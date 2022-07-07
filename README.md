@@ -18,15 +18,20 @@ I'm making a tiny change to a mod created by others:
 
 Which brings me to ``frikbot4``.  My change is very minimal.
 
-## Changes
+## Problem
 
 I spent a week playing w/ ``v3`` and had a blast, but what I found was that teamplay games didn't work so well.
 
 It turns out there was a flaw in the bot logic that made them want to follow teammates around the map.  What ended up happening is the bots would clump together and just idle there.
 
-I just found the priority logic in the bot code and made teammates a priority of zero.  I literally commented out a single line of code.
+I found the priority logic in the bot code and made following teammates a priority of zero.  I literally commented out a single line of code.
 
 You can now play teamplay games and the bots are awesome, just like they are in FFA.
+
+## Changelog
+
+- Changed teammate following logic.
+- Changed some bot names.
 
 ## Todo
 
@@ -38,4 +43,4 @@ I want to add item respawn on coop games.
 - [Frikbot X on ModDB](https://www.moddb.com/mods/frikbot-x) - where I found the missing campaign waypoint files.
 - [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history.
 - [Quake Config Mod](https://www.moddb.com/downloads/quake-config-mod) - the mod I used for coop respawn of items.
-- [Intro to QuakeC](https://codedocs.org/what-is/quakec) - page I could on how to compile QuakeC code.
+- [Intro to QuakeC](https://codedocs.org/what-is/quakec) - page I found on how to compile QuakeC code.

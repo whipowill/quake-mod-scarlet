@@ -105,7 +105,7 @@ string(float r) BotName =
 	{
 		self.b_pants = 9;
 		self.b_shirt = 4;
-		return "Pimp Bot";
+		return "TigerJ";
 	}
 	else if (r == 10)
 	{
@@ -129,7 +129,7 @@ string(float r) BotName =
 	{
 		self.b_pants = 11;
 		self.b_shirt = 2;
-		return "FrikBot";
+		return "FrikaC";
 	}
 	else if (r == 14)
 	{
