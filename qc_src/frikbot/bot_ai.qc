@@ -752,7 +752,7 @@ float(entity thing) priority_for_thing =
 				}
 				else if (teamplay && thing.team == self.team)
 				{
-					thisp = 100;
+					//thisp = 100;
 					if (thing.target1.classname == "player")
 						return 0;
 				}

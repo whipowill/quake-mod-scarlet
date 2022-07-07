@@ -1,0 +1,121 @@
+// 'Donner Und Blitzen' by JVOX- maps/jvoxdm3.way
+// Ways by ¥u†sO
+saved1 518.3; saved2 236.7; saved3 -146.0
+scratch1 2; scratch2 7; scratch3 5; scratch4 9
+saved4 1; wait
+saved1 525.8; saved2 -123.5; saved3 -50.0
+scratch1 1; scratch2 3; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 706.3; saved2 -130.0; saved3 -50.0
+scratch1 2; scratch2 4; scratch3 20; scratch4 7
+saved4 2; wait
+saved1 709.4; saved2 -388.3
+scratch1 3; scratch2 33; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 907.2; saved2 276.9; saved3 -146.0
+scratch1 1; scratch2 7
+saved4 2; wait
+saved1 702.7; saved2 -47.8
+scratch1 7; scratch2 25
+saved4 2; wait
+saved2  83.5
+scratch1 1; scratch2 6; scratch3 5
+saved4 2; wait
+saved1 891.8; saved2  50.0; saved3 -146.0
+scratch1 7; scratch2 0; scratch3 0
+saved4 2; wait
+saved1 318.0; saved2 250.0
+scratch1 1; scratch2 10
+saved4 2; wait
+saved1 324.6; saved2 -133.4; saved3 -146.0
+scratch1 9; scratch2 11
+saved4 2; wait
+saved1 119.4; saved2 -105.5; saved3 -146.0
+scratch1 10; scratch2 12; scratch3 32
+saved4 2; wait
+saved1 128.6; saved2 262.6; saved3 -50.0
+scratch1 11; scratch2 13; scratch3 17
+saved4 2; wait
+saved1 -257.5; saved2 259.2
+scratch1 12; scratch2 14; scratch3 0
+saved4 2; wait
+saved1 -272.6; saved2 -65.5; saved3  46.0
+scratch1 24; scratch2 15
+saved4 514; wait
+saved1 -248.7; saved2 -370.0; saved3 -50.0
+scratch1 16; scratch2 0
+saved4 2; wait
+saved1 -38.0; saved2 -382.0; saved3 -50.0
+scratch1 15; scratch2 32
+saved4 2; wait
+saved1 138.0; saved2 501.0; saved3 -50.0
+scratch1 12; scratch2 18
+saved4 2; wait
+saved1 504.4; saved2 503.2
+scratch1 17; scratch2 19
+saved4 2; wait
+saved1 518.4; saved2 260.9
+scratch1 18; scratch2 21; scratch3 38
+saved4 2; wait
+saved1 911.5; saved2 -125.1
+scratch1 3; scratch3 0
+saved4 2; wait
+saved1 906.0; saved2 245.1
+scratch1 19; scratch2 20; scratch3 7
+saved4 2; wait
+saved1 129.8; saved2 -228.4; saved3  46.0
+scratch1 11; scratch2 0; scratch3 0
+saved4 2; wait
+saved1 -123.0; saved2 -208.3
+scratch1 22
+saved4 2; wait
+saved1 -231.7; saved2 -104.4
+scratch1 23
+saved4 1026; wait
+saved1 689.1; saved2 -376.5; saved3 -146.0
+scratch1 6; scratch2 26
+saved4 2; wait
+saved1 516.9; saved2 -385.2; saved3 -146.0
+scratch1 25; scratch2 27; scratch3 30
+saved4 2; wait
+saved1 514.0; saved2 -779.9; saved3 -50.0
+scratch1 26; scratch2 28; scratch3 0
+saved4 2; wait
+saved1 120.5; saved2 -778.2
+scratch1 27; scratch2 34
+saved4 2; wait
+saved1 269.4; saved2 -664.4; saved3 -146.0
+scratch1 30; scratch2 0
+saved4 2; wait
+saved1 337.7; saved2 -411.0
+scratch1 26; scratch2 29; scratch3 31
+saved4 2; wait
+saved1 242.0; saved2 -336.0
+scratch1 30; scratch2 32; scratch3 0
+saved4 642; wait
+saved1 126.2; saved2 -329.0
+scratch1 11; scratch2 31
+saved4 642; wait
+saved1 500.1; saved2 -390.5; saved3 -50.0
+scratch1 4; scratch2 27; scratch3 39
+saved4 2; wait
+saved1 142.1; saved2 -534.7
+scratch1 28; scratch2 32
+saved4 2; wait
+saved1  11.2; saved2 141.3; saved3 -146.0
+scratch1 36; scratch2 0; scratch3 0
+saved4 2; wait
+saved1 -52.9; saved2  -3.4
+scratch1 11
+saved4 2; wait
+saved1 313.2; saved2 -123.4; saved3 -50.0
+scratch1 38; scratch2 11
+saved4 2; wait
+saved1 318.0; saved2 250.7; saved3 -50.0
+scratch1 19; scratch2 37
+saved4 2; wait
+saved1 286.4; saved2 -393.1; saved3 -50.0
+scratch1 29; scratch2 33
+saved4 2; wait
+saved4 3
+// end waypoint dump

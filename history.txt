@@ -16,3 +16,11 @@ And Jan 2013, made this change:
 . Added back the map cycle feature from the original FrikBot X.
 
 - Johnny Law
+
+====================================================================
+
+And Jul 2022, made this change:
+
+. Removed bot following of teammates in teamplay.  They now roam and fight like FFA.
+
+-whipowill

@@ -1,0 +1,226 @@
+// …Blizzard 2000… - maps/blizz2.way
+// Ways by bta.monster - updated by Lightning Hunter
+saved1 476; saved2 -656; saved3 -178
+scratch1 2; scratch2 0; scratch3 0; scratch4 0
+saved4 1; wait
+saved2 -489
+scratch1 44; scratch2 11; scratch3 1
+saved4 2; wait
+saved1 1; saved2 -493
+scratch2 62; scratch3 63
+saved4 2; wait
+saved1 10; saved2 -111
+scratch1 43; scratch2 5; scratch3 7
+saved4 2; wait
+saved1 152; saved2 -162
+scratch1 4; scratch2 6
+saved4 2; wait
+saved1 171; saved2 -5
+scratch1 5; scratch2 7; scratch3 61
+saved4 2; wait
+saved1 13; saved2 -10
+scratch1 6; scratch2 4; scratch3 8; scratch4 5
+saved4 2; wait
+saved1 -175; saved2 159
+scratch1 7; scratch2 59; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 -177; saved2 590
+scratch1 60; scratch2 34; scratch3 35
+saved4 2; wait
+saved1 502; saved2 -3
+scratch1 61; scratch2 11; scratch3 15; scratch4 53
+saved4 2; wait
+saved1 489; saved2 -295
+scratch1 10; scratch2 12; scratch3 2; scratch4 0
+saved4 2; wait
+saved1 293; saved2 -185; saved3 -338
+scratch1 13; scratch2 14; scratch3 0
+saved4 2; wait
+saved1 425; saved2 -218
+scratch1 12; scratch2 24; scratch3 26
+saved4 2; wait
+saved1 122; saved2 -130
+scratch2 46; scratch3 38; scratch4 25
+saved4 2; wait
+saved1 469; saved2 361; saved3 -178
+scratch1 10; scratch2 0; scratch3 17; scratch4 0
+saved4 2; wait
+saved1 297; saved2 364; saved3 -150
+scratch1 25; scratch2 19; scratch3 15
+saved4 2; wait
+saved1 478; saved2 710; saved3 -178
+scratch1 15; scratch2 18; scratch3 19; scratch4 66
+saved4 2; wait
+saved1 318; saved2 711
+scratch1 17; scratch2 0; scratch3 20; scratch4 0
+saved4 2; wait
+saved1 374; saved2 536; saved3 -338
+scratch1 27; scratch2 28; scratch3 70
+saved4 2; wait
+saved1 138; saved2 707; saved3 -178
+scratch1 18; scratch2 21; scratch3 0
+saved4 2; wait
+saved1 -207; saved2 708; saved3 -338
+scratch1 20; scratch2 22; scratch3 33
+saved4 2; wait
+saved1 -177; saved2 580
+scratch1 21; scratch2 47; scratch4 52
+saved4 2; wait
+saved1 -180; saved2 165
+scratch1 47; scratch2 46; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 436; saved2 25
+scratch1 13; scratch2 25; scratch3 27; scratch4 68
+saved4 2; wait
+saved1 348; saved2 5
+scratch1 24; scratch2 14; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 450; saved2 -479
+scratch1 13; scratch2 38
+saved4 2; wait
+saved1 480; saved2 382
+scratch1 19; scratch2 24
+saved4 2; wait
+saved1 386; saved2 607
+scratch2 29; scratch3 51
+saved4 10; wait
+saved1 -413; saved2 -489; saved3 -178
+scratch1 30; scratch2 42; scratch3 48
+saved4 2; wait
+saved1 -401; saved2 -567
+scratch1 29; scratch2 31; scratch3 32; scratch4 19
+saved4 34; wait
+saved1 -305; saved2 -608
+scratch1 30; scratch2 41; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 -486; saved2 -599
+scratch2 39
+saved4 2; wait
+saved1 -464; saved2 711; saved3 -338
+scratch1 21; scratch2 22; scratch3 48; scratch4 49
+saved4 2; wait
+saved1 164; saved2 585; saved3 -130
+scratch1 9; scratch2 20; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 -301; saved2 576; saved3 -178
+scratch2 57
+saved4 2; wait
+saved1 -490; saved2 539; saved3 -150
+scratch1 37; scratch2 29; scratch3 64
+saved4 2; wait
+saved1 -504; saved2 581
+scratch1 36; scratch2 33; scratch3 0
+saved4 2; wait
+saved1 100; saved2 -395; saved3 -338
+scratch1 26; scratch2 14; scratch3 45
+saved4 2; wait
+saved1 -508; saved2 -780; saved3 -178
+scratch1 32; scratch2 40; scratch3 0
+saved4 514; wait
+saved1 -398; saved3 -162
+scratch1 39; scratch2 41; scratch3 19
+saved4 18; wait
+saved1 -296; saved3 -178
+scratch1 40; scratch2 31; scratch3 0
+saved4 514; wait
+saved1 -276; saved2 -491
+scratch1 63; scratch2 29
+saved4 2; wait
+saved1 -9; saved2 -258
+scratch1 4; scratch2 62
+saved4 2; wait
+saved1 264; saved2 -500
+scratch1 2; scratch2 3; scratch3 45
+saved4 2; wait
+saved1 223; saved2 -355; saved3 -338
+scratch1 38; scratch2 26; scratch3 73
+saved4 2; wait
+saved1 -24; saved2 24
+scratch1 23; scratch2 14; scratch3 0
+saved4 2; wait
+saved1 -180; saved2 522
+scratch2 22
+saved4 2; wait
+saved1 -431; saved2 558
+scratch1 33; scratch2 29
+saved4 2; wait
+saved1 -508; saved2 752
+scratch1 50; scratch2 55; scratch3 33
+saved4 514; wait
+saved2 708
+scratch1 37; scratch2 0; scratch3 0
+saved4 16386; wait
+saved1 235; saved2 608
+scratch1 28; scratch2 52
+saved4 2; wait
+saved1 -75; saved2 578
+scratch1 51; scratch2 22
+saved4 2; wait
+saved1 494; saved2 109; saved3 -178
+scratch1 54; scratch2 0
+saved4 514; wait
+saved1 450; saved2 172
+scratch1 16
+saved4 1538; wait
+saved1 -419; saved2 674; saved3 -338
+scratch1 56
+saved4 16386; wait
+saved1 -258; saved2 556; saved3 -178
+scratch1 9
+saved4 2; wait
+saved1 -202; saved2 580
+scratch1 58
+saved4 2; wait
+saved1 -335; saved2 564
+scratch1 36
+saved4 1026; wait
+saved1 -187; saved2 376
+scratch1 8; scratch2 60
+saved4 2; wait
+saved1 -185; saved2 495
+scratch1 59; scratch2 9
+saved4 2; wait
+saved1 263; saved2 2
+scratch1 6; scratch2 10
+saved4 2; wait
+saved1 -5; saved2 -375
+scratch1 43; scratch2 3
+saved4 2; wait
+saved1 -174; saved2 -508
+scratch1 42
+saved4 2; wait
+saved1 -508; saved2 529; saved3 -150
+scratch1 65; scratch2 0
+saved4 2; wait
+saved1 -298; saved2 532; saved3 -178
+scratch1 35
+saved4 2; wait
+saved1 512; saved2 632
+scratch1 67
+saved4 514; wait
+saved1 437; saved2 515
+scratch1 16
+saved4 1538; wait
+saved1 360; saved2 155; saved3 -338
+scratch1 69
+saved4 16386; wait
+saved1 288; saved2 309; saved3 -150
+scratch1 16
+saved4 2; wait
+saved1 474; saved2 586; saved3 -338
+scratch1 71
+saved4 2; wait
+saved1 389; saved2 499
+scratch1 72
+saved4 16386; wait
+saved1 301; saved2 408; saved3 -150
+scratch1 16
+saved4 2; wait
+saved1 313; saved2 -344; saved3 -338
+scratch1 74
+saved4 2; wait
+saved1 154; saved2 -347
+scratch1 62
+saved4 16386; wait
+saved4 3
+// end waypoint dump

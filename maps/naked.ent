@@ -1,0 +1,1097 @@
+{
+"classname" "worldspawn"
+}
+{
+"classname" "func_plat"
+"speed" "100"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"height" "112"
+"model" "*1"
+}
+{
+"classname" "func_plat"
+"speed" "100"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"height" "112"
+"model" "*2"
+}
+{
+"classname" "info_player_start"
+"angle" "270"
+"origin" "-61 97 33"
+}
+{
+"classname" "info_player_deathmatch"
+"angle" "90"
+"origin" "1700 -865 325"
+}
+{
+"classname" "light"
+"origin" "19 -677 183"
+}
+{
+"classname" "light"
+"origin" "296 -666 183"
+}
+{
+"classname" "light"
+"origin" "-33 -238 159"
+}
+{
+"classname" "light"
+"origin" "113 -27 229"
+}
+{
+"classname" "light"
+"origin" "-43 38 249"
+}
+{
+"classname" "light"
+"light" "175"
+"style" "0"
+"origin" "109 -169 57"
+}
+{
+"classname" "light"
+"origin" "626 -719 273"
+}
+{
+"classname" "light"
+"origin" "596 -294 259"
+}
+{
+"classname" "light"
+"origin" "476 -138 266"
+}
+{
+"classname" "light"
+"origin" "299 -152 239"
+}
+{
+"classname" "light"
+"light" "150"
+"style" "0"
+"origin" "517 -385 59"
+}
+{
+"classname" "light"
+"light" "150"
+"origin" "277 -392 60"
+}
+{
+"classname" "light"
+"light" "150"
+"origin" "327 -397 53"
+}
+{
+"classname" "light"
+"light" "150"
+"origin" "562 -395 53"
+}
+{
+"classname" "light"
+"light" "150"
+"origin" "-112 224 48"
+}
+{
+"classname" "light"
+"light" "150"
+"origin" "-90 215 53"
+}
+{
+"classname" "light"
+"light" "150"
+"origin" "191 229 176"
+}
+{
+"classname" "light"
+"light" "150"
+"origin" "213 220 174"
+}
+{
+"classname" "light"
+"origin" "369 -772 177"
+}
+{
+"classname" "light"
+"light" "180"
+"style" "0"
+"origin" "449 -647 297"
+}
+{
+"classname" "light"
+"light" "175"
+"style" "0"
+"origin" "563 -546 143"
+}
+{
+"classname" "light"
+"light" "175"
+"style" "0"
+"origin" "567 -699 133"
+}
+{
+"classname" "light"
+"light" "190"
+"style" "0"
+"origin" "-44 -689 316"
+}
+{
+"classname" "light"
+"light" "190"
+"style" "0"
+"origin" "-24 -437 300"
+}
+{
+"classname" "light"
+"origin" "188 -391 188"
+}
+{
+"classname" "light"
+"light" "175"
+"style" "0"
+"origin" "672 -384 272"
+}
+{
+"classname" "light"
+"light" "150"
+"origin" "672 -608 48"
+}
+{
+"classname" "light"
+"light" "150"
+"origin" "661 -569 52"
+}
+{
+"classname" "light"
+"light" "175"
+"style" "0"
+"origin" "439 -488 175"
+}
+{
+"classname" "light"
+"light" "175"
+"style" "0"
+"origin" "48 -480 59"
+}
+{
+"classname" "light"
+"light" "170"
+"style" "0"
+"origin" "328 -558 76"
+}
+{
+"classname" "light"
+"light" "160"
+"style" "0"
+"origin" "560 -512 80"
+}
+{
+"classname" "light"
+"light" "150"
+"style" "0"
+"origin" "181 -311 57"
+}
+{
+"classname" "weapon_nailgun"
+"origin" "560 -656 258"
+}
+{
+"classname" "func_button"
+"angle" "270"
+"speed" "100"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"target" "thing1"
+"delay" "0"
+"model" "*3"
+}
+{
+"classname" "func_door"
+"speed" "100"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"targetname" "thing1"
+"model" "*4"
+}
+{
+"classname" "light"
+"origin" "1012 -651 107"
+}
+{
+"classname" "light"
+"origin" "1572 -617 98"
+}
+{
+"classname" "light"
+"origin" "1613 -219 106"
+}
+{
+"classname" "light"
+"origin" "1264 -180 336"
+}
+{
+"classname" "light"
+"origin" "1221 -483 315"
+}
+{
+"classname" "light"
+"origin" "1232 -863 281"
+}
+{
+"classname" "light"
+"light" "180"
+"style" "0"
+"origin" "864 -438 260"
+}
+{
+"classname" "weapon_rocketlauncher"
+"origin" "835 -436 249"
+}
+{
+"classname" "func_door_secret"
+"angle" "90"
+"spawnflags" "2"
+"speed" "100"
+"sounds" "2"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"model" "*5"
+}
+{
+"classname" "func_door"
+"angle" "-1"
+"speed" "100"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"targetname" "door1"
+"model" "*6"
+}
+{
+"classname" "trigger_multiple"
+"speed" "100"
+"sounds" "4"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"style" "32"
+"delay" "1"
+"target" "door1"
+"model" "*7"
+}
+{
+"classname" "item_armor2"
+"origin" "1453 -187 458"
+}
+{
+"classname" "light"
+"light" "150"
+"style" "0"
+"origin" "1407 -178 527"
+}
+{
+"classname" "light"
+"origin" "1694 -356 493"
+}
+{
+"classname" "light"
+"origin" "1685 -655 486"
+}
+{
+"classname" "light"
+"origin" "1233 -537 479"
+}
+{
+"classname" "light"
+"origin" "1245 -884 472"
+}
+{
+"classname" "func_button"
+"angle" "270"
+"speed" "100"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"target" "trap1"
+"delay" "0"
+"model" "*8"
+}
+{
+"classname" "func_door"
+"angle" "-2"
+"speed" "200"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "500"
+"health" "0"
+"targetname" "trap1"
+"model" "*9"
+}
+{
+"classname" "light"
+"origin" "1717 -951 385"
+}
+{
+"classname" "light"
+"origin" "1583 -788 310"
+}
+{
+"classname" "light"
+"light" "150"
+"style" "0"
+"origin" "1543 -964 328"
+}
+{
+"classname" "light"
+"origin" "1014 -889 474"
+}
+{
+"classname" "light"
+"origin" "1030 -893 303"
+}
+{
+"classname" "light"
+"origin" "1020 -183 344"
+}
+{
+"classname" "light"
+"origin" "833 -437 314"
+}
+{
+"classname" "light"
+"light" "170"
+"style" "0"
+"origin" "928 -434 256"
+}
+{
+"classname" "light"
+"origin" "1386 -711 90"
+}
+{
+"classname" "light"
+"light" "200"
+"style" "0"
+"origin" "1562 -432 136"
+}
+{
+"classname" "light"
+"light" "150"
+"style" "0"
+"origin" "1392 -704 391"
+}
+{
+"classname" "light"
+"light" "180"
+"style" "0"
+"origin" "976 -656 448"
+}
+{
+"classname" "light"
+"light" "160"
+"style" "0"
+"origin" "1424 -302 432"
+}
+{
+"classname" "func_button"
+"angle" "180"
+"speed" "100"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "1"
+"delay" "0"
+"target" "trap1"
+"model" "*10"
+}
+{
+"classname" "light"
+"origin" "997 47 521"
+}
+{
+"classname" "info_player_deathmatch"
+"angle" "250"
+"origin" "576 -416 36"
+}
+{
+"classname" "item_health"
+"style" "0"
+"origin" "140 -208 24"
+}
+{
+"classname" "item_health"
+"style" "0"
+"origin" "136 -52 36"
+}
+{
+"classname" "info_player_deathmatch"
+"angle" "230"
+"origin" "676 -420 268"
+}
+{
+"classname" "item_spikes"
+"origin" "576 -744 256"
+}
+{
+"classname" "item_spikes"
+"origin" "572 -796 264"
+}
+{
+"classname" "weapon_nailgun"
+"origin" "1744 -388 428"
+}
+{
+"classname" "item_spikes"
+"origin" "1752 -336 428"
+}
+{
+"classname" "item_health"
+"origin" "940 -948 432"
+}
+{
+"classname" "item_health"
+"origin" "936 -884 432"
+}
+{
+"classname" "weapon_supershotgun"
+"origin" "192 128 164"
+}
+{
+"classname" "item_rockets"
+"origin" "648 -859 160"
+}
+{
+"classname" "info_player_deathmatch"
+"angle" "56"
+"origin" "944 -992 268"
+}
+{
+"classname" "info_player_deathmatch"
+"angle" "83"
+"origin" "768 -176 308"
+}
+{
+"classname" "func_plat"
+"speed" "100"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"height" "272"
+"model" "*11"
+}
+{
+"classname" "light"
+"light" "195"
+"style" "0"
+"origin" "978 -493 -165"
+}
+{
+"classname" "light"
+"origin" "802 -437 -167"
+}
+{
+"classname" "light"
+"light" "180"
+"style" "0"
+"origin" "800 -224 32"
+}
+{
+"classname" "light"
+"origin" "608 -160 63"
+}
+{
+"classname" "light"
+"origin" "516 141 180"
+}
+{
+"classname" "light"
+"origin" "360 246 204"
+}
+{
+"classname" "light"
+"origin" "736 198 240"
+}
+{
+"classname" "light"
+"light" "195"
+"style" "0"
+"origin" "592 489 224"
+}
+{
+"classname" "light"
+"origin" "599 578 98"
+}
+{
+"classname" "light"
+"light" "180"
+"style" "0"
+"origin" "576 720 80"
+}
+{
+"classname" "light"
+"light" "200"
+"style" "0"
+"origin" "912 848 80"
+}
+{
+"classname" "light"
+"origin" "962 588 67"
+}
+{
+"classname" "light"
+"origin" "970 104 277"
+}
+{
+"classname" "light"
+"light" "190"
+"style" "0"
+"origin" "922 -5 287"
+}
+{
+"classname" "light"
+"origin" "790 -142 293"
+}
+{
+"classname" "func_plat"
+"speed" "100"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"height" "144"
+"model" "*12"
+}
+{
+"classname" "weapon_grenadelauncher"
+"origin" "256 -528 40"
+}
+{
+"classname" "weapon_grenadelauncher"
+"origin" "1584 -733 248"
+}
+{
+"classname" "light"
+"style" "0"
+"light" "190"
+"origin" "288 128 68"
+}
+{
+"classname" "weapon_supernailgun"
+"origin" "808 60 264"
+}
+{
+"classname" "item_health"
+"origin" "820 232 172"
+}
+{
+"classname" "item_health"
+"origin" "772 256 176"
+}
+{
+"spawnflags" "2"
+"classname" "item_health"
+"origin" "1025 -760 424"
+}
+{
+"classname" "item_health"
+"origin" "976 824 -28"
+}
+{
+"classname" "item_health"
+"origin" "943 462 165"
+}
+{
+"classname" "light"
+"light" "170"
+"style" "0"
+"origin" "628 609 334"
+}
+{
+"classname" "light"
+"origin" "392 558 241"
+}
+{
+"classname" "light"
+"origin" "1326 96 467"
+}
+{
+"classname" "light"
+"origin" "1347 292 462"
+}
+{
+"classname" "light"
+"origin" "1590 297 449"
+}
+{
+"classname" "light"
+"origin" "1586 688 437"
+}
+{
+"classname" "light"
+"light" "190"
+"style" "0"
+"origin" "1408 1040 400"
+}
+{
+"classname" "light"
+"light" "190"
+"style" "0"
+"origin" "1280 1040 384"
+}
+{
+"classname" "light"
+"origin" "1409 916 319"
+}
+{
+"classname" "light"
+"origin" "1289 662 361"
+}
+{
+"classname" "light"
+"light" "195"
+"style" "0"
+"origin" "1423 412 349"
+}
+{
+"classname" "light"
+"light" "200"
+"style" "0"
+"origin" "1568 560 336"
+}
+{
+"classname" "light"
+"light" "195"
+"style" "0"
+"origin" "1392 720 80"
+}
+{
+"classname" "light"
+"origin" "1321 580 83"
+}
+{
+"classname" "light"
+"origin" "1480 797 231"
+}
+{
+"classname" "func_plat"
+"angle" "-1"
+"speed" "100"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"height" "96"
+"model" "*13"
+}
+{
+"classname" "light"
+"light" "200"
+"style" "0"
+"origin" "652 848 90"
+}
+{
+"classname" "light"
+"light" "200"
+"style" "0"
+"origin" "1036 850 81"
+}
+{
+"classname" "light"
+"light" "200"
+"style" "0"
+"origin" "779 843 77"
+}
+{
+"classname" "light"
+"light" "200"
+"style" "0"
+"origin" "708 254 63"
+}
+{
+"classname" "light"
+"light" "200"
+"style" "0"
+"origin" "416 208 64"
+}
+{
+"classname" "light"
+"light" "200"
+"style" "0"
+"origin" "1296 -449 -96"
+}
+{
+"classname" "item_armor1"
+"origin" "1382 -439 -226"
+}
+{
+"classname" "trigger_teleport"
+"speed" "100"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"target" "tele1"
+"model" "*14"
+}
+{
+"classname" "info_teleport_destination"
+"targetname" "tele1"
+"origin" "-64 -636 100"
+}
+{
+"classname" "light"
+"origin" "1008 -353 48"
+}
+{
+"classname" "func_door_secret"
+"angle" "180"
+"spawnflags" "2"
+"speed" "100"
+"sounds" "1"
+"wait" "10"
+"lip" "0"
+"dmg" "0"
+"health" "1"
+"model" "*15"
+}
+{
+"classname" "func_door"
+"angle" "-1"
+"speed" "100"
+"sounds" "2"
+"wait" "4"
+"lip" "32"
+"dmg" "0"
+"health" "0"
+"height" "128"
+"targetname" "door1"
+"model" "*16"
+}
+{
+"classname" "light"
+"origin" "1322 902 75"
+}
+{
+"classname" "light"
+"light" "190"
+"style" "0"
+"origin" "1535 1037 376"
+}
+{
+"classname" "func_button"
+"angle" "90"
+"speed" "100"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"target" "door1"
+"delay" "0"
+"model" "*17"
+}
+{
+"classname" "light"
+"origin" "1344 576 304"
+}
+{
+"classname" "weapon_rocketlauncher"
+"origin" "1408 1038 288"
+}
+{
+"classname" "weapon_lightning"
+"origin" "1376 304 432"
+}
+{
+"classname" "item_cells"
+"origin" "1424 304 442"
+}
+{
+"classname" "item_cells"
+"origin" "1472 304 440"
+}
+{
+"classname" "item_armorInv"
+"origin" "583 601 305"
+}
+{
+"classname" "light"
+"light" "150"
+"style" "0"
+"origin" "1520 982 78"
+}
+{
+"classname" "func_button"
+"angle" "-2"
+"speed" "100"
+"sounds" "1"
+"wait" "6"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"delay" "0"
+"target" "trapie"
+"model" "*18"
+}
+{
+"classname" "func_door"
+"angle" "90"
+"targetname" "trapie"
+"speed" "225"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "500"
+"health" "0"
+"model" "*19"
+}
+{
+"classname" "light"
+"light" "200"
+"style" "0"
+"origin" "1232 848 208"
+}
+{
+"classname" "light"
+"light" "195"
+"style" "0"
+"origin" "1312 -384 105"
+}
+{
+"classname" "item_health"
+"origin" "985 464 160"
+}
+{
+"classname" "func_door"
+"speed" "100"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"model" "*20"
+}
+{
+"classname" "func_door"
+"angle" "180"
+"speed" "100"
+"sounds" "1"
+"wait" "4"
+"lip" "0"
+"dmg" "0"
+"health" "0"
+"model" "*21"
+}
+{
+"classname" "weapon_supershotgun"
+"origin" "1200 983 32"
+}
+{
+"classname" "light"
+"light" "200"
+"style" "0"
+"origin" "719 502 64"
+}
+{
+"classname" "light"
+"light" "180"
+"style" "0"
+"origin" "1152 -422 -112"
+}
+{
+"classname" "item_cells"
+"origin" "308 308 146"
+}
+{
+"classname" "item_cells"
+"origin" "306 349 146"
+}
+{
+"classname" "item_shells"
+"origin" "588 850 -48"
+}
+{
+"classname" "item_shells"
+"origin" "565 -136 206"
+}
+{
+"classname" "item_shells"
+"origin" "1388 -977 250"
+}
+{
+"classname" "item_shells"
+"origin" "1441 -977 252"
+}
+{
+"classname" "item_health"
+"origin" "1611 -202 30"
+}
+{
+"classname" "item_rockets"
+"origin" "947 152 439"
+}
+{
+"classname" "item_health"
+"origin" "1216 402 272"
+}
+{
+"classname" "item_shells"
+"origin" "1265 397 281"
+}
+{
+"classname" "item_health"
+"origin" "1307 558 163"
+}
+{
+"classname" "item_health"
+"origin" "1264 608 167"
+}
+{
+"classname" "item_spikes"
+"origin" "1201 699 32"
+}
+{
+"classname" "item_spikes"
+"origin" "1246 694 32"
+}
+{
+"classname" "item_health"
+"origin" "800 -352 44"
+}
+{
+"classname" "info_player_deathmatch"
+"angle" "123"
+"origin" "1363 66 434"
+}
+{
+"classname" "info_player_deathmatch"
+"origin" "1192 691 179"
+}
+{
+"classname" "info_player_deathmatch"
+"angle" "138"
+"origin" "1489 680 48"
+}
+{
+"classname" "info_player_deathmatch"
+"origin" "697 846 50"
+}
+{
+"classname" "info_player_deathmatch"
+"angle" "270"
+"origin" "976 474 256"
+}
+{
+"classname" "info_player_deathmatch"
+"angle" "262"
+"origin" "832 320 177"
+}
+{
+"classname" "item_rockets"
+"origin" "656 -256 32"
+}
+{
+"classname" "light"
+"light" "180"
+"style" "0"
+"origin" "131 103 64"
+}
+{
+"classname" "light"
+"light" "180"
+"style" "0"
+"origin" "976 -349 395"
+}
+{
+"classname" "light"
+"light" "170"
+"style" "0"
+"origin" "976 304 192"
+}
+{
+"classname" "light"
+"light" "195"
+"style" "0"
+"origin" "1424 -336 48"
+}
+{
+"classname" "light"
+"light" "190"
+"style" "0"
+"origin" "956 -450 421"
+}
+{
+"classname" "light"
+"light" "190"
+"style" "0"
+"origin" "1463 -320 303"
+}
+{
+"classname" "light"
+"light" "190"
+"style" "0"
+"origin" "1504 -704 553"
+}
+{
+"classname" "light"
+"light" "190"
+"style" "0"
+"origin" "400 408 48"
+}
+{
+"classname" "light"
+"light" "190"
+"style" "0"
+"origin" "624 149 64"
+}
+{
+"classname" "light"
+"light" "190"
+"style" "0"
+"origin" "688 480 208"
+}
+{
+"classname" "item_artifact_super_damage"
+"origin" "1506 527 34"
+}
+{
+"classname" "light"
+"light" "150"
+"style" "0"
+"origin" "1356 -458 -178"
+}
+{
+"classname" "light"
+"light" "195"
+"style" "0"
+"origin" "528 384 120"
+}
+ 

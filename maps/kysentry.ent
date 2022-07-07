@@ -1,0 +1,685 @@
+{
+"wad" "d:\quake2\quest\graphics\quake101.wad"
+"classname" "worldspawn"
+}
+{
+"model" "*1"
+"target" "byexit"
+"classname" "trigger_teleport"
+}
+{
+"model" "*2"
+"target" "bystart"
+"classname" "trigger_teleport"
+}
+{
+"targetname" "bystart"
+"angle" "90"
+"origin" "-59 -136 88"
+"classname" "info_teleport_destination"
+}
+{
+"targetname" "byexit"
+"angle" "0"
+"origin" "-1164 160 364"
+"classname" "info_teleport_destination"
+}
+{
+"angle" "270"
+"origin" "96 384 -32"
+"classname" "info_player_start"
+}
+{
+"light" "200"
+"origin" "228 576 -28"
+"classname" "light"
+}
+{
+"light" "100"
+"origin" "160 336 -28"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "100"
+"origin" "40 336 -28"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "200"
+"origin" "-56 208 -20"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "260 72 88"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "108 68 -20"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "264 -232 100"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "-60 -228 100"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "-60 76 88"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "260 208 -20"
+"classname" "light"
+}
+{
+"origin" "12 -252 -32"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "188 -252 -32"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "264 252 -48"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "100"
+"origin" "112 240 -52"
+"classname" "light"
+}
+{
+"light" "400"
+"origin" "172 -652 -36"
+"classname" "light_flame_small_yellow"
+}
+{
+"light" "250"
+"origin" "176 -588 -20"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "250"
+"origin" "108 -656 -20"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "165"
+"origin" "-248 -580 4"
+"classname" "light"
+}
+{
+"light" "165"
+"origin" "-88 -580 4"
+"classname" "light"
+}
+{
+"light" "165"
+"origin" "-408 -580 160"
+"classname" "light"
+}
+{
+"light" "165"
+"origin" "-568 -580 4"
+"classname" "light"
+}
+{
+"light" "250"
+"origin" "-852 -580 64"
+"classname" "light_flame_small_yellow"
+}
+{
+"light" "135"
+"origin" "-852 -580 -12"
+"classname" "light"
+}
+{
+"light" "90"
+"origin" "-940 -536 -76"
+"classname" "light"
+}
+{
+"light" "90"
+"origin" "-980 -532 -76"
+"classname" "light"
+}
+{
+"light" "90"
+"origin" "-1020 -536 -76"
+"classname" "light"
+}
+{
+"light" "90"
+"origin" "-940 -624 -76"
+"classname" "light"
+}
+{
+"light" "90"
+"origin" "-980 -632 -76"
+"classname" "light"
+}
+{
+"light" "90"
+"origin" "-1020 -624 -76"
+"classname" "light"
+}
+{
+"light" "512"
+"origin" "-96 -936 240"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "512"
+"origin" "-240 -936 240"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "340 -876 0"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "340 -1620 0"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "512"
+"origin" "340 -1628 244"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "512"
+"origin" "328 -1628 136"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "328 -868 240"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "340 -868 132"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-668 -868 236"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-676 -868 132"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-676 -876 8"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-676 -1620 8"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-676 -1628 148"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "512"
+"origin" "-668 -1628 240"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "150"
+"origin" "-108 -752 -8"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "150"
+"origin" "-228 -752 -8"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "250"
+"origin" "-168 -1088 156"
+"classname" "light_globe"
+}
+{
+"light" "200"
+"origin" "-168 -1088 -56"
+"classname" "light"
+}
+{
+"origin" "-276 -868 -32"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-64 -868 -32"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "100"
+"origin" "8 -1256 24"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "100"
+"origin" "44 -1292 24"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "100"
+"origin" "8 -1328 24"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "100"
+"origin" "-28 -1292 24"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "165"
+"origin" "-308 -1292 180"
+"classname" "light"
+}
+{
+"light" "165"
+"origin" "-344 -1256 180"
+"classname" "light"
+}
+{
+"light" "165"
+"origin" "-380 -1292 180"
+"classname" "light"
+}
+{
+"light" "165"
+"origin" "-344 -1328 180"
+"classname" "light"
+}
+{
+"light" "165"
+"origin" "-548 -372 4"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "-168 -908 -32"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "-168 -1620 4"
+"classname" "light"
+}
+{
+"origin" "-1592 -276 400"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-1592 604 400"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-624 604 404"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-964 -280 220"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "200"
+"origin" "-1156 164 276"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "-768 164 404"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "-1160 568 356"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "-1552 180 400"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "-1164 -220 356"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "-620 -280 404"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "-1340 -36 188"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "-1344 352 184"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "-960 356 184"
+"classname" "light"
+}
+{
+"light" "512"
+"origin" "-1416 164 300"
+"classname" "light"
+}
+{
+"light" "512"
+"origin" "-1156 -88 300"
+"classname" "light"
+}
+{
+"light" "512"
+"origin" "-904 164 300"
+"classname" "light"
+}
+{
+"light" "512"
+"origin" "-1160 424 300"
+"classname" "light"
+}
+{
+"angle" "135"
+"origin" "255 -222 -103"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "-37 139 -103"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "258 -228 88"
+"angle" "90"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "104 -548 -40"
+"angle" "90"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "309 -981 220"
+"angle" "-90"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "302 -1580 112"
+"angle" "90"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "-584 -380 -40"
+"angle" "90"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "-890 587 -55"
+"angle" "-45"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "-1168 532 12"
+"angle" "-90"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "-1168 340 284"
+"angle" "-90"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "-1536 580 412"
+"angle" "-90"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "-768 244 352"
+"angle" "-90"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "-836 -576 -40"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "-180 -720 -36"
+"angle" "90"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "-625 -1203 -35"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "-532 -1552 224"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "231 -1466 -35"
+"angle" "180"
+"classname" "info_player_deathmatch"
+}
+{
+"origin" "68 320 -56"
+"classname" "weapon_supershotgun"
+}
+{
+"origin" "124 316 -56"
+"classname" "weapon_rocketlauncher"
+}
+{
+"origin" "244 112 -120"
+"classname" "weapon_grenadelauncher"
+}
+{
+"origin" "100 -224 56"
+"classname" "weapon_lightning"
+}
+{
+"origin" "112 -592 -56"
+"classname" "weapon_nailgun"
+}
+{
+"origin" "-960 -584 -60"
+"classname" "weapon_rocketlauncher"
+}
+{
+"origin" "-1004 -580 -60"
+"classname" "item_rockets"
+}
+{
+"origin" "-856 -508 -56"
+"classname" "item_health"
+}
+{
+"origin" "-856 -656 -56"
+"classname" "item_health"
+}
+{
+"origin" "-168 -1140 -56"
+"classname" "weapon_supershotgun"
+}
+{
+"origin" "152 -1152 -48"
+"classname" "item_shells"
+}
+{
+"origin" "-492 -1156 -52"
+"classname" "item_shells"
+}
+{
+"origin" "-168 -1440 88"
+"classname" "item_armor2"
+}
+{
+"origin" "-112 -1560 168"
+"classname" "item_health"
+}
+{
+"origin" "-220 -1560 168"
+"classname" "item_health"
+}
+{
+"origin" "-60 96 72"
+"spawnflags" "2"
+"classname" "item_health"
+}
+{
+"origin" "-612 -928 132"
+"classname" "item_cells"
+}
+{
+"origin" "-612 -928 224"
+"classname" "item_spikes"
+}
+{
+"origin" "284 -924 216"
+"classname" "item_shells"
+}
+{
+"origin" "284 -1548 228"
+"classname" "item_rockets"
+}
+{
+"origin" "-604 -1548 204"
+"classname" "item_cells"
+}
+{
+"origin" "-608 -1564 124"
+"classname" "item_spikes"
+}
+{
+"light" "170"
+"origin" "-168 -1456 132"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "-552 280 20"
+"classname" "light"
+}
+{
+"origin" "-548 280 -44"
+"classname" "weapon_supernailgun"
+}
+{
+"origin" "157 527 -38"
+"classname" "item_artifact_invisibility"
+}
+{
+"light" "512"
+"origin" "-1156 1000 564"
+"classname" "light"
+}
+{
+"origin" "-1160 164 252"
+"classname" "item_armor1"
+}
+{
+"light" "512"
+"origin" "-1156 912 564"
+"classname" "light"
+}
+{
+"light" "200"
+"origin" "-668 960 -48"
+"classname" "light"
+}
+{
+"origin" "-652 668 -96"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-652 1232 -96"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-1580 1260 -96"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-1580 652 -96"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-1580 976 -96"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-1140 1264 -96"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "512"
+"origin" "-1136 1020 0"
+"classname" "light"
+}
+{
+"origin" "-752 92 328"
+"classname" "weapon_grenadelauncher"
+}
+{
+"origin" "-1536 220 324"
+"classname" "weapon_rocketlauncher"
+}
+{
+"origin" "-388 -44 48"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-448 -108 48"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-388 460 48"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-532 572 48"
+"classname" "light_torch_small_walltorch"
+}
+{
+"light" "200"
+"origin" "-1452 -132 8"
+"classname" "light"
+}
+{
+"origin" "-1452 -136 -52"
+"classname" "item_artifact_invulnerability"
+}
+{
+"origin" "-1168 948 -96"
+"classname" "item_artifact_super_damage"
+}
+{
+"light" "200"
+"origin" "-412 204 -16"
+"classname" "light"
+}
+{
+"origin" "-1600 604 0"
+"classname" "light_torch_small_walltorch"
+}
+{
+"origin" "-1600 -280 36"
+"classname" "light_torch_small_walltorch"
+}
+ 

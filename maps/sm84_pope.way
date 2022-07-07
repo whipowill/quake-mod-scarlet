@@ -1,0 +1,133 @@
+// It's not Love, It's Sex - maps/sm84_pope.way
+// Ways by lightninghunter
+saved1 -656; saved2 -345; saved3 -322
+scratch1 2; scratch2 30; scratch3 31; scratch4 0
+saved4 1; wait
+saved1 -890; saved2 -374; saved3 -338
+scratch1 1; scratch2 3; scratch3 0
+saved4 2; wait
+saved1 -784; saved2 -736; saved3 -402
+scratch1 2; scratch2 4
+saved4 2; wait
+saved1 -536; saved2 -714; saved3 -466
+scratch1 3; scratch2 5
+saved4 2; wait
+saved1 -437; saved2 -716
+scratch1 4; scratch2 6; scratch3 43
+saved4 2; wait
+saved1 -272; saved2 -761
+scratch1 5; scratch2 7; scratch3 12; scratch4 22
+saved4 34; wait
+saved1 -255; saved2 -651
+scratch1 6; scratch2 8; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 -259; saved2 -535
+scratch1 7; scratch2 9
+saved4 2; wait
+saved1 -287; saved2 -89; saved3 -546
+scratch1 8; scratch2 10
+saved4 2; wait
+saved1 -572; saved2 -40; saved3 -594
+scratch1 9; scratch2 11
+saved4 2; wait
+saved1 -635; saved2 -153
+scratch1 10; scratch2 0
+saved4 2; wait
+saved1 -86; saved2 -711; saved3 -466
+scratch1 6; scratch2 13
+saved4 2; wait
+saved1 216; saved2 -702; saved3 -402
+scratch1 12; scratch2 14
+saved4 2; wait
+saved1 310; saved2 -931; saved3 -354
+scratch1 13; scratch2 15
+saved4 2; wait
+saved1 293; saved2 -1231; saved3 -322
+scratch1 14; scratch2 16
+saved4 2; wait
+saved1 141; saved2 -1229
+scratch1 15; scratch2 17; scratch3 32
+saved4 2; wait
+saved1 117; saved2 -1067; saved3 -306
+scratch1 16; scratch2 18; scratch3 0
+saved4 2; wait
+saved1 79; saved2 -924
+scratch1 17; scratch2 19; scratch3 40
+saved4 2; wait
+saved1 63; saved2 -592
+scratch1 18; scratch2 20; scratch3 22; scratch4 12
+saved4 2; wait
+saved1 211; saved2 -570; saved3 -305
+scratch1 19; scratch2 21; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 307; saved2 -644; saved3 -306
+scratch1 20; scratch2 14
+saved4 2; wait
+saved1 53; saved2 -372
+scratch1 19; scratch2 23
+saved4 2; wait
+saved1 -243; saved2 -382
+scratch1 22; scratch2 24; scratch3 31
+saved4 2; wait
+saved1 -248; saved2 -478
+scratch1 23; scratch2 6; scratch3 27
+saved4 2; wait
+saved1 -448; saved2 -563
+scratch1 27; scratch2 26; scratch3 6
+saved4 2; wait
+saved1 -570; saved2 -682
+scratch1 25; scratch2 28; scratch4 29
+saved4 2; wait
+saved1 -381; saved2 -543
+scratch1 24; scratch2 25; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 -596; saved2 -732
+scratch1 26; scratch2 29; scratch3 3
+saved4 2; wait
+saved1 -607; saved2 -640
+scratch1 28; scratch2 30; scratch3 26
+saved4 2; wait
+saved1 -678; saved2 -539; saved3 -304
+scratch1 29; scratch2 1; scratch3 3
+saved4 2; wait
+saved1 -426; saved2 -375; saved3 -306
+scratch1 1; scratch2 23; scratch3 0
+saved4 2; wait
+saved1 -246; saved2 -1233
+scratch1 16; scratch2 33; scratch3 38
+saved4 2; wait
+saved1 -574; saved2 -1257
+scratch1 32; scratch2 34; scratch3 0
+saved4 2; wait
+saved1 -607; saved2 -1073; saved3 -305
+scratch1 33; scratch2 35; scratch3 10
+saved4 18; wait
+saved1 -648; saved2 -1164; saved3 -306
+scratch1 36; scratch2 0; scratch3 0
+saved4 2; wait
+saved1 -596; saved2 -1052; saved3 -305
+scratch1 37
+saved4 16386; wait
+saved1 -555; saved2 -949; saved3 -146
+scratch1 34
+saved4 66; wait
+saved1 -246; saved2 -1134; saved3 -306
+scratch1 32; scratch2 39
+saved4 2; wait
+saved1 -252; saved2 -1020
+scratch1 38; scratch2 6
+saved4 2; wait
+saved1 16; saved2 -963
+scratch1 41; scratch2 0
+saved4 2; wait
+saved1 175; saved2 -862
+scratch1 42
+saved4 16386; wait
+saved1 368; saved2 -656; saved3 -146
+scratch1 18; scratch2 14
+saved4 2; wait
+saved1 -459; saved2 -832; saved3 -466
+scratch1 5; scratch2 6
+saved4 2; wait
+saved4 3
+// end waypoint dump

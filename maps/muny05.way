@@ -1,0 +1,133 @@
+// MunY 05, By Eric Sambach - maps/muny05.way
+// Ways by Lightning Hunter
+saved1 32; saved2 736; saved3 110
+scratch1 2; scratch2 3; scratch3 0; scratch4 0
+saved4 1; wait
+saved1 47; saved2 566; saved3 46
+scratch1 8; scratch2 9
+saved4 2; wait
+saved1 270; saved2 722
+scratch1 4
+saved4 2; wait
+saved1 428; saved2 726
+scratch1 3; scratch2 5
+saved4 2; wait
+saved1 426; saved2 573
+scratch1 4; scratch2 6; scratch3 25
+saved4 2; wait
+saved1 411; saved2 447
+scratch1 5; scratch2 7; scratch3 0
+saved4 2; wait
+saved1 164; saved2 465
+scratch1 6; scratch2 8
+saved4 2; wait
+saved1 67; saved2 463
+scratch1 7; scratch2 2; scratch3 10
+saved4 2; wait
+saved1 151; saved2 665
+scratch1 2; scratch2 3; scratch3 0
+saved4 2; wait
+saved1 58; saved2 200
+scratch1 8; scratch2 11; scratch3 20
+saved4 2; wait
+saved1 67; saved2 52
+scratch1 10; scratch2 12; scratch3 0
+saved4 2; wait
+saved1 333; saved2 60; saved3 126
+scratch1 11; scratch2 13; scratch3 23; scratch4 42
+saved4 4098; wait
+saved1 318; saved2 248; saved3 190
+scratch1 12; scratch2 14; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 323; saved2 417
+scratch1 13; scratch2 15; scratch3 43; scratch4 3
+saved4 2; wait
+saved1 78; saved2 450
+scratch1 14; scratch2 16; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 70; saved2 714
+scratch1 15; scratch2 3
+saved4 2; wait
+saved1 618; saved2 451
+scratch1 43; scratch2 18; scratch3 22; scratch4 38
+saved4 2; wait
+saved1 835; saved2 449
+scratch1 17; scratch2 19; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 837; saved2 189
+scratch1 18; scratch2 22
+saved4 2; wait
+saved1 325; saved2 198; saved3 46
+scratch1 21; scratch3 10
+saved4 2; wait
+saved1 322; saved2 41
+scratch1 20; scratch2 0; scratch3 0
+saved4 2; wait
+saved1 605; saved2 209
+scratch2 23; scratch3 24
+saved4 2; wait
+saved1 612; saved2 52
+scratch1 22; scratch2 12; scratch3 27
+saved4 2; wait
+saved1 625; saved2 402
+scratch2 25; scratch4 26
+saved4 2; wait
+saved1 633; saved2 579
+scratch1 24; scratch2 5; scratch3 26; scratch4 0
+saved4 2; wait
+saved1 745; saved2 683
+scratch1 25; scratch2 24; scratch3 0
+saved4 2; wait
+saved1 738; saved2 27
+scratch1 23
+saved4 2; wait
+saved1 321; saved2 -54; saved3 238
+scratch1 0; scratch2 29
+saved4 2; wait
+saved1 170; saved2 -65
+scratch1 28; scratch2 30
+saved4 2; wait
+saved1 -64; saved2 -79
+scratch1 29; scratch2 31
+saved4 2; wait
+saved1 -70; saved2 189
+scratch1 30; scratch2 32
+saved4 2; wait
+saved1 -60; saved2 443; saved3 302
+scratch1 31; scratch2 33
+saved4 2; wait
+saved1 -67; saved2 711
+scratch1 32; scratch2 34
+saved4 2; wait
+saved1 165; saved2 708
+scratch1 33; scratch2 35
+saved4 2; wait
+saved1 323; saved2 711
+scratch1 34; scratch2 14
+saved4 2; wait
+saved1 726; saved2 663; saved3 238
+scratch1 25; scratch2 0
+saved4 2; wait
+saved1 719; saved2 31
+scratch1 22
+saved4 2; wait
+saved1 570; saved2 426; saved3 190
+scratch1 17; scratch2 39
+saved4 2; wait
+saved1 496; saved2 279; saved3 254
+scratch1 40; scratch2 0
+saved4 2; wait
+saved1 528; saved2 243
+scratch1 39; scratch2 23
+saved4 2; wait
+saved1 269; saved2 185; saved3 174
+scratch1 13; scratch2 39
+saved4 2; wait
+saved1 320; saved2 -38; saved3 126
+scratch1 12; scratch2 28
+saved4 8194; wait
+saved1 419; saved2 445; saved3 190
+scratch1 17; scratch2 14
+saved4 2; wait
+saved4 3
+// end waypoint dump

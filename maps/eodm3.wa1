@@ -1,0 +1,84 @@
+// **** break here ****
+saved1 -391; saved2 1345; saved3 296
+scratch1 85; scratch2 3; scratch3 4
+saved4 514; wait
+saved1 -390; saved2 1336; saved3 78
+scratch1 43; scratch2 42; scratch3 41
+saved4 2; wait
+saved1 -603; saved2 603; saved3 158
+scratch1 59; scratch2 0; scratch3 0
+saved4 2; wait
+saved1 48; saved2 400; saved3 462
+scratch1 74
+saved4 2; wait
+saved1 -663; saved2 574; saved3 -83
+scratch1 55; scratch2 56
+saved4 2; wait
+saved1 -692; saved2 1052; saved3 -105
+scratch1 57; scratch2 90
+saved4 2; wait
+saved1 -982; saved2 1086
+scratch1 89; scratch2 91
+saved4 2; wait
+saved1 -1023; saved2 950; saved3 -146
+scratch1 90; scratch2 0
+saved4 2; wait
+saved1 -895; saved2 711; saved3 -115
+scratch1 61; scratch2 60
+saved4 2; wait
+saved1 -133; saved2 -216; saved3 238
+scratch1 14; scratch2 94; scratch3 18
+saved4 2; wait
+saved1 89; saved2 -198
+scratch1 93; scratch2 13
+saved4 2; wait
+saved1 -211; saved2 479; saved3 14
+scratch1 96; scratch2 0; scratch3 0
+saved4 66; wait
+saved1 196; saved2 484
+scratch1 97
+saved4 2; wait
+saved1 300; saved2 483
+scratch1 98
+saved4 2; wait
+saved1 425
+scratch1 99
+saved4 2; wait
+saved1 259; saved2 479
+scratch1 100
+saved4 578; wait
+saved1 45; saved2 493
+scratch1 48
+saved4 2; wait
+saved1 -976; saved2 1032; saved3 -107
+scratch1 102
+saved4 2; wait
+saved1 -1112; saved2 1055; saved3 -127
+scratch1 103; scratch2 90
+saved4 66; wait
+saved1 -1256; saved2 1056; saved3 -130
+scratch1 105; scratch2 0
+saved4 66; wait
+saved1 -1012; saved2 1064; saved3 -115
+scratch1 89
+saved4 2; wait
+saved1 -1220; saved2 1055; saved3 -126
+scratch1 104
+saved4 2; wait
+saved1 8; saved2 52; saved3 14
+scratch1 50; scratch2 23; scratch3 51
+saved4 2; wait
+saved1 -71; saved2 486
+scratch1 48; scratch2 108; scratch3 0
+saved4 66; wait
+saved1 -105; saved2 613
+scratch1 107; scratch2 49
+saved4 2; wait
+saved1 48; saved2 -112; saved3 526
+scratch1 110; scratch2 0
+saved4 514; wait
+saved1 41; saved2 -71
+scratch1 70
+saved4 1026; wait
+saved4 3
+// end waypoint dump

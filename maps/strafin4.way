@@ -1,0 +1,103 @@
+// CelebrityDeathmatch - maps/strafin4.way
+// Ways by Quest - Updated by Lightning Hunter
+saved1 -132; saved2 -379; saved3 -82
+scratch1 2; scratch2 16; scratch3 0; scratch4 0
+saved4 1; wait
+saved2 125; saved3 14
+scratch1 1; scratch2 28
+saved4 2; wait
+saved1 274; saved2 -411; saved3 -82
+scratch1 14; scratch2 16; scratch3 31
+saved4 2; wait
+saved1 1285; saved2 -391
+scratch1 31; scratch2 12; scratch3 0
+saved4 2; wait
+saved1 517; saved2 139; saved3 78
+scratch1 29; scratch2 33; scratch3 18
+saved4 2; wait
+saved2 -376; saved3 110
+scratch1 33; scratch2 7; scratch3 32
+saved4 2; wait
+saved1 516; saved2 -583
+scratch1 6; scratch2 8; scratch3 0
+saved4 2; wait
+saved1 97; saved2 -579
+scratch1 7; scratch2 15
+saved4 2; wait
+saved1 1085; saved2 -384
+scratch1 32; scratch2 10
+saved4 2; wait
+saved1 1080; saved2 122; saved3 -98
+scratch1 9; scratch2 27; scratch3 13
+saved4 2; wait
+saved1 317; saved2 124; saved3 -146
+scratch1 24; scratch2 14; scratch3 0
+saved4 2; wait
+saved1 1303; saved2 -93; saved3 -106
+scratch1 4; scratch2 13
+saved4 2; wait
+saved1 1214; saved2 108; saved3 -98
+scratch1 12; scratch2 10
+saved4 2; wait
+saved1 305; saved2 -77; saved3 -146
+scratch1 3; scratch2 11
+saved4 2; wait
+saved1 82; saved3 -138
+scratch1 14; scratch2 0
+saved4 2; wait
+saved1 69; saved2 -392; saved3 -82
+scratch1 3; scratch2 1; scratch3 15
+saved4 2; wait
+saved1 312; saved2 -63; saved3 46
+scratch2 29; scratch3 30
+saved4 2; wait
+saved1 516; saved2 313; saved3 78
+scratch1 5; scratch2 19; scratch3 0
+saved4 2; wait
+saved1 703; saved2 320
+scratch1 18; scratch2 20; scratch3 22
+saved4 2; wait
+saved1 889; saved2 317
+scratch1 19; scratch2 21; scratch3 0
+saved4 2; wait
+saved1 873; saved2 93; saved3 46
+scratch1 0; scratch2 23
+saved4 2; wait
+saved1 700; saved2 71
+scratch2 21
+saved4 2; wait
+saved1 897; saved2 -192; saved3 -138
+scratch1 27; scratch2 26
+saved4 2; wait
+saved1 724; saved2 127; saved3 -146
+scratch2 11; scratch3 25
+saved4 2; wait
+saved1 681; saved2 -87
+scratch1 26; scratch2 24; scratch3 0
+saved4 2; wait
+saved1 798; saved2 -188; saved3 -138
+scratch1 23; scratch2 25
+saved4 2; wait
+saved1 899; saved2 130; saved3 -146
+scratch1 10; scratch2 24; scratch3 23
+saved4 2; wait
+saved1 65; saved2 113; saved3 46
+scratch1 2; scratch2 29; scratch3 30
+saved4 2; wait
+saved1 304; saved2 129
+scratch1 28; scratch2 5; scratch3 17
+saved4 2; wait
+saved1 35; saved2 -61
+scratch1 17; scratch2 28; scratch3 0
+saved4 2; wait
+saved1 805; saved2 -409; saved3 -82
+scratch1 3; scratch2 4; scratch3 26
+saved4 2; wait
+saved1 839; saved2 -392; saved3 110
+scratch1 9; scratch2 6; scratch4 23
+saved4 2; wait
+saved1 499; saved2 -78
+scratch1 6; scratch2 5; scratch3 17; scratch4 0
+saved4 2; wait
+saved4 3
+// end waypoint dump

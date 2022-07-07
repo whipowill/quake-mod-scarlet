@@ -1,0 +1,117 @@
+// Quake Addiction by PeeJ - maps/strafin6.way
+// Ways by Quest
+saved1 -158.371; saved2 -533.238; saved3 -209.992
+scratch1 5; scratch2 4; scratch3 0; scratch4 0
+saved4 1; wait
+saved1 -29.7694; saved2 600.957; saved3 174.031
+scratch1 11; scratch2 3; scratch3 14
+saved4 2; wait
+saved1 -28.303; saved2 770.974; saved3 110.031
+scratch1 2; scratch2 12; scratch3 0
+saved4 2; wait
+saved1 -213.816; saved2 -623.179; saved3 -209.969
+scratch1 1; scratch2 6
+saved4 2; wait
+saved1 -155.389; saved2 -96.6216; saved3 -209.992
+scratch2 24; scratch3 28; scratch4 30
+saved4 2; wait
+saved1 -325.47; saved2 -629.779; saved3 -209.969
+scratch1 4; scratch2 7; scratch3 8; scratch4 0
+saved4 2; wait
+saved1 -381.684; saved2 -705.576
+scratch1 8; scratch2 0; scratch3 0
+saved4 2; wait
+saved1 -526.28; saved2 -631.332
+scratch1 6; scratch2 9
+saved4 10; wait
+saved1 -172.829; saved2 124.184; saved3 174.015
+scratch1 10; scratch2 8
+saved4 10; wait
+saved1 -17.5497; saved2 155.898
+scratch1 9; scratch2 11; scratch3 22
+saved4 2; wait
+saved1 -37.5342; saved2 407.483
+scratch1 10; scratch2 2; scratch3 0
+saved4 2; wait
+saved1 107.718; saved2 787.753; saved3 62.0313
+scratch1 3; scratch2 13
+saved4 2; wait
+saved1 134.52; saved2 582.565; saved3 -17.9688
+scratch1 12; scratch2 14; scratch3 15
+saved4 2; wait
+saved1 307.492; saved2 601.671; saved3 -17.9688
+scratch1 13; scratch2 27; scratch3 0
+saved4 2; wait
+saved1 116.087; saved2 129.368; saved3 -17.9688
+scratch2 16
+saved4 2; wait
+saved1 -195.893; saved2 148.38
+scratch1 15; scratch2 17; scratch3 5
+saved4 2; wait
+saved1 -382.958; saved2 125.948
+scratch1 16; scratch2 18; scratch3 34
+saved4 2; wait
+saved2 -123.542
+scratch1 17; scratch2 19; scratch3 5
+saved4 2; wait
+saved1 -380.233; saved2 -387.043; saved3 -17.9859
+scratch1 18; scratch2 20; scratch3 36
+saved4 2; wait
+saved1 53.8589; saved2 -385.645; saved3 142.022
+scratch1 19; scratch2 21; scratch3 0
+saved4 2; wait
+saved1 65.5443; saved2 -142.947; saved3 174.031
+scratch1 20; scratch2 22; scratch4 28
+saved4 2; wait
+saved1 72.6153; saved2 153.03
+scratch1 21; scratch2 10; scratch4 0
+saved4 2; wait
+saved1 240.907; saved2 432.298; saved3 -209.969
+scratch1 27; scratch2 0
+saved4 2; wait
+saved1 254.218; saved2 -95.5417; saved3 -209.999
+scratch1 5; scratch2 25
+saved4 2; wait
+saved1 325.003; saved2 -13.4827
+scratch1 24; scratch2 26
+saved4 2; wait
+saved1 329.414; saved2 182.411; saved3 -209.969
+scratch1 27; scratch2 25
+saved4 2; wait
+saved1 313.883; saved2 310.541
+scratch1 23; scratch2 26
+saved4 2; wait
+saved1 -383.361; saved2 -122.312
+scratch1 29; scratch2 0
+saved4 2; wait
+saved1 -392.705; saved2 -31.1947; saved3 -225.969
+scratch1 5
+saved4 2; wait
+saved1 -150.455; saved2 133.459; saved3 -209.974
+scratch2 31; scratch3 35
+saved4 2; wait
+saved1 -450.695; saved2 154.183
+scratch1 30; scratch2 32
+saved4 2; wait
+saved1 -454.71; saved2 358.884; saved3 -209.969
+scratch1 31; scratch2 33
+saved4 2; wait
+saved1 -671.65; saved2 353.559; saved3 -145.969
+scratch1 32; scratch2 34; scratch3 0
+saved4 2; wait
+saved1 -671.15; saved2 123.212; saved3 -81.9688
+scratch1 33; scratch2 17
+saved4 2; wait
+saved1 -301.678; saved2 323.677; saved3 -209.969
+scratch1 31; scratch2 30; scratch3 32
+saved4 2; wait
+saved1 -576.433; saved2 -386.468; saved3 -17.9688
+scratch1 19; scratch2 37; scratch3 0
+saved4 2; wait
+saved1 -575.518; saved2 -632.428
+scratch1 36; scratch2 38
+saved4 2; wait
+saved1 -261.786; saved2 -624.733
+scratch1 7; scratch2 37
+saved4 2; wait
+saved4 3

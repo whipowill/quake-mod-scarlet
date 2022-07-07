@@ -1,0 +1,60 @@
+// **** break here ****
+saved1 -710; saved2 -387
+scratch1 87; scratch2 94; scratch3 0
+saved4 2; wait
+saved1 -272; saved2 -259; saved3 -530
+scratch1 81; scratch2 32
+saved4 2; wait
+saved1 550; saved2 -1009; saved3 -562
+scratch1 9; scratch2 91
+saved4 514; wait
+saved1 425; saved2 -1007
+scratch1 90; scratch2 92
+saved4 514; wait
+saved1 332; saved2 -1008; saved3 -530
+scratch1 91; scratch2 50
+saved4 514; wait
+saved1 81; saved2 -1011
+scratch1 50; scratch2 0
+saved4 2; wait
+saved1 -833; saved2 -384; saved3 -562
+scratch1 88; scratch2 95
+saved4 131138; wait
+saved1 -877; saved2 -385; saved3 -218
+scratch1 96; scratch2 0
+saved4 66; wait
+saved1 -874; saved2 -267; saved3 -210
+scratch1 97
+saved4 2; wait
+saved1 -887; saved2 -163
+scratch1 96; scratch2 98
+saved4 2; wait
+saved1 -872; saved2 -13
+scratch1 97; scratch2 10
+saved4 2; wait
+saved1 -567; saved2 -24
+scratch1 10; scratch2 100
+saved4 2; wait
+saved1 -405; saved2 -3
+scratch1 99; scratch2 101
+saved4 2; wait
+saved1 -263; saved2 -53
+scratch1 100; scratch2 102; scratch3 105
+saved4 2; wait
+saved1 -238; saved2 -182
+scratch1 101; scratch2 103; scratch3 0
+saved4 2; wait
+saved1 -265; saved2 -289
+scratch1 102; scratch2 104
+saved4 2; wait
+saved1 -278; saved2 -412
+scratch1 103; scratch2 81; scratch3 86
+saved4 2; wait
+saved1 -94; saved2 -78
+scratch1 101; scratch2 106; scratch3 0
+saved4 2; wait
+saved1 168; saved2 -79
+scratch1 105; scratch2 36
+saved4 2; wait
+saved4 3
+// end waypoint dump

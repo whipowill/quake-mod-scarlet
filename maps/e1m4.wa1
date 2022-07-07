@@ -1,0 +1,150 @@
+// **** break here ****
+saved1 1056; saved2 -564; saved3 862
+scratch1 83; scratch2 88; scratch3 89
+saved4 2; wait
+saved1 1081; saved2 -770
+scratch1 87; scratch2 0; scratch3 0
+saved4 2; wait
+saved1 631; saved2 -573
+scratch2 90
+saved4 4098; wait
+saved1 511; saved2 -577
+scratch1 89; scratch2 91
+saved4 8194; wait
+saved1 505; saved2 -545; saved3 1150
+scratch1 90; scratch2 92
+saved4 8194; wait
+saved1 635; saved2 -584; saved3 1146
+scratch1 91; scratch2 93
+saved4 2; wait
+saved1 752; saved2 -601; saved3 1150
+scratch1 92; scratch2 94; scratch3 95; scratch4 96
+saved4 2; wait
+saved1 761; saved2 -703; saved3 1146
+scratch1 93; scratch2 99; scratch3 0; scratch4 0
+saved4 66; wait
+saved1 746; saved2 -470; saved3 1150
+scratch2 106
+saved4 66; wait
+saved1 1000; saved2 -592
+scratch2 97; scratch3 98
+saved4 2; wait
+saved1 1017; saved2 -918
+scratch1 96; scratch2 0; scratch3 0
+saved4 2; wait
+saved1 1034; saved2 -272; saved3 1182
+scratch2 111
+saved4 2; wait
+saved1 674; saved2 -838; saved3 1158
+scratch1 94; scratch2 100
+saved4 2; wait
+saved1 687; saved2 -885; saved3 1142
+scratch1 99; scratch2 101
+saved4 2; wait
+saved1 668; saved2 -915; saved3 974
+scratch1 102; scratch2 0
+saved4 2; wait
+saved1 774; saved2 -877
+scratch1 103; scratch2 104
+saved4 2; wait
+saved1 876; saved2 -881
+scratch1 102; scratch2 0
+saved4 2; wait
+saved1 779; saved2 -823; saved3 982
+scratch2 105
+saved4 2; wait
+saved1 789; saved2 -584; saved3 862
+scratch1 89; scratch2 87
+saved4 2; wait
+saved1 678; saved2 -293; saved3 1142
+scratch1 95; scratch2 107
+saved4 2; wait
+saved1 689; saved2 -224; saved3 974
+scratch1 108; scratch2 109
+saved4 2; wait
+saved1 878; saved2 -254
+scratch1 107
+saved4 2; wait
+saved1 785; saved2 -305; saved3 982
+scratch1 108; scratch2 107; scratch3 110
+saved4 2; wait
+saved1 778; saved2 -511; saved3 862
+scratch1 89; scratch2 87; scratch3 0
+saved4 2; wait
+saved1 683; saved2 -265; saved3 1294
+scratch1 98; scratch2 112
+saved4 2; wait
+saved1 706; saved2 84
+scratch1 111; scratch2 113; scratch3 116; scratch4 123
+saved4 2; wait
+saved1 533; saved2 62
+scratch1 112; scratch2 114; scratch3 120; scratch4 0
+saved4 2; wait
+saved1 416; saved2 158
+scratch1 113; scratch2 115; scratch4 122
+saved4 2; wait
+saved1 294; saved2 84
+scratch1 114; scratch2 120; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 958; saved2 119
+scratch1 112; scratch2 117; scratch3 119
+saved4 2; wait
+saved1 1041; saved2 161
+scratch1 116; scratch2 118; scratch4 121
+saved4 2; wait
+saved1 1185; saved2 36
+scratch1 117; scratch2 119; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 1070; saved2 103
+scratch1 116; scratch2 117; scratch3 118
+saved4 2; wait
+saved1 406; saved2 100
+scratch1 113; scratch2 114; scratch3 115
+saved4 2; wait
+saved1 1032; saved2 258; saved3 918
+scratch1 79; scratch2 75; scratch3 76
+saved4 2; wait
+saved1 389; saved2 356
+scratch1 78; scratch2 77; scratch3 75; scratch4 76
+saved4 2; wait
+saved1 706; saved2 292; saved3 1286
+scratch1 112; scratch2 124; scratch3 128; scratch4 0
+saved4 2; wait
+saved1 707; saved2 691; saved3 1302
+scratch1 123; scratch2 125; scratch3 0
+saved4 2; wait
+saved1 1002; saved2 698; saved3 1398
+scratch1 124; scratch2 126
+saved4 2; wait
+saved1 1164; saved2 798; saved3 1430
+scratch1 125; scratch2 127
+saved4 2; wait
+saved1 1251; saved2 803
+scratch1 126; scratch2 0
+saved4 2; wait
+saved1 762; saved2 290; saved3 1286
+scratch1 123; scratch2 121
+saved4 2; wait
+saved1 932; saved2 1381; saved3 784
+scratch1 66; scratch2 130; scratch3 133
+saved4 66; wait
+saved1 1219; saved2 1338; saved3 647
+scratch1 129; scratch2 131; scratch3 0
+saved4 2; wait
+saved1 1256; saved2 1400; saved3 906
+scratch1 130; scratch2 132
+saved4 2; wait
+saved1 1371; saved2 1497
+scratch1 131; scratch2 0
+saved4 2; wait
+saved1 938; saved2 1618; saved3 389
+scratch1 129; scratch2 72
+saved4 2; wait
+saved1 701; saved2 794; saved3 751
+scratch1 73; scratch2 135
+saved4 2; wait
+saved1 696; saved2 887; saved3 406
+scratch1 134; scratch2 26; scratch3 68
+saved4 2; wait
+saved4 3
+// end waypoint dump

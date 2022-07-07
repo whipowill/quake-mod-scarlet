@@ -1,0 +1,147 @@
+// The House of Chthon - maps/e1m7.way
+// Ways by ¯Ü¯ÜO¯Ü¯sÔ3òÔÕ
+saved1 704; saved2 -360; saved3 302
+scratch1 2; scratch2 0; scratch3 0; scratch4 0
+saved4 1; wait
+saved1 708; saved2 -325
+scratch1 3
+saved4 130; wait
+saved1 688; saved2 -211; saved3 238
+scratch1 4; scratch2 18; scratch3 40
+saved4 2; wait
+saved1 1023; saved2 -203
+scratch1 3; scratch2 5; scratch3 6
+saved4 2; wait
+saved1 1020; saved2 -330
+scratch1 4; scratch2 44; scratch3 0
+saved4 2; wait
+saved1 1026; saved2 84; saved3 194
+scratch2 7; scratch3 34; scratch4 35
+saved4 2; wait
+saved1 1004; saved2 439; saved3 238
+scratch1 6; scratch2 8; scratch3 9; scratch4 45
+saved4 2; wait
+saved1 1062; saved2 474
+scratch1 7; scratch2 0; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 851; saved2 348
+scratch2 10
+saved4 2; wait
+saved1 728; saved2 369
+scratch1 9; scratch2 11; scratch3 25
+saved4 2; wait
+saved1 118; saved2 351
+scratch1 10; scratch2 12; scratch3 41
+saved4 2; wait
+saved1 -259; saved2 344; saved3 254
+scratch1 11; scratch2 13; scratch3 14
+saved4 2; wait
+saved1 -288; saved2 426
+scratch1 12; scratch2 0; scratch3 0
+saved4 2; wait
+saved1 -259; saved2 42; saved3 258
+scratch2 15; scratch3 16; scratch4 17
+saved4 2; wait
+saved1 -149; saved2 54; saved3 254
+scratch1 14; scratch2 19; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 -368; saved2 65
+scratch2 20
+saved4 2; wait
+saved1 -259; saved2 -259
+scratch2 18
+saved4 2; wait
+saved1 117; saved2 -220; saved3 238
+scratch1 17; scratch2 3; scratch3 39
+saved4 1026; wait
+saved1 15; saved2 62; saved3 30
+scratch1 21; scratch2 0; scratch3 0
+saved4 2; wait
+saved1 -494; saved2 57; saved3 78
+saved4 2; wait
+saved1 -251; saved2 61
+scratch1 20; scratch2 19; scratch3 22; scratch4 32
+saved4 2; wait
+saved1 -253; saved2 457
+scratch1 21; scratch2 23; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 138; saved2 451
+scratch1 22; scratch2 24; scratch3 42
+saved4 2; wait
+saved1 353; saved2 452
+scratch1 23; scratch2 25; scratch3 0
+saved4 2; wait
+saved1 708; saved2 449
+scratch1 24; scratch2 26; scratch3 38
+saved4 2; wait
+saved1 1033; saved2 450; saved3 14
+scratch1 25; scratch2 27; scratch3 0
+saved4 2; wait
+saved1 1029; saved2 75
+scratch1 26; scratch2 28; scratch3 33
+saved4 4098; wait
+saved1 1027; saved2 -300
+scratch1 27; scratch2 29; scratch3 0
+saved4 2; wait
+saved1 696; saved2 -310; saved3 78
+scratch1 28; scratch2 30; scratch3 31; scratch4 37
+saved4 2; wait
+saved2 -360
+scratch1 29; scratch2 0; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 88; saved2 -320
+scratch2 32; scratch3 43
+saved4 2; wait
+saved1 -278; saved2 -325
+scratch1 31; scratch2 21; scratch3 0
+saved4 2; wait
+saved1 1199; saved2 58; saved3 14
+scratch1 27; scratch2 34
+saved4 8194; wait
+saved1 1214; saved2 60; saved3 190
+scratch1 6; scratch2 0
+saved4 2; wait
+saved1 752; saved2 65; saved3 198
+scratch2 36
+saved4 66; wait
+saved1 665; saved2 63; saved3 30
+scratch1 37; scratch2 38
+saved4 2; wait
+saved1 705; saved2 -210; saved3 78
+scratch1 29; scratch2 36
+saved4 66; wait
+saved1 713; saved2 341
+scratch1 25
+saved4 66; wait
+saved1 112; saved2 -243; saved3 238
+scratch1 18; scratch2 31
+saved4 2; wait
+saved1 690; saved2 -242
+scratch1 3; scratch2 30
+saved4 2; wait
+saved1 124; saved2 376
+scratch1 11; scratch2 23
+saved4 2; wait
+saved1 84; saved2 338; saved3 78
+scratch1 23; scratch2 19
+saved4 1538; wait
+saved1 94; saved2 -203
+scratch1 31
+saved4 1538; wait
+saved1 908; saved2 -342; saved3 238
+scratch1 5; scratch2 29
+saved4 2; wait
+saved1 903; saved2 465
+scratch1 7; scratch2 25
+saved4 2; wait
+saved1 116; saved2 -335; saved3 302
+scratch1 18; scratch2 0
+saved4 130; wait
+saved1 139; saved2 471
+scratch1 11
+saved4 130; wait
+saved1 712; saved2 456
+scratch1 10
+saved4 130; wait
+saved4 3
+// end waypoint dump

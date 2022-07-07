@@ -1,0 +1,150 @@
+// Hatebreeder by Qurnel - maps/hate.way
+// Ways by Electro - updated by Lightning Hunter
+saved1 314; saved2 193; saved3 -242
+scratch1 38; scratch2 39; scratch3 40; scratch4 0
+saved4 1; wait
+saved1 317; saved2 -394
+scratch1 41; scratch2 3; scratch3 45; scratch4 29
+saved4 34; wait
+saved1 706; saved2 -424
+scratch1 2; scratch2 43; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 -100; saved2 -412; saved3 -146
+scratch1 45; scratch2 5
+saved4 2; wait
+saved1 -99; saved2 -678; saved3 -50
+scratch1 4; scratch2 36; scratch3 7; scratch4 24
+saved4 2; wait
+saved1 -97; saved2 -939
+scratch1 36; scratch2 7; scratch3 24; scratch4 0
+saved4 2; wait
+saved1 7; saved2 -704
+scratch1 24; scratch2 6; scratch3 5; scratch4 31
+saved4 131074; wait
+saved1 103; saved2 -705; saved3 110
+scratch1 9; scratch2 0; scratch3 0; scratch4 0
+saved4 131074; wait
+saved1 183; saved2 -704
+scratch1 10; scratch2 5
+saved4 2; wait
+saved1 322; saved2 -703
+scratch1 9; scratch2 11; scratch3 25; scratch4 29
+saved4 2; wait
+saved2 -592
+scratch1 10; scratch2 12; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 324; saved2 -517
+scratch1 11; scratch2 13; scratch3 2
+saved4 1026; wait
+saved1 311; saved2 -198; saved3 -50
+scratch1 14; scratch2 15
+saved4 2; wait
+saved1 64; saved2 -199
+scratch1 13; scratch2 30; scratch3 0
+saved4 2; wait
+saved1 681; saved2 -184
+scratch2 16
+saved4 2; wait
+saved1 756; saved2 -391
+scratch1 15; scratch2 17; scratch3 48; scratch4 49
+saved4 2; wait
+saved1 770; saved2 -830
+scratch1 16; scratch2 18; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 1039; saved2 -841
+scratch1 17; scratch2 19
+saved4 2; wait
+saved1 1046; saved2 -1086
+scratch1 18; scratch2 20; scratch3 35
+saved4 2; wait
+saved1 937; saved2 -1089
+scratch1 19; scratch2 21; scratch3 0
+saved4 2; wait
+saved1 743; saved3 -242
+scratch1 42; scratch2 22; scratch3 28
+saved4 18; wait
+saved1 200; saved2 -1088
+scratch1 21; scratch2 32; scratch3 0
+saved4 2; wait
+saved1 66; saved2 -1070; saved3 -50
+scratch1 0; scratch2 44
+saved4 131074; wait
+saved1 16; saved2 -933
+scratch1 6; scratch2 7; scratch3 5; scratch4 36
+saved4 2; wait
+saved1 327; saved2 -957; saved3 110
+scratch1 10; scratch2 26; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 510; saved2 -964; saved3 78
+scratch1 25; scratch2 27; scratch4 21
+saved4 2; wait
+saved1 638; saved2 -1145
+scratch1 26; scratch2 28; scratch3 33; scratch4 0
+saved4 1026; wait
+saved1 463; saved2 -1174
+scratch1 47; scratch2 46; scratch3 0
+saved4 2; wait
+saved1 474; saved2 -702; saved3 110
+scratch1 10; scratch2 0
+saved4 2; wait
+saved1 87; saved2 194; saved3 -50
+scratch1 14; scratch2 1
+saved4 2; wait
+saved1 101; saved2 -703
+scratch1 8; scratch2 0
+saved4 8322; wait
+saved1 91; saved2 -1085; saved3 -242
+scratch1 23
+saved4 8194; wait
+saved1 701; saved2 -1255; saved3 110
+scratch1 26; scratch2 34; scratch3 21
+saved4 2; wait
+saved1 822; saved2 -1274
+scratch1 20; scratch2 33
+saved4 2; wait
+saved1 1039; saved2 -1309; saved3 -50
+scratch1 19; scratch2 0; scratch3 0
+saved4 2; wait
+saved1 -99; saved2 -831
+scratch1 5; scratch2 6; scratch3 37; scratch4 24
+saved4 2; wait
+saved1 -167; saved2 -835
+scratch1 36; scratch2 0; scratch3 0; scratch4 0
+saved4 2; wait
+saved1 323; saved2 347; saved3 -242
+scratch1 1
+saved4 2; wait
+saved1 213; saved2 196
+saved4 2; wait
+saved1 314; saved2 -22
+scratch2 41
+saved4 2; wait
+saved1 317; saved2 -194
+scratch1 40; scratch2 2
+saved4 2; wait
+saved1 736; saved2 -868
+scratch1 21; scratch2 43
+saved4 2; wait
+saved1 751; saved2 -527
+scratch1 42; scratch2 3
+saved4 2; wait
+saved1 87; saved2 -969; saved3 -50
+scratch1 24; scratch2 0
+saved4 2; wait
+saved1 194; saved2 -416; saved3 -242
+scratch1 2; scratch2 4
+saved4 2; wait
+saved1 444; saved2 -1342; saved3 78
+scratch1 28; scratch2 0
+saved4 2; wait
+saved1 481; saved2 -1097
+scratch1 26; scratch2 28; scratch3 21
+saved4 2; wait
+saved1 862; saved2 -338; saved3 -50
+scratch1 16; scratch2 49; scratch3 0
+saved4 2; wait
+saved1 872; saved2 -451
+scratch1 48; scratch2 16
+saved4 2; wait
+saved4 3
+// end waypoint dump
