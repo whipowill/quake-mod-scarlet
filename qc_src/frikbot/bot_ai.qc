@@ -752,7 +752,7 @@ float(entity thing) priority_for_thing =
 				}
 				else if (teamplay && thing.team == self.team)
 				{
-					//thisp = 100;
+					//thisp = 100; don't follow teammates on teamplay! -whipowill
 					if (thing.target1.classname == "player")
 						return 0;
 				}

@@ -976,7 +976,7 @@ void(float whichteam, float whatbot, float whatskill) BotConnect =
 		whatskill = 0;
 	self.b_skill = whatskill;
 
-	if (teamplay && !coop)
+	if (teamplay) // choose same team on coop! -whipowill
 	{
 		if (whichteam)
 			self.b_pants = FindAnotherColor(uself.team - 1);

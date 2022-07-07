@@ -21,6 +21,9 @@ And Jan 2013, made this change:
 
 And Jul 2022, made this change:
 
-. Removed bot following of teammates in teamplay.  They now roam and fight like FFA.
+- Teammates no longer try to follow each other in deathmatch games.
+- The bot names "Pimp Bot" and "Frik Bot" have been changed.
+- Items now always respawn over time in singleplayer and coop.
+- In coop games bots will now appropriately choose your team color.
 
 -whipowill

@@ -191,23 +191,16 @@ void() health_touch =
 	}
 	else
 	{
-		//~ deathmatch 3 start
-		//~ if (deathmatch != 2)		// deathmatch 2 is the silly old rules
-		if (deathmatch == 1)
-		//~ deathmatch 3 end
-		{
-			if (deathmatch)
-				self.nextthink = time + 20;
-			self.think = SUB_regen;
-		}
-		//~ deathmatch 3 start
 		if (deathmatch == 3)
 		{
-			if (deathmatch)
-				self.nextthink = time + 15;
+			self.nextthink = time + 15;
 			self.think = SUB_regen;
 		}
-		//~ deathmatch 3 end
+		if (deathmatch == 1 || 1) // always respawn items! -whipowill
+		{
+			self.nextthink = time + 20;
+			self.think = SUB_regen;
+		}
 	}
 	
 	activator = other;
@@ -229,18 +222,16 @@ void() item_megahealth_rot =
 // just blindly subtract the flag off
 	other.items = other.items - (other.items & IT_SUPERHEALTH);
 	
-	if (deathmatch == 1)	// deathmatch 2 is silly old rules
-	{
-		self.nextthink = time + 20;
-		self.think = SUB_regen;
-	}
-	//~ deathmatch 3 start
 	if (deathmatch == 3)
 	{
 		self.nextthink = time + 15;
 		self.think = SUB_regen;
 	}
-	//~ deathmatch 3 end
+	if (deathmatch == 1)
+	{
+		self.nextthink = time + 20;
+		self.think = SUB_regen;
+	}
 };
 
 /*
@@ -289,18 +280,17 @@ void() armor_touch =
 
 	self.solid = SOLID_NOT;
 	self.model = string_null;
-	if (deathmatch == 1)
-	{
-		self.nextthink = time + 20;
-		self.think = SUB_regen;
-	}
-	//~ deathmatch 3 start
+
 	if (deathmatch == 3)
 	{
 		self.nextthink = time + 30;
 		self.think = SUB_regen;
 	}
-	//~ deathmatch 3 end
+	if (deathmatch == 1 || 1) // always respawn items! -whipowill
+	{
+		self.nextthink = time + 20;
+		self.think = SUB_regen;
+	}
 
 	sprint(other, "You got armor\n");
 // armor touch sound
@@ -431,10 +421,7 @@ void() weapon_touch =
 	best = W_BestWeapon();
 	self = stemp;
 	
-	//~ deathmatch 3 start
-	//~ if (deathmatch == 2 || coop)
-	if (deathmatch == 2 || deathmatch == 3 || coop)
-	//~ deathmatch 3 end	
+	if (deathmatch == 2 || deathmatch == 3) // don't weapon persist on coop! -whipowill
 		leave = 1;
 	else
 		leave = 0;
@@ -521,7 +508,7 @@ void() weapon_touch =
 // remove it in single player, or setup for respawning in deathmatch
 	self.model = string_null;
 	self.solid = SOLID_NOT;
-	if (deathmatch == 1)
+	if (deathmatch == 1 || 1) // always respawn items! -whipowill
 		self.nextthink = time + 30;
 	self.think = SUB_regen;
 	
@@ -702,19 +689,16 @@ local float		best;
 // remove it in single player, or setup for respawning in deathmatch
 	self.model = string_null;
 	self.solid = SOLID_NOT;
-	if (deathmatch == 1)
-	{
-		self.nextthink = time + 30;
-		self.think = SUB_regen;
-	}
-	//~ deathmatch 3 start
 	if (deathmatch == 3)
 	{
 		self.nextthink = time + 15;
 		self.think = SUB_regen;
 	}
-	//~ deathmatch 3 end
-
+	if (deathmatch == 1 || 1) // always respawn items! -whipowill
+	{
+		self.nextthink = time + 30;
+		self.think = SUB_regen;
+	}
 	activator = other;
 	SUB_UseTargets();				// fire all targets / killtargets
 };
