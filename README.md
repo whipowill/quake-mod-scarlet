@@ -10,7 +10,7 @@ See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded 
 
 ## History
 
-I'm making a changes to a mod created by others:
+I'm making changes to a mod created by others:
 
 - ``frikbot x`` - by FrikaC (I'm calling this ``frikbot1``)
 - ``frikbot x+`` - by Igor9 (I'm calling this ``frikbot2``)
@@ -20,7 +20,7 @@ Which brings me to ``frikbot4``.  My changes are minimal.
 
 ## Problem
 
-I spent a week playing w/ ``v3`` and had a blast, but what I found was that teamplay games didn't work so well.
+I spent a week playing w/ ``frikbot3`` and had a blast, but what I found was that teamplay games didn't work so well.
 
 It turns out there was a flaw in the bot logic that made them want to follow other teammates around the map.  What ended up happening is the bots would clump together and just idle there.
 
@@ -30,10 +30,10 @@ You can now play teamplay games and the bots are awesome, just like they are in 
 
 ## Changelog
 
-- Teammates no longer try to follow each other in deathmatch games.
-- The bot names "Pimp Bot" and "Frik Bot" have been changed.
-- Items now always respawn over time in singleplayer and coop.
-- In coop games bots will now appropriately choose your team color.
+- Bots no longer try to follow each other in team deathmatch games.
+- Bots will now appropriately choose your team color in coop games.
+- Bots "Pimp Bot" and "Frik Bot" have had their names changed.
+- Items now always respawn over time in singleplayer and coop games.
 
 ## References
 

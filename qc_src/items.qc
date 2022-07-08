@@ -191,14 +191,14 @@ void() health_touch =
 	}
 	else
 	{
-		if (deathmatch == 3)
-		{
-			self.nextthink = time + 15;
-			self.think = SUB_regen;
-		}
 		if (deathmatch == 1 || 1) // always respawn items! -whipowill
 		{
 			self.nextthink = time + 20;
+			self.think = SUB_regen;
+		}
+		if (deathmatch == 3)
+		{
+			self.nextthink = time + 15;
 			self.think = SUB_regen;
 		}
 	}
@@ -281,14 +281,14 @@ void() armor_touch =
 	self.solid = SOLID_NOT;
 	self.model = string_null;
 
-	if (deathmatch == 3)
-	{
-		self.nextthink = time + 30;
-		self.think = SUB_regen;
-	}
 	if (deathmatch == 1 || 1) // always respawn items! -whipowill
 	{
 		self.nextthink = time + 20;
+		self.think = SUB_regen;
+	}
+	if (deathmatch == 3)
+	{
+		self.nextthink = time + 30;
 		self.think = SUB_regen;
 	}
 
@@ -689,16 +689,18 @@ local float		best;
 // remove it in single player, or setup for respawning in deathmatch
 	self.model = string_null;
 	self.solid = SOLID_NOT;
-	if (deathmatch == 3)
-	{
-		self.nextthink = time + 15;
-		self.think = SUB_regen;
-	}
+
 	if (deathmatch == 1 || 1) // always respawn items! -whipowill
 	{
 		self.nextthink = time + 30;
 		self.think = SUB_regen;
 	}
+	if (deathmatch == 3)
+	{
+		self.nextthink = time + 15;
+		self.think = SUB_regen;
+	}
+
 	activator = other;
 	SUB_UseTargets();				// fire all targets / killtargets
 };
