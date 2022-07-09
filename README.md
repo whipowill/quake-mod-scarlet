@@ -56,9 +56,9 @@ So I turned off fast thinking for ``skill 2``.  This seems to slow them down jus
 
 ## Changelog
 
-- Bots ``skill`` differences more appropriately scaled.
+- Bots ``skill`` levels more appropriately scaled.
 - Bots no longer try to follow each other in team deathmatch games.
-- Bots will now appropriately choose your team color in coop games.
+- Bots will now wear your team color in coop games.
 - Bots "Pimp Bot" and "Frik Bot" have had their names changed.
 - Items now always respawn over time in singleplayer and coop games.
 - Added waypoints files:
