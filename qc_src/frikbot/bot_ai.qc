@@ -961,7 +961,7 @@ void() BotAI =
 		
 	// stagger the bot's AI out so they all don't think at the same time, causing game
 	// 'spikes'
-	if (self.b_skill < 2)
+	if (self.b_skill < 3) // only use max brainpower on skill 3! -whipowill
 	{
 		if (self.ai_time > time)
 			return;
