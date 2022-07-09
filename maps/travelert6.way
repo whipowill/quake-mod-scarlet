@@ -1,0 +1,76 @@
+// le voyageur cosmique - maps/travelert6.way
+// Ways by DoomGuy
+saved1 1072; saved2 350; saved3 406
+scratch1 19; scratch2 2; scratch3 0; scratch4 0
+saved4 1; wait
+saved1 1184; saved2 216
+scratch1 1; scratch2 3
+saved4 2; wait
+saved1 1152; saved2 -20; saved3 346
+scratch1 2; scratch2 4
+saved4 2; wait
+saved1 681; saved2 -7
+scratch1 3; scratch2 5
+saved4 2; wait
+saved1 779; saved2 20
+scratch1 4; scratch2 6
+saved4 2; wait
+saved1 764; saved2 397; saved3 286
+scratch1 5; scratch2 7
+saved4 2; wait
+saved1 296; saved2 359; saved3 238
+scratch1 6; scratch2 8
+saved4 2; wait
+saved1 304; saved2 -14; saved3 142
+scratch1 7; scratch2 9; scratch3 22
+saved4 2; wait
+saved1 -147; saved2 -6; saved3 110
+scratch1 8; scratch2 10; scratch3 11
+saved4 2; wait
+saved1 -131; saved2 309
+scratch1 9; scratch2 0; scratch3 0
+saved4 2; wait
+saved1 -89; saved2 -57
+scratch2 12
+saved4 2; wait
+saved1 201; saved2 5; saved3 142
+scratch1 11; scratch2 13; scratch3 21
+saved4 2; wait
+saved1 162; saved2 542; saved3 110
+scratch1 12; scratch2 14; scratch3 20
+saved4 2; wait
+saved1 444; saved2 535
+scratch1 13; scratch2 15; scratch3 19
+saved4 2; wait
+saved1 453; saved2 842; saved3 174
+scratch1 14; scratch2 16; scratch3 0
+saved4 2; wait
+saved1 677; saved2 835
+scratch1 15; scratch2 17
+saved4 2; wait
+saved1 700; saved2 663
+scratch1 16; scratch2 18
+saved4 2; wait
+saved1 607; saved2 658
+scratch1 17; scratch2 0
+saved4 2; wait
+saved1 321; saved2 525; saved3 110
+scratch1 14
+saved4 2; wait
+saved1 145; saved2 481
+scratch1 13
+saved4 2; wait
+saved1 213; saved2 1; saved3 142
+scratch1 12
+saved4 2; wait
+saved1 528; saved2 -29; saved3 222
+scratch1 8; scratch2 23
+saved4 2; wait
+saved1 575; saved2 -413; saved3 270
+scratch1 22; scratch2 24
+saved4 2; wait
+saved1 896
+scratch1 23; scratch2 0
+saved4 2; wait
+saved4 3
+// end waypoint dump

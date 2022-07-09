@@ -30,7 +30,9 @@ I'm making changes to a mod created by others:
 
 Which brings me to ``frikbot4``.  My changes are minimal.
 
-## Problem
+## Fixes
+
+### Teamplay
 
 I spent a week playing w/ ``frikbot3`` and had a blast, but what I found was that teamplay games didn't work so well.
 
@@ -40,17 +42,32 @@ I found the priority logic in the bot code and made a change where following tea
 
 You can now play teamplay games and the bots are awesome, just like they are in FFA.
 
+### Skills
+
+After playing on ``skill 1`` for a while, I decided it was time to take my game up a notch.  So I bumped it up to ``skill 2``.
+
+I then proceeded to get my ass handed to me.  What I found in the code is two sections based on skills: how fast the bot can target you, and how fast the bot can think:
+
+- ``skill 1`` - slow targeting / slow thinking
+- ``skill 2`` - fast targeting / fast thinking
+- ``skill 3`` - fast targeting / fast thinking
+
+So I turned off fast thinking for ``skill 2``.  This seems to slow them down just enough for me to feel like it's not a total blowout.
+
 ## Changelog
 
+- Bots ``skill`` differences more appropriately scaled.
 - Bots no longer try to follow each other in team deathmatch games.
 - Bots will now appropriately choose your team color in coop games.
 - Bots "Pimp Bot" and "Frik Bot" have had their names changed.
 - Items now always respawn over time in singleplayer and coop games.
+- Added waypoints files:
+    - ``travelert6``
 
 ## Credits
 
 - Original Frikbot mod by FrikaC, Igor9, and JLaw
-- Compilation of waypoint files by LightningHunter
+- Original compilation of waypoint files by LightningHunter
 
 ## References
 
