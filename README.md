@@ -8,6 +8,18 @@ The Frikbot mod is one of the best Quake bots to play with.  This repo continues
 
 See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory.
 
+## Controls
+
+You can control the bots via the console.  Press the ~ key to bring down the console screen.
+
+- ``impulse 100`` - add a bot to the game
+- ``impulse 101`` - add a bot to the other team
+- ``impulse 102`` - remove most recently added bot
+- ``impulse 103`` - spectate other players (use ``kill`` to exit)
+- ``impulse 104`` - enter dev mode for editing waypoints
+
+Be sure and reference the included ``instructions.html`` file from FrikaC for detailed information about using the bots.
+
 ## History
 
 I'm making changes to a mod created by others:
@@ -47,3 +59,4 @@ You can now play teamplay games and the bots are awesome, just like they are in 
 - [Deathmatch With Bots](https://steamcommunity.com/sharedfiles/filedetails/?id=123626484) - a guide I used to figure out what bot to use.
 - [Frikbot X on ModDB](https://www.moddb.com/mods/frikbot-x) - where I found the missing campaign waypoint files.
 - [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history.
+- [Definitive Frikbot Waypack](https://www.celephais.net/board/view_thread.php?id=60404) - where almost all the waypoints come from.
