@@ -35,6 +35,11 @@ You can now play teamplay games and the bots are awesome, just like they are in 
 - Bots "Pimp Bot" and "Frik Bot" have had their names changed.
 - Items now always respawn over time in singleplayer and coop games.
 
+## Credits
+
+- Original Frikbot mod by FrikaC, Igor9, and JLaw
+- Compilation of waypoint files by LightningHunter
+
 ## References
 
 - [FTEQCC](https://www.fteqcc.org/) - the QuakeC compiler I used to compile this code.
