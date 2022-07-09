@@ -50,7 +50,7 @@ I then proceeded to get my ass handed to me.  What I found in the code is two se
 
 - ``skill 1`` - slow targeting / slow thinking
 - ``skill 2`` - fast targeting / fast thinking
-- ``skill 3`` - fast targeting / fast thinking
+- ``skill 3`` - fastest targeting / fast thinking
 
 So I turned off fast thinking for ``skill 2``.  This seems to slow them down just enough for me to feel like it's not a total blowout.
 
