@@ -84,7 +84,7 @@ void() CL_KeyMove = // CL_BaseMove + CL_AdjustAngles
 	}
 	self.oldkeys = self.keys;
 
-	if (self.b_skill != 2) // use mouse emulation
+	if (self.b_skill != 2 || 1) // always use mouse emulation! -whipowill
 	{
 		anglespeed = 1.5 * real_frametime; 
 		// 1.5 is the default cl_anglespeedkey & bot always has +speed
@@ -97,7 +97,7 @@ void() CL_KeyMove = // CL_BaseMove + CL_AdjustAngles
 		self.v_angle_x = self.v_angle_x + anglespeed * CL_KeyState(KEY_LOOKDOWN) * 150; 
 		// 150 is default cl_pitchspeed
 	}
-	else
+	else // this is the original, now unused, skill 2 code -whipowill
 	{
 		view_x = angcomp(self.b_angle_x, self.v_angle_x);
 		view_y = angcomp(self.b_angle_y, self.v_angle_y);
@@ -110,9 +110,8 @@ void() CL_KeyMove = // CL_BaseMove + CL_AdjustAngles
 		else 
 			self.mouse_emu = view * (1 / real_frametime);
 		self.v_angle = self.v_angle + self.mouse_emu * real_frametime;
-
-		
 	}
+
 	if (self.v_angle_x > 80)
 		self.v_angle_x = 80;
 	else if (self.v_angle_x < -70)

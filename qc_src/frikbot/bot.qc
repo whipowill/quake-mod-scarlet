@@ -1015,7 +1015,6 @@ void(float whichteam, float whatbot, float whatskill) BotConnect =
 	h = ftos(saved_skills2);
 	cvar_set("scratch3", h);
 	self = uself;
-
 };
 
 void(entity bot) BotDisconnect =

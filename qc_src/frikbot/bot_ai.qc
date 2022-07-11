@@ -893,7 +893,16 @@ void() bot_angle_set =
 	// HACK HACK HACK HACK
 	// The bot falls off ledges a lot because of "turning around"
 	// so let the bot use instant turn around when not hunting a player
-	if (self.b_skill == 3)
+	if ((self.enemy == world || self.enemy.movetype == MOVETYPE_PUSH) && self.target1.classname != "player")
+	{
+		self.keys = self.keys & 63;
+		self.v_angle = self.b_angle;
+		while (self.v_angle_x < -180)
+			self.v_angle_x = self.v_angle_x + 360;
+		while (self.v_angle_x > 180)
+			self.v_angle_x = self.v_angle_x - 360;
+	}
+	else if (self.b_skill == 3 && 0) // leaving in the "nightmare" bot code in case I want it again someday. -whipowill
 	{
 		self.keys = self.keys & 63;
 		self.v_angle = self.b_angle;
@@ -903,28 +912,29 @@ void() bot_angle_set =
 			self.v_angle_x = self.v_angle_x - 360;
 
 	}
-	else if ((self.enemy == world || self.enemy.movetype == MOVETYPE_PUSH) && self.target1.classname != "player")
+	else // always use mouse emulation! -whipowill
 	{
-		self.keys = self.keys & 63;
-		self.v_angle = self.b_angle;
-		while (self.v_angle_x < -180)
-			self.v_angle_x = self.v_angle_x + 360;
-		while (self.v_angle_x > 180)
-			self.v_angle_x = self.v_angle_x - 360;
-	}
-	else if (self.b_skill < 2) // skill 2 handled in bot_phys
-	{
+		local float accuracy;
+
+		if (skill == 3) accuracy = .90;
+		if (skill == 2) accuracy = .75;
+		if (skill == 1) accuracy = .50;
+		if (skill == 0) accuracy = .25;
+
+		local float precision;
+		precision = 20 * (1 - accuracy); // 20 degrees is what I chose as the max amount the bots can be off their aim
+
 		if (self.b_angle_x > 180)
 			self.b_angle_x = self.b_angle_x - 360;
 		self.keys = self.keys & 63;
 
-		if (angcomp(self.b_angle_y, self.v_angle_y) > 10)
+		if (angcomp(self.b_angle_y, self.v_angle_y) > precision)
 			self.keys = self.keys | KEY_LOOKLEFT;
-		else if (angcomp(self.b_angle_y, self.v_angle_y) < -10)
+		else if (angcomp(self.b_angle_y, self.v_angle_y) < (precision * -1))
 			self.keys = self.keys | KEY_LOOKRIGHT;
-		if (angcomp(self.b_angle_x, self.v_angle_x) < -10)
+		if (angcomp(self.b_angle_x, self.v_angle_x) < (precision * -1))
 			self.keys = self.keys | KEY_LOOKUP;
-		else if (angcomp(self.b_angle_x, self.v_angle_x) > 10)
+		else if (angcomp(self.b_angle_x, self.v_angle_x) > precision)
 			self.keys = self.keys | KEY_LOOKDOWN;
 	}
 };
@@ -961,7 +971,7 @@ void() BotAI =
 		
 	// stagger the bot's AI out so they all don't think at the same time, causing game
 	// 'spikes'
-	if (self.b_skill < 3) // only use max brainpower on skill 3! -whipowill
+	if (self.b_skill < 2 && 0) // turn off starggered thinking! -whipowill
 	{
 		if (self.ai_time > time)
 			return;
