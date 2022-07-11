@@ -86,18 +86,28 @@ void() CL_KeyMove = // CL_BaseMove + CL_AdjustAngles
 
 	if (self.b_skill != 2 || 1) // always use mouse emulation! -whipowill
 	{
+		// bot "reflexes" code
+		local float boost;
+		if (self.b_skill == 3) boost = .90;
+		if (self.b_skill == 2) boost = .75;
+		if (self.b_skill == 1) boost = .50;
+		if (self.b_skill == 0) boost = .25;
+
+		local float multiplier;
+		multiplier = (1 + boost);
+
 		anglespeed = 1.5 * real_frametime; 
 		// 1.5 is the default cl_anglespeedkey & bot always has +speed
-		self.v_angle_y = self.v_angle_y + anglespeed * CL_KeyState(KEY_LOOKLEFT) * 140; 
+		self.v_angle_y = self.v_angle_y + anglespeed * CL_KeyState(KEY_LOOKLEFT) * 140 * multiplier;
 		// 140 is default cl_yawspeed
-		self.v_angle_y = self.v_angle_y - anglespeed * CL_KeyState(KEY_LOOKRIGHT) * 140; 
+		self.v_angle_y = self.v_angle_y - anglespeed * CL_KeyState(KEY_LOOKRIGHT) * 140 * multiplier;
 		// 140 is default cl_yawspeed
-		self.v_angle_x = self.v_angle_x - anglespeed * CL_KeyState(KEY_LOOKUP) * 150; 
+		self.v_angle_x = self.v_angle_x - anglespeed * CL_KeyState(KEY_LOOKUP) * 150 * multiplier;
 		// 150 is default cl_pitchspeed
-		self.v_angle_x = self.v_angle_x + anglespeed * CL_KeyState(KEY_LOOKDOWN) * 150; 
+		self.v_angle_x = self.v_angle_x + anglespeed * CL_KeyState(KEY_LOOKDOWN) * 150 * multiplier;
 		// 150 is default cl_pitchspeed
 	}
-	else // this is the original, now unused, skill 2 code -whipowill
+	else // this is the original, now unused, skill 2 code by FrikaC. -whipowill
 	{
 		view_x = angcomp(self.b_angle_x, self.v_angle_x);
 		view_y = angcomp(self.b_angle_y, self.v_angle_y);

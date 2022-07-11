@@ -36,9 +36,12 @@ I'm making changes to a mod created by others:
 
 ## Changelog
 
-- Bots ``skill`` levels are now appropriately scaled from ``0`` to ``3``.
+- Bots ``skill`` level now scales linearly from ``0`` to ``3``.
+    - No more insane "nightmare" performance on skills 2+, uses actual mouse emulation based on accuracy and reflexes.
 - Bots can now be spawned w/ random ``skill`` levels using new ``impulse 110`` and ``impulse 111`` commands.
-- Bots no longer try to follow each other in team deathmatch games.
+    - Better simulates a real multiplayer game, with diverse ranges of abilities and skill.
+- Bots no longer try to follow each other in team deathmatch games to prevent clumping.
+    - Prevents bots from clumping up together in obscure areas of the map.
 - Bots will now wear the proper team color in coop games.
 - Bots "Pimp Bot" and "Frik Bot" have had their names changed.
 - Items now always respawn over time in singleplayer and coop games.
@@ -54,6 +57,7 @@ I'm making changes to a mod created by others:
 
 - [FTEQCC](https://www.fteqcc.org/) - the QuakeC compiler I used to compile this code.
 - [Intro to QuakeC](https://codedocs.org/what-is/quakec) - nice intro I found on how to compile QuakeC code.
+- [QuakeC Manual](http://www.cataboligne.org/extra/qcmanual.html#Names) - helpful list of available functions.
 - [Deathmatch With Bots](https://steamcommunity.com/sharedfiles/filedetails/?id=123626484) - a guide I used to figure out what bot to use.
 - [Frikbot X on ModDB](https://www.moddb.com/mods/frikbot-x) - where I found the missing campaign waypoint files.
 - [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history.

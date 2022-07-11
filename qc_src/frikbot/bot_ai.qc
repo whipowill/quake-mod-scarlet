@@ -914,15 +914,15 @@ void() bot_angle_set =
 	}
 	else // always use mouse emulation! -whipowill
 	{
+		// bot "accuracy" code
 		local float accuracy;
-
-		if (skill == 3) accuracy = .90;
-		if (skill == 2) accuracy = .75;
-		if (skill == 1) accuracy = .50;
-		if (skill == 0) accuracy = .25;
+		if (self.b_skill == 3) accuracy = .90;
+		if (self.b_skill == 2) accuracy = .75;
+		if (self.b_skill == 1) accuracy = .50;
+		if (self.b_skill == 0) accuracy = .25;
 
 		local float precision;
-		precision = 20 * (1 - accuracy); // 20 degrees is what I chose as the max amount the bots can be off their aim
+		precision = 20 * (1 - accuracy); // 15 degrees is what I chose as the max amount the bots can be off their aim
 
 		if (self.b_angle_x > 180)
 			self.b_angle_x = self.b_angle_x - 360;
