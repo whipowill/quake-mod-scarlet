@@ -1249,6 +1249,24 @@ void() BotImpulses =
 		f = cvar("skill");
 		BotConnect(1, 0, f);
 	}
+	if (self.impulse == 110)
+	{
+		f = cvar("skill");
+		f = rint(random() * f);
+		dprint("Random bot of skill ");
+		dprint(ftos(f));
+		dprint(" added to the game.\n");
+		BotConnect(0, 0, f);
+	}
+	else if (self.impulse == 111)
+	{
+		f = cvar("skill");
+		f = rint(random() * f);
+		dprint("Random bot of skill ");
+		dprint(ftos(f));
+		dprint(" added to the game.\n");
+		BotConnect(1, 0, f);
+	}
 	else if (self.impulse == 102)
 		KickABot();
 	else if (self.impulse == 103)

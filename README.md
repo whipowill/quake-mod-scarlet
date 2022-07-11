@@ -12,8 +12,15 @@ See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded 
 
 You can control the bots via the console.  Press the ~ key to bring down the console screen.
 
+- ``skill <x>`` - set the bot skill level (0 to 3)
+- ``teamplay <x>`` - turn on teamplay mode (1 or 0)
+- ``deathmatch <x>`` - turn on deathmatch mode (1 or 0)
+- ``coop <x>`` - turn on coop mode (1 or 0)
+
 - ``impulse 100`` - add a bot to the game
+- ``impulse 110`` - add a bot to the game of random skill level (up to ``skill`` setting)
 - ``impulse 101`` - add a bot to the other team
+- ``impulse 110`` - add a bot to the other team of random skill level (up to ``skill`` setting)
 - ``impulse 102`` - remove most recently added bot
 - ``impulse 103`` - spectate other players (use ``kill`` to exit)
 - ``impulse 104`` - enter dev mode for editing waypoints
@@ -24,17 +31,18 @@ Be sure and reference the included ``instructions.html`` file from FrikaC for de
 
 I'm making changes to a mod created by others:
 
-- ``frikbot x`` - by FrikaC (I'm calling this ``frikbot1``)
-- ``frikbot x+`` - by Igor9 (I'm calling this ``frikbot2``)
-- ``frikbot x++`` - by JLaw (I'm calling this ``frikbot3``)
+- ``frikbot x`` - by FrikaC - I'm calling this ``frikbot1``
+- ``frikbot x+`` - by Igor9 - I'm calling this ``frikbot2``
+- ``frikbot x++`` - by JLaw - I'm calling this ``frikbot3``
 
 Which brings me to ``frikbot4``.  My changes are minimal.
 
 ## Changelog
 
-- Bots ``skill`` levels more appropriately scaled.
+- Bots ``skill`` levels are now appropriately scaled from ``0`` to ``3``.
+- Bots can now be spawned w/ random ``skill`` levels using new ``impulse 110`` and ``impulse 111`` commands.
 - Bots no longer try to follow each other in team deathmatch games.
-- Bots will now wear your team color in coop games.
+- Bots will now wear the proper team color in coop games.
 - Bots "Pimp Bot" and "Frik Bot" have had their names changed.
 - Items now always respawn over time in singleplayer and coop games.
 - Added waypoints files:
