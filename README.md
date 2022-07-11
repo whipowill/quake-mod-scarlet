@@ -16,7 +16,6 @@ You can control the bots via the console.  Press the ~ key to bring down the con
 - ``teamplay <x>`` - turn on teamplay mode (1 or 0)
 - ``deathmatch <x>`` - turn on deathmatch mode (1 or 0)
 - ``coop <x>`` - turn on coop mode (1 or 0)
-
 - ``impulse 100`` - add a bot to the game
 - ``impulse 110`` - add a bot to the game of random skill level (up to ``skill`` setting)
 - ``impulse 101`` - add a bot to the other team
@@ -31,11 +30,9 @@ Be sure and reference the included ``instructions.html`` file from FrikaC for de
 
 I'm making changes to a mod created by others:
 
-- ``frikbot x`` - by FrikaC - I'm calling this ``frikbot1``
-- ``frikbot x+`` - by Igor9 - I'm calling this ``frikbot2``
-- ``frikbot x++`` - by JLaw - I'm calling this ``frikbot3``
-
-Which brings me to ``frikbot4``.  My changes are minimal.
+- ``frikbot x`` - by FrikaC
+- ``frikbot x+`` - by Igor9
+- ``frikbot x++`` - by JLaw
 
 ## Changelog
 
