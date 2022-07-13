@@ -132,6 +132,7 @@ for all variables in the bot...
 */
 
 // ----- entity fields ---
+.float respawn_time;
 .float	wallhug, keys, oldkeys, ishuman;
 .float	b_frags, b_clientno, b_shirt, b_pants; 
 .float	priority, ai_time, b_sound, missile_speed;
@@ -212,9 +213,9 @@ float OPT_SAVEBOTS	= 1;
 float OPT_NOCHAT	= 2;
 
 // -------globals-----
-float 	active_clients;
+float 		active_clients;
 float		max_clients, real_frametime;
-float		bot_count, b_options;
+float		bot_count, b_options, bot_team0_count, bot_team1_count;
 float		waypoint_mode, dump_mode; 
 float		waypoints, direct_route;
 float		sv_friction, sv_gravity;
@@ -959,6 +960,9 @@ void(float whichteam, float whatbot, float whatskill) BotConnect =
 	// chat thing
 
 	bot_count = bot_count + 1;
+	if (whichteam == 0) bot_team0_count = bot_team0_count + 1;
+	if (whichteam == 1) bot_team1_count = bot_team1_count + 1;
+
 	self = GetClientEntity(f);
 	if (!saved_bots)
 		bot_start_topic(1);
@@ -968,6 +972,7 @@ void(float whichteam, float whatbot, float whatskill) BotConnect =
 		self.netname = BotName(whatbot);
 	else
 		self.netname = PickARandomName();
+
 	// players can set skill all weird, so leave these checks in
 	whatskill = rint(whatskill);
 	if (whatskill > 3)
@@ -988,6 +993,34 @@ void(float whichteam, float whatbot, float whatskill) BotConnect =
 		else
 			self.b_pants = uself.team - 1;
 		self.b_shirt = self.b_pants;
+
+		// code for unique colors on teams
+		/*
+	    if (whichteam == 0)
+	    {
+	    	self.b_pants = 3;
+	        if (bot_team0_count == 1) self.b_shirt = 4;
+	        if (bot_team0_count == 2) self.b_shirt = 13;
+	        if (bot_team0_count == 3) self.b_shirt = 11;
+	        if (bot_team0_count == 4)
+	        {
+	        	self.b_shirt = 3;
+	        	bot_team0_count = 0;
+	        }
+	    }
+	    if (whichteam == 1)
+	    {
+	    	self.b_pants = 0;
+	        if (bot_team1_count == 1) self.b_shirt = 7;
+	        if (bot_team1_count == 2) self.b_shirt = 6;
+	        if (bot_team1_count == 3) self.b_shirt = 10;
+	        if (bot_team1_count == 4)
+	        {
+	        	self.b_shirt = 12;
+	        	bot_team1_count = 0;
+	        }
+	    }
+	    */
 	}
 
 	self.team = self.b_pants + 1;

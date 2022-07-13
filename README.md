@@ -4,6 +4,14 @@ A Quake mod for playing w/ multiplayer bots.
 
 The Frikbot mod is one of the best Quake bots to play with.  This repo continues the development of some old code for an even older game.
 
+## History
+
+I'm making changes to a mod created by others:
+
+- ``frikbot x`` - by FrikaC
+- ``frikbot x+`` - by Igor9
+- ``frikbot x++`` - by JLaw
+
 ## Install
 
 See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory.
@@ -21,30 +29,22 @@ You can control the bots via the console.  Press the ~ key to bring down the con
 - ``impulse 101`` - add a bot to the other team
 - ``impulse 110`` - add a bot to the other team of random skill level (up to ``skill`` setting)
 - ``impulse 102`` - remove most recently added bot
-- ``impulse 103`` - spectate other players (use ``kill`` to exit)
+- ``impulse 103`` - spectate other players
 - ``impulse 104`` - enter dev mode for editing waypoints
 
 Be sure and reference the included ``instructions.html`` file from FrikaC for detailed information about using the bots.
 
-## History
-
-I'm making changes to a mod created by others:
-
-- ``frikbot x`` - by FrikaC
-- ``frikbot x+`` - by Igor9
-- ``frikbot x++`` - by JLaw
-
 ## Changelog
 
 - Bots ``skill`` now scales linearly from ``0`` to ``3``.
-    - No more getting absolutely slaughtered on skills 2 and 3.
-    - Uses actual mouse emulation w/ skills improving accuracy and reflexes.
+    - No more getting absolutely slaughtered on skills ``2`` and ``3``.
+    - Uses actual mouse emulation w/ ``skill`` improving accuracy and reflexes.
 - Bots can now be spawned w/ random ``skill`` levels using new ``impulse 110`` and ``impulse 111`` commands.
     - Better simulates a real multiplayer game, with diverse ranges of abilities and skill.
-- Bots no longer try to follow each other in team deathmatch games to prevent clumping.
-    - Prevents bots from clumping up together in obscure areas of the map.
+- Bots no longer try to follow each other in team deathmatch games.
+    - Prevents bots from clumping up together and idling in random areas of the map.
 - Bots will now wear the proper team color in coop games.
-- Bots "Pimp Bot" and "Frik Bot" have had their names changed.
+- Bots will now wait 5 seconds after death before respawning.
 - Items now always respawn over time in singleplayer and coop games.
 - Added waypoints files:
     - ``travelert6``

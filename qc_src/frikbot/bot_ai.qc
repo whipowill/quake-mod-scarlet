@@ -959,6 +959,22 @@ void() BotAI =
 
 	if (self.health < 1)
 	{ 
+		// wait 5 seconds before respawn! -whipowill
+		if (!self.respawn_time || self.respawn_time == 0)
+		{
+			self.respawn_time = time + 5;
+			return;
+		}
+		else
+		{
+			if (self.respawn_time > time)
+			{
+				return;
+			}
+		}
+
+		self.ai_time = time + 0.05;
+
 		self.button0 = floor(random() * 2);
 		self.button2 = 0;
 		self.keys = 0;
@@ -966,12 +982,16 @@ void() BotAI =
 		ClearMyRoute();
 		self.target1 = self.target2 = self.target3 = self.target4 = self.enemy = world;
 		self.last_way = world;
+
 		return;
 	}
+
+	// alive again, reset respawn timer
+	self.respawn_time = 0;
 		
 	// stagger the bot's AI out so they all don't think at the same time, causing game
 	// 'spikes'
-	if (self.b_skill < 2 && 0) // turn off starggered thinking! -whipowill
+	if (self.b_skill < 2 && 0) // turn off staggered thinking! -whipowill
 	{
 		if (self.ai_time > time)
 			return;
