@@ -84,7 +84,7 @@ void() CL_KeyMove = // CL_BaseMove + CL_AdjustAngles
 	}
 	self.oldkeys = self.keys;
 
-	if (self.b_skill != 2 || 1) // always use mouse emulation! -whipowill
+	if (self.b_skill != 3) // use mouse emulation! -whipowill
 	{
 		// bot "reflexes" code
 		local float boost;
@@ -94,7 +94,8 @@ void() CL_KeyMove = // CL_BaseMove + CL_AdjustAngles
 		if (self.b_skill == 0) boost = .25;
 
 		local float multiplier;
-		multiplier = (1 + boost);
+		//multiplier = (1 + boost);
+		multiplier = 1; // not using this atm
 
 		anglespeed = 1.5 * real_frametime; 
 		// 1.5 is the default cl_anglespeedkey & bot always has +speed
@@ -107,7 +108,7 @@ void() CL_KeyMove = // CL_BaseMove + CL_AdjustAngles
 		self.v_angle_x = self.v_angle_x + anglespeed * CL_KeyState(KEY_LOOKDOWN) * 150 * multiplier;
 		// 150 is default cl_pitchspeed
 	}
-	else // this is the original, now unused, skill 2 code by FrikaC. -whipowill
+	else // skill 3 has perfect aim
 	{
 		view_x = angcomp(self.b_angle_x, self.v_angle_x);
 		view_y = angcomp(self.b_angle_y, self.v_angle_y);

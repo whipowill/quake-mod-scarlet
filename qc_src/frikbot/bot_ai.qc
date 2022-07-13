@@ -902,7 +902,7 @@ void() bot_angle_set =
 		while (self.v_angle_x > 180)
 			self.v_angle_x = self.v_angle_x - 360;
 	}
-	else if (self.b_skill == 3 && 0) // leaving in the "nightmare" bot code in case I want it again someday. -whipowill
+	else if (self.b_skill == 3 && 0) // FrikaC allowed instant reflexes for skill 3. -whipowill
 	{
 		self.keys = self.keys & 63;
 		self.v_angle = self.b_angle;
@@ -912,7 +912,7 @@ void() bot_angle_set =
 			self.v_angle_x = self.v_angle_x - 360;
 
 	}
-	else // always use mouse emulation! -whipowill
+	else // use mouse emulation! -whipowill
 	{
 		// bot "accuracy" code
 		local float accuracy;
@@ -991,7 +991,7 @@ void() BotAI =
 		
 	// stagger the bot's AI out so they all don't think at the same time, causing game
 	// 'spikes'
-	if (self.b_skill < 2 && 0) // turn off staggered thinking! -whipowill
+	if (self.b_skill < 3 && 0) // turn off staggered thinking! -whipowill
 	{
 		if (self.ai_time > time)
 			return;

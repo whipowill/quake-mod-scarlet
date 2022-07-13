@@ -37,8 +37,10 @@ Be sure and reference the included ``instructions.html`` file from FrikaC for de
 ## Changelog
 
 - Bots ``skill`` now scales linearly from ``0`` to ``3``.
-    - No more getting absolutely slaughtered on skills ``2`` and ``3``.
-    - Uses actual mouse emulation w/ ``skill`` improving accuracy and reflexes.
+    - ``skill 0`` - 25% accuracy
+    - ``skill 1`` - 50% accuracy
+    - ``skill 2`` - 75% accuracy
+    - ``skill 3`` - 100% accuracy
 - Bots can now be spawned w/ random ``skill`` levels using new ``impulse 110`` and ``impulse 111`` commands.
     - Better simulates a real multiplayer game, with diverse ranges of abilities and skill.
 - Bots no longer try to follow each other in team deathmatch games.
