@@ -36,21 +36,14 @@ Be sure and reference the included ``instructions.html`` file from FrikaC for de
 
 ## Changelog
 
-- Bots ``skill`` now scales linearly from ``0`` to ``3``.
-    - ``skill 0`` - 25% accuracy
-    - ``skill 1`` - 50% accuracy
-    - ``skill 2`` - 75% accuracy
-    - ``skill 3`` - 100% accuracy
-- Bots can now be spawned w/ random ``skill`` levels using new ``impulse 110`` and ``impulse 111`` commands.
-    - Better simulates a real multiplayer game, with diverse ranges of abilities and skill.
-- Bots no longer try to follow each other in team deathmatch games.
-    - Prevents bots from clumping up together and idling in random areas of the map.
+- Bots ``skill`` now scales linearly from ``0`` to ``3`` (25% to 100% accuracy).
+- Bots can now be spawned w/ random ``skill`` levels (simulates real multiplayer game).
+- Bots no longer try to follow each other in team deathmatch games (fixes clumping).
 - Bots will now wear the proper team color in coop games.
 - Bots will now wait 5 seconds after death before respawning.
-- Items now always respawn over time in singleplayer and coop games.
-- Added waypoints files:
-    - ``nova``
-    - ``travelert6``
+- Items now always respawn in singleplayer and coop games.
+- Added waypoints files: ``nova``, ``travelert6``
+- Renamed a few bots.
 
 ## Credits
 
