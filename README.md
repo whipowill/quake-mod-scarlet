@@ -47,6 +47,7 @@ Be sure and reference the included ``instructions.html`` file from FrikaC for de
 - Bots will now wait 5 seconds after death before respawning.
 - Items now always respawn over time in singleplayer and coop games.
 - Added waypoints files:
+    - ``nova``
     - ``travelert6``
 
 ## Credits

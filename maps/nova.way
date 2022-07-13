@@ -1,0 +1,96 @@
+// Nova - by alice - maps/nova.way
+// Ways by Raven
+saved1 816; saved2 -768; saved3 334
+scratch1 2; scratch2 3; scratch3 0; scratch4 0
+saved4 1; wait
+scratch1 1; scratch2 0
+saved4 2; wait
+saved1 826; saved2 -386
+scratch2 4
+saved4 2; wait
+saved1 392; saved2 -490
+scratch1 3; scratch2 5
+saved4 2; wait
+saved1 331; saved2 85
+scratch1 4; scratch2 6; scratch3 7
+saved4 2; wait
+saved1 521; saved2 72
+scratch1 5; scratch2 0; scratch3 0
+saved4 2; wait
+saved1 -29; saved2 75
+scratch2 8
+saved4 2; wait
+saved1 -506; saved2 19; saved3 238
+scratch1 7; scratch2 9
+saved4 2; wait
+saved1 -824; saved2 -221
+scratch1 8; scratch2 0
+saved4 2; wait
+saved1 843; saved2 47; saved3 190
+scratch1 11
+saved4 2; wait
+saved1 825; saved2 -267
+scratch1 10; scratch2 12
+saved4 2; wait
+saved1 655; saved2 -284
+scratch1 11; scratch2 13
+saved4 2; wait
+saved1 654; saved2 -621
+scratch1 12; scratch2 14
+saved4 2; wait
+saved1 343; saved2 -703
+scratch1 13; scratch2 15
+saved4 2; wait
+saved1 111; saved2 -982
+scratch1 14; scratch2 16
+saved4 2; wait
+saved1 13; saved2 -677; saved3 158
+scratch1 15; scratch2 17
+saved4 2; wait
+saved1 -408; saved2 -635
+scratch1 16; scratch2 18
+saved4 2; wait
+saved1 -476; saved2 -380
+scratch1 17; scratch2 19
+saved4 2; wait
+saved1 -76; saved2 -383
+scratch1 18; scratch2 20
+saved4 2; wait
+saved1 -226; saved2 -187
+scratch1 19; scratch2 21
+saved4 2; wait
+saved1 -136; saved2 241; saved3 94
+scratch1 20; scratch2 22
+saved4 2; wait
+saved1 210; saved2 234; saved3 46
+scratch1 21; scratch2 23
+saved4 2; wait
+saved1 58; saved2 18
+scratch1 22; scratch2 24
+saved4 2; wait
+saved1 198; saved2 -165
+scratch1 23; scratch2 25
+saved4 2; wait
+saved1 167; saved2 -502
+scratch1 24; scratch2 26
+saved4 2; wait
+saved1 537; saved2 -499
+scratch1 25; scratch2 27
+saved4 2; wait
+saved1 546; saved2 -9; saved3 190
+scratch1 26; scratch2 28
+saved4 2; wait
+saved1 218; saved2 48
+scratch1 27; scratch2 29
+saved4 2; wait
+saved1 419; saved2 108
+scratch1 28; scratch2 30
+saved4 2; wait
+saved1 402; saved2 553
+scratch1 29; scratch2 31
+saved4 2; wait
+saved1 80; saved2 515; saved3 302
+scratch1 30; scratch2 0
+saved4 2; wait
+saved4 3
+// end waypoint dump
