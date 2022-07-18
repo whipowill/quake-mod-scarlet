@@ -47,7 +47,7 @@ Be sure and reference the included ``instructions.html`` file from FrikaC for de
 
 ### Gore
 
-This is an set of changes I'm really excited about.  To keep these changes optional, I've isolated them to the [Gore](https://github.com/whipowill/quake-mod-frikbot4/tree/gore) branch of this repo:
+This is a set of changes I'm really excited about.  To keep these changes optional, I've isolated them to the [Gore](https://github.com/whipowill/quake-mod-frikbot4/tree/gore) branch of this repo:
 
 - Doubles the bood particles.
 - Doubles the amount of gibs used in the explosion.
@@ -56,6 +56,8 @@ This is an set of changes I'm really excited about.  To keep these changes optio
 - Enemy bodies can now be gibbed into chunks.
 
 I think this is really tastefully done and brings Quake up to a level of violence worthy of a Doom successor.  What's great about how I did this is it doesn't use any additional textures or heavy mods, it just changes the programming of the assets that are already baked into the game.
+
+You may want to run the game w/ ``-particles 4096`` to double the amount of particles allowed in the game.  I'm not sure if it's necessary but it might be.
 
 ## Credits
 
