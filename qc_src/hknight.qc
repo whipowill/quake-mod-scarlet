@@ -175,7 +175,7 @@ void()	hknight_pain5	=[	$pain5,		hknight_run1	] {};
 void()	hknight_die1	=[	$death1,	hknight_die2	] {ai_forward(10);};
 void()	hknight_die2	=[	$death2,	hknight_die3	] {ai_forward(8);};
 void()	hknight_die3	=[	$death3,	hknight_die4	]
-{self.solid = SOLID_NOT; ai_forward(7);};
+{become_corpse(); ai_forward(7);};
 void()	hknight_die4	=[	$death4,	hknight_die5	] {};
 void()	hknight_die5	=[	$death5,	hknight_die6	] {};
 void()	hknight_die6	=[	$death6,	hknight_die7	] {};
@@ -189,7 +189,7 @@ void()	hknight_die12	=[	$death12,	hknight_die12	] {};
 void()	hknight_dieb1	=[	$deathb1,	hknight_dieb2	] {};
 void()	hknight_dieb2	=[	$deathb2,	hknight_dieb3	] {};
 void()	hknight_dieb3	=[	$deathb3,	hknight_dieb4	]
-{self.solid = SOLID_NOT;};
+{become_corpse();};
 void()	hknight_dieb4	=[	$deathb4,	hknight_dieb5	] {};
 void()	hknight_dieb5	=[	$deathb5,	hknight_dieb6	] {};
 void()	hknight_dieb6	=[	$deathb6,	hknight_dieb7	] {};
@@ -423,6 +423,7 @@ void() monster_hell_knight =
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
 
+	self.headmdl = "progs/h_hellkn.mdl";
 	setmodel (self, "progs/hknight.mdl");
 
 	setsize (self, '-16 -16 -24', '16 16 40');

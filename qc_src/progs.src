@@ -22,9 +22,11 @@ fight.qc
 ai.qc
 combat.qc
 items.qc
+splat.qc
 weapons.qc
 world.qc
 client.qc
+kickgibs.qc
 player.qc
 monsters.qc
 doors.qc
@@ -32,7 +34,7 @@ buttons.qc
 triggers.qc
 plats.qc
 misc.qc
-
+corpse.qc
 ogre.qc
 demon.qc
 shambler.qc

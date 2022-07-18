@@ -1,4 +1,3 @@
-
 void() T_MissileTouch;
 void() info_player_start;
 void(entity targ, entity attacker) ClientObituary;
@@ -170,7 +169,6 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
 		
 // do the damage
 	targ.health = targ.health - take;
-			
 	if (targ.health <= 0)
 	{
 		Killed (targ, attacker);
@@ -286,4 +284,3 @@ void(entity attacker, float damage) T_BeamDamage =
 		head = head.chain;
 	}
 };
-

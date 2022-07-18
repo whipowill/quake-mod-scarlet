@@ -112,7 +112,7 @@ void() shalrath_die =
 
 	sound (self, CHAN_VOICE, "shalrath/death.wav", 1, ATTN_NORM);
 	shal_death1();
-	self.solid = SOLID_NOT;
+	become_corpse();
 	// insert death sounds here
 };
 
@@ -193,7 +193,7 @@ void() ShalMissileTouch =
 	self.velocity = '0 0 0';
 	self.touch = SUB_Null;
 	setmodel (self, "progs/s_explod.spr");
-	self.solid = SOLID_NOT;
+	become_corpse();
 	s_explode1 ();
 };
 
@@ -222,6 +222,7 @@ void() monster_shalrath =
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
 	
+	self.headmdl = "progs/h_shal.mdl";
 	setmodel (self, "progs/shalrath.mdl");
 	setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
 	self.health = 400;

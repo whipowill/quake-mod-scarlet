@@ -331,7 +331,7 @@ self.flags = self.flags - (self.flags & FL_ONGROUND);
 sound (self, CHAN_VOICE, "wizard/wdeath.wav", 1, ATTN_NORM);
 };
 void()	wiz_death2	=[	$death2,		wiz_death3	] {};
-void()	wiz_death3	=[	$death3,		wiz_death4	]{self.solid = SOLID_NOT;};
+void()	wiz_death3	=[	$death3,		wiz_death4	]{become_corpse();};
 void()	wiz_death4	=[	$death4,		wiz_death5	] {};
 void()	wiz_death5	=[	$death5,		wiz_death6	] {};
 void()	wiz_death6	=[	$death6,		wiz_death7	] {};
@@ -394,6 +394,7 @@ void() monster_wizard =
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
 
+	self.headmdl = "progs/h_wizard.mdl";
 	setmodel (self, "progs/wizard.mdl");
 
 	setsize (self, '-16 -16 -24', '16 16 40');

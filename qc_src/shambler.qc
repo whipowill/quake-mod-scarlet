@@ -293,7 +293,7 @@ void(entity attacker, float damage)	sham_pain =
 
 void() sham_death1      =[      $death1,       sham_death2     ] {};
 void() sham_death2      =[      $death2,       sham_death3     ] {};
-void() sham_death3      =[      $death3,       sham_death4     ] {self.solid = SOLID_NOT;};
+void() sham_death3      =[      $death3,       sham_death4     ] {become_corpse();};
 void() sham_death4      =[      $death4,       sham_death5     ] {};
 void() sham_death5      =[      $death5,       sham_death6     ] {};
 void() sham_death6      =[      $death6,       sham_death7     ] {};
@@ -350,6 +350,8 @@ void() monster_shambler =
 
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
+
+	self.headmdl = "progs/h_shams.mdl";
 	setmodel (self, "progs/shambler.mdl");
 
 	setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
