@@ -45,6 +45,18 @@ Be sure and reference the included ``instructions.html`` file from FrikaC for de
 - Added waypoints files: ``nova``, ``travelert6``
 - Renamed a few bots.
 
+### Gore
+
+This is an set of changes I'm really excited about.  To keep these changes optional, I've isolated them to the [Gore](https://github.com/whipowill/quake-mod-frikbot4/tree/gore) branch of this repo:
+
+- Doubles the bood particles.
+- Doubles the amount of gibs used in the explosion.
+- Enemies now bleed (profusely) when hit, from direct or blast damage.
+- Enemy heads and gibs are now kickable.
+- Enemy bodies can now be gibbed into chunks.
+
+I think this is really tastefully done and brings Quake up to a level of violence worthy of a Doom successor.  What's great about how I did this is it doesn't use any additional textures or heavy mods, it just changes the programming of the assets that are already baked into the game.
+
 ## Credits
 
 - Original Frikbot mod by FrikaC, Igor9, and JLaw
@@ -59,3 +71,4 @@ Be sure and reference the included ``instructions.html`` file from FrikaC for de
 - [Frikbot X on ModDB](https://www.moddb.com/mods/frikbot-x) - where I found the missing campaign waypoint files.
 - [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history.
 - [Definitive Frikbot Waypack](https://www.celephais.net/board/view_thread.php?id=60404) - where almost all the waypoints come from.
+- [QuakeC Tutorials](https://quakewiki.org/wiki/QuakeC_tutorials) - a list of tutorials on modding QuakeC.
