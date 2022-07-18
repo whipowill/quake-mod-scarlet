@@ -73,4 +73,4 @@ You may want to run the game w/ ``-particles 4096`` to double the amount of part
 - [Frikbot X on ModDB](https://www.moddb.com/mods/frikbot-x) - where I found the missing campaign waypoint files.
 - [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history.
 - [Definitive Frikbot Waypack](https://www.celephais.net/board/view_thread.php?id=60404) - where almost all the waypoints come from.
-- [QuakeC Tutorials](https://quakewiki.org/wiki/QuakeC_tutorials) - where I learned how to do the gore mods.
+- [QuakeC Tutorials](https://quakewiki.org/wiki/QuakeC_tutorials) - a list of tutorials for modding QuakeC.
