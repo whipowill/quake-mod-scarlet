@@ -1,41 +1,51 @@
-float() crandom; //function prototype for crandom
+float() crandom; // function prototype for crandom
 
-//SplatThink: Controls behavior of splats after they have hit the wall
+// SplatThink: Controls behavior of splats after they have hit the wall
 void() SplatThink =
 {
-        //if ( (self.attack_finished <= time) || (self.flags & FL_ONGROUND) )
-        if ( (self.attack_finished <= time) )
+        if ((self.attack_finished <= time))
         {
-                remove(self); //remove if: time "runs out" or on ground
+                remove(self); // remove if: time "runs out"
                 return;
         }
-        self.velocity_z = random()*-10; //splat slowly slides down walls, changing speed
-        self.angles = vectoangles(self.velocity); //point in direction of movement
-        self.nextthink = time + 0.2;
+
+        self.angles = vectoangles(self.velocity); // point in direction of movement
+        if (self.flags & FL_ONGROUND)
+        {
+                // trying to get blood stains on the ground
+                particle (self.origin, self.velocity*0.1, 79, 7);
+                particle (self.origin, self.velocity*0.2, 74, 30);
+                particle (self.origin, self.velocity*0.3, 69, 15);
+                self.nextthink = time + random();
+        }
+        else
+        {
+                // splat slowly slides down walls, changing speed
+                self.velocity_z = random()*-10;
+                self.nextthink = time + 0.2;
+        }
+
 };
 
-//SplatTouch: Called(by the engine) when splats touch the world or an entity
-//after being spawned
+// SplatTouch: Called(by the engine) when splats touch the world or an entity after being spawned
 void() SplatTouch =
 {
-        //if ( (other != world) || (pointcontents(self.origin) <= -3) || (self.flags & FL_ONGROUND) )
-        if ( (other != world) || (pointcontents(self.origin) <= -3) )
+        if ((other != world) || (pointcontents(self.origin) <= -3))
         {
-                remove(self); //remove if: didn't hit wall, in liquid, or on ground
-                return;
+                //remove(self); // remove if: didn't hit wall, in liquid
+                //return;
         }
 
-        self.velocity = self.avelocity = '0 0 0'; //stop moving and spinning
-        self.movetype = MOVETYPE_TOSS; //MOVETYPE_FLY; //changed to remove effect of gravity
-        self.touch = SUB_Null; //don't call this (touch) function again
-        self.attack_finished = time + 4 + (2*random()); //set random "time limit"
+        self.velocity = self.avelocity = '0 0 0'; // stop moving and spinning
+        self.movetype = MOVETYPE_FLY; // changed to remove effect of gravity
+        self.touch = SUB_Null; // don't call this (touch) function again
+        self.attack_finished = time + 4 + (2*random()); // set random "time limit"
 
         self.think = SplatThink;
         self.nextthink = time + 0.2;
 };
 
-//ThrowBloodSplat: This will create a blood splat at "org", moving in
-//direction "dir", and owned by "own"
+//ThrowBloodSplat: This will create a blood splat at "org", moving in direction "dir", and owned by "own"
 void(vector dir, vector org, entity own) ThrowBloodSplat =
 {
         local entity splat;
@@ -45,7 +55,7 @@ void(vector dir, vector org, entity own) ThrowBloodSplat =
 
         splat = spawn();
         splat.owner = own; //move through hit monster/player
-        splat.movetype = MOVETYPE_TOSS; //MOVETYPE_TOSS; //gravity with no bouncing
+        splat.movetype = MOVETYPE_TOSS;
         splat.solid = SOLID_BBOX; //does not move through other entities (besides owner)
 
         dir = normalize(dir); //make sure "dir" has length 1
@@ -65,38 +75,20 @@ void(vector dir, vector org, entity own) ThrowBloodSplat =
 };
 
 // special blood spat function for rockets and grenades based on radius. -whipowill
-void(entity inflictor, entity attacker, float damage, entity ignore) ThrowBloodSplatRadius =
+void(entity rocket, entity attacker, float damage, entity ignore) ThrowBloodSplatRadius =
 {
-        local   float   points;
         local   entity  head;
-        local   vector  org;
 
-        head = findradius(self.origin, damage+40);
+        rocket.angles_x = rocket.angles_x*-1; //account for error in makevectors with non-player entities
+        makevectors(rocket.angles); //find direction rocket is facing
 
+        head = findradius(rocket.origin, damage+40);
         while (head)
         {
-                //if (head != ignore)
-                //{
-                        org = head.origin + (head.mins + head.maxs)*0.5;
-                        points = 0.5*vlen (inflictor.origin - org);
-                        if (points < 0)
-                                points = 0;
-                        points = damage - points;
-                        if (head == self.owner)
-                                points = points * 0.5;
-                        if (points > 0)
-                        {
-                                if (CanDamage (head, self))
-                                {
-                                        if (random() < 0.8) //only 4 in 5 times to prevent overflows
-                                        {
-                                                inflictor.angles_x = inflictor.angles_x*-1; //account for error in makevectors with non-player entities
-                                                makevectors(inflictor.angles); //find direction nail is facing
-                                                ThrowBloodSplat(v_forward, inflictor.origin, other); //throw blood splat in direction nail is facing
-                                        }
-                                }
-                        }
-                //}
+                if (random() < 0.8) //only 4 in 5 times to prevent overflows
+                {
+                        ThrowBloodSplat(rocket.velocity, rocket.origin, other); //throw blood splat in direction nail is facing
+                }
 
                 head = head.chain;
         }

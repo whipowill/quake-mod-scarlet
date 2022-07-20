@@ -359,7 +359,7 @@ void() T_MissileTouch =
 	T_RadiusDamage (self, self.owner, 120, other);
 
 	// special blood spat function for rockets and grenades based on radius. -whipowill
-	ThrowBloodSplatRadius(self, self.owner, 120, other);
+	ThrowBloodSplatRadius(self, self.owner, damg, other);
 
 //	sound (self, CHAN_WEAPON, "weapons/r_exp3.wav", 1, ATTN_NORM);
 	self.origin = self.origin - 8*normalize(self.velocity);
