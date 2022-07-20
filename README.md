@@ -49,15 +49,15 @@ Be sure and reference the included ``instructions.html`` file from FrikaC for de
 
 This is a set of changes I'm really excited about.  To keep these changes optional, I've isolated them to the [Gore](https://github.com/whipowill/quake-mod-frikbot4/tree/gore) branch of this repo:
 
-- Doubles the bood particles.
-- Doubles the amount of gibs used in the explosion.
-- Enemies now bleed (profusely) when hit, from direct or blast damage.
+- Increases the amount of bood particles.
+- Increases the amount of gibs used in death explosions.
+- Enemies now bleed (profusely) when hit from direct or blast damage.
 - Enemy heads and gibs are now kickable.
 - Enemy bodies can now be gibbed into chunks.
 
-I think this is really tastefully done and brings Quake up to a level of violence worthy of a Doom successor.  What's great about how I did this is it doesn't use any additional textures or heavy mods, it just changes the programming of the assets that are already baked into the game.
+I think this is really tastefully done and brings Quake up to a level of violence worthy of a Doom successor.  What's different from other gore mods is I didn't use any new textures or decals, making this mod compatible w/ any Quake engine you might use.  I just changed the programming of the assets that are already baked into the game.
 
-You may want to run the game w/ ``-particles 4096`` to double the amount of particles allowed in the game.  I'm not sure if it's necessary but it might be.
+You will want to run the game w/ ``-particles 16384`` to increase the amount of particles allowed in the game.
 
 ## Credits
 
