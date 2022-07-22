@@ -63,7 +63,7 @@ You will want to run the game w/ ``-particles 16384`` to increase the amount of 
 
 ### Nametags
 
-Initiated by adding ``frikbot4_nametags 1`` to your ``autoexec.cfg`` file.
+Initiated by adding ``frikbot4_nametag 1`` to your ``autoexec.cfg`` file.
 
 - Displays player names on screen when aiming at them.
 

@@ -25,7 +25,7 @@ items.qc
 frikbot4_gore.qc
 weapons.qc
 world.qc
-frikbot4_nametag.qc
+frikbot4_nametags.qc
 client.qc
 player.qc
 frikbot4_corpses.qc
