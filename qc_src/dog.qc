@@ -241,7 +241,7 @@ void() dog_die =
 
 // regular death
 	sound (self, CHAN_VOICE, "dog/ddeath.wav", 1, ATTN_NORM);
-	self.solid = SOLID_NOT;
+	BecomeCorpse();
 
 	if (random() > 0.5)
 		dog_die1 ();
@@ -346,6 +346,7 @@ void() monster_dog =
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
 
+	self.headmdl = "progs/h_dog.mdl";
 	setmodel (self, "progs/dog.mdl");
 
 	setsize (self, '-32 -32 -24', '32 32 40');

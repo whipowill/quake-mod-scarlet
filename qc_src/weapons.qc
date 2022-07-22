@@ -22,6 +22,7 @@ void() W_Precache =
 	precache_sound ("weapons/grenade.wav");	// grenade launcher
 	precache_sound ("weapons/bounce.wav");		// grenade bounce
 	precache_sound ("weapons/shotgn2.wav");	// super shotgun
+	precache_model ("progs/zom_gib.mdl");
 };
 
 float() crandom =
@@ -119,7 +120,16 @@ SpawnBlood
 */
 void(vector org, vector vel, float damage) SpawnBlood =
 {
-	particle (org, vel*0.1, 73, damage*2);
+	if (cvar("frikbot4_gore"))
+	{
+		particle (org, vel*0.1, 79, damage*1);
+		particle (org, vel*0.2, 74, damage*5);
+		particle (org, vel*0.3, 69, damage*2);
+	}
+	else
+	{
+		particle (org, vel*0.1, 73, damage*2);
+	}
 };
 
 /*
@@ -212,6 +222,9 @@ void(float damage, vector dir) TraceAttack =
 
 	if (trace_ent.takedamage)
 	{
+		// blood splat -whipowill
+		if(random() < 0.4) // only 2 in 5 times to prevent overflows
+	        ThrowBloodSplat(dir, trace_endpos, trace_ent, damage); // throw blood splat in direction of shot
 		SpawnBlood (org, vel*0.2, damage);
 		AddMultiDamage (trace_ent, damage);
 	}
@@ -352,6 +365,9 @@ void() T_MissileTouch =
 	// was done in the impact
 	T_RadiusDamage (self, self.owner, 120, other);
 
+	// special blood spat function for rockets and grenades based on radius. -whipowill
+	ThrowBloodSplatRadius(self, self.owner, damg, other);
+
 //	sound (self, CHAN_WEAPON, "weapons/r_exp3.wav", 1, ATTN_NORM);
 	self.origin = self.origin - 8*normalize(self.velocity);
 
@@ -435,7 +451,12 @@ void(vector p1, vector p2, entity from, float damage) LightningDamage =
 	traceline (p1, p2, FALSE, self);
 	if (trace_ent.takedamage)
 	{
+		// blood splat -whipowill
+		if(random() < 0.4) // only 2 in 5 times to prevent overflows
+	        ThrowBloodSplat(f, trace_endpos, trace_ent, damage); // throw blood splat in direction of shot
+
 		particle (trace_endpos, '0 0 100', 225, damage*4);
+
 		T_Damage (trace_ent, from, from, damage);
 		if (self.classname == "player")
 		{
@@ -517,6 +538,9 @@ void() W_FireLightning =
 void() GrenadeExplode =
 {
 	T_RadiusDamage (self, self.owner, 120, world);
+
+	// special blood spat function for rockets and grenades based on radius. -whipowill
+	ThrowBloodSplatRadius(self, self.owner, 120, world);
 
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 	WriteByte (MSG_BROADCAST, TE_EXPLOSION);
@@ -690,6 +714,13 @@ local float rand;
 // hit something that bleeds
 	if (other.takedamage)
 	{
+		// blood splat -whipowill
+		if (random() < 0.8) // only 4 in 5 times to prevent overflows
+		{
+		        self.angles_x = self.angles_x*-1; // account for error in makevectors with non-player entities
+		        makevectors(self.angles); // find direction nail is facing
+		        ThrowBloodSplat(v_forward, self.origin, other, 9); // throw blood splat in direction nail is facing
+		}
 		spawn_touchblood (9);
 		T_Damage (other, self, self.owner, 9);
 	}
@@ -730,6 +761,13 @@ local float rand;
 // hit something that bleeds
 	if (other.takedamage)
 	{
+		// blood splat -whipowill
+		if (random() < 0.8) // only 4 in 5 times to prevent overflows
+		{
+		        self.angles_x = self.angles_x*-1; // ccount for error in makevectors with non-player entities
+		        makevectors(self.angles); // find direction nail is facing
+		        ThrowBloodSplat(v_forward, self.origin, other, 18); // throw blood splat in direction nail is facing
+		}
 		spawn_touchblood (18);
 		T_Damage (other, self, self.owner, 18);
 	}

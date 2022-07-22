@@ -47,10 +47,12 @@ Be sure and reference the included ``instructions.html`` file from FrikaC for de
 
 ### Gore
 
-This is a set of changes I'm really excited about.  To keep these changes optional, I've isolated them to the [Gore](https://github.com/whipowill/quake-mod-frikbot4/tree/gore) branch of this repo:
+Initiated by adding ``frikbot4_gore 1`` to your ``autoexec.cfg`` file.
+
+This is a set of changes I'm really excited about:
 
 - Increases the amount of bood particles.
-- Increases the amount of gibs used in death explosions.
+- Increases the amount of gibs in death explosions.
 - Enemies now bleed (profusely) when hit from direct or blast damage.
 - Enemy heads and gibs are now kickable.
 - Enemy bodies can now be gibbed into chunks.
@@ -59,18 +61,25 @@ I think this is really tastefully done and brings Quake up to a level of violenc
 
 You will want to run the game w/ ``-particles 16384`` to increase the amount of particles allowed in the game.
 
+### Nametags
+
+Initiated by adding ``frikbot4_nametags 1`` to your ``autoexec.cfg`` file.
+
+- Displays player names on screen when aiming at them.
+
 ## Credits
 
-- Original Frikbot mod by FrikaC, Igor9, and JLaw
-- Original compilation of waypoint files by LightningHunter
+- Original bot mod by [FrikaC](https://www.moddb.com/mods/frikbot-x), Igor9, and JLaw
+- Original waypoint files by [LightningHunter](https://www.celephais.net/board/view_thread.php?id=60404)
+- Original nametag code by [BenVanCitters](https://gist.github.com/BenVanCitters/a157f58e906bf00adc39a484cbcee12f)
+- Original corpse gibbing code by [Kryten](https://www.insideqc.com/qctut/qctut-33.shtml)
+- Original corpse kicking code by [Ivana](http://www.insideqc.com/qctut/lesson-52.shtml)
+- Original enemy bleeding code by [Maniac](https://www.insideqc.com/qctut/qctut-47.shtml)
 
 ## References
 
 - [FTEQCC](https://www.fteqcc.org/) - the QuakeC compiler I used to compile this code.
 - [Intro to QuakeC](https://codedocs.org/what-is/quakec) - nice intro I found on how to compile QuakeC code.
 - [QuakeC Manual](http://www.cataboligne.org/extra/qcmanual.html#Names) - helpful list of available functions.
-- [Deathmatch With Bots](https://steamcommunity.com/sharedfiles/filedetails/?id=123626484) - a guide I used to figure out what bot to use.
-- [Frikbot X on ModDB](https://www.moddb.com/mods/frikbot-x) - where I found the missing campaign waypoint files.
-- [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history.
-- [Definitive Frikbot Waypack](https://www.celephais.net/board/view_thread.php?id=60404) - where almost all the waypoints come from.
 - [QuakeC Tutorials](https://quakewiki.org/wiki/QuakeC_tutorials) - a list of tutorials for modding QuakeC.
+- [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history.

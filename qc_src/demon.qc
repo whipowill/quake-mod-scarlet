@@ -145,7 +145,7 @@ void()	demon1_die3		=[	$death3,		demon1_die4	] {};
 void()	demon1_die4		=[	$death4,		demon1_die5	] {};
 void()	demon1_die5		=[	$death5,		demon1_die6	] {};
 void()	demon1_die6		=[	$death6,		demon1_die7	]
-{self.solid = SOLID_NOT;};
+{BecomeCorpse();};
 void()	demon1_die7		=[	$death7,		demon1_die8	] {};
 void()	demon1_die8		=[	$death8,		demon1_die9	] {};
 void()	demon1_die9		=[	$death9,		demon1_die9 ] {};
@@ -197,6 +197,7 @@ void() monster_demon1 =
 	self.solid = SOLID_SLIDEBOX;
 	self.movetype = MOVETYPE_STEP;
 
+	self.headmdl = "progs/h_demon.mdl";
 	setmodel (self, "progs/demon.mdl");
 
 	setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
