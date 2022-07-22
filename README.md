@@ -67,16 +67,17 @@ Initiated by adding ``frikbot4_nametags 1`` to your ``autoexec.cfg`` file.
 
 ## Credits
 
-- Original Frikbot mod by FrikaC, Igor9, and JLaw
-- Original compilation of waypoint files by LightningHunter
+- Original bot mod by [FrikaC](https://www.moddb.com/mods/frikbot-x), Igor9, and JLaw
+- Original waypoint files by [LightningHunter](https://www.celephais.net/board/view_thread.php?id=60404)
+- Original nametag code by [BenVanCitters](https://gist.github.com/BenVanCitters/a157f58e906bf00adc39a484cbcee12f)
+- Original corpse gibbing code by [Kryten](https://www.insideqc.com/qctut/qctut-33.shtml)
+- Original corpse kicking code by [Ivana](http://www.insideqc.com/qctut/lesson-52.shtml)
+- Original enemy bleeding code by [Maniac](https://www.insideqc.com/qctut/qctut-47.shtml)
 
 ## References
 
 - [FTEQCC](https://www.fteqcc.org/) - the QuakeC compiler I used to compile this code.
 - [Intro to QuakeC](https://codedocs.org/what-is/quakec) - nice intro I found on how to compile QuakeC code.
 - [QuakeC Manual](http://www.cataboligne.org/extra/qcmanual.html#Names) - helpful list of available functions.
-- [Deathmatch With Bots](https://steamcommunity.com/sharedfiles/filedetails/?id=123626484) - a guide I used to figure out what bot to use.
-- [Frikbot X on ModDB](https://www.moddb.com/mods/frikbot-x) - where I found the missing campaign waypoint files.
-- [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history.
-- [Definitive Frikbot Waypack](https://www.celephais.net/board/view_thread.php?id=60404) - where almost all the waypoints come from.
 - [QuakeC Tutorials](https://quakewiki.org/wiki/QuakeC_tutorials) - a list of tutorials for modding QuakeC.
+- [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history.
