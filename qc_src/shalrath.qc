@@ -112,7 +112,7 @@ void() shalrath_die =
 
 	sound (self, CHAN_VOICE, "shalrath/death.wav", 1, ATTN_NORM);
 	shal_death1();
-	become_corpse();
+	BecomeCorpse();
 	// insert death sounds here
 };
 
@@ -193,7 +193,7 @@ void() ShalMissileTouch =
 	self.velocity = '0 0 0';
 	self.touch = SUB_Null;
 	setmodel (self, "progs/s_explod.spr");
-	become_corpse();
+	BecomeCorpse();
 	s_explode1 ();
 };
 

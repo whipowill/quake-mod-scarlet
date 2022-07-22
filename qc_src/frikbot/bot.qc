@@ -776,8 +776,6 @@ void() BotInit =
 	}
 	precache_model("progs/s_light.spr");
 	precache_model("progs/s_bubble.spr");
-
-
 };
 
 /*

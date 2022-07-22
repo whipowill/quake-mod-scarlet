@@ -241,7 +241,7 @@ void() dog_die =
 
 // regular death
 	sound (self, CHAN_VOICE, "dog/ddeath.wav", 1, ATTN_NORM);
-	become_corpse();
+	BecomeCorpse();
 
 	if (random() > 0.5)
 		dog_die1 ();

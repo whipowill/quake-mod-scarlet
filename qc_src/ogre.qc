@@ -64,7 +64,7 @@ void() OgreGrenadeExplode =
 	self.velocity = '0 0 0';
 	self.touch = SUB_Null;
 	setmodel (self, "progs/s_explod.spr");
-	become_corpse();
+	BecomeCorpse();
 	s_explode1 ();
 };
 
@@ -355,7 +355,7 @@ void(entity attacker, float damage)	ogre_pain =
 void()	ogre_die1	=[	$death1,	ogre_die2	] {};
 void()	ogre_die2	=[	$death2,	ogre_die3	] {};
 void()	ogre_die3	=[	$death3,	ogre_die4	]
-{become_corpse();
+{BecomeCorpse();
 self.ammo_rockets = 2;DropBackpack();};
 void()	ogre_die4	=[	$death4,	ogre_die5	] {};
 void()	ogre_die5	=[	$death5,	ogre_die6	] {};
@@ -372,7 +372,7 @@ void()	ogre_die14	=[	$death14,	ogre_die14	] {};
 void()	ogre_bdie1	=[	$bdeath1,	ogre_bdie2	] {};
 void()	ogre_bdie2	=[	$bdeath2,	ogre_bdie3	] {ai_forward(5);};
 void()	ogre_bdie3	=[	$bdeath3,	ogre_bdie4	]
-{become_corpse();
+{BecomeCorpse();
 self.ammo_rockets = 2;DropBackpack();};
 void()	ogre_bdie4	=[	$bdeath4,	ogre_bdie5	] {ai_forward(1);};
 void()	ogre_bdie5	=[	$bdeath5,	ogre_bdie6	] {ai_forward(3);};

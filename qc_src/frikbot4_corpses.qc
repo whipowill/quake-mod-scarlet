@@ -1,5 +1,9 @@
-void () corpse_touch = 
-{ 
+// -------------------------------------------------
+// Enable gibbing corpses.
+// -------------------------------------------------
+
+void() CorpseTouch =
+{
         self.velocity = '0 0 0';
 
         if ((!other.flags & FL_ONGROUND) && (other.health) && (other.flags & FL_CLIENT))
@@ -7,8 +11,7 @@ void () corpse_touch =
 };
 
 .string headmdl;
-void () corpse_die =
-
+void() CorpseDie =
 {
         sound (self, CHAN_VOICE, "player/udeath.wav", 1, ATTN_NORM); //gib sound
         if (self.headmdl) //do we have a head? if not you must have forgotten that.
@@ -21,9 +24,14 @@ void () corpse_die =
                 remove (self);
 };
 
-void () BecomeCorpse =
-
+void() BecomeCorpse =
 {
+        if (!cvar("frikbot4_gore"))
+        {
+                self.solid = SOLID_NOT;
+                return;
+        }
+
         self.health = 30;
 
         self.takedamage = DAMAGE_AIM;
@@ -48,12 +56,12 @@ void () BecomeCorpse =
         self.killtarget = string_null;
         self.targetname = string_null;
 
-        self.th_die = corpse_die;
+        self.th_die = CorpseDie;
         self.th_stand = SUB_Null;
         self.th_walk = SUB_Null;
         self.th_run = SUB_Null;
         self.th_missile = SUB_Null;
         self.th_melee = SUB_Null;
         self.th_pain = SUB_Null;
-        self.touch = corpse_touch;
+        self.touch = CorpseTouch;
 };

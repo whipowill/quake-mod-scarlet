@@ -120,9 +120,16 @@ SpawnBlood
 */
 void(vector org, vector vel, float damage) SpawnBlood =
 {
-	particle (org, vel*0.1, 79, damage*1);
-	particle (org, vel*0.2, 74, damage*5);
-	particle (org, vel*0.3, 69, damage*2);
+	if (cvar("frikbot4_gore"))
+	{
+		particle (org, vel*0.1, 79, damage*1);
+		particle (org, vel*0.2, 74, damage*5);
+		particle (org, vel*0.3, 69, damage*2);
+	}
+	else
+	{
+		particle (org, vel*0.1, 73, damage*2);
+	}
 };
 
 /*
@@ -217,7 +224,7 @@ void(float damage, vector dir) TraceAttack =
 	{
 		// blood splat -whipowill
 		if(random() < 0.4) // only 2 in 5 times to prevent overflows
-	        ThrowBloodSplat(dir, trace_endpos, trace_ent); // throw blood splat in direction of shot
+	        ThrowBloodSplat(dir, trace_endpos, trace_ent, damage); // throw blood splat in direction of shot
 		SpawnBlood (org, vel*0.2, damage);
 		AddMultiDamage (trace_ent, damage);
 	}
@@ -446,7 +453,7 @@ void(vector p1, vector p2, entity from, float damage) LightningDamage =
 	{
 		// blood splat -whipowill
 		if(random() < 0.4) // only 2 in 5 times to prevent overflows
-	        ThrowBloodSplat(f, trace_endpos, trace_ent); // throw blood splat in direction of shot
+	        ThrowBloodSplat(f, trace_endpos, trace_ent, damage); // throw blood splat in direction of shot
 
 		particle (trace_endpos, '0 0 100', 225, damage*4);
 
@@ -712,7 +719,7 @@ local float rand;
 		{
 		        self.angles_x = self.angles_x*-1; // account for error in makevectors with non-player entities
 		        makevectors(self.angles); // find direction nail is facing
-		        ThrowBloodSplat(v_forward, self.origin, other); // throw blood splat in direction nail is facing
+		        ThrowBloodSplat(v_forward, self.origin, other, 9); // throw blood splat in direction nail is facing
 		}
 		spawn_touchblood (9);
 		T_Damage (other, self, self.owner, 9);
@@ -759,7 +766,7 @@ local float rand;
 		{
 		        self.angles_x = self.angles_x*-1; // ccount for error in makevectors with non-player entities
 		        makevectors(self.angles); // find direction nail is facing
-		        ThrowBloodSplat(v_forward, self.origin, other); // throw blood splat in direction nail is facing
+		        ThrowBloodSplat(v_forward, self.origin, other, 18); // throw blood splat in direction nail is facing
 		}
 		spawn_touchblood (18);
 		T_Damage (other, self, self.owner, 18);

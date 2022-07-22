@@ -350,7 +350,7 @@ void() zombie_paine8	=[	$paine8,	zombie_paine9	] {ai_pain(1);};
 void() zombie_paine9	=[	$paine9,	zombie_paine10	] {ai_pain(2);};
 void() zombie_paine10	=[	$paine10,	zombie_paine11	] {
 sound (self, CHAN_BODY, "zombie/z_fall.wav", 1, ATTN_NORM);
-become_corpse();
+BecomeCorpse();
 };
 void() zombie_paine11	=[	$paine11,	zombie_paine12	] {self.nextthink = self.nextthink + 5;self.health = 60;};
 void() zombie_paine12	=[	$paine12,	zombie_paine13	]{
@@ -361,7 +361,7 @@ self.solid = SOLID_SLIDEBOX;
 if (!walkmove (0, 0))
 {
 	self.think = zombie_paine11;
-	become_corpse();
+	BecomeCorpse();
 	return;
 }
 };

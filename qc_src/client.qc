@@ -1055,6 +1055,9 @@ void() PlayerPreThink =
 	if (BotPreFrame())	//~ FrikBot
 	return;
 
+	// add player name to screen, like Halo. -whipowill
+	NameTag();
+
 	local	float	mspeed, aspeed;
 	local	float	r;
 

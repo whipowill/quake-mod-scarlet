@@ -467,7 +467,7 @@ void(string gibname, float dm) ThrowGib =
 	new.velocity = VelocityForDamage (dm);
 	new.movetype = MOVETYPE_BOUNCE;
 	new.solid = SOLID_TRIGGER;   // Set it up for a trigger event
-	new.touch = kick_touch;      // Call kick_touch when touched
+	new.touch = KickGibs;      // Call KickGibs when touched
 	new.avelocity_x = random()*600;
 	new.avelocity_y = random()*600;
 	new.avelocity_z = random()*600;
@@ -486,7 +486,7 @@ void(string gibname, float dm) ThrowHead =
 	self.movetype = MOVETYPE_BOUNCE;
 	self.takedamage = DAMAGE_NO;
 	self.solid = SOLID_TRIGGER;
-	self.touch = kick_touch;
+	self.touch = KickGibs;
 	self.view_ofs = '0 0 8';
 	setsize (self, '-16 -16 0', '16 16 56');
 	self.velocity = VelocityForDamage (dm);
@@ -500,11 +500,14 @@ void() GibPlayer =
 {
 	ThrowHead ("progs/h_player.mdl", self.health);
 	ThrowGib ("progs/gib1.mdl", self.health);
-	ThrowGib ("progs/gib1.mdl", self.health);
-	ThrowGib ("progs/gib2.mdl", self.health);
 	ThrowGib ("progs/gib2.mdl", self.health);
 	ThrowGib ("progs/gib3.mdl", self.health);
-	ThrowGib ("progs/gib3.mdl", self.health);
+	if (cvar("frikbot4_gore"))
+	{
+		ThrowGib ("progs/gib1.mdl", self.health);
+		ThrowGib ("progs/gib2.mdl", self.health);
+		ThrowGib ("progs/gib3.mdl", self.health);
+	}
 
 	self.deadflag = DEAD_DEAD;
 

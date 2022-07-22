@@ -47,10 +47,10 @@ Be sure and reference the included ``instructions.html`` file from FrikaC for de
 
 ### Gore
 
-This is a set of changes I'm really excited about.  To keep these changes optional, I've isolated them to the [Gore](https://github.com/whipowill/quake-mod-frikbot4/tree/gore) branch of this repo:
+Initiated by adding ``frikbot4_gore 1`` to your ``autoexec.cfg`` file.
 
 - Increases the amount of bood particles.
-- Increases the amount of gibs used in death explosions.
+- Increases the amount of gibs in death explosions.
 - Enemies now bleed (profusely) when hit from direct or blast damage.
 - Enemy heads and gibs are now kickable.
 - Enemy bodies can now be gibbed into chunks.
@@ -58,6 +58,12 @@ This is a set of changes I'm really excited about.  To keep these changes option
 I think this is really tastefully done and brings Quake up to a level of violence worthy of a Doom successor.  What's different from other gore mods is I didn't use any new textures or decals, making this mod compatible w/ any Quake engine you might use.  I just changed the programming of the assets that are already baked into the game.
 
 You will want to run the game w/ ``-particles 16384`` to increase the amount of particles allowed in the game.
+
+## Nametags
+
+Initiated by adding ``frikbot4_nametags 1`` to your ``autoexec.cfg`` file.
+
+- Displays player names on screen when aiming at them.
 
 ## Credits
 
