@@ -1,316 +1,133 @@
+/*
+================================================================
 
+	MISC SUBSTITUTION FUNCTIONS
 
-void() SUB_Null = {};
+================================================================
+*/
 
-void() SUB_Remove = {remove(self);};
-
+void() SUB_Null = {}
 
 /*
-QuakeEd only writes a single float for angles (bad idea), so up and down are
-just constant angles.
+=============
+SUB_Remove/SUB_RemoveSoon
+
+RemoveSoon is to be used during touch functions to avoid touchlinks errors
+===============
 */
-void() SetMovedir =
+void() SUB_Remove = { remove(self); }
+void() SUB_RemoveSoon = 
 {
-	if (self.angles == '0 -1 0')
-		self.movedir = '0 0 1';
-	else if (self.angles == '0 -2 0')
-		self.movedir = '0 0 -1';
+	// ensure no shenanigans take place in the next hundredth of a second
+	// otherwise we get weirdness like items being picked up twice at high framerates
+	self.model = string_null;
+	self.solid = SOLID_NOT;
+	self.touch = SUB_Null;
+	self.use = SUB_Null;
+	
+	self.think = SUB_Remove;
+	self.nextthink = time;
+}
+
+/*
+=============
+RemoveTarget
+
+take an entity out of gameplay (independent of 'killing' it)
+===============
+*/
+void(entity victim) RemoveTarget =
+{
+	
+	// iw -- don't change kill count when removing a dead monster
+	if (victim.flags & FL_MONSTER && victim.deadflag == DEAD_NO && !(victim.customflags & CFL_SPAWNER))
+		addmonster(-1);		// since the player won't get credit for the kill
+
+	// clean up door triggers so they don't get lonely and crash
+	if (victim.trigger_field != world)
+		remove(victim.trigger_field);
+
+	// silence movers
+	sound(victim, CHAN_VOICE, "misc/null.wav", 1, 1);
+	
+	remove (victim);
+}
+
+/*
+=============
+SUB_CallAsSelf
+
+wrap the self/oself shuffle for code cleanliness elsewhere
+===============
+*/
+void(void() fun, entity newself) SUB_CallAsSelf =
+{
+	local entity oself;
+	
+	oself = self;
+	self = newself;
+	fun();
+	self = oself;	
+}
+
+/*
+=============
+SUB_ChangeModel
+
+size changes after a model change, use this to preserve it
+===============
+*/
+void(entity ent, string mdl) SUB_ChangeModel =
+{
+	local vector sz,smin,smax;
+	sz = ent.size;
+	smin = ent.mins;
+	smax = ent.maxs;
+	
+	setmodel(ent, mdl);
+	
+	if (sz == VEC_ORIGIN)
+		setsize(ent, VEC_ORIGIN, VEC_ORIGIN);
 	else
-	{
-		makevectors (self.angles);
-		self.movedir = v_forward;
-	}
-	
-	self.angles = '0 0 0';
-};
+		setsize(ent, smin, smax);
+}
 
 /*
-================
-InitTrigger
-================
-*/
-void() InitTrigger =
+void(float frame, void() th, float thtime) SUB_FrameThinkTime
 {
-// trigger angles are used for one-way touches.  An angle of 0 is assumed
-// to mean no restrictions, so use a yaw of 360 instead.
-	if (self.angles != '0 0 0')
-		SetMovedir ();
-	self.solid = SOLID_TRIGGER;
-	setmodel (self, self.model);	// set size and link into world
-	self.movetype = MOVETYPE_NONE;
-	self.modelindex = 0;
-	self.model = "";
-};
+	self.frame = frame;
+	self.think = th;
+	self.nextthink = time + thtime;
+}
+*/
+
 
 /*
-=============
-SUB_CalcMove
-
-calculate self.velocity and self.nextthink to reach dest from
-self.origin traveling at speed
+===============
+SUB_ShouldSpawn
 ===============
 */
-void(entity ent, vector tdest, float tspeed, void() func) SUB_CalcMoveEnt =
+float() SUB_ShouldSpawn =
 {
-local entity	stemp;
-	stemp = self;
-	self = ent;
-
-	SUB_CalcMove (tdest, tspeed, func);
-	self = stemp;
-};
-
-void(vector tdest, float tspeed, void() func) SUB_CalcMove =
-{
-local vector	vdestdelta;
-local float		len, traveltime;
-
-	if (!tspeed)
-		objerror("No speed is defined!");
-
-	self.think1 = func;
-	self.finaldest = tdest;
-	self.think = SUB_CalcMoveDone;
-
-	if (tdest == self.origin)
+	// do a minimum-version check so cheeky mappers can place surprise 
+	// trigger_hurts to frag people who don't upgrade
+	if (self.version && self.version <= version_f)
 	{
-		self.velocity = '0 0 0';
-		self.nextthink = self.ltime + 0.1;
-		return;
+		remove(self);
+		return FALSE;
 	}
-		
-// set destdelta to the vector needed to move
-	vdestdelta = tdest - self.origin;
-	
-// calculate length of vector
-	len = vlen (vdestdelta);
-	
-// divide by speed to get time to reach dest
-	traveltime = len / tspeed;
-
-	if (traveltime < 0.1)
+	// check coop spawn flags, because we invented them and the exe only 
+	// checks skill/dm flags
+	if (self.spawnflags & SPAWN_COOPONLY && self.spawnflags & SPAWN_NOTCOOP)
+		objerror("cooponly and notincoop flags both set on the same entity");
+	if ( ((self.spawnflags & SPAWN_NOTCOOP) && coop) || ((self.spawnflags & SPAWN_COOPONLY) && !(coop)) )
 	{
-		self.velocity = '0 0 0';
-		self.nextthink = self.ltime + 0.1;
-		return;
+		remove(self);
+		return FALSE;
 	}
-	
-// set nextthink to trigger a think when dest is reached
-	self.nextthink = self.ltime + traveltime;
-
-// scale the destdelta vector by the time spent traveling to get velocity
-	self.velocity = vdestdelta * (1/traveltime);	// qcc won't take vec/float	
-};
-
-/*
-============
-After moving, set origin to exact final destination
-============
-*/
-void()  SUB_CalcMoveDone =
-{
-	setorigin(self, self.finaldest);
-	self.velocity = '0 0 0';
-	self.nextthink = -1;
-	if (self.think1)
-		self.think1();
-};
+	return TRUE;
+}
 
 
-/*
-=============
-SUB_CalcAngleMove
-
-calculate self.avelocity and self.nextthink to reach destangle from
-self.angles rotating 
-
-The calling function should make sure self.think is valid
-===============
-*/
-void(entity ent, vector destangle, float tspeed, void() func) SUB_CalcAngleMoveEnt =
-{
-local entity		stemp;
-	stemp = self;
-	self = ent;
-	SUB_CalcAngleMove (destangle, tspeed, func);
-	self = stemp;
-};
-
-void(vector destangle, float tspeed, void() func) SUB_CalcAngleMove =
-{
-local vector	destdelta;
-local float		len, traveltime;
-
-	if (!tspeed)
-		objerror("No speed is defined!");
-		
-// set destdelta to the vector needed to move
-	destdelta = destangle - self.angles;
-	
-// calculate length of vector
-	len = vlen (destdelta);
-	
-// divide by speed to get time to reach dest
-	traveltime = len / tspeed;
-
-// set nextthink to trigger a think when dest is reached
-	self.nextthink = self.ltime + traveltime;
-
-// scale the destdelta vector by the time spent traveling to get velocity
-	self.avelocity = destdelta * (1 / traveltime);
-	
-	self.think1 = func;
-	self.finalangle = destangle;
-	self.think = SUB_CalcAngleMoveDone;
-};
-
-/*
-============
-After rotating, set angle to exact final angle
-============
-*/
-void() SUB_CalcAngleMoveDone =
-{
-	self.angles = self.finalangle;
-	self.avelocity = '0 0 0';
-	self.nextthink = -1;
-	if (self.think1)
-		self.think1();
-};
 
 
-//=============================================================================
-
-void() DelayThink =
-{
-	activator = self.enemy;
-	SUB_UseTargets ();
-	remove(self);
-};
-
-/*
-==============================
-SUB_UseTargets
-
-the global "activator" should be set to the entity that initiated the firing.
-
-If self.delay is set, a DelayedUse entity will be created that will actually
-do the SUB_UseTargets after that many seconds have passed.
-
-Centerprints any self.message to the activator.
-
-Removes all entities with a targetname that match self.killtarget,
-and removes them, so some events can remove other triggers.
-
-Search for (string)targetname in all entities that
-match (string)self.target and call their .use function
-
-==============================
-*/
-void() SUB_UseTargets =
-{
-	local entity t, stemp, otemp, act;
-
-//
-// check for a delay
-//
-	if (self.delay)
-	{
-	// create a temp object to fire at a later time
-		t = spawn();
-		t.classname = "DelayedUse";
-		t.nextthink = time + self.delay;
-		t.think = DelayThink;
-		t.enemy = activator;
-		t.message = self.message;
-		t.killtarget = self.killtarget;
-		t.target = self.target;
-		return;
-	}
-	
-	
-//
-// print the message
-//
-	if (activator.classname == "player" && self.message != "")
-	{
-		centerprint (activator, self.message);
-		if (!self.noise)
-			sound (activator, CHAN_VOICE, "misc/talk.wav", 1, ATTN_NORM);
-	}
-
-//
-// kill the killtagets
-//
-	if (self.killtarget)
-	{
-		t = world;
-		do
-		{
-			t = find (t, targetname, self.killtarget);
-			if (!t)
-				return;
-			remove (t);
-		} while ( 1 );
-	}
-	
-//
-// fire targets
-//
-	if (self.target)
-	{
-		act = activator;
-		t = world;
-		do
-		{
-			t = find (t, targetname, self.target);
-			if (!t)
-			{
-				return;
-			}
-			stemp = self;
-			otemp = other;
-			self = t;
-			other = stemp;
-			if (self.use != SUB_Null)
-			{
-				if (self.use)
-					self.use ();
-			}
-			self = stemp;
-			other = otemp;
-			activator = act;
-		} while ( 1 );
-	}
-	
-
-};
-
-
-/*
-
-in nightmare mode, all attack_finished times become 0
-some monsters refire twice automatically
-
-*/
-
-void(float normal) SUB_AttackFinished =
-{
-	self.cnt = 0;		// refire count for nightmare
-	if (skill != 3)
-		self.attack_finished = time + normal;
-};
-
-float (entity targ) visible;
-
-void (void() thinkst) SUB_CheckRefire =
-{
-	if (skill != 3)
-		return;
-	if (self.cnt == 1)
-		return;
-	if (!visible (self.enemy))
-		return;
-	self.cnt = 1;
-	self.think = thinkst;
-};

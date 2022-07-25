@@ -1,488 +1,699 @@
 
 /*QUAKED info_null (0 0.5 0) (-4 -4 -4) (4 4 4)
-Used as a positional target for spotlights, etc.
+Used as a positional target for spotlights, etc. Not present in game.
+*/
+/*FGD
+@PointClass base(Targetname) size(8 8 8) color(200 150 150) = info_null : "info_null (spotlight target)" []
 */
 void() info_null =
 {
 	remove(self);
-};
+}
 
 /*QUAKED info_notnull (0 0.5 0) (-4 -4 -4) (4 4 4)
-Used as a positional target for lightning.
+Used as a positional target for lighting. Present in game.
+*/
+/*FGD
+@PointClass base(Appearflags, Target, Targetname) size(8 8 8) color(200 150 150) = info_notnull : "Wildcard entity" // I love you too
+[
+	use(string) : "self.use"
+	think(string) : "self.think"
+	nextthink(integer) : "nextthink"
+	noise(string) : "noise"
+	touch(string) : "self.touch"
+]
 */
 void() info_notnull =
 {
-};
+	if (!SUB_ShouldSpawn()) return;
+}
 
-//============================================================================
+/*QUAKED misc_external_map (0.6 0.7 0.8) (-4 -4 -4) (4 4 4)
 
-float START_OFF = 1;
+"_external_map"				Specifies the filename of the .map to import.
+"_external_map_classname"	What entity you want the external map to turn in to. You can use internal qbsp entity types such as "func_detail", or a regular bmodel classname like "func_wall" or "func_door".
+"_external_map_angles"		Rotation for the prefab, "pitch yaw roll" format. Negative pitch is UP.
+"_external_map_angle"		Short version of "_external_map_angles" for when you want to specify just a yaw rotation.
+"_external_map_scale"		Scale factor for the prefab, defaults to 1. Either specify a single value or three scales, "x y z".
+*/
+/*FGD
+@PointClass = misc_external_map : "Put another map in your map" [
+	_external_map(string) : "Filename of .map to import"
+	_external_map_classname(string) : "Classname to turn imported worldspawn into"
+	_external_map_angles(string) : "Rotation (pitch yaw roll, negative pitch is up)"
+	_external_map_angle(string) : "Rotation (yaw only)"
+	_external_map_scale(string) : "Scale (one value or x y z)"
+]
+*/
 
-void() light_use =
+void() misc_model_animate =
 {
-	if (self.spawnflags & START_OFF)
+	vector anim;
+	if (self.state) anim = self.pos2;
+	else anim = self.pos1;
+	
+	self.frame += 1;
+	if (self.frame > anim_z)
 	{
-		lightstyle(self.style, "m");
-		self.spawnflags = self.spawnflags - START_OFF;
+		self.frame = anim_x;
+		if (self.spawnflags & SPAWN_MODEL_ANIMONCE && self.state)
+		{
+			self.state = !self.state;
+			self.frame = self.pos1_y;
+			self.nextthink = time + self.speed;
+			return;
+		}
+	}
+	self.nextthink = time + self.speed;
+}
+
+void() misc_model_use =
+{
+	self.state = !self.state;
+	if (self.spawnflags & SPAWN_MODEL_TOGGLEVIS)
+	{
+		if (self.state)
+		{
+			self.modelindex = self.oldstyle;
+		}
+		else
+		{
+			self.oldstyle = self.modelindex;
+			self.modelindex = 0;
+		}
+		//tmp = self.oldstyle;
+		//self.oldstyle = self.alpha;
+		//self.alpha = tmp;
 	}
 	else
 	{
-		lightstyle(self.style, "a");
-		self.spawnflags = self.spawnflags + START_OFF;
+		if (self.state)
+		{
+			self.frame = self.pos2_y;
+		}
+		else
+		{
+			self.frame = self.pos1_y;
+		}
+		self.think = misc_model_animate;
+		self.nextthink = time + self.speed;
 	}
-};
+}
 
-/*QUAKED light (0 1 0) (-8 -8 -8) (8 8 8) START_OFF
-Non-displayed light.
-Default light value is 300
-Default style is 0
-If targeted, it will toggle between on or off.
+float SPAWN_MODEL_TOGGLEVIS = 1;
+float SPAWN_MODEL_STARTINVIS = 2;
+float SPAWN_MODEL_ANIMONCE = 4;
+
+/*QUAKED misc_model (0.6 0.7 0.8) (-8 -8 -8) (8 8 8) TOGGLE_VIS START_INVIS ANIM_ONCE
+display a model. will not be solid! for a misc_model which can be toggled on or off, use a func_wall_point with a targetname.
+
+"model" filename of model to stand in for this entity. can be a bsp or an mdl. 
+"mangle" exact orientation of the model, values are 'pitch yaw roll', positive pitch is down
+"frame" frame of model (0-ordinal)
+"skin" skin index on model (0-ordinal)
+"pos1" override frame with an animation (firstframe startframe lastframe)
+"pos2" if triggerable, second animation to toggle to (firstframe startframe lastframe)
+"ideal_yaw" randomly select yaw angle (for quickly scattering props)
+
+TOGGLE_VIS show/hide when triggered
+START_INVIS start hidden
+ANIM_ONCE if second triggered animation, will play once when triggered (instead of switching loops)
+
+dead player.mdl frame reference because we both know that's what you want:
+axdeth: 49 (on back (with axe (duh)))
+deatha: 60 (on face)
+deathb: 69 (sat)
+deathc: 84 (also on face)
+deathd: 93 (also on face but arms under forehead as if sad)
+deathe: 102 (on side)
 */
-void() light =
-{
-	if (!self.targetname)
-	{	// inert light
-		remove(self);
+/*FGD
+@PointClass base(Appearflags) size(16 16 16) color(160 192 224) model({ 
+	"path": model,
+    "skin": skin,
+    "frame": frame
+}) = misc_model : 
+"Display a model. Not solid.
+for a misc_model which can be toggled on or off, use a func_wall_point with a targetname."
+[
+	spawnflags(flags) = [
+		1 : "Trigger Visibility" : 0
+		2 : "Start Invisible" : 0
+		4 : "2nd anim once" : 0	
+	]
+	model(string) : "Filename of model (mdl or bsp)"
+	mangle(string) : "Orientation (pitch yaw roll, positive pitch is down)"
+	frame(integer) : "frame of mdl to display" : 0
+	skin(integer) : "skin of mdl to display" : 0
+	pos1(string) : "override frame with an animation (firstframe startframe lastframe)"
+	pos2(string) : "if triggerable, second animation to toggle to"
+]
+*/
+void() misc_model = 
+{ 
+	if (!SUB_ShouldSpawn()) return;
+	
+	if (self.targetname == string_null && !self.pos1)
+	{
+		func_static_point(); 
 		return;
 	}
 	
-	if (self.style >= 32)
-	{
-		self.use = light_use;
-		if (self.spawnflags & START_OFF)
-			lightstyle(self.style, "a");
-		else
-			lightstyle(self.style, "m");
-	}
-};
-
-/*QUAKED light_fluoro (0 1 0) (-8 -8 -8) (8 8 8) START_OFF
-Non-displayed light.
-Default light value is 300
-Default style is 0
-If targeted, it will toggle between on or off.
-Makes steady fluorescent humming sound
-*/
-void() light_fluoro =
-{
-	if (self.style >= 32)
-	{
-		self.use = light_use;
-		if (self.spawnflags & START_OFF)
-			lightstyle(self.style, "a");
-		else
-			lightstyle(self.style, "m");
-	}
+	precache_model_safe(self.model);
 	
-	precache_sound ("ambience/fl_hum1.wav");
-	ambientsound (self.origin, "ambience/fl_hum1.wav", 0.5, ATTN_STATIC);
-};
-
-/*QUAKED light_fluorospark (0 1 0) (-8 -8 -8) (8 8 8)
-Non-displayed light.
-Default light value is 300
-Default style is 10
-Makes sparking, broken fluorescent sound
-*/
-void() light_fluorospark =
-{
-	if (!self.style)
-		self.style = 10;
-
-	precache_sound ("ambience/buzz1.wav");
-	ambientsound (self.origin, "ambience/buzz1.wav", 0.5, ATTN_STATIC);
-};
-
-/*QUAKED light_globe (0 1 0) (-8 -8 -8) (8 8 8)
-Sphere globe light.
-Default light value is 300
-Default style is 0
-*/
-void() light_globe =
-{
-	precache_model ("progs/s_light.spr");
-	setmodel (self, "progs/s_light.spr");
-	makestatic (self);
-};
-
-void() FireAmbient =
-{
-	precache_sound ("ambience/fire1.wav");
-// attenuate fast
-	ambientsound (self.origin, "ambience/fire1.wav", 0.5, ATTN_STATIC);
-};
-
-/*QUAKED light_torch_small_walltorch (0 .5 0) (-10 -10 -20) (10 10 20)
-Short wall torch
-Default light value is 200
-Default style is 0
-*/
-void() light_torch_small_walltorch =
-{
-	precache_model ("progs/flame.mdl");
-	setmodel (self, "progs/flame.mdl");
-	FireAmbient ();
-	makestatic (self);
-};
-
-/*QUAKED light_flame_large_yellow (0 1 0) (-10 -10 -12) (12 12 18)
-Large yellow flame ball
-*/
-void() light_flame_large_yellow =
-{
-	precache_model ("progs/flame2.mdl");
-	setmodel (self, "progs/flame2.mdl");
-	self.frame = 1;
-	FireAmbient ();
-	makestatic (self);
-};
-
-/*QUAKED light_flame_small_yellow (0 1 0) (-8 -8 -8) (8 8 8) START_OFF
-Small yellow flame ball
-*/
-void() light_flame_small_yellow =
-{
-	precache_model ("progs/flame2.mdl");
-	setmodel (self, "progs/flame2.mdl");
-	FireAmbient ();
-	makestatic (self);
-};
-
-/*QUAKED light_flame_small_white (0 1 0) (-10 -10 -40) (10 10 40) START_OFF
-Small white flame ball
-*/
-void() light_flame_small_white =
-{
-	precache_model ("progs/flame2.mdl");
-	setmodel (self, "progs/flame2.mdl");
-	FireAmbient ();
-	makestatic (self);
-};
-
-//============================================================================
-
-
-/*QUAKED misc_fireball (0 .5 .8) (-8 -8 -8) (8 8 8)
-Lava Balls
-*/
-
-void() fire_fly;
-void() fire_touch;
-void() misc_fireball =
-{
+	if (self.mangle != '0 0 0')
+	{
+		self.angles = self.mangle;
+	}
+	else if (self.angles != '0 0 0')
+	{
+		if (self.angles == '0 -1 0')
+			self.angles = '-90 0 0';
+		else if (self.angles == '0 -2 0')
+			self.angles = '90 0 0';
+	}
+	if (self.ideal_yaw)
+		self.angles_y = random()*360;
+	setmodel (self, self.model);
+	setsize(self, '-16 -16 -16', '16 16 16');
 	
-	precache_model ("progs/lavaball.mdl");
-	self.classname = "fireball";
-	self.nextthink = time + (random() * 5);
-	self.think = fire_fly;
+	self.solid = SOLID_NOT;
+	self.movetype = MOVETYPE_NONE;
 	if (!self.speed)
-		self.speed = 1000;
-};
-
-void() fire_fly =
-{
-local entity	fireball;
-
-	fireball = spawn();
-	fireball.solid = SOLID_TRIGGER;
-	fireball.movetype = MOVETYPE_TOSS;
-	fireball.velocity = '0 0 1000';
-	fireball.velocity_x = (random() * 100) - 50;
-	fireball.velocity_y = (random() * 100) - 50;
-	fireball.velocity_z = self.speed + (random() * 200);
-	fireball.classname = "fireball";
-	setmodel (fireball, "progs/lavaball.mdl");
-	setsize (fireball, '0 0 0', '0 0 0');
-	setorigin (fireball, self.origin);
-	fireball.nextthink = time + 5;
-	fireball.think = SUB_Remove;
-	fireball.touch = fire_touch;
-	
-	self.nextthink = time + (random() * 5) + 3;
-	self.think = fire_fly;
-};
-
-
-void() fire_touch =
-{
-	T_Damage (other, self, self, 20);
-	remove(self);
-};
-
-//============================================================================
-
-
-void() barrel_explode =
-{
-	self.takedamage = DAMAGE_NO;
-	self.classname = "explo_box";
-	// did say self.owner
-	T_RadiusDamage (self, self, 160, world);
-	sound (self, CHAN_VOICE, "weapons/r_exp3.wav", 1, ATTN_NORM);
-	particle (self.origin, '0 0 0', 75, 255);
-
-	self.origin_z = self.origin_z + 32;
-	BecomeExplosion ();
-};
-
-
-
-/*QUAKED misc_explobox (0 .5 .8) (0 0 0) (32 32 64)
-TESTING THING
-*/
-
-void() misc_explobox =
-{
-	local float	oldz;
-	
-	self.solid = SOLID_BBOX;
-	self.movetype = MOVETYPE_NONE;
-	precache_model ("maps/b_explob.bsp");
-	setmodel (self, "maps/b_explob.bsp");
-	precache_sound ("weapons/r_exp3.wav");
-	self.health = 20;
-	self.th_die = barrel_explode;
-	self.takedamage = DAMAGE_AIM;
-
-	self.origin_z = self.origin_z + 2;
-	oldz = self.origin_z;
-	droptofloor();
-	if (oldz - self.origin_z > 250)
-	{
-		dprint ("item fell out of level at ");
-		dprint (vtos(self.origin));
-		dprint ("\n");
-		remove(self);
-	}
-};
-
-
-
-
-/*QUAKED misc_explobox2 (0 .5 .8) (0 0 0) (32 32 64)
-Smaller exploding box, REGISTERED ONLY
-*/
-
-void() misc_explobox2 =
-{
-	local float	oldz;
-	
-	self.solid = SOLID_BBOX;
-	self.movetype = MOVETYPE_NONE;
-	precache_model2 ("maps/b_exbox2.bsp");
-	setmodel (self, "maps/b_exbox2.bsp");
-	precache_sound ("weapons/r_exp3.wav");
-	self.health = 20;
-	self.th_die = barrel_explode;
-	self.takedamage = DAMAGE_AIM;
-
-	self.origin_z = self.origin_z + 2;
-	oldz = self.origin_z;
-	droptofloor();
-	if (oldz - self.origin_z > 250)
-	{
-		dprint ("item fell out of level at ");
-		dprint (vtos(self.origin));
-		dprint ("\n");
-		remove(self);
-	}
-};
-
-//============================================================================
-
-float SPAWNFLAG_SUPERSPIKE	= 1;
-float SPAWNFLAG_LASER = 2;
-
-void(vector org, vector vec) LaunchLaser;
-
-void() spikeshooter_use =
-{
-	if (self.spawnflags & SPAWNFLAG_LASER)
-	{
-		sound (self, CHAN_VOICE, "enforcer/enfire.wav", 1, ATTN_NORM);
-		LaunchLaser (self.origin, self.movedir);
-	}
-	else
-	{
-		sound (self, CHAN_VOICE, "weapons/spike2.wav", 1, ATTN_NORM);
-		launch_spike (self.origin, self.movedir);
-		newmis.velocity = self.movedir * 500;
-		if (self.spawnflags & SPAWNFLAG_SUPERSPIKE)
-			newmis.touch = superspike_touch;
-	}
-};
-
-void() shooter_think =
-{
-	spikeshooter_use ();
-	self.nextthink = time + self.wait;
-	newmis.velocity = self.movedir * 500;
-};
-
-
-/*QUAKED trap_spikeshooter (0 .5 .8) (-8 -8 -8) (8 8 8) superspike laser
-When triggered, fires a spike in the direction set in QuakeEd.
-Laser is only for REGISTERED.
-*/
-
-void() trap_spikeshooter =
-{
-	SetMovedir ();
-	self.use = spikeshooter_use;
-	if (self.spawnflags & SPAWNFLAG_LASER)
-	{
-		precache_model2 ("progs/laser.mdl");
+		self.speed = 0.1;
 		
-		precache_sound2 ("enforcer/enfire.wav");
-		precache_sound2 ("enforcer/enfstop.wav");
+	// toggle animation
+	if (self.targetname != string_null)
+	{
+		self.use = misc_model_use;
+		if (self.spawnflags & SPAWN_MODEL_STARTINVIS)
+		{
+			self.oldstyle = self.modelindex;
+			self.modelindex = 0;
+			//self.alpha = -1;	
+			self.state = 1;
+		}
 	}
-	else
-		precache_sound ("weapons/spike2.wav");
-};
+	if (self.pos1)
+	{
+		self.frame = self.pos1_y;
+		self.think = misc_model_animate;
+		self.nextthink = time + 0.1;
+	}		
+}
 
 
-/*QUAKED trap_shooter (0 .5 .8) (-8 -8 -8) (8 8 8) superspike laser
-Continuously fires spikes.
-"wait" time between spike (1.0 default)
-"nextthink" delay before firing first spike, so multiple shooters can be stagered.
-*/
-void() trap_shooter =
+//============================================================================
+
+
+void() target_heal_setmax =
 {
-	trap_spikeshooter ();
+	if (self.max_health)
+		self.count = self.max_health - activator.health;
+	else
+		self.count = activator.max_health - activator.health;
+	if (self.strength > 0)
+		self.count = ceil(self.count * self.strength);
+	self.count = max(self.lip, self.count);
+}
+
+void() target_heal_do =
+{
+	float h;
+	entity tgt;
 	
-	if (self.wait == 0)
-		self.wait = 1;
-	self.nextthink = self.nextthink + self.wait + self.ltime;
-	self.think = shooter_think;
-};
+	if (self.count > 0)
+		h = min(self.healamount, self.count);	// only heal for what's left if we're almost dry
+	else
+		h = self.healamount;
+	
+	// don't heal activator if we have target fields even if we find no targets, 
+	// because if a target_heal's targets have all been killtargeted or removed
+	// we don't want the player to receive mystery health instead
+	if (self.target == string_null &&
+		self.target2 == string_null &&
+		self.target3 == string_null &&
+		self.target4 == string_null)
+	{
+		tgt = activator;
+		if ((self.spawnflags & 2) && tgt.classname != "player")
+			return; // player only
+		if (T_Heal(tgt, h, (self.spawnflags & 1)) && self.count > 0)
+			self.count -= h;
+		return;
+	}
+	
+	if (self.target == string_null) return;
+	tgt = world; while(1) {
+		tgt = find(tgt,targetname,self.target); if (!tgt) break;
+		if (T_Heal(tgt, h, (self.spawnflags & 1)) && self.count > 0)
+			self.count -= h;
+	}
+	if (self.target2 == string_null) return;
+	tgt = world; while(1) {
+		tgt = find(tgt,targetname,self.target2); if (!tgt) break;
+		if (T_Heal(tgt, h, (self.spawnflags & 1)) && self.count > 0)
+			self.count -= h;
+	}	
+	if (self.target3 == string_null) return;
+	tgt = world; while(1) {
+		tgt = find(tgt,targetname,self.target3); if (!tgt) break;
+		if (T_Heal(tgt, h, (self.spawnflags & 1)) && self.count > 0)
+			self.count -= h;
+	}	
+	if (self.target4 == string_null) return;
+	tgt = world; while(1) {
+		tgt = find(tgt,targetname,self.target4); if (!tgt) break;
+		if (T_Heal(tgt, h, (self.spawnflags & 1)) && self.count > 0)
+			self.count -= h;
+	}
+}
 
+void() target_heal_use =
+{
+	if (self.customflags & CFL_LOCKED)
+		return;
+	if (self.count == 0)
+		return;	// we're dry
+	
+	playercount_convert(strength);
+	// trigger first
+	if (!self.state) 
+	{
+		self.state = 1;
+		// autobalance
+		if ((self.spawnflags & 8) && activator.health >= 0 && activator.max_health)
+			target_heal_setmax();
+			
+		return;
+	}
+	
+	
+	target_heal_do();
+}
 
+/*QUAKED target_heal (0.75 0.25 0) (-8 -8 -8) (8 8 8) OVERHEAL PLAYER_ONLY TRIGGER_FIRST AUTO_AMT
+Heals activator for 'healamount' when triggered. Use for healing pools, first aid dispensers, etc.
+If it has any targets, it heals them instead, even doors and buttons. This will not reset 'dead' doors or buttons with a wait of -1.
 
-/*
-===============================================================================
+Spawnflags:
+OVERHEAL	will ignore target's max_health when healing
+PLAYER_ONLY	will ignore any targets or activators which aren't clients
+TRIGGER_FIRST	will treat its first trigger as an activation, then work normally after
+AUTO_AMT	if trigger_first, will choose 'count' based on how much health the activator needs when first triggered, for dirty lazy automatic game balance
 
-
-===============================================================================
+Keyvalues:
+"healamount" amount to heal per use, default 5
+"count" expire after healing this much in total, default -1 (never)
+"strength" count will be multiplied by this much, default 1. -4 for the number of players.
+  "lip" if auto, never set count less than this much, defaults to healamount
+  "max_health" if auto, never set count to heal *target* above this much
 */
-
-
-void() make_bubbles;
-void() bubble_remove;
-void() bubble_bob;
-
-/*QUAKED air_bubbles (0 .5 .8) (-8 -8 -8) (8 8 8)
-
-testing air bubbles
+/*FGD
+@Pointclass base(Target, Targetname, Appearflags) color(192 64 0) size(32 32 32) = target_heal : 
+"Heals targets when triggered, or activator if no targets set" 
+[
+	spawnflags(flags) = [
+		1 : "ignore max_health" : 0
+		2 : "ignore non-clients" : 0
+		4 : "first trigger activates" : 0
+		8 : "auto-set count on trigger-first" : 0
+	]
+	healamount(integer) : "heal per use" : 5
+	count(integer) : "lifetime limit" : -1
+	strength(string) : "scale auto-limit" : "1.0"
+	lip(integer) : "minimum for auto-limit"
+	max_health(integer) : "max target health for auto-limit"
+]
 */
+void() target_heal =
+{
+	if (self.healamount <= 0)
+		self.healamount = 5;
+	if (!self.count)
+		self.count = -1;
+	if (!(self.spawnflags & 4))
+		self.state = 1;
+	if (!self.strength)
+		self.strength = 1;
+	if (self.spawnflags & 8)
+	{
+		if (!self.lip) self.lip = self.healamount;
+	}
+	
+	self.use = target_heal_use;
+}
 
-void() air_bubbles =
 
+
+//============================================================================
+
+
+void() target_kill_use =
+{
+	local entity t;
+
+	// kill targets
+	if (self.target != string_null) {
+		t = world;
+		do	{
+			t = find(t, targetname, self.target);
+			if (!t) break;
+			RemoveTarget (t);
+		} while ( 1 );
+	}
+	if (self.target2 != string_null) {
+		t = world;
+		do	{
+			t = find(t, targetname, self.target2);
+			if (!t) break;
+			RemoveTarget (t);
+		} while ( 1 );
+	}
+	if (self.target3 != string_null) {
+		t = world;
+		do	{
+			t = find(t, targetname, self.target3);
+			if (!t) break;
+			RemoveTarget (t);
+		} while ( 1 );
+	}
+	if (self.target4 != string_null) {
+		t = world;
+		do	{
+			t = find(t, targetname, self.target4);
+			if (!t) break;
+			RemoveTarget (t);
+		} while ( 1 );
+	}
+
+	SUB_KillTargets(self.killtarget);
+}
+
+/*QUAKED target_kill (0.75 0.5 0) (-8 -8 -8) (8 8 8)
+Kills ALL of its targets (1-4) as well as killtargets when triggered. for targets you really don't like.
+*/
+/*FGD
+@Pointclass base(Target, Targetname, Appearflags) color(192 64 0) size(16 16 16) = target_kill : 
+"Removes all targets when triggered." []
+*/
+void() target_kill =
+{
+	if (!SUB_ShouldSpawn()) return;
+	self.use = target_kill_use;
+}
+
+//============================================================================
+
+void() toggle_autosave =
+{
+	entity e = world;
+	float printed = FALSE;
+	do {
+		e = find(e, classname, "target_autosave");
+		if (!e) break;
+		
+		if (e.use == target_autosave_use)
+		{
+			e.use = SUB_Null;
+			if (!printed)
+			{
+				bprint("Autosaves disabled\n");
+				printed = TRUE;
+			}
+		} else {
+			e.use = target_autosave_use;
+			if (!printed)
+			{
+				bprint("Autosaves reenabled\n");
+				printed = TRUE;
+			}
+		}
+
+	} while (e != world);
+}
+
+void() target_autosave_use =
+{
+	if (time < self.pain_finished)
+		return;
+	self.pain_finished = time + 0.5;	// fix for juzley double autosaving, the numpty
+	
+	if (self.enemy)
+	{
+		activator = self.enemy;
+		self.enemy = world;
+	}
+	if (activator.classname != "player") return;
+	if (time < 2)	// make sure an autosave fired from a player start doesn't happen too early
+	{
+		if (serverflags & SVFL_RESPAWNING)
+		{
+			dprint("RESPAWNING flag set, skipping autosave\n");
+			return;
+		}
+		self.enemy = activator;
+		self.think = target_autosave_use;
+		self.nextthink = 2;
+		return;
+	}
+	sound(activator, CHAN_VOICE, "misc/sav.wav", 1.0, ATTN_NORM);
+	autosave(activator, self.message);
+}
+
+/*QUAKED target_autosave (1 .0 .5) (-8 -8 -8) (8 8 8)
+Saves the game when triggered by a player. Never appears in multiplayer. the bprint tends to stomp any other prints on screen in most quake clients, so use a delayed trigger_relay if you fire this from an important pickup/trigger_counter/something else that puts text on screen more important than the autosave blurb.
+
+Keys:
+"message" change save file name, defaults to 'auto'
+*/
+/*FGD
+@Pointclass base(Targetname, Appearflags) color(255 0 128) size(32 32 32) = target_autosave : 
+"Saves the game when triggered by a player. Never appears in multiplayer. 
+the bprint tends to stomp any other prints on screen in most quake clients, so use a delayed trigger_relay if you fire this from an important pickup/trigger_counter/something else that puts text on screen more important than the autosave blurb." 
+[
+	message(string) : "Change save filename" : "auto"
+]
+*/
+void() target_autosave =
 {
 	if (deathmatch)
 	{
-		remove (self);
+		remove(self);
 		return;
 	}
-	precache_model ("progs/s_bubble.spr");
-	self.nextthink = time + 1;
-	self.think = make_bubbles;
-};
+	
+	// never autosave in coop anyway
+	self.spawnflags = not(self.spawnflags, SPAWN_COOPONLY) | SPAWN_NOTCOOP;
+	if (!SUB_ShouldSpawn()) return;
+	
+	if (self.message == string_null)
+		self.message = "auto";
+	precache_sound2("misc/sav.wav");
+	self.use = target_autosave_use;
+}
 
-void() make_bubbles =
+
+//============================================================================
+
+
+
+
+void() lavaball_touch =
 {
-local entity	bubble;
-
-	bubble = spawn();
-	setmodel (bubble, "progs/s_bubble.spr");
-	setorigin (bubble, self.origin);
-	bubble.movetype = MOVETYPE_NOCLIP;
-	bubble.solid = SOLID_NOT;
-	bubble.velocity = '0 0 15';
-	bubble.nextthink = time + 0.5;
-	bubble.think = bubble_bob;
-	bubble.touch = bubble_remove;
-	bubble.classname = "bubble";
-	bubble.frame = 0;
-	bubble.cnt = 0;
-	setsize (bubble, '-8 -8 -8', '8 8 8');
-	self.nextthink = time + random() + 0.5;
-	self.think = make_bubbles;
-};
-
-void() bubble_split =
-{
-local entity	bubble;
-	bubble = spawn();
-	setmodel (bubble, "progs/s_bubble.spr");
-	setorigin (bubble, self.origin);
-	bubble.movetype = MOVETYPE_NOCLIP;
-	bubble.solid = SOLID_NOT;
-	bubble.velocity = self.velocity;
-	bubble.nextthink = time + 0.5;
-	bubble.think = bubble_bob;
-	bubble.touch = bubble_remove;
-	bubble.classname = "bubble";
-	bubble.frame = 1;
-	bubble.cnt = 10;
-	setsize (bubble, '-8 -8 -8', '8 8 8');
-	self.frame = 1;
-	self.cnt = 10;
-	if (self.waterlevel != 3)
-		remove (self);
-};
-
-void() bubble_remove =
-{
-	if (other.classname == self.classname)
+	if (CheckProjectilePassthru()) return FALSE;
+	if (other.takedamage)
 	{
-//		dprint ("bump");
-		return;
+		sound (self, CHAN_WEAPON, "zombie/z_hit.wav", 1, ATTN_IDLE);
+		T_Damage (other, self, self, self.dmg);
 	}
 	remove(self);
-};
+}
 
-void() bubble_bob =
+void() lavaball_fly =
 {
-local float		rnd1, rnd2, rnd3;
-local vector	vtmp1, modi;
+	entity fireball;
+	vector vel;
+	vel = self.movedir * self.speed;
+	vel_x += crandom() * self.mangle_x;
+	vel_y += crandom() * self.mangle_y;
+	vel_z += crandom() * self.mangle_z;
 
-	self.cnt = self.cnt + 1;
-	if (self.cnt == 4)
-		bubble_split();
-	if (self.cnt == 20)
-		remove(self);
-
-	rnd1 = self.velocity_x + (-10 + (random() * 20));
-	rnd2 = self.velocity_y + (-10 + (random() * 20));
-	rnd3 = self.velocity_z + 10 + random() * 10;
-
-	if (rnd1 > 10)
-		rnd1 = 5;
-	if (rnd1 < -10)
-		rnd1 = -5;
-		
-	if (rnd2 > 10)
-		rnd2 = 5;
-	if (rnd2 < -10)
-		rnd2 = -5;
-		
-	if (rnd3 < 10)
-		rnd3 = 15;
-	if (rnd3 > 30)
-		rnd3 = 25;
+	fireball = launch_lavamissile(self.origin, vel);
+	fireball.movetype = MOVETYPE_TOSS;
 	
-	self.velocity_x = rnd1;
-	self.velocity_y = rnd2;
-	self.velocity_z = rnd3;
-		
-	self.nextthink = time + 0.5;
-	self.think = bubble_bob;
-};
+	fireball.classname = "fireball";
+
+	if (!(self.spawnflags & 4))
+		fireball.touch = lavaball_touch;
+	fireball.dmg = self.dmg;
+}
+
+void() lavaball_toggle = 
+{
+	self.state = !self.state;
+	if (!self.state)
+	{	
+		self.nextthink = 0;
+		return;
+	}
+	self.think = lavaball_idle;
+	self.nextthink = time + self.delay + random() * self.rand;
+}
+
+void() lavaball_use =
+{
+	self.nextthink = time + self.delay + random() * self.rand;
+	self.think = lavaball_fly;
+}
+
+void() lavaball_idle =
+{
+	lavaball_fly();
+	self.nextthink = time + self.wait + random() * self.rand;
+}
+
+/*QUAKED misc_fireball (0 .5 .8) (-8 -8 -8) (8 8 8) START_OFF BURST EXPLODE
+LavA_Ballz
+Fires randomly. Trigger to turn on/off. 
+
+"wait" min pause between balls
+"rand" max extra pause between balls (total pause is 'wait' + 'rand' * random())
+"speed" launch velocity, defaults to 1000
+"movedir" launch direction, defaults to straight up (0 0 1)
+"mangle" amount of randomness to apply to velocity (x, y, z)
+"dmg" damage on contact, default 20
+
+Spawnflags
+START_OFF start off
+BURST fires "delay" seconds after being triggered
+EXPLODE blow up on contact, does 'dmg' damage (default 20)
+*/
+/*FGD
+@PointClass base(Appearflags, Targetname) model({ "path": ":progs/lavaball.mdl" }) = misc_fireball : "Lavaball Launcher. Trigger to toggle on/off." 
+[
+	spawnflags(flags) = [
+		1 : "Start off" : 0
+		2 : "Launch when triggered (no toggle)" : 0
+		4 : "Explode on contact" : 0
+	]
+	delay(string) : "Pause before first ball" : "0"
+	wait(string) : "Pause between balls" : "3"
+	rand(string) : "Random extra pause before ball" : "5"
+	speed(integer) : "Speed" : 1000
+	movedir(string) : "Launch Dir" : "0 0 1"
+	mangle(string) : "Random velocity addition (x y z)" : "50 50 100"
+	dmg(integer) : "Contact damage" : 20
+]
+*/
+void() misc_fireball =
+{
+	if (!SUB_ShouldSpawn()) return;
+	
+	precache_model ("progs/lavaball.mdl");
+	self.classname = "fireball";
+
+	self.wait = zeroconvertdefault(self.wait, 3);
+	self.rand = zeroconvertdefault(self.rand, 5);
+	self.dmg = zeroconvertdefault(self.dmg, 20);
+	
+	if (self.targetname == string_null)
+	{
+		self.think = lavaball_idle;
+		self.nextthink = time + self.delay + (random() * self.rand);
+	}
+	else	// targeted
+	{
+		if (self.spawnflags & 2)	// fire on trigger
+			self.use = lavaball_use;
+		else						// toggle on trigger
+		{
+			self.state = !(self.spawnflags & 1);
+			self.use = lavaball_toggle;
+		}
+	}
+	
+	if (self.mangle == VEC_ORIGIN)
+		self.mangle = '50 50 100';
+	if (self.movedir == VEC_ORIGIN)
+		self.movedir = '0 0 1';
+	else
+		self.movedir = normalize(self.movedir);
+	self.speed = zeroconvertdefault(self.speed, 1000);
+}
+
+
+
+
+
+//=============================================================================
+
+void() target_multiprint_use =
+{
+	//dprint("in multiprint_use\n");
+	// print the message
+	//if (activator.classname == "player")
+	//{
+		if ( self.message != string_null )
+		{
+			// just make sure it goes to all if activator is a weirdo, players do
+			// silly things on purpose with monsters shooting buttons
+			//centerprint (activator, self.message);
+			SUB_PrintMessage();
+			
+			if (!(self.spawnflags & 1))
+				sound (activator, CHAN_VOICE, "misc/talk.wav", 1, ATTN_NORM);
+			
+			self.message = self.noise;
+			self.noise = self.noise1;
+			self.noise1 = self.noise2;
+			self.noise2 = self.noise3;
+			self.noise3 = self.noise4;
+			self.noise4 = string_null;
+		}
+		else
+		{
+			SUB_UseTargets();
+		}
+	//}
+}
+
+/*QUAKED target_multiprint (.5 .5 .5) (-8 -8 -8) (8 8 8) SILENT
+This entity will print a different string every time it"s triggered.  Prints "message", 
+"noise", "noise1", "noise2", "noise3", then "noise4."  Once all strings are used up, it will 
+fire its targets instead (so several of these can be chained if you really need that 
+many prints in a row).
+
+SILENT: Don't play the beep wav when triggered.
+*/
+/*FGD
+@PointClass base(Appearflags, Targetname, Target) color(128 128 128) = target_multiprint : 
+"Target : Multiprint
+Prints a different string every time it's triggered, or fires its targets if it ran out."
+[
+	spawnflags(flags) = [
+		1 : "Silent" : 0
+	]
+	message(string) : "First print"
+	noise(string) : "Second print"
+	noise1(string) : "Third print"
+	noise2(string) : "Fourth print"
+	noise3(string) : "Fifth print"
+	noise4(string) : "Sixth print"
+]
+*/
+void() target_multiprint =
+{
+	if (!SUB_ShouldSpawn()) return;
+	self.use = target_multiprint_use;
+}
+
+
 
 /*~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>
 ~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~<~>~*/
 
-/*QUAKED viewthing (0 .5 .8) (-8 -8 -8) (8 8 8)
+/* viewthing (0 .5 .8) (-8 -8 -8) (8 8 8)
 
 Just for the debugging level.  Don't use
 */
@@ -494,179 +705,16 @@ void() viewthing =
 	self.solid = SOLID_NOT;
 	precache_model ("progs/player.mdl");
 	setmodel (self, "progs/player.mdl");
-};
+}
 
 
-/*
-==============================================================================
 
-SIMPLE BMODELS
-
-==============================================================================
+/* noclass (0 0 0) (-8 -8 -8) (8 8 8)
+prints a warning message when spawned
 */
-
-void() func_wall_use =
-{	// change to alternate textures
-	self.frame = 1 - self.frame;
-};
-
-/*QUAKED func_wall (0 .5 .8) ?
-This is just a solid wall if not inhibitted
-*/
-void() func_wall =
+void() noclass =
 {
-	self.angles = '0 0 0';
-	self.movetype = MOVETYPE_PUSH;	// so it doesn't get pushed by anything
-	self.solid = SOLID_BSP;
-	self.use = func_wall_use;
-	setmodel (self, self.model);
-};
+	dprint3("noclass spawned at",vtos(self.origin),"\n");
+	remove (self);
+}
 
-
-/*QUAKED func_illusionary (0 .5 .8) ?
-A simple entity that looks solid but lets you walk through it.
-*/
-void() func_illusionary =
-
-{
-	self.angles = '0 0 0';
-	self.movetype = MOVETYPE_NONE;
-	self.solid = SOLID_NOT;
-	setmodel (self, self.model);
-	makestatic (self);
-};
-
-/*QUAKED func_episodegate (0 .5 .8) ? E1 E2 E3 E4
-This bmodel will appear if the episode has allready been completed, so players can't reenter it.
-*/
-void() func_episodegate =
-
-{
-	if (!(serverflags & self.spawnflags))
-		return;			// can still enter episode
-
-	self.angles = '0 0 0';
-	self.movetype = MOVETYPE_PUSH;	// so it doesn't get pushed by anything
-	self.solid = SOLID_BSP;
-	self.use = func_wall_use;
-	setmodel (self, self.model);
-};
-
-/*QUAKED func_bossgate (0 .5 .8) ?
-This bmodel appears unless players have all of the episode sigils.
-*/
-void() func_bossgate =
-
-{
-	if ( (serverflags & 15) == 15)
-		return;		// all episodes completed
-	self.angles = '0 0 0';
-	self.movetype = MOVETYPE_PUSH;	// so it doesn't get pushed by anything
-	self.solid = SOLID_BSP;
-	self.use = func_wall_use;
-	setmodel (self, self.model);
-};
-
-//============================================================================
-/*QUAKED ambient_suck_wind (0.3 0.1 0.6) (-10 -10 -8) (10 10 8)
-*/
-void() ambient_suck_wind =
-{
-	precache_sound ("ambience/suck1.wav");
-	ambientsound (self.origin, "ambience/suck1.wav", 1, ATTN_STATIC);
-};
-
-/*QUAKED ambient_drone (0.3 0.1 0.6) (-10 -10 -8) (10 10 8)
-*/
-void() ambient_drone =
-{
-	precache_sound ("ambience/drone6.wav");
-	ambientsound (self.origin, "ambience/drone6.wav", 0.5, ATTN_STATIC);
-};
-
-/*QUAKED ambient_flouro_buzz (0.3 0.1 0.6) (-10 -10 -8) (10 10 8)
-*/
-void() ambient_flouro_buzz =
-{
-	precache_sound ("ambience/buzz1.wav");
-	ambientsound (self.origin, "ambience/buzz1.wav", 1, ATTN_STATIC);
-};
-/*QUAKED ambient_drip (0.3 0.1 0.6) (-10 -10 -8) (10 10 8)
-*/
-void() ambient_drip =
-{
-	precache_sound ("ambience/drip1.wav");
-	ambientsound (self.origin, "ambience/drip1.wav", 0.5, ATTN_STATIC);
-};
-/*QUAKED ambient_comp_hum (0.3 0.1 0.6) (-10 -10 -8) (10 10 8)
-*/
-void() ambient_comp_hum =
-{
-	precache_sound ("ambience/comp1.wav");
-	ambientsound (self.origin, "ambience/comp1.wav", 1, ATTN_STATIC);
-};
-/*QUAKED ambient_thunder (0.3 0.1 0.6) (-10 -10 -8) (10 10 8)
-*/
-void() ambient_thunder =
-{
-	precache_sound ("ambience/thunder1.wav");
-	ambientsound (self.origin, "ambience/thunder1.wav", 0.5, ATTN_STATIC);
-};
-/*QUAKED ambient_light_buzz (0.3 0.1 0.6) (-10 -10 -8) (10 10 8)
-*/
-void() ambient_light_buzz =
-{
-	precache_sound ("ambience/fl_hum1.wav");
-	ambientsound (self.origin, "ambience/fl_hum1.wav", 0.5, ATTN_STATIC);
-};
-/*QUAKED ambient_swamp1 (0.3 0.1 0.6) (-10 -10 -8) (10 10 8)
-*/
-void() ambient_swamp1 =
-{
-	precache_sound ("ambience/swamp1.wav");
-	ambientsound (self.origin, "ambience/swamp1.wav", 0.5, ATTN_STATIC);
-};
-/*QUAKED ambient_swamp2 (0.3 0.1 0.6) (-10 -10 -8) (10 10 8)
-*/
-void() ambient_swamp2 =
-{
-	precache_sound ("ambience/swamp2.wav");
-	ambientsound (self.origin, "ambience/swamp2.wav", 0.5, ATTN_STATIC);
-};
-
-//============================================================================
-
-void() noise_think =
-{
-	self.nextthink = time + 0.5;
-	sound (self, 1, "enforcer/enfire.wav", 1, ATTN_NORM);
-	sound (self, 2, "enforcer/enfstop.wav", 1, ATTN_NORM);
-	sound (self, 3, "enforcer/sight1.wav", 1, ATTN_NORM);
-	sound (self, 4, "enforcer/sight2.wav", 1, ATTN_NORM);
-	sound (self, 5, "enforcer/sight3.wav", 1, ATTN_NORM);
-	sound (self, 6, "enforcer/sight4.wav", 1, ATTN_NORM);
-	sound (self, 7, "enforcer/pain1.wav", 1, ATTN_NORM);
-};
-
-/*QUAKED misc_noisemaker (1 0.5 0) (-10 -10 -10) (10 10 10)
-
-For optimzation testing, starts a lot of sounds.
-*/
-
-void() misc_noisemaker =
-
-{
-	precache_sound2 ("enforcer/enfire.wav");
-	precache_sound2 ("enforcer/enfstop.wav");
-	precache_sound2 ("enforcer/sight1.wav");
-	precache_sound2 ("enforcer/sight2.wav");
-	precache_sound2 ("enforcer/sight3.wav");
-	precache_sound2 ("enforcer/sight4.wav");
-	precache_sound2 ("enforcer/pain1.wav");
-	precache_sound2 ("enforcer/pain2.wav");
-	precache_sound2 ("enforcer/death1.wav");
-	precache_sound2 ("enforcer/idle1.wav");
-
-	self.nextthink = time + 0.1 + random();
-	self.think = noise_think;
-};

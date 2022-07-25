@@ -1,53 +1,75 @@
 ../progs.dat
+#pragma autoproto
+#define COOP 1
 
 defs.qc
-//~ start
-waypoints/map_dm1.qc
-waypoints/map_dm2.qc
-waypoints/map_dm3.qc
-waypoints/map_dm4.qc
-waypoints/map_dm5.qc
-waypoints/map_dm6.qc
-frikbot/bot.qc
-frikbot/bot_way.qc
-frikbot/bot_fight.qc 
-frikbot/bot_ai.qc
-frikbot/bot_misc.qc
-frikbot/bot_phys.qc
-frikbot/bot_move.qc
-frikbot/bot_ed.qc
-//~ end
+constants.qc
+
+maths.qc
+utility.qc
 subs.qc
-fight.qc
+subs_move.qc
+subs_tgt.qc
 ai.qc
-combat.qc
+meat.qc		// gibs and gore
+combat.qc	// fight.qc decrufted away
+fly.qc		// smoothed pathcorner movement
+
 items.qc
-frikbot4_gore.qc
+item_health_armor.qc
+item_weap_ammo.qc
+item_powerups.qc
+item_keys_runes.qc
+item_backpack.qc
+
+projectiles.qc
 weapons.qc
+w_axe.qc
+w_lightning.qc
+w_shotguns.qc
+w_rockets.qc
+w_nails.qc
+dev.qc
+impulse.qc
+
 world.qc
-frikbot4_nametags.qc
 client.qc
 player.qc
-frikbot4_corpses.qc
 monsters.qc
 doors.qc
 buttons.qc
 triggers.qc
+t_tele.qc
+t_level.qc
+t_ctrl.qc
 plats.qc
+lights.qc
+explobox.qc
 misc.qc
-ogre.qc
-demon.qc
-shambler.qc
-knight.qc
-soldier.qc
-wizard.qc
-dog.qc
-zombie.qc
-boss.qc
+shooters.qc
+walls.qc
+sound.qc
 
-tarbaby.qc		// registered
-hknight.qc		// registered
-fish.qc			// registered
-shalrath.qc		// registered
-enforcer.qc		// registered
-oldone.qc		// registered
+fog.qc			// atmosfear
+t_void.qc		// bottomless pits
+fx.qc			// more dots
+
+// prefixed all these so I can more easily open all the monster files at once
+m_ogre.qc
+m_demon.qc
+m_shambler.qc
+m_knight.qc
+m_soldier.qc
+m_wizard.qc
+m_dog.qc
+m_zombie.qc
+m_boss.qc
+
+m_tarbaby.qc	// registered
+m_hknight.qc	// registered
+m_fish.qc		// registered
+m_shalrath.qc	// registered
+m_enforcer.qc	// registered
+m_oldone.qc		// registered
+
+test.qc
