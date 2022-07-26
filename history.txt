@@ -19,11 +19,9 @@ And Jan 2013, made this change:
 
 ====================================================================
 
-And Jul 2022, made this change:
+Jul 2022
 
-- Bots no longer try to follow each other in team deathmatch games.
-- Bots will now appropriately choose your team color in coop games.
-- Bots "Pimp Bot" and "Frik Bot" have had their names changed.
-- Items now always respawn over time in singleplayer and coop games.
+A series of small changes:
+https://github.com/whipowill/quake-mod-frikbot4
 
 -whipowill
