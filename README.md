@@ -18,7 +18,7 @@ See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded 
 
 ### Mod Mergers
 
-- [FrikBot4+Copper](https://github.com/whipowill/quake-mod-frikbot4/tree/copper) - a branch of FrikBot merged w/ [Copper](http://lunaran.com/copper/) v1.19
+- [FrikBot4 + Copper](https://github.com/whipowill/quake-mod-frikbot4/tree/copper) - a branch of FrikBot merged w/ [Copper](http://lunaran.com/copper/) v1.19
 
 ## Controls
 
@@ -65,8 +65,8 @@ These are optional changes you can control using cvars in your ``autoexec.cfg`` 
     - Enemy bodies can now be gibbed into chunks *
 - ``frikbot4_nametag 1``
     - Displays player names on screen when aiming at them
-- ``frikbot4_placeholder 0`` **
-    - Disables transparent item placeholders in maps to restore normal item behavior
+- ``frikbot4_placeholder 0``
+    - Disables transparent item placeholders in maps to restore normal item behavior **
 
 You will want to run the game w/ ``-particles 16384`` to increase the amount of particles allowed in the game.
 
@@ -91,4 +91,3 @@ You will want to run the game w/ ``-particles 16384`` to increase the amount of 
 - [QuakeC Manual](http://www.cataboligne.org/extra/qcmanual.html#Names) - helpful list of available functions.
 - [QuakeC Tutorials](https://quakewiki.org/wiki/QuakeC_tutorials) - a list of tutorials for modding QuakeC.
 - [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history.
-- [Copper Mod](http://lunaran.com/copper/) - the website for the vanilla+ mod and related docs.
