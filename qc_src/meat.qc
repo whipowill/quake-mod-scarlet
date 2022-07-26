@@ -57,7 +57,8 @@ void(string gibname, float dm) ThrowHead =
 	self.nextthink = -1;
 	self.movetype = MOVETYPE_BOUNCE;
 	self.takedamage = DAMAGE_NO;
-	self.solid = SOLID_NOT;
+	self.solid = SOLID_TRIGGER; //~ FrikBot
+	self.touch = KickGibs; //~ FrikBot
 	self.view_ofs = '0 0 8';
 	setsize (self, '-16 -16 0', '16 16 56');
 	self.velocity += GibVelocityForHealth(dm);
@@ -75,21 +76,29 @@ void(string headmdl, float dm) GibSpray =
 	ThrowGib ("progs/gib1.mdl", dm);
 	ThrowGib ("progs/gib2.mdl", dm);
 	ThrowGib ("progs/gib3.mdl", dm);
+
+	if (cvar("frikbot4_gore")) //~ FrikBot
+	{
+		ThrowGib ("progs/gib1.mdl", dm);
+		ThrowGib ("progs/gib2.mdl", dm);
+		ThrowGib ("progs/gib3.mdl", dm);
+	}
 	
 	if (self.classname != "player")
-		if (damage_attacker.classname == "trigger_void" || damage_attacker.classname == "func_void" )
+	{
+		if (damage_attacker.classname == "trigger_void" || damage_attacker.classname == "func_void")
 		{
 			SUB_Remove();
 			return;
 		}
-
+	}
 		
 	ThrowHead (headmdl, dm);
 }
 
 void(string headmdl, float dm) Gib =
 {
-		sound (self, CHAN_VOICE, "player/udeath.wav", 1, ATTN_NORM);
+	sound (self, CHAN_VOICE, "player/udeath.wav", 1, ATTN_NORM);
 	
 	GibSpray(headmdl, dm);
 }
@@ -124,7 +133,16 @@ SpawnBlood
 */
 void(vector org, vector vel, float damage) SpawnBlood =
 {
-	particle (org, vel*0.1, 73, damage*2);
+	if (cvar("frikbot4_gore")) //~ FrikBot
+	{
+		particle (org, vel*0.1, 79, damage*1);
+		particle (org, vel*0.2, 74, damage*5);
+		particle (org, vel*0.3, 69, damage*2);
+	}
+	else
+	{
+		particle (org, vel*0.1, 73, damage*2);
+	}
 }
 
 //============================================================================

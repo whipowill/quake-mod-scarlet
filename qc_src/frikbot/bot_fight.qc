@@ -240,6 +240,8 @@ vector(float wep) weapon_range =
 		return '180 48 3000';
 	else if (wep == 64) // IT_LIGHTNING
 		return '350 0 512';
+	else
+		return '180 0 3000';
 };
 /*
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -425,7 +427,7 @@ void() bot_fight_style =
 			else
 				frik_walkmove(v1);
 		}
-		else if (!self.enemy.flags & FL_MONSTER)
+		else if (!self.enemy.flags && FL_MONSTER)
 		{
 			if (foedist + 32 <  v_x)
 			frik_walkmove(self.origin - org);

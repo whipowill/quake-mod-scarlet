@@ -136,7 +136,7 @@ void()	demon1_die1		=[	$death1,		demon1_die2	] {
 sound (self, CHAN_VOICE, "demon/ddeath.wav", 1, ATTN_NORM);}
 void()	demon1_die2		=[	$death2,		demon1_die3	] {}
 void()	demon1_die3		=[	$death3,		demon1_die4	] {}
-void()	demon1_die4		=[	$death4,		demon1_die5	] {self.solid = SOLID_NOT;}
+void()	demon1_die4		=[	$death4,		demon1_die5	] {BecomeCorpse();}
 void()	demon1_die5		=[	$death5,		demon1_die6	] {}
 void()	demon1_die6		=[	$death6,		demon1_die7	] {}
 void()	demon1_die7		=[	$death7,		demon1_die8	] {}
@@ -563,6 +563,7 @@ void() monster_demon_spawn =
 	self.solid = SOLID_SLIDEBOX;
 	//self.movetype = MOVETYPE_STEP;
 
+	self.headmdl = "progs/h_demon.mdl";
 	setmodel (self, "progs/demon.mdl");
 
 	//setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);

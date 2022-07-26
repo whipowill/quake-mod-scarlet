@@ -56,13 +56,13 @@ float(entity scot) target_onstack =
 {
 	if (scot == world)
 		return FALSE;
-	else if (self.target1 == scot)
+	else if (self.target1_ent == scot)
 		return 1;
-	else if (self.target2 == scot)
+	else if (self.target2_ent == scot)
 		return 2;
-	else if (self.target3 == scot)
+	else if (self.target3_ent == scot)
 		return 3;
-	else if (self.target4 == scot)
+	else if (self.target4_ent == scot)
 		return 4;
 	else
 		return FALSE;
@@ -71,24 +71,24 @@ float(entity scot) target_onstack =
 /*
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-target_add
+target_ent_add
 
 adds a new entity to the stack, since it's a
-LIFO stack, this will be the bot's new target1
+LIFO stack, this will be the bot's new target1_ent
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-void(entity ent) target_add =
+void(entity ent) target_ent_add =
 {
 	if (ent == world)
 		return;
 	if (target_onstack(ent))
 		return;
-	self.target4 = self.target3;
-	self.target3 = self.target2;
-	self.target2 = self.target1;
-	self.target1 = ent;
+	self.target4_ent = self.target3_ent;
+	self.target3_ent = self.target2_ent;
+	self.target2_ent = self.target1_ent;
+	self.target1_ent = ent;
 	self.search_time = time + 5;
 };
 
@@ -96,42 +96,42 @@ void(entity ent) target_add =
 /*
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-target_drop
+target_ent_drop
 
 Removes an entity from the bot's target stack.
 The stack will empty everything up to the object
-So if you have target2 item_health, target1
+So if you have target2_ent item_health, target1_ent
 waypoint, and you drop the health, the waypoint
 is gone too.
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-void(entity ent) target_drop =
+void(entity ent) target_ent_drop =
 {
 	local float tg;
 	
 	tg = target_onstack(ent);
 	if (tg == 1)
 	{
-		self.target1 = self.target2;
-		self.target2 = self.target3;
-		self.target3 = self.target4;
-		self.target4 = world;
+		self.target1_ent = self.target2_ent;
+		self.target2_ent = self.target3_ent;
+		self.target3_ent = self.target4_ent;
+		self.target4_ent = world;
 	}
 	else if (tg == 2)
 	{
-		self.target1 = self.target3;
-		self.target2 = self.target4;
-		self.target3 = self.target4 = world;
+		self.target1_ent = self.target3_ent;
+		self.target2_ent = self.target4_ent;
+		self.target3_ent = self.target4_ent = world;
 	}
 	else if (tg == 3)
 	{
-		self.target1 = self.target4;
-		self.target2 = self.target3 = self.target4 = world;
+		self.target1_ent = self.target4_ent;
+		self.target2_ent = self.target3_ent = self.target4_ent = world;
 	}
 	else if (tg == 4)
-		self.target1 = self.target2 = self.target3 = self.target4 = world;
+		self.target1_ent = self.target2_ent = self.target3_ent = self.target4_ent = world;
 	self.search_time = time + 5;
 };
 
@@ -150,14 +150,14 @@ void(entity targ, float success) bot_lost =
 	if (!targ)
 		return;
 
-	target_drop(targ);
+	target_ent_drop(targ);
 	if (targ.classname == "waypoint")
 		targ.b_sound = targ.b_sound - (targ.b_sound & ClientBitFlag(self.b_clientno));
 
 	// find a new route
 	if (!success)
 	{
-		self.target1 = self.target2 = self.target3 = self.target4 = world;
+		self.target1_ent = self.target2_ent = self.target3_ent = self.target4_ent = world;
 		self.last_way = FindWayPoint(self.current_way);
 		ClearMyRoute();
 		self.b_aiflags = 0;
@@ -238,9 +238,9 @@ void(entity targ) bot_check_lost =
 			bot_lost(targ, TRUE);
 		else if ((coop) || (teamplay && targ.team == self.team))
 		{
-			if (targ.target1.classname == "player")
+			if (targ.target1_ent.classname == "player")
 			{
-				if (!targ.target1.ishuman)
+				if (!targ.target1_ent.ishuman)
 					bot_lost(targ, TRUE);
 			}
 			else if (targ.teleport_time > time)
@@ -279,8 +279,8 @@ void(entity targ) bot_check_lost =
 			bot_lost(targ, TRUE);
 			if (self.enemy == targ)
 				self.enemy = world;
-			//if (self.target1)
-			//	bot_get_path(self.target1, TRUE);
+			//if (self.target1_ent)
+			//	bot_get_path(self.target1_ent, TRUE);
 				
 		}
 	}
@@ -290,8 +290,8 @@ void(entity targ) bot_check_lost =
 		if (targ.nextthink >= time)
 		{
 			bot_lost(targ, TRUE);
-			//if (self.target1)
-			//	bot_get_path(self.target1, TRUE);
+			//if (self.target1_ent)
+			//	bot_get_path(self.target1_ent, TRUE);
 		}
 	}
 	// lose any target way above the bot's head
@@ -370,8 +370,8 @@ void() bot_handle_ai =
 					}
 					else
 					{
-					//	target_drop(self.last_way);
-						target_add(newt);
+					//	target_ent_drop(self.last_way);
+						target_ent_add(newt);
 					//	bot_get_path(newt, TRUE);
 					}
 				}
@@ -404,7 +404,7 @@ void() bot_handle_ai =
 				self.button0 = TRUE;
 			}
 			else
-				bot_lost(self.target1, FALSE);
+				bot_lost(self.target1_ent, FALSE);
 			
 		}
 	}
@@ -468,7 +468,7 @@ void() bot_handle_ai =
 		if ((normalize(self.last_way.origin - self.origin) * self.b_dir) > 0.4)
 		{
 			self.b_aiflags = self.b_aiflags - AI_DIRECTIONAL;
-			bot_lost(self.target1, TRUE);
+			bot_lost(self.target1_ent, TRUE);
 		}
 	}
 	if (self.b_aiflags & AI_SNIPER)
@@ -504,8 +504,8 @@ void() bot_path =
 
 	local entity jj, tele;
 
-	bot_check_lost(self.target1);
-	if (!self.target1)
+	bot_check_lost(self.target1_ent);
+	if (!self.target1_ent)
 	{
 		self.keys=0;
 		return;
@@ -517,11 +517,11 @@ void() bot_path =
 	if (!jj)
 	{
 		// this is an ugly hack
-		if (self.target1.current_way != self.last_way)
+		if (self.target1_ent.current_way != self.last_way)
 		{
-			if (self.target1.classname != "temp_waypoint")
-				if (self.target1.classname != "player")
-					bot_lost(self.target1, FALSE);
+			if (self.target1_ent.classname != "temp_waypoint")
+				if (self.target1_ent.classname != "player")
+					bot_lost(self.target1_ent, FALSE);
 		}
 
 		return;
@@ -533,13 +533,13 @@ void() bot_path =
 	// point types are AI flags that should be executed once reaching a waypoint
 
 	self.b_aiflags = (jj.b_aiflags & AI_READAHEAD_TYPES) | (self.last_way.b_aiflags & AI_POINT_TYPES);
-	target_add(jj);
+	target_ent_add(jj);
 	if (self.last_way)
 	{
 		if (CheckLinked(self.last_way, jj) == 2) // waypoints are telelinked
 		{
 			tele = FindThing("trigger_teleport"); // this is probbly the teleport responsible
-			target_add(tele);
+			target_ent_add(tele);
 		}
 		traceline(self.last_way.origin, jj.origin, FALSE, self); // check for blockage
    		if (trace_fraction != 1)
@@ -565,8 +565,8 @@ void() bot_path =
 					}
 					else
 					{
-					//	target_drop(jj);
-						target_add(tele);
+					//	target_ent_drop(jj);
+						target_ent_add(tele);
 					//	bot_get_path(tele, TRUE);
 						self.b_aiflags = self.b_aiflags | AI_BLIND; // give a bot a bone	
 						return;
@@ -576,7 +576,7 @@ void() bot_path =
 			else if (trace_ent.classname == "func_wall")
 			{
 				// give up
-				bot_lost(self.target1, FALSE);
+				bot_lost(self.target1_ent, FALSE);
 				return;
 			}
 		}
@@ -746,14 +746,14 @@ float(entity thing) priority_for_thing =
 				else if (coop)
 				{
 					thisp = 200;
-					if (thing.target1.classname == "player")
-						if (!thing.target1.ishuman)
+					if (thing.target1_ent.classname == "player")
+						if (!thing.target1_ent.ishuman)
 							return 0;
 				}
 				else if (teamplay && thing.team == self.team)
 				{
 					//thisp = 100; don't follow teammates on teamplay! -whipowill
-					if (thing.target1.classname == "player")
+					if (thing.target1_ent.classname == "player")
 						return 0;
 				}
 				else thisp = 30;
@@ -813,7 +813,7 @@ void(float scope) bot_look_for_crap =
 		return;
 	if (!target_onstack(best))
 	{	
-		target_add(best);
+		target_ent_add(best);
 		if (scope)
 		{
 			bot_get_path(best, FALSE);
@@ -878,10 +878,10 @@ void() bot_angle_set =
 		view_x = view_x * -1;
 		self.b_angle = view;
 	}
-	else if (self.target1)
+	else if (self.target1_ent)
 	{
-		view = realorigin(self.target1);
-		if (self.target1.flags & FL_ITEM)
+		view = realorigin(self.target1_ent);
+		if (self.target1_ent.flags & FL_ITEM)
 				view = view + '0 0 48';
 		view = view - (self.origin + self.view_ofs);
 		view = vectoangles(view);
@@ -893,7 +893,7 @@ void() bot_angle_set =
 	// HACK HACK HACK HACK
 	// The bot falls off ledges a lot because of "turning around"
 	// so let the bot use instant turn around when not hunting a player
-	if ((self.enemy == world || self.enemy.movetype == MOVETYPE_PUSH) && self.target1.classname != "player")
+	if ((self.enemy == world || self.enemy.movetype == MOVETYPE_PUSH) && self.target1_ent.classname != "player")
 	{
 		self.keys = self.keys & 63;
 		self.v_angle = self.b_angle;
@@ -980,7 +980,7 @@ void() BotAI =
 		self.keys = 0;
 		self.b_aiflags = 0;
 		ClearMyRoute();
-		self.target1 = self.target2 = self.target3 = self.target4 = self.enemy = world;
+		self.target1_ent = self.target2_ent = self.target3_ent = self.target4_ent = self.enemy = world;
 		self.last_way = world;
 
 		return;
@@ -1015,7 +1015,7 @@ void() BotAI =
 	self.button0 = 0;
 	
 
-	// target1 is like goalentity in normal Quake monster AI.
+	// target1_ent is like goalentity in normal Quake monster AI.
 	// it's the bot's most immediate target
 	if (route_table == self)
 	{
@@ -1027,7 +1027,7 @@ void() BotAI =
 		self.b_aiflags = 0;
 		self.keys = 0;
 	}
-	else if (self.target1)
+	else if (self.target1_ent)
 	{
 		frik_movetogoal();
 		bot_path();
@@ -1058,7 +1058,7 @@ void() BotAI =
 		}
 	}
 
-	// bot_angle_set points the bot at it's goal (self.enemy or target1)
+	// bot_angle_set points the bot at it's goal (self.enemy or target1_ent)
 
 	bot_angle_set();
 

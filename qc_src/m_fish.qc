@@ -226,7 +226,7 @@ void() fish_gib =
 
 void() fish_die =
 {
-	self.solid = SOLID_NOT;
+	BecomeCorpse();
 	
 	// just spray a bunch of blood and bubbles
 	if (self.health < -30)
@@ -262,6 +262,7 @@ void() monster_fish_spawn =
 	self.solid = SOLID_SLIDEBOX;
 	//self.movetype = MOVETYPE_STEP;
 
+	self.headmdl = "progs/zom_gib.mdl";
 	setmodel (self, "progs/fish.mdl");
 
 	setsize (self, '-16 -16 -16', '16 16 16');

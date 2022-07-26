@@ -34,8 +34,8 @@ void() SplatTouch =
 {
         if ((other != world) || (pointcontents(self.origin) <= -3))
         {
-                //remove(self); // remove if: didn't hit wall, in liquid
-                //return;
+                remove(self); // remove if: didn't hit wall, in liquid
+                return;
         }
 
         self.velocity = self.avelocity = '0 0 0'; // stop moving and spinning
@@ -99,39 +99,4 @@ void(entity rocket, entity attacker, float damage, entity ignore) ThrowBloodSpla
 
                 head = head.chain;
         }
-};
-
-//**********************************************
-// Enable kicking heads and gibs.
-//**********************************************
-
-void() KickGibs;
-
-void() KickGibs =
-{
-    if (!cvar("frikbot4_gore")) return;
-
-    local vector v;
-
-    // only a player can kick it
-    if (other.classname != "player")
-        return;
-
-    //randomize sound
-    /*
-    if (random()< 0.8)
-        sound(other, CHAN_ITEM, "zombie/z_hit.wav", 1, ATTN_NORM);
-    else
-        sound(other, CHAN_ITEM, "zombie/z_miss.wav", 1, ATTN_NORM);
-    */
-
-    //define velocity
-    //you can play with these formulas to adjust
-    //trajectory
-    v_x = (other.velocity_x*2+50*random());
-    v_y = (other.velocity_y*2+50*random());
-    v_z =250 + 160 * random()+(other.velocity_y+other.velocity_x)*0.30;
-
-    self.flags = self.flags - ( self.flags & FL_ONGROUND );
-    self.velocity = v;
 };

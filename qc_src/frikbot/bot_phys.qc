@@ -78,7 +78,7 @@ void() CL_KeyMove = // CL_BaseMove + CL_AdjustAngles
 		// 200 is the default cl_upspeed
 		self.movevect_z = self.movevect_z - (200 * CL_KeyState(KEY_MOVEDOWN)); 
 		// 200 is the default cl_upspeed
-		if (!self.b_aiflags & AI_PRECISION)
+		if (!self.b_aiflags && AI_PRECISION)
 			self.movevect = self.movevect * 2; 
 		// 2 is the default cl_movespeedkey & bot always has +speed
 	}
@@ -456,8 +456,7 @@ void() SV_CheckOnGround =
 		self.flags = self.flags - FL_ONGROUND;
 	else if ((trace_plane_normal_z <= 0.7) && (trace_fraction != 1))
 		self.flags = self.flags - FL_ONGROUND;
-        //~ else if (!droptofloor(0,0))
-	else if (!droptofloor())	//~ hip_fbx bugfix
+        else if (!droptofloor(0,0)) // used to have no arguments, something about "hip_fbx bugfix"
 		self.flags = self.flags - FL_ONGROUND;
 	else if (org_z - self.origin_z < 2)
 		self.flags = self.flags | FL_ONGROUND;
@@ -479,8 +478,7 @@ float(vector dir) botCheckForStep =
 	yaw = vectoyaw(dir); 
 	if(walkmove(yaw, 3))
 	{	
-		//~ if(droptofloor(0,0))
-		if(droptofloor())
+		if(droptofloor(0,0)) // used to have no arguments, something about "hip_fbx bugfix"
 		{	
 			stepdistance = self.origin_z - currentorigin_z;
 			v = self.origin - currentorigin;

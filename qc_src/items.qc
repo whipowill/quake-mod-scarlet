@@ -88,10 +88,11 @@ void() ItemSpawn =
 	self.model = self.wad;		// restore original model
 	self.solid = SOLID_TRIGGER;	// allow it to be touched again
 	setorigin (self, self.origin);
-	//ItemFall();
 
-	
-	ItemPiff();
+	if (cvar("frikbot4_placeholder"))
+		ItemPiff();
+	else
+		ItemFall();
 	
 	if (self.targetname != string_null && self.use != SUB_regen)
 		sound (self, CHAN_VOICE, "misc/r_tele1.wav", 1, ATTN_NORM);
@@ -122,10 +123,15 @@ void() ItemDespawnBlink =
 		SUB_Remove();
 		return;
 	}
-	if (self.alpha == 1)
-		self.alpha = 0.25;
-	else
-		self.alpha = 1;
+
+	if (cvar("frikbot4_placeholder"))
+	{
+		if (self.alpha == 1)
+			self.alpha = 0.25;
+		else
+			self.alpha = 1;
+	}
+
 	self.nextthink = time + 0.25;
 }
 
@@ -145,7 +151,8 @@ void() ItemPrespawnFlicker =
 
 	// flicker back into place
 	//self.alpha = (3.5 - (self.attack_finished - time)) / 8 + (1 - mod(self.attack_finished - time, 0.5)) * 0.2;
-	self.alpha = (0.5 - mod(self.attack_finished - time, 0.5));
+	if (cvar("frikbot4_placeholder"))
+		self.alpha = (0.5 - mod(self.attack_finished - time, 0.5));
 	self.nextthink = time + 0.05;
 }
 
@@ -175,7 +182,10 @@ void() ItemTouched =
 	if (self.wait > 0)
 	{
 		//self.model = string_null;
-		self.alpha = 0.2;
+		if (cvar("frikbot4_placeholder"))
+			self.alpha = 0.2;
+		else
+			self.alpha = 0.001;
 		self.solid = SOLID_NOT;
 		
 		self.think = ItemPrespawn;

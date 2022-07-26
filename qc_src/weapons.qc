@@ -50,6 +50,8 @@ void() W_Precache =
 	precache_model ("progs/v_rock2.mdl");
 	precache_model ("progs/v_light.mdl");
 
+
+	precache_model ("progs/zom_gib.mdl"); //~ FrikBot
 }
 
 

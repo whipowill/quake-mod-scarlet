@@ -6,7 +6,7 @@ void() CorpseTouch =
 {
         self.velocity = '0 0 0';
 
-        if ((!other.flags & FL_ONGROUND) && (other.health) && (other.flags & FL_CLIENT))
+        if ((!other.flags && FL_ONGROUND) && (other.health) && (other.flags && FL_CLIENT))
                 other.flags = other.flags + FL_ONGROUND;
 };
 
@@ -26,7 +26,8 @@ void() CorpseDie =
 
 void() BecomeCorpse =
 {
-        if (!cvar("frikbot4_gore"))
+        // if gore is turned off, or this is copper...
+        if (!cvar("frikbot4_gore") || version_f == 1.19)
         {
                 self.solid = SOLID_NOT;
                 return;
@@ -64,4 +65,37 @@ void() BecomeCorpse =
         self.th_melee = SUB_Null;
         self.th_pain = SUB_Null;
         self.touch = CorpseTouch;
+};
+
+//**********************************************
+// Enable kicking heads and gibs.
+//**********************************************
+
+void() KickGibs =
+{
+    if (!cvar("frikbot4_gore")) return;
+
+    local vector v;
+
+    // only a player can kick it
+    if (other.classname != "player")
+        return;
+
+    //randomize sound
+    /*
+    if (random()< 0.8)
+        sound(other, CHAN_ITEM, "zombie/z_hit.wav", 1, ATTN_NORM);
+    else
+        sound(other, CHAN_ITEM, "zombie/z_miss.wav", 1, ATTN_NORM);
+    */
+
+    //define velocity
+    //you can play with these formulas to adjust
+    //trajectory
+    v_x = (other.velocity_x*2+50*random());
+    v_y = (other.velocity_y*2+50*random());
+    v_z =250 + 160 * random()+(other.velocity_y+other.velocity_x)*0.30;
+
+    self.flags = self.flags - ( self.flags & FL_ONGROUND );
+    self.velocity = v;
 };

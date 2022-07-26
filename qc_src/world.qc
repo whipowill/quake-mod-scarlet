@@ -207,6 +207,8 @@ void() worldspawn =
 {
 	lastspawn = world;
 	startingserverflags = serverflags;
+
+	BotInit();	//~ FrikBot
 	
 	InitBodyQueue ();
 	InitLightStyles();	// moved to lights.qc
@@ -343,6 +345,8 @@ void() worldspawn =
 
 void() StartFrame =
 {
+	BotFrame();	//~ FrikBot
+
 	teamplay = cvar("teamplay");
 	skill = cvar("skill");
 	
@@ -419,6 +423,8 @@ void() InitBodyQueue =
 // respawned elsewhere
 void(entity ent) CopyToBodyQueue =
 {
+	bodyqueue_head.touch = ent.touch; //~ FrikBot
+	bodyqueue_head.solid = ent.solid; //~ FrikBot
 	bodyqueue_head.angles = ent.angles;
 	bodyqueue_head.model = ent.model;
 	bodyqueue_head.modelindex = ent.modelindex;

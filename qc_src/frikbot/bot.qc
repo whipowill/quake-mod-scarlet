@@ -142,7 +142,7 @@ for all variables in the bot...
 .float route_failed, dyn_flags, dyn_time;
 .float dyn_plat;
 .entity	temp_way, last_way, phys_obj;
-.entity	target1, target2, target3, target4;
+.entity	target1_ent, target2_ent, target3_ent, target4_ent;
 .entity	_next, _last;
 .entity	current_way;
 .vector	b_angle, b_dest, mouse_emu, obs_dir;
@@ -273,8 +273,8 @@ float(entity targ1, entity targ2)		wisible;
 float(entity targ)		sisible;
 float(entity targ)		fisible;
 vector(entity ent)		realorigin;
-void(entity ent)			target_drop;
-void(entity ent)			target_add;
+void(entity ent)			target_ent_drop;
+void(entity ent)			target_ent_add;
 void()				KickABot;
 void()				BotImpulses;
 void(entity targ, float success) bot_lost;
@@ -325,6 +325,7 @@ direct messages to the bots, it crashes quake :-(
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
+
 void(entity	client, string s) stuffcmd =
 {
 	if (client.ishuman == 1)
@@ -361,6 +362,7 @@ void(entity	e) setspawnparms =
 		SetNewParms();
 	}
 };
+
 void(entity	client, string s) sprint =
 {
 	if (client.ishuman == 1)
@@ -378,6 +380,7 @@ void(entity	client, string s) sprint =
 	}
 
 };
+
 void(entity	client, string s) centerprint =
 {
 	if (client.ishuman == 1)
@@ -413,54 +416,63 @@ void(entity e, float chan, string samp, float vol, float atten) sound =
 		other.b_sound = time + 1;
 
 };
+
 void(float to, float f) WriteByte =
 {
 	if ((to == MSG_ONE) && (msg_entity.ishuman != TRUE))
 		return;
 	frik_WriteByte(to, f);
 };
+
 void(float to, float f) WriteChar =		
 {
 	if ((to == MSG_ONE) && (msg_entity.ishuman != TRUE))
 		return;
 	frik_WriteChar(to, f);
 };
+
 void(float to, float f) WriteShort =	
 {
 	if ((to == MSG_ONE) && (msg_entity.ishuman != TRUE))
 		return;
 	frik_WriteShort(to, f);
 };
+
 void(float to, float f) WriteLong = 
 {
 	if ((to == MSG_ONE) && (msg_entity.ishuman != TRUE))
 		return;
 	frik_WriteLong(to, f);
 };
+
 void(float to, float f) WriteCoord = 
 {
 	if ((to == MSG_ONE) && (msg_entity.ishuman != TRUE))
 		return;
 	frik_WriteCoord(to, f);
 };
+
 void(float to, float f) WriteAngle = 
 {
 	if ((to == MSG_ONE) && (msg_entity.ishuman != TRUE))
 		return;
 	frik_WriteAngle(to, f);
 };
+
 void(float to, string s) WriteString = 
 {
 	if ((to == MSG_ONE) && (msg_entity.ishuman != TRUE))
 		return;
 	frik_WriteString(to, s);
 };
+
 void(float to, entity s) WriteEntity = 
 {
 	if ((to == MSG_ONE) && (msg_entity.ishuman != TRUE))
 		return;
 	frik_WriteEntity(to, s);
 };
+
 /*
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 

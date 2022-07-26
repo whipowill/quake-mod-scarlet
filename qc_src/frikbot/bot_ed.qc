@@ -298,36 +298,36 @@ void() bot_menu_display =
 					h = ftos(self.current_way.b_aiflags);
 					sprint(self, h);
 
-					if (self.current_way.target1)
+					if (self.current_way.target1_ent)
 					{
-						h = ftos(self.current_way.target1.count);
+						h = ftos(self.current_way.target1_ent.count);
 						if (self.current_way.b_aiflags & AI_TELELINK_1)
 							sprint(self, "\nTelelink1 to:");
 						else
 							sprint(self, "\nLink1 to:");
 						sprint(self, h);
 					}
-					if (self.current_way.target2)
+					if (self.current_way.target2_ent)
 					{
-						h = ftos(self.current_way.target2.count);
+						h = ftos(self.current_way.target2_ent.count);
 						if (self.current_way.b_aiflags & AI_TELELINK_2)
 							sprint(self, "\nTelelink2 to:");
 						else
 							sprint(self, "\nLink2 to:");
 						sprint(self, h);
 					}
-					if (self.current_way.target3)
+					if (self.current_way.target3_ent)
 					{
-						h = ftos(self.current_way.target3.count);
+						h = ftos(self.current_way.target3_ent.count);
 						if (self.current_way.b_aiflags & AI_TELELINK_3)
 							sprint(self, "\nTelelink3 to:");
 						else
 							sprint(self, "\nLink3 to:");
 						sprint(self, h);
 					}
-					if (self.current_way.target4)
+					if (self.current_way.target4_ent)
 					{
-						h = ftos(self.current_way.target4.count);
+						h = ftos(self.current_way.target4_ent.count);
 						if (self.current_way.b_aiflags & AI_TELELINK_4)
 							sprint(self, "\nTelelink4 to:");
 						else
@@ -573,7 +573,7 @@ void() bot_menu_display =
 				{
 					if (!self.ishuman)
 					{
-						target_add(b_temp3);
+						target_ent_add(b_temp3);
 						bot_get_path(b_temp3, TRUE);
 						self = world;
 					}
@@ -595,7 +595,7 @@ void() bot_menu_display =
 				{
 					if (!self.ishuman)
 					{
-						self.target1 = self.target2 = self.target3 = self.target4 = world;
+						self.target1_ent = self.target2_ent = self.target3_ent = self.target4_ent = world;
 						route_table = world;
 					}
 					self = self._next;
@@ -653,14 +653,14 @@ void() bot_menu_display =
 				t = way_head;
 				while(t)
 				{
-					if ((t.target1 == world) && (t.target2 == world) && (t.target3 == world) && (t.target4 == world))
+					if ((t.target1_ent == world) && (t.target2_ent == world) && (t.target3_ent == world) && (t.target4_ent == world))
 					{
 						sprint(self, "Waypoint #");
 						h = ftos(t.count);
 						sprint(self, h);
 						sprint(self, " has no outbound links\n");
 					}
-					if ((t.target1 == t) || (t.target2 == t) || (t.target3 == t) || (t.target4 == t))
+					if ((t.target1_ent == t) || (t.target2_ent == t) || (t.target3_ent == t) || (t.target4_ent == t))
 					{
 						sprint(self, "Waypoint #");
 						h = ftos(t.count);
@@ -860,7 +860,7 @@ void() bot_menu_display =
 			{
 				if (self.last_way)
 				{
-					self.last_way.target1 = self.last_way.target2 = self.last_way.target3 = self.last_way.target4 = world;
+					self.last_way.target1_ent = self.last_way.target2_ent = self.last_way.target3_ent = self.last_way.target4_ent = world;
 					self.last_way.b_aiflags = self.last_way.b_aiflags - (self.last_way.b_aiflags & 15);
 				}
 				self.b_menu = MENU_LINKS;
@@ -1198,16 +1198,16 @@ void() PrintWaypoint =
 		bprint("\n");
 		needcolon = FALSE;
 	}
-	if ((scratch1 != t.target1.count) || t.count == 1)
+	if ((scratch1 != t.target1_ent.count) || t.count == 1)
 	{
 		needcolon = TRUE;
 		bprint("scratch1 ");
 		bytecounter = bytecounter + 14;
-		h = ftos(t.target1.count);
+		h = ftos(t.target1_ent.count);
 		bprint(h);
-		scratch1 = t.target1.count;
+		scratch1 = t.target1_ent.count;
 	}
-	if ((scratch2 != t.target2.count) || t.count == 1)
+	if ((scratch2 != t.target2_ent.count) || t.count == 1)
 	{
 		if (needcolon)
 		{
@@ -1218,11 +1218,11 @@ void() PrintWaypoint =
 			needcolon = TRUE;
 		bprint("scratch2 ");
 		bytecounter = bytecounter + 14;
-		h = ftos(t.target2.count);
+		h = ftos(t.target2_ent.count);
 		bprint(h);
-		scratch2 = t.target2.count;
+		scratch2 = t.target2_ent.count;
 	}
-	if ((scratch3 != t.target3.count) || t.count == 1)
+	if ((scratch3 != t.target3_ent.count) || t.count == 1)
 	{
 		if (needcolon)
 		{
@@ -1233,11 +1233,11 @@ void() PrintWaypoint =
 			needcolon = TRUE;
 		bprint("scratch3 ");
 		bytecounter = bytecounter + 14;
-		h = ftos(t.target3.count);
+		h = ftos(t.target3_ent.count);
 		bprint(h);
-		scratch3 = t.target3.count;
+		scratch3 = t.target3_ent.count;
 	}
-	if ((scratch4 != t.target4.count) || t.count == 1)
+	if ((scratch4 != t.target4_ent.count) || t.count == 1)
 	{
 		if (needcolon)
 		{
@@ -1248,9 +1248,9 @@ void() PrintWaypoint =
 			needcolon = TRUE;
 		bprint("scratch4 ");
 		bytecounter = bytecounter + 14;
-		h = ftos(t.target4.count);
+		h = ftos(t.target4_ent.count);
 		bprint(h);
-		scratch4 = t.target4.count;
+		scratch4 = t.target4_ent.count;
 	}
 	if (needcolon)	// 2001-09-10 FrikBot support by FrikaC/Maddes
 	{
@@ -1318,16 +1318,16 @@ void() PrintQCWaypoint =
 	h = vtos(t.origin);
 	bprint(h);
 	bprint(", '");
-	h = ftos(t.target1.count);
+	h = ftos(t.target1_ent.count);
 	bprint(h);
 	bprint(" ");
-	h = ftos(t.target2.count);
+	h = ftos(t.target2_ent.count);
 	bprint(h);
 	bprint(" ");
-	h = ftos(t.target3.count);
+	h = ftos(t.target3_ent.count);
 	bprint(h);
 	bprint("', ");
-	h = ftos(t.target4.count);
+	h = ftos(t.target4_ent.count);
 	bprint(h);
 	bprint(", ");
 	h = ftos(t.b_aiflags);
@@ -1392,28 +1392,28 @@ void() PrintBSPWaypoint =
 	bprint(" ");
 	h = ftos(t.origin_z);
 	bprint(h);
-	if (t.target1.count)
+	if (t.target1_ent.count)
 	{
 		bprint("\"\n\"b_pants\" \"");
-		h = ftos(t.target1.count);
+		h = ftos(t.target1_ent.count);
 		bprint(h);
 	}
-	if (t.target2.count)
+	if (t.target2_ent.count)
 	{
 		bprint("\"\n\"b_skill\" \"");
-		h = ftos(t.target2.count);
+		h = ftos(t.target2_ent.count);
 		bprint(h);
 	}
-	if (t.target3.count)
+	if (t.target3_ent.count)
 	{
 		bprint("\"\n\"b_shirt\" \"");
-		h = ftos(t.target3.count);
+		h = ftos(t.target3_ent.count);
 		bprint(h);
 	}
-	if (t.target4.count)
+	if (t.target4_ent.count)
 	{
 		bprint("\"\n\"b_frags\" \"");
-		h = ftos(t.target4.count);
+		h = ftos(t.target4_ent.count);
 		bprint(h);
 	}
 	if (t.b_aiflags)
@@ -1549,16 +1549,16 @@ void() SaveWaypoint =
 		write(file, "\n");
 		needcolon = FALSE;
 	}
-	if ((scratch1 != t.target1.count) || t.count == 1)
+	if ((scratch1 != t.target1_ent.count) || t.count == 1)
 	{
 		needcolon = TRUE;
 		write(file, "scratch1 ");
 		bytecounter = bytecounter + 14;
-		h = ftos(t.target1.count);
+		h = ftos(t.target1_ent.count);
 		write(file, h);
-		scratch1 = t.target1.count;
+		scratch1 = t.target1_ent.count;
 	}
-	if ((scratch2 != t.target2.count) || t.count == 1)
+	if ((scratch2 != t.target2_ent.count) || t.count == 1)
 	{
 		if (needcolon)
 		{
@@ -1569,11 +1569,11 @@ void() SaveWaypoint =
 			needcolon = TRUE;
 		write(file, "scratch2 ");
 		bytecounter = bytecounter + 14;
-		h = ftos(t.target2.count);
+		h = ftos(t.target2_ent.count);
 		write(file, h);
-		scratch2 = t.target2.count;
+		scratch2 = t.target2_ent.count;
 	}
-	if ((scratch3 != t.target3.count) || t.count == 1)
+	if ((scratch3 != t.target3_ent.count) || t.count == 1)
 	{
 		if (needcolon)
 		{
@@ -1584,11 +1584,11 @@ void() SaveWaypoint =
 			needcolon = TRUE;
 		write(file, "scratch3 ");
 		bytecounter = bytecounter + 14;
-		h = ftos(t.target3.count);
+		h = ftos(t.target3_ent.count);
 		write(file, h);
-		scratch3 = t.target3.count;
+		scratch3 = t.target3_ent.count;
 	}
-	if ((scratch4 != t.target4.count) || t.count == 1)
+	if ((scratch4 != t.target4_ent.count) || t.count == 1)
 	{
 		if (needcolon)
 		{
@@ -1599,9 +1599,9 @@ void() SaveWaypoint =
 			needcolon = TRUE;
 		write(file, "scratch4 ");
 		bytecounter = bytecounter + 14;
-		h = ftos(t.target4.count);
+		h = ftos(t.target4_ent.count);
 		write(file, h);
-		scratch4 = t.target4.count;
+		scratch4 = t.target4_ent.count;
 	}
 	if (needcolon)	// 2001-09-10 FrikBot support by FrikaC/Maddes
 	{

@@ -83,7 +83,7 @@ void() shal_pain4       =[      $pain4, shal_pain5      ] {}
 void() shal_pain5       =[      $pain5, shal_run1      ] {}
 
 void() shal_death1      =[      $death1,        shal_death2     ] {}
-void() shal_death2      =[      $death2,        shal_death3     ] {self.solid = SOLID_NOT;}
+void() shal_death2      =[      $death2,        shal_death3     ] {BecomeCorpse();}
 void() shal_death3      =[      $death3,        shal_death4     ] {}
 void() shal_death4      =[      $death4,        shal_death5     ] {}
 void() shal_death5      =[      $death5,        shal_death6     ] {}
@@ -300,6 +300,7 @@ void() monster_shalrath_spawn =
 	self.solid = SOLID_SLIDEBOX;
 	//self.movetype = MOVETYPE_STEP;
 	
+	self.headmdl = "progs/h_shal.mdl";
 	setmodel (self, "progs/shalrath.mdl");
 	setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
 	self.health = 400;

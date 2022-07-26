@@ -63,7 +63,7 @@ void() weapon_touch =
 
 	if (!CheckValidTouch()) return;
 
-	if (deathmatch == 2 || coop > 1)
+	if (deathmatch == 2) //~ FrikBot - removed "|| coop > 1" so weaps are re-gatherable
 		leave = 1;
 	else
 		leave = 0;
@@ -120,7 +120,7 @@ void() StartWeapon =
 	self.type = "weapon";
 	self.touch = weapon_touch;
 	setsize (self, '-16 -16 0', '16 16 56');
-	if (deathmatch == 1)
+	if (deathmatch == 1 || 1) //~ FrikBot
 		self.wait = 30;
 	StartItem ();
 }
@@ -360,7 +360,7 @@ void() StartAmmo =
 	self.type = "ammo";
 	setsize (self, '0 0 0', '32 32 56');
 	self.touch = ammo_touch;
-	if (deathmatch == 1)
+	if (deathmatch == 1 || 1) //~ FrikBot
 		self.wait = 30;
 	StartItem ();
 	//ItemRotateAndSize('32 32 56');

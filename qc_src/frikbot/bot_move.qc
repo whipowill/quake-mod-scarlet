@@ -153,7 +153,7 @@ void(vector whichway, float danger) frik_obstructed =
 // TODO: something
 	if (self.b_aiflags & AI_BLIND)
 		return;
-	org = realorigin(self.target1);
+	org = realorigin(self.target1_ent);
 
 	if (danger)
 	{
@@ -164,7 +164,7 @@ void(vector whichway, float danger) frik_obstructed =
 		return;
 
 
-	if (self.target1)
+	if (self.target1_ent)
 	{
 		if (self.b_aiflags & AI_OBSTRUCTED)
 		{
@@ -267,9 +267,9 @@ void() frik_obstacles =
 		}
 		else
 		{
-			if (self.target1)
+			if (self.target1_ent)
 			{
-				stop = realorigin(self.target1);
+				stop = realorigin(self.target1_ent);
 				if ((stop_z - self.origin_z) < -32)
 					return; // safe to fall
 			}
@@ -291,9 +291,9 @@ void() frik_obstacles =
 			}
 			else
 			{
-				if (self.target1)
+				if (self.target1_ent)
 				{
-					stop = realorigin(self.target1);
+					stop = realorigin(self.target1_ent);
 					if ((stop_z - self.origin_z) < -32)
 						return; // safe to fall
 				}
@@ -302,11 +302,11 @@ void() frik_obstacles =
 			}
 		}
 
-		if (self.target1)
+		if (self.target1_ent)
 		{
 			// getting furter away from my target?
-			test = vlen(self.target1.origin - (ang + self.origin));
-			if (test > vlen(self.target1.origin - self.origin))
+			test = vlen(self.target1_ent.origin - (ang + self.origin));
+			if (test > vlen(self.target1_ent.origin - self.origin))
 			{
 				if (conts < -3) // bad stuff down dare
 				{
@@ -328,9 +328,9 @@ void() frik_obstacles =
 			frik_obstructed(ang, TRUE);
 			return;
 		}
-		if (self.target1)
+		if (self.target1_ent)
 		{
-			stop = realorigin(self.target1);
+			stop = realorigin(self.target1_ent);
 			if ((stop_z - self.origin_z) < -32)
 			{
 
@@ -416,13 +416,13 @@ void() frik_movetogoal =
 	local vector way, start, stop, ang;
 	local float g;
 
-	if (self.target1 == world)
+	if (self.target1_ent == world)
 	{
 		makevectors(self.v_angle);
 		frik_walkmove(v_forward);
 		return;
 	}
-	way = realorigin(self.target1) - self.origin;
+	way = realorigin(self.target1_ent) - self.origin;
 	if (vlen(way) < 25)
 	{
 		self.keys = self.keys & 960;

@@ -234,7 +234,7 @@ void(entity attacker, float damage) dog_pain =
 
 void() dog_die1		=[	$death1,	dog_die2	] {}
 void() dog_die2		=[	$death2,	dog_die3	] {}
-void() dog_die3		=[	$death3,	dog_die4	] {	self.solid = SOLID_NOT; }
+void() dog_die3		=[	$death3,	dog_die4	] {	BecomeCorpse(); }
 void() dog_die4		=[	$death4,	dog_die5	] {}
 void() dog_die5		=[	$death5,	dog_die6	] {}
 void() dog_die6		=[	$death6,	dog_die7	] {}
@@ -244,7 +244,7 @@ void() dog_die9		=[	$death9,	dog_die9	] {}
 
 void() dog_dieb1	=[	$deathb1,	dog_dieb2	] {}
 void() dog_dieb2	=[	$deathb2,	dog_dieb3	] {}
-void() dog_dieb3	=[	$deathb3,	dog_dieb4	] {	self.solid = SOLID_NOT;}
+void() dog_dieb3	=[	$deathb3,	dog_dieb4	] {	BecomeCorpse();}
 void() dog_dieb4	=[	$deathb4,	dog_dieb5	] {}
 void() dog_dieb5	=[	$deathb5,	dog_dieb6	] {}
 void() dog_dieb6	=[	$deathb6,	dog_dieb7	] {}
@@ -351,6 +351,7 @@ void() monster_dog_spawn =
 	self.solid = SOLID_SLIDEBOX;
 	//self.movetype = MOVETYPE_STEP;
 
+	self.headmdl = "progs/h_dog.mdl";
 	setmodel (self, "progs/dog.mdl");
 
 	setsize (self, '-32 -32 -24', '32 32 40');

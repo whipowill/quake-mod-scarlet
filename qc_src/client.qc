@@ -47,7 +47,7 @@ void() SetChangeParms =
 	// cap super health
 	self.health = min(self.health, self.max_health);		
 	// bump the player up if he's below 50 <- pretty much the only 'autobalance' in quake
-	if (skill < 3)	// nightmare players now get no help
+	if (skill < 3)
 		self.health = max(self.health, 50);
 	
 	parm1 = self.items;
@@ -68,7 +68,7 @@ void() SetChangeParms =
 
 void() SetNewParms =
 {
-	if (skill == 3)
+	if (skill == 3 && !deathmatch) //~ FrikBot
 		parm2 = 50;
 	else
 		parm2 = 100;
@@ -526,7 +526,7 @@ void() PutClientInServer =
 	self.classname = "player";
 	
 	// new for nightmare: reduced max health instead of the manky attack time scale
-	if (skill == 3)
+	if (skill == 3 && !deathmatch) //~ FrikBot
 		self.max_health = 50;
 	else
 		self.max_health = 100;
@@ -1418,6 +1418,12 @@ Called every frame before physics are run
 */
 void() PlayerPreThink =
 {
+	if (BotPreFrame()) //~ FrikBot
+		return;
+
+	// add player name to screen, like Halo. -whipowill
+	NameTag();
+
 	if (cleanUpClientShit)
 	{
 		fog_setFromEnt( self, self );
@@ -1497,6 +1503,9 @@ Called every frame after physics are run
 */
 void() PlayerPostThink =
 {
+	if (BotPostFrame())	//~ FrikBot
+		return;
+
 	if ( intermission_running ) return;
 	
 	if (self.view_ofs == '0 0 0')
@@ -1591,6 +1600,8 @@ called when a player connects to a server
 */
 void() ClientConnect =
 {
+	ClientInRankings(); //~ FrikBot
+
 	bprint (self.netname);
 	bprint (" entered the game\n");
 	
@@ -1612,6 +1623,8 @@ called when a player disconnects from a server
 */
 void() ClientDisconnect =
 {
+	ClientDisconnected(); //~ FrikBot
+
 	if (gameover)
 		return;
 	// if the level end trigger has been activated, just return

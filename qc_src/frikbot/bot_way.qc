@@ -57,25 +57,25 @@ float (entity e1, entity e2) CheckLinked =
 {
 	if ((e1 == e2) || (e2 == world) || (e1 == world))
 		return FALSE;
-	else if (e1.target1 == e2)
+	else if (e1.target1_ent == e2)
 	{
 		if (e1.b_aiflags & AI_TELELINK_1)
 			return 2;
 		else return TRUE;
 	}
-	else if (e1.target2 == e2)
+	else if (e1.target2_ent == e2)
 	{
 		if (e1.b_aiflags & AI_TELELINK_2)
 			return 2;
 		else return TRUE;
 	}
-	else if (e1.target3 == e2)
+	else if (e1.target3_ent == e2)
 	{
 		if (e1.b_aiflags & AI_TELELINK_3)
 			return 2;
 		else return TRUE;
 	}
-	else if (e1.target4 == e2)
+	else if (e1.target4_ent == e2)
 	{
 		if (e1.b_aiflags & AI_TELELINK_4)
 			return 2;
@@ -93,24 +93,24 @@ float (entity e1, entity e2) LinkWays =
 	else if (CheckLinked(e1, e2))
 		return FALSE; // already linked!!!
 
-	if (e1.target1 == world)
+	if (e1.target1_ent == world)
 	{
-		e1.target1 = e2;
+		e1.target1_ent = e2;
 		return TRUE;
 	}
-	else if (e1.target2 == world)
+	else if (e1.target2_ent == world)
 	{
-		e1.target2 = e2;
+		e1.target2_ent = e2;
 		return TRUE;
 	}
-	else if (e1.target3 == world)
+	else if (e1.target3_ent == world)
 	{
-		e1.target3 = e2;
+		e1.target3_ent = e2;
                 return TRUE;
 	}
-	else if (e1.target4 == world)
+	else if (e1.target4_ent == world)
 	{
-		e1.target4 = e2;
+		e1.target4_ent = e2;
 		return TRUE;
 	}
 	else return FALSE;
@@ -125,27 +125,27 @@ float (entity e1, entity e2) TeleLinkWays =
 	else if (CheckLinked(e1, e2))
 		return FALSE; // already linked!!!
 
-	if (e1.target1 == world)
+	if (e1.target1_ent == world)
 	{
-		e1.target1 = e2;
+		e1.target1_ent = e2;
 		e1.b_aiflags = e1.b_aiflags | AI_TELELINK_1;
 		return TRUE;
 	}
-	else if (e1.target2 == world)
+	else if (e1.target2_ent == world)
 	{
-		e1.target2 = e2;
+		e1.target2_ent = e2;
 		e1.b_aiflags = e1.b_aiflags | AI_TELELINK_2;
 		return TRUE;
 	}
-	else if (e1.target3 == world)
+	else if (e1.target3_ent == world)
 	{
-		e1.target3 = e2;
+		e1.target3_ent = e2;
 		e1.b_aiflags = e1.b_aiflags | AI_TELELINK_3;
             return TRUE;
 	}
-	else if (e1.target4 == world)
+	else if (e1.target4_ent == world)
 	{
-		e1.target4 = e2;
+		e1.target4_ent = e2;
 		e1.b_aiflags = e1.b_aiflags | AI_TELELINK_4;
 		return TRUE;
 	}
@@ -161,25 +161,25 @@ void (entity e1, entity e2) UnlinkWays =
 	else if (!CheckLinked(e1, e2))
 		return;
 
-	if (e1.target1 == e2)
+	if (e1.target1_ent == e2)
 	{
 		e1.b_aiflags = e1.b_aiflags - (e1.b_aiflags & AI_TELELINK_1);
-		e1.target1 = world;
+		e1.target1_ent = world;
 	}
-	if (e1.target2 == e2)
+	if (e1.target2_ent == e2)
 	{
 		e1.b_aiflags = e1.b_aiflags - (e1.b_aiflags & AI_TELELINK_2);
-		e1.target2 = world;
+		e1.target2_ent = world;
 	}
-	if (e1.target3 == e2)
+	if (e1.target3_ent == e2)
 	{
 		e1.b_aiflags = e1.b_aiflags - (e1.b_aiflags & AI_TELELINK_3);
-		e1.target3 = world;
+		e1.target3_ent = world;
 	}
-	if (e1.target4 == e2)
+	if (e1.target4_ent == e2)
 	{
 		e1.b_aiflags = e1.b_aiflags - (e1.b_aiflags & AI_TELELINK_4);
-		e1.target4 = world;
+		e1.target4_ent = world;
 	}
 
 };
@@ -295,12 +295,12 @@ void() DynamicWaypoint =
 
 	if (self.teleport_time > self.portal_time)
 	{
-		if (!self.flags & FL_WATERJUMP)
+		if (!self.flags && FL_WATERJUMP)
 		{
 			self.dyn_flags = 2;
 			if (!self.ishuman)
 			{
-				bot_lost(self.target1, TRUE);
+				bot_lost(self.target1_ent, TRUE);
 				self.enemy = world;
 			}
 		}
@@ -383,14 +383,14 @@ void() DynamicWaypoint =
 	{
 		if (self.current_way)
 		{
-			if (self.current_way.target1)
-				DeveloperLightning(self.current_way, self.current_way.target1, self.current_way.b_aiflags & AI_TELELINK_1);
-			if (self.current_way.target2)
-				DeveloperLightning(self.current_way, self.current_way.target2, self.current_way.b_aiflags & AI_TELELINK_2);
-			if (self.current_way.target3)
-				DeveloperLightning(self.current_way, self.current_way.target3, self.current_way.b_aiflags & AI_TELELINK_3);
-			if (self.current_way.target4)
-				DeveloperLightning(self.current_way, self.current_way.target4, self.current_way.b_aiflags & AI_TELELINK_4);
+			if (self.current_way.target1_ent)
+				DeveloperLightning(self.current_way, self.current_way.target1_ent, self.current_way.b_aiflags & AI_TELELINK_1);
+			if (self.current_way.target2_ent)
+				DeveloperLightning(self.current_way, self.current_way.target2_ent, self.current_way.b_aiflags & AI_TELELINK_2);
+			if (self.current_way.target3_ent)
+				DeveloperLightning(self.current_way, self.current_way.target3_ent, self.current_way.b_aiflags & AI_TELELINK_3);
+			if (self.current_way.target4_ent)
+				DeveloperLightning(self.current_way, self.current_way.target4_ent, self.current_way.b_aiflags & AI_TELELINK_4);
 		}
 		if (self.b_aiflags & AI_HOLD_SELECT)
 			return;
@@ -529,10 +529,10 @@ entity(float num) WaypointForNum =
 
 void() FixThisWaypoint = 
 {
-	self.enemy.target1 = WaypointForNum(self.enemy.b_pants);
-	self.enemy.target2 = WaypointForNum(self.enemy.b_skill);
-	self.enemy.target3 = WaypointForNum(self.enemy.b_shirt);
-	self.enemy.target4 = WaypointForNum(self.enemy.b_frags);
+	self.enemy.target1_ent = WaypointForNum(self.enemy.b_pants);
+	self.enemy.target2_ent = WaypointForNum(self.enemy.b_skill);
+	self.enemy.target3_ent = WaypointForNum(self.enemy.b_shirt);
+	self.enemy.target4_ent = WaypointForNum(self.enemy.b_frags);
 	self.enemy = self.enemy._next;
 	self.nextthink = time;
 	if (self.enemy == world)
@@ -632,14 +632,14 @@ entity(entity lastone) FindRoute =
 	
 	if (lastone)
 	{
-		if (lastone.target1.b_sound & flag)
-			return lastone.target1;
-		else if (lastone.target2.b_sound & flag)
-			return lastone.target2;
-		else if (lastone.target3.b_sound & flag)
-			return lastone.target3;
-		else if (lastone.target4.b_sound & flag)
-			return lastone.target4;
+		if (lastone.target1_ent.b_sound & flag)
+			return lastone.target1_ent;
+		else if (lastone.target2_ent.b_sound & flag)
+			return lastone.target2_ent;
+		else if (lastone.target3_ent.b_sound & flag)
+			return lastone.target3_ent;
+		else if (lastone.target4_ent.b_sound & flag)
+			return lastone.target4_ent;
 	}
 	
 	t = way_head;
@@ -795,41 +795,41 @@ void() WaypointThink =
 	// can you say ugly?
 	if (self.b_aiflags & AI_TRACE_TEST)
 	{
-		if (self.target1)
+		if (self.target1_ent)
 		{
-			traceline(self.origin, self.target1.origin, TRUE, self);
+			traceline(self.origin, self.target1_ent.origin, TRUE, self);
 			if (trace_fraction == 1)
-				FollowLink(self.target1, AI_TELELINK_1);
+				FollowLink(self.target1_ent, AI_TELELINK_1);
 		}
-		if (self.target2)
+		if (self.target2_ent)
 		{
-			traceline(self.origin, self.target2.origin, TRUE, self);
+			traceline(self.origin, self.target2_ent.origin, TRUE, self);
 			if (trace_fraction == 1)
-				FollowLink(self.target2, AI_TELELINK_2);
+				FollowLink(self.target2_ent, AI_TELELINK_2);
 		}
-		if (self.target3)
+		if (self.target3_ent)
 		{
-			traceline(self.origin, self.target3.origin, TRUE, self);
+			traceline(self.origin, self.target3_ent.origin, TRUE, self);
 			if (trace_fraction == 1)
-			FollowLink(self.target3, AI_TELELINK_3);
+			FollowLink(self.target3_ent, AI_TELELINK_3);
 		}
-		if (self.target4)
+		if (self.target4_ent)
 		{
-			traceline(self.origin, self.target4.origin, TRUE, self);
+			traceline(self.origin, self.target4_ent.origin, TRUE, self);
 			if (trace_fraction == 1)
-				FollowLink(self.target4, AI_TELELINK_4);
+				FollowLink(self.target4_ent, AI_TELELINK_4);
 		}
  	}
 	else
 	{
-		if (self.target1)
-			FollowLink(self.target1, AI_TELELINK_1);
-		if (self.target2)
-			FollowLink(self.target2, AI_TELELINK_2);
-		if (self.target3)
-			FollowLink(self.target3, AI_TELELINK_3);
-		if (self.target4)
-			FollowLink(self.target4, AI_TELELINK_4);
+		if (self.target1_ent)
+			FollowLink(self.target1_ent, AI_TELELINK_1);
+		if (self.target2_ent)
+			FollowLink(self.target2_ent, AI_TELELINK_2);
+		if (self.target3_ent)
+			FollowLink(self.target3_ent, AI_TELELINK_3);
+		if (self.target4_ent)
+			FollowLink(self.target4_ent, AI_TELELINK_4);
 	}
 
 	busy_waypoints = busy_waypoints - 1;
@@ -841,7 +841,7 @@ void() WaypointThink =
 		{
 			oself = self;
 			self = route_table;
-			bot_get_path(self.target1, FALSE);
+			bot_get_path(self.target1_ent, FALSE);
 			self = oself;
 			direct_route = FALSE;
 		}
@@ -1002,6 +1002,6 @@ void(vector org) SpawnTempWaypoint =
 	tep.solid = SOLID_TRIGGER;
 	tep.movetype = MOVETYPE_NOCLIP;
 	setorigin(tep, org);
-	target_add(tep);
+	target_ent_add(tep);
 	setsize(tep, VEC_HULL_MIN, VEC_HULL_MAX); // FIXME: convert these to numerical
 };

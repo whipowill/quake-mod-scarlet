@@ -413,7 +413,7 @@ void(entity attacker, float damage)	ogre_pain =
 void()	ogre_die1	=[	$death1,	ogre_die2	] {}
 void()	ogre_die2	=[	$death2,	ogre_die3	] {}
 void()	ogre_die3	=[	$death3,	ogre_die4	] {
-	self.solid = SOLID_NOT;
+	BecomeCorpse();
 	ogre_dropammo();
 }
 void()	ogre_die4	=[	$death4,	ogre_die5	] {}
@@ -431,7 +431,7 @@ void()	ogre_die14	=[	$death14,	ogre_die14	] {}
 void()	ogre_bdie1	=[	$bdeath1,	ogre_bdie2	] {}
 void()	ogre_bdie2	=[	$bdeath2,	ogre_bdie3	] {ai_forward(5);}
 void()	ogre_bdie3	=[	$bdeath3,	ogre_bdie4	] {
-	self.solid = SOLID_NOT;
+	BecomeCorpse();
 	ogre_dropammo();
 }
 void()	ogre_bdie4	=[	$bdeath4,	ogre_bdie5	] {ai_forward(1);}
@@ -483,6 +483,7 @@ void() monster_ogre_spawn =
 	self.solid = SOLID_SLIDEBOX;
 	//self.movetype = MOVETYPE_STEP;
 
+	self.headmdl = "progs/h_ogre.mdl";
 	setmodel (self, "progs/ogre.mdl");
 
 	setsize (self, VEC_HULL2_MIN, '32 32 40');

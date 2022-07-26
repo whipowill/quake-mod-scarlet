@@ -75,11 +75,14 @@ Initiated by adding ``frikbot4_nametag 1`` to your ``autoexec.cfg`` file.
 - Original corpse gibbing code by [Kryten](https://www.insideqc.com/qctut/qctut-33.shtml)
 - Original corpse kicking code by [Ivana](http://www.insideqc.com/qctut/lesson-52.shtml)
 - Original enemy bleeding code by [Maniac](https://www.insideqc.com/qctut/qctut-47.shtml)
+- Original Copper mod by [Lunaran](http://lunaran.com/copper/) (I'm using v1.19)
 
 ## References
 
-- [FTEQCC](https://www.fteqcc.org/) - the QuakeC compiler I used to compile this code.
-- [Intro to QuakeC](https://codedocs.org/what-is/quakec) - nice intro I found on how to compile QuakeC code.
+- [Intro to QuakeC](https://codedocs.org/what-is/quakec) - nice intro to what QuakeC is and it's history.
+- [FTEQCC](https://fte.triptohell.info/downloads) - the QuakeC compiler I used to compile this code.
+- [FTEQCC Docs](https://fte.triptohell.info/moodles/fteqcc/README.html) - the difficult to find docs about FTEQCC.
 - [QuakeC Manual](http://www.cataboligne.org/extra/qcmanual.html#Names) - helpful list of available functions.
 - [QuakeC Tutorials](https://quakewiki.org/wiki/QuakeC_tutorials) - a list of tutorials for modding QuakeC.
 - [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history.
+- [Copper Mod](http://lunaran.com/copper/) - the website for the vanilla+ mod and related docs.

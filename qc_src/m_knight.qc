@@ -195,7 +195,7 @@ void()	knight_bow10	=[	$walk1,		knight_walk1	] {ai_turn();}
 void()	knight_die1	=[	$death1,	knight_die2	] {ai_nop();}
 void()	knight_die2	=[	$death2,	knight_die3	] {ai_nop();}
 void()	knight_die3	=[	$death3,	knight_die4	] {ai_nop();}
-void()	knight_die4	=[	$death4,	knight_die5	] {ai_nop();self.solid = SOLID_NOT;}
+void()	knight_die4	=[	$death4,	knight_die5	] {ai_nop();BecomeCorpse();}
 void()	knight_die5	=[	$death5,	knight_die6	] {ai_nop();}
 void()	knight_die6	=[	$death6,	knight_die7	] {ai_nop();}
 void()	knight_die7	=[	$death7,	knight_die8	] {ai_nop();}
@@ -207,7 +207,7 @@ void()	knight_die10=[	$death10,	SUB_Null] {ai_nop(); if (self.lip == 555) self.t
 void()	knight_dieb1	=[	$deathb1,	knight_dieb2	] {ai_nop();}
 void()	knight_dieb2	=[	$deathb2,	knight_dieb3	] {ai_nop();}
 void()	knight_dieb3	=[	$deathb3,	knight_dieb4	] {ai_nop();}
-void()	knight_dieb4	=[	$deathb4,	knight_dieb5	] {ai_nop();self.solid = SOLID_NOT;}
+void()	knight_dieb4	=[	$deathb4,	knight_dieb5	] {ai_nop();BecomeCorpse();}
 void()	knight_dieb5	=[	$deathb5,	knight_dieb6	] {ai_nop();}
 void()	knight_dieb6	=[	$deathb6,	knight_dieb7	] {ai_nop();}
 void()	knight_dieb7	=[	$deathb7,	knight_dieb8	] {ai_nop();}
@@ -243,6 +243,7 @@ void() monster_knight_spawn =
 	self.solid = SOLID_SLIDEBOX;
 	//self.movetype = MOVETYPE_STEP;
 
+	self.headmdl = "progs/h_knight.mdl";
 	setmodel (self, "progs/knight.mdl");
 
 	setsize (self, '-16 -16 -24', '16 16 40');

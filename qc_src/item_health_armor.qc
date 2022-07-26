@@ -72,7 +72,7 @@ void() item_health_go
 	}
 	setsize (self, '0 0 0', '32 32 56');
 	
-	if (deathmatch == 1)
+	if (deathmatch == 1 || 1) //~ FrikBot
 		self.wait = 20;
 		
 	StartItem ();
@@ -271,7 +271,7 @@ void(float skn, float amt) StartArmor =
 	precache_model_safe ("progs/armor.mdl");
 	setmodel (self, "progs/armor.mdl");
 	
-	if (deathmatch == 1)
+	if (deathmatch == 1 || 1) //~ FrikBot
 		self.wait = 20;
 
 	setsize (self, '-16 -16 0', '16 16 56');
