@@ -18,7 +18,7 @@ See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded 
 
 ### Mod Mergers
 
-- [Copper Branch]() - a branch of FrikBot merged w/ [Copper](http://lunaran.com/copper/) v1.19
+- [FrikBot4+Copper](https://github.com/whipowill/quake-mod-frikbot4/tree/copper) - a branch of FrikBot merged w/ [Copper](http://lunaran.com/copper/) v1.19
 
 ## Controls
 
