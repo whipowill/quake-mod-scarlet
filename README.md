@@ -16,6 +16,10 @@ I'm making changes to a mod created by others:
 
 See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory.
 
+### Mod Mergers
+
+- [Copper Branch]() - a branch of FrikBot merged w/ [Copper](http://lunaran.com/copper/) v1.19
+
 ## Controls
 
 You can control the bots via the console.  Press the ~ key to bring down the console screen.
@@ -36,36 +40,38 @@ Be sure and reference the included ``instructions.html`` file from FrikaC for de
 
 ## Changelog
 
-- Bots ``skill`` now scales linearly from ``0`` to ``3`` (25% to 100% accuracy).
-- Bots can now be spawned w/ random ``skill`` levels (simulates real multiplayer game).
-- Bots no longer try to follow each other in team deathmatch games (fixes clumping).
-- Bots will now wear the proper team color in coop games.
-- Bots will now wait 5 seconds after death before respawning.
-- Items now always respawn in singleplayer and coop games.
+### Core Changes
+
+These are my changes from the original FrikBot code:
+
+- Bots ``skill`` now scales linearly from ``0`` to ``3`` (25% to 100% accuracy)
+- Bots can now be spawned w/ random ``skill`` levels (simulates real multiplayer game)
+- Bots no longer try to follow each other in team deathmatch games (fixes clumping)
+- Bots will now wear the proper team color in coop games
+- Bots will now wait 5 seconds after death before respawning
+- Items now always respawn in singleplayer and coop games
 - Added waypoints files: ``nova``, ``travelert6``
-- Renamed a few bots.
+- Renamed a few bots
 
-### Gore
+### Optional Changes
 
-Initiated by adding ``frikbot4_gore 1`` to your ``autoexec.cfg`` file.
+These are optional changes you can control using cvars in your ``autoexec.cfg`` file:
 
-This is a set of changes I'm really excited about:
-
-- Increases the amount of bood particles.
-- Increases the amount of gibs in death explosions.
-- Enemies now bleed (profusely) when hit from direct or blast damage.
-- Enemy heads and gibs are now kickable.
-- Enemy bodies can now be gibbed into chunks.
-
-I think this is really tastefully done and brings Quake up to a level of violence worthy of a Doom successor.  What's different from other gore mods is I didn't use any new textures or decals, making this mod compatible w/ any Quake engine you might use.  I just changed the programming of the assets that are already baked into the game.
+- ``frikbot4_gore 1``
+    - Increases the amount of bood particles
+    - Increases the amount of gibs in death explosions
+    - Enemies now bleed (profusely) when hit from direct or blast damage
+    - Enemy heads and gibs are now kickable *
+    - Enemy bodies can now be gibbed into chunks *
+- ``frikbot4_nametag 1``
+    - Displays player names on screen when aiming at them
+- ``frikbot4_placeholder 0`` **
+    - Disables transparent item placeholders in maps to restore normal item behavior
 
 You will want to run the game w/ ``-particles 16384`` to increase the amount of particles allowed in the game.
 
-### Nametags
-
-Initiated by adding ``frikbot4_nametag 1`` to your ``autoexec.cfg`` file.
-
-- Displays player names on screen when aiming at them.
+- ``*`` this feature does not work w/ the Copper branch
+- ``**`` this feature only works w/ the Copper branch
 
 ## Credits
 
@@ -75,7 +81,7 @@ Initiated by adding ``frikbot4_nametag 1`` to your ``autoexec.cfg`` file.
 - Original corpse gibbing code by [Kryten](https://www.insideqc.com/qctut/qctut-33.shtml)
 - Original corpse kicking code by [Ivana](http://www.insideqc.com/qctut/lesson-52.shtml)
 - Original enemy bleeding code by [Maniac](https://www.insideqc.com/qctut/qctut-47.shtml)
-- Original Copper mod by [Lunaran](http://lunaran.com/copper/) (I'm using v1.19)
+- Original Copper mod by [Lunaran](http://lunaran.com/copper/) (using v1.19)
 
 ## References
 
