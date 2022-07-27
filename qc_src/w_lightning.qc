@@ -117,6 +117,8 @@ void(vector start, vector limit, entity from, float damage) LightningBeam =
 		AddMultiDamage (targ, damage);
 		// clear and apply multidamage must be called in an enclosing function!
 		particle (end, '0 0 100', 225, damage*4);
+
+		ThrowBloodSplatByLightning(start, trace_endpos, trace_ent, damage); //~ FrikBot
 	}
 	
 	// we do the lightning beam after the chain lightning recursion as the stack unwinds,
@@ -153,6 +155,8 @@ void(vector start, vector limit, entity from, float damage) LightningBeam =
 		trace_ent.customflags |= CFL_ZAPPED;
 		particle (trace_endpos, '0 0 100', 225, damage*4);
 		AddMultiDamage (trace_ent, damage);
+
+		ThrowBloodSplatByLightning(start, trace_endpos, trace_ent, damage); //~ FrikBot
 	}
 
 	traceline2(start - left, end - left, from, 0);
@@ -161,6 +165,8 @@ void(vector start, vector limit, entity from, float damage) LightningBeam =
 		trace_ent.customflags |= CFL_ZAPPED;
 		particle (trace_endpos, '0 0 100', 225, damage*4);
 		AddMultiDamage (trace_ent, damage);
+
+	    ThrowBloodSplatByLightning(start, trace_endpos, trace_ent, damage); //~ FrikBot
 	}
 }
 

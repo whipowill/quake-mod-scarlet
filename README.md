@@ -61,27 +61,22 @@ These are optional changes you can control using cvars in your ``autoexec.cfg`` 
     - Increases the amount of bood particles
     - Increases the amount of gibs in death explosions
     - Enemies now bleed (profusely) when hit from direct or blast damage
-    - Enemy heads and gibs are now kickable *
-    - Enemy bodies can now be gibbed into chunks *
+    - Enemy heads and gibs are now kickable
+    - Enemy bodies can now be gibbed into chunks
 - ``frikbot4_nametag 1``
     - Displays player names on screen when aiming at them
-- ``frikbot4_placeholder 0``
-    - Disables transparent item placeholders in maps to restore normal item behavior **
 
 You will want to run the game w/ ``-particles 16384`` to increase the amount of particles allowed in the game.
 
-- ``*`` this feature does not work w/ the Copper branch
-- ``**`` this feature only works w/ the Copper branch
-
 ## Credits
 
-- Original bot mod by [FrikaC](https://www.moddb.com/mods/frikbot-x), Igor9, and JLaw
+- Original FrikBot mod by [FrikaC](https://www.moddb.com/mods/frikbot-x), Igor9, and JLaw
 - Original waypoint files by [LightningHunter](https://www.celephais.net/board/view_thread.php?id=60404)
 - Original nametag code by [BenVanCitters](https://gist.github.com/BenVanCitters/a157f58e906bf00adc39a484cbcee12f)
 - Original corpse gibbing code by [Kryten](https://www.insideqc.com/qctut/qctut-33.shtml)
 - Original corpse kicking code by [Ivana](http://www.insideqc.com/qctut/lesson-52.shtml)
 - Original enemy bleeding code by [Maniac](https://www.insideqc.com/qctut/qctut-47.shtml)
-- Original Copper mod by [Lunaran](http://lunaran.com/copper/) (using v1.19)
+- Original Copper mod by [Lunaran](http://lunaran.com/copper/)
 
 ## References
 

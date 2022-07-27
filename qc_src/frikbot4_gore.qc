@@ -2,9 +2,8 @@
 // Enable blood splatter when getting shot.
 // -------------------------------------------------
 
-float() crandom; // function prototype for crandom
+float() crandom;
 
-// SplatThink: Controls behavior of splats after they have hit the wall
 void() SplatThink =
 {
         if ((self.attack_finished <= time))
@@ -29,7 +28,6 @@ void() SplatThink =
 
 };
 
-// SplatTouch: Called(by the engine) when splats touch the world or an entity after being spawned
 void() SplatTouch =
 {
         if ((other != world) || (pointcontents(self.origin) <= -3))
@@ -47,7 +45,6 @@ void() SplatTouch =
         self.nextthink = time + 0.2;
 };
 
-//ThrowBloodSplat: This will create a blood splat at "org", moving in direction "dir", and owned by "own"
 void(vector dir, vector org, entity own, float damage) ThrowBloodSplat =
 {
         if (!cvar("frikbot4_gore")) return;
@@ -55,18 +52,18 @@ void(vector dir, vector org, entity own, float damage) ThrowBloodSplat =
         local entity splat;
 
         if ( !((own.flags & FL_MONSTER) || (own.classname == "player")) )
-                return; //only monsters and players should create splats!
+                return; // only monsters and players should create splats!
 
         splat = spawn();
-        splat.owner = own; //move through hit monster/player
+        splat.owner = own; // move through hit monster/player
         splat.movetype = MOVETYPE_TOSS;
-        splat.solid = SOLID_BBOX; //does not move through other entities (besides owner)
+        splat.solid = SOLID_BBOX; // does not move through other entities (besides owner)
 
         dir = normalize(dir); //make sure "dir" has length 1
-        splat.velocity = dir * (450 + 50*random()); //random velocity in direction of shot
-        splat.velocity_x = splat.velocity_x + crandom()*40; //randomize x velocity (+/- 40)
-        splat.velocity_y = splat.velocity_y + crandom()*40; //randomize y velocity (+/- 40)
-        splat.velocity_z = splat.velocity_z + 120 + 50*random(); //randomize z velocity (+ 120-170)
+        splat.velocity = dir * ((450 - (damage*2)) + (50*random())); // less velocity the more damage is dealt
+        splat.velocity_x = splat.velocity_x + (crandom()*90); // 90 degree arc of splash
+        splat.velocity_y = splat.velocity_y + (crandom()*90); // 90 degree arc of splash
+        splat.velocity_z = splat.velocity_z + 90 + (100*random()); // random arc of spatter
         splat.avelocity = '3000 1000 2000'; //spin fast!
         splat.touch = SplatTouch;
     
@@ -81,23 +78,47 @@ void(vector dir, vector org, entity own, float damage) ThrowBloodSplat =
         setorigin (splat, org); //start splat at point of damage
 };
 
-// special blood spat function for rockets and grenades based on radius. -whipowill
-void(entity rocket, entity attacker, float damage, entity ignore) ThrowBloodSplatRadius =
+void(entity explosive, float damage) ThrowBloodSplatByExplosion =
 {
-        local   entity  head;
+        local entity head;
+        local float count;
 
-        rocket.angles_x = rocket.angles_x*-1; //account for error in makevectors with non-player entities
-        makevectors(rocket.angles); //find direction rocket is facing
+        explosive.angles_x = (explosive.angles_x + 180)*-1; // grenades and rockets explode in front of you, reverse direction
+        makevectors(explosive.angles); //find direction rocket is facing
 
-        head = findradius(rocket.origin, damage+40);
+        head = findradius(explosive.origin, damage+40);
         while (head)
         {
-                if (random() < 0.8) //only 4 in 5 times to prevent overflows
+                count = 0;
+
+                while (count < 3)
                 {
-                        ThrowBloodSplat(rocket.velocity, rocket.origin, other, damage); //throw blood splat in direction nail is facing
+                        if (random() < 0.8) //only 4 in 5 times to prevent overflows
+                        {
+                                ThrowBloodSplat(v_forward, head.origin, head, damage);
+                                ThrowBloodSplat(v_forward, head.origin, head, damage);
+                                ThrowBloodSplat(v_forward, head.origin, head, damage);
+                        }
+                        count++;
                 }
 
                 head = head.chain;
+        }
+};
+
+void(vector dir, vector org, entity own, float damage) ThrowBloodSplatByLightning =
+{
+        local float count;
+        count = 0;
+
+        while (count < 3)
+        {
+                if (random() < 0.6) //only 4 in 5 times to prevent overflows
+                {
+                        ThrowBloodSplat(dir, org, own, damage);
+                        ThrowBloodSplat(dir, org, own, damage);
+                }
+                count++;
         }
 };
 
