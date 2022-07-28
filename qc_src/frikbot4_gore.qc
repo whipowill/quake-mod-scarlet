@@ -16,7 +16,9 @@ void() SplatThink =
         if (self.flags & FL_ONGROUND)
         {
                 // trying to get blood stains on the ground
-                particle (self.origin, self.velocity*0.1, 79, 666 * random());
+                particle (self.origin, self.velocity*0.2, 64+(random()*15), 100 * random());
+                particle (self.origin, self.velocity*0.4, 64+(random()*15), 100 * random());
+                particle (self.origin, self.velocity*0.6, 64+(random()*15), 100 * random());
                 self.nextthink = time + random();
         }
         else
