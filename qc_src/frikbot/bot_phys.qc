@@ -456,7 +456,7 @@ void() SV_CheckOnGround =
 		self.flags = self.flags - FL_ONGROUND;
 	else if ((trace_plane_normal_z <= 0.7) && (trace_fraction != 1))
 		self.flags = self.flags - FL_ONGROUND;
-        else if (!droptofloor(0,0)) // used to have no arguments, something about "hip_fbx bugfix"
+        else if (!droptofloor()) // old way is "0,0", something about "hip_fbx bugfix"
 		self.flags = self.flags - FL_ONGROUND;
 	else if (org_z - self.origin_z < 2)
 		self.flags = self.flags | FL_ONGROUND;
@@ -478,7 +478,7 @@ float(vector dir) botCheckForStep =
 	yaw = vectoyaw(dir); 
 	if(walkmove(yaw, 3))
 	{	
-		if(droptofloor(0,0)) // used to have no arguments, something about "hip_fbx bugfix"
+		if(droptofloor()) // old way is "0,0", something about "hip_fbx bugfix"
 		{	
 			stepdistance = self.origin_z - currentorigin_z;
 			v = self.origin - currentorigin;
