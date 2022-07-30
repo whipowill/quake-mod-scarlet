@@ -1,5 +1,8 @@
 // -------------------------------------------------
 // Enable blood splatter when getting shot.
+// #
+// https://www.insideqc.com/qctut/qctut-47.shtml
+// original code by Maniac, modified by whipowill
 // -------------------------------------------------
 
 float() crandom;
@@ -49,7 +52,7 @@ void() SplatTouch =
 
 void(vector dir, vector org, entity own, float damage) ThrowBloodSplat =
 {
-        if (!cvar("frikbot4_gore")) return;
+        if (!cvar("frikbot_gore")) return;
 
         local entity splat;
 
@@ -95,7 +98,7 @@ void(entity explosive, float damage) ThrowBloodSplatByExplosion =
 
                 while (count < 3)
                 {
-                        if (random() < 0.8) //only 4 in 5 times to prevent overflows
+                        if (random() < 0.8)
                         {
                                 ThrowBloodSplat(v_forward, head.origin, head, damage);
                                 ThrowBloodSplat(v_forward, head.origin, head, damage);
@@ -115,44 +118,11 @@ void(vector dir, vector org, entity own, float damage) ThrowBloodSplatByLightnin
 
         while (count < 3)
         {
-                if (random() < 0.6) //only 4 in 5 times to prevent overflows
+                if (random() < 0.6)
                 {
                         ThrowBloodSplat(dir, org, own, damage);
                         ThrowBloodSplat(dir, org, own, damage);
                 }
                 count++;
         }
-};
-
-//**********************************************
-// Enable kicking heads and gibs.
-//**********************************************
-
-void() KickGibs =
-{
-    if (!cvar("frikbot4_gore")) return;
-
-    local vector v;
-
-    // only a player can kick it
-    if (other.classname != "player")
-        return;
-
-    //randomize sound
-    /*
-    if (random()< 0.8)
-        sound(other, CHAN_ITEM, "zombie/z_hit.wav", 1, ATTN_NORM);
-    else
-        sound(other, CHAN_ITEM, "zombie/z_miss.wav", 1, ATTN_NORM);
-    */
-
-    //define velocity
-    //you can play with these formulas to adjust
-    //trajectory
-    v_x = (other.velocity_x*2+50*random());
-    v_y = (other.velocity_y*2+50*random());
-    v_z =250 + 160 * random()+(other.velocity_y+other.velocity_x)*0.30;
-
-    self.flags = self.flags - ( self.flags & FL_ONGROUND );
-    self.velocity = v;
 };

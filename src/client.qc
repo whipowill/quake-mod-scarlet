@@ -68,7 +68,7 @@ void() SetChangeParms =
 
 void() SetNewParms =
 {
-	if (skill == 3 && !deathmatch) //~ FrikBot
+	if (skill == 3 && !deathmatch) // FRIKBOT - error fix.
 		parm2 = 50;
 	else
 		parm2 = 100;
@@ -526,7 +526,7 @@ void() PutClientInServer =
 	self.classname = "player";
 	
 	// new for nightmare: reduced max health instead of the manky attack time scale
-	if (skill == 3 && !deathmatch) //~ FrikBot
+	if (skill == 3 && !deathmatch) // FRIKBOT - error fix.
 		self.max_health = 50;
 	else
 		self.max_health = 100;
@@ -1418,11 +1418,9 @@ Called every frame before physics are run
 */
 void() PlayerPreThink =
 {
-	if (BotPreFrame()) //~ FrikBot
-		return;
+	if (BotPreFrame()) return; // FRIKBOT - bots integration.
 
-	// add player name to screen, like Halo. -whipowill
-	NameTag();
+	NameTag(); // FRIKBOT - nametags integration.
 
 	if (cleanUpClientShit)
 	{
@@ -1503,8 +1501,7 @@ Called every frame after physics are run
 */
 void() PlayerPostThink =
 {
-	if (BotPostFrame())	//~ FrikBot
-		return;
+	if (BotPostFrame())	return; // FRIKBOT - bots integration.
 
 	if ( intermission_running ) return;
 	
@@ -1600,7 +1597,7 @@ called when a player connects to a server
 */
 void() ClientConnect =
 {
-	ClientInRankings(); //~ FrikBot
+	ClientInRankings(); // FRIKBOT - bots integration.
 
 	bprint (self.netname);
 	bprint (" entered the game\n");
@@ -1623,7 +1620,7 @@ called when a player disconnects from a server
 */
 void() ClientDisconnect =
 {
-	ClientDisconnected(); //~ FrikBot
+	ClientDisconnected(); // FRIKBOT - bots integration.
 
 	if (gameover)
 		return;

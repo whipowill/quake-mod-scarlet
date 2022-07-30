@@ -1,5 +1,8 @@
 // -------------------------------------------------
-// Enable gibbing corpses (the only reason this isn't in frikbot4_gore.qc is due to loading sequence issues).
+// Enable gibbing corpses.
+// #
+// https://www.insideqc.com/qctut/qctut-33.shtml
+// original code by Kryten, modified by whipowill
 // -------------------------------------------------
 
 void() CorpseTouch =
@@ -27,7 +30,7 @@ void() CorpseDie =
 void() BecomeCorpse =
 {
         // if gore is turned off, or this is copper...
-        if (!cvar("frikbot4_gore") || frikbot4_branch == "copper")
+        if (!cvar("frikbot_corpses"))
         {
                 self.solid = SOLID_NOT;
                 return;

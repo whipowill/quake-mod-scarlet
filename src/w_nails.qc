@@ -148,12 +148,14 @@ void() spike_touch =
 			spawn_touchblood (self.dmg);
 			T_Damage (other, self, self.trueowner, self.dmg);
 
-			if (random() < 0.8) //~ FrikBot
+			// FRIKBOT - gore integration.
+			if (random() < 0.8)
 			{
-		        self.angles_x = self.angles_x*-1; // account for error in makevectors with non-player entities
-		        makevectors(self.angles); // find direction nail is facing
-		        ThrowBloodSplat(v_forward, self.origin, other, self.dmg); // throw blood splat in direction nail is facing
+		        self.angles_x = self.angles_x*-1;
+		        makevectors(self.angles);
+		        ThrowBloodSplat(v_forward, self.origin, other, self.dmg);
 			}
+			// FRIKBOT - end.
 		}
 		else
 		{

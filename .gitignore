@@ -1,3 +1,5 @@
 reset.sh
-progs.lno
-qc_src/fteqcc.log
+*.lno
+*/*.lno
+*.log
+*/*.log

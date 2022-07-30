@@ -1,4 +1,9 @@
+// -------------------------------------------------
+// Enable Halo-style nametags when aiming at players.
+// #
 // https://gist.github.com/BenVanCitters/a157f58e906bf00adc39a484cbcee12f
+// original code by BenVanCitters, modified by whipowill
+// -------------------------------------------------
 
 .float      wait_after_show_time; // during gameplay this is set to the time to start showing a player's name under the crosshair - .2 seconds after he is under it
 .float      wait_before_show_time; // during gameplay this is set to the time to stop showing a player's name no longer under the crosshair
@@ -8,7 +13,7 @@
 // meant to be called every frame (ie in PlayerPreThink)
 void() NameTag=
 {
-    if (!cvar("frikbot4_nametag")) return;
+    if (!cvar("frikbot_nametags")) return;
 
     local vector source;
     local float has_invis;

@@ -8,7 +8,7 @@
 
 void() GotoNextMap =
 {
-	//~ FrikBot ~ code use frikbot style auto map rotation
+	// FRIKBOT - automatic map rotation.
     if (deathmatch)
     {
         local float p;
@@ -32,7 +32,7 @@ void() GotoNextMap =
             return;
         }
     }
-    //end FrikBot code
+    // FRIKBOT - end.
 
 	if (cvar("samelevel"))	// if samelevel is set, stay on same level
 		changelevel (mapname);	// name of current level

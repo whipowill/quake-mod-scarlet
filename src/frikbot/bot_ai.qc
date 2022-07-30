@@ -962,7 +962,7 @@ void() BotAI =
 		// wait 5 seconds before respawn! -whipowill
 		if (!self.respawn_time || self.respawn_time == 0)
 		{
-			self.respawn_time = time + 5;
+			self.respawn_time = time + cvar("frikbot_respawn");
 			return;
 		}
 		else
