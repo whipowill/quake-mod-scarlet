@@ -24,6 +24,7 @@ frikbot/nametags.qc // FRIKBOT - nametags integration.
 frikbot/gore.qc // FRIKBOT - gore integration.
 frikbot/football.qc // FRIKBOT - football integration.
 frikbot/corpses.qc // FRIKBOT - corpses integration.
+frikbot/teamscore.qc // FRIKBOT - teamscore integration.
 // FRIKBOT - end.
 
 maths.qc
