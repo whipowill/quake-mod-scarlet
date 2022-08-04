@@ -12,16 +12,16 @@ float(entity victim) TeamScoreEndgame =
         if (!cvar("frikbot_teamscores"))
                 return FALSE;
 
-        float fraglimit = cvar("fraglimit");
+        local float fraglimit = cvar("fraglimit");
 
         // if wrong game type then bail
         if (coop > 0 || deathmatch < 1 || teamplay < 1 || fraglimit < 1) return FALSE;
 
-        entity killer = victim.enemy;
+        local entity killer = victim.enemy;
 
         // get team nums
-        float victim_team_num = victim.team;
-        float killer_team_num = killer.team;
+        local float victim_team_num = victim.team;
+        local float killer_team_num = killer.team;
 
         if (victim == killer)
         {
