@@ -88,14 +88,14 @@ void() CL_KeyMove = // CL_BaseMove + CL_AdjustAngles
 	{
 		// bot "reflexes" code
 		local float boost;
-		if (self.b_skill == 3) boost = .90;
-		if (self.b_skill == 2) boost = .75;
-		if (self.b_skill == 1) boost = .50;
-		if (self.b_skill == 0) boost = .25;
+		if (self.b_skill == 3) boost = .75;
+		if (self.b_skill == 2) boost = .50;
+		if (self.b_skill == 1) boost = .25;
+		if (self.b_skill == 0) boost = 0;
 
 		local float multiplier;
-		//multiplier = (1 + boost);
-		multiplier = 1; // not using this atm
+		multiplier = (1 + boost);
+		//multiplier = 1; // not using this atm
 
 		anglespeed = 1.5 * real_frametime; 
 		// 1.5 is the default cl_anglespeedkey & bot always has +speed

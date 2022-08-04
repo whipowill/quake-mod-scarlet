@@ -902,7 +902,7 @@ void() bot_angle_set =
 		while (self.v_angle_x > 180)
 			self.v_angle_x = self.v_angle_x - 360;
 	}
-	else if (self.b_skill == 3 && 0) // FrikaC allowed instant reflexes for skill 3. -whipowill
+	else if (self.b_skill == 3) // FrikaC allowed instant reflexes for skill 3. -whipowill
 	{
 		self.keys = self.keys & 63;
 		self.v_angle = self.b_angle;
@@ -922,7 +922,7 @@ void() bot_angle_set =
 		if (self.b_skill == 0) accuracy = .25;
 
 		local float precision;
-		precision = 20 * (1 - accuracy); // 15 degrees is what I chose as the max amount the bots can be off their aim
+		precision = 15 * (1 - accuracy); // 15 degrees is what I chose as the max amount the bots can be off their aim
 
 		if (self.b_angle_x > 180)
 			self.b_angle_x = self.b_angle_x - 360;
