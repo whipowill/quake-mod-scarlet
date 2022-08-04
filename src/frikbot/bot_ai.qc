@@ -352,7 +352,9 @@ void() bot_handle_ai =
 			if (self.b_aiflags & AI_DOOR_NO_OPEN)
 			{
 				if (newt.nextthink)
+				{
 					self.keys = self.keys & 960; // wait until it closes
+				}
 				else
 				{
 					bot_lost(self.last_way, FALSE);
@@ -461,7 +463,9 @@ void() bot_handle_ai =
 				frik_walkmove(v);
 		}
 		else
+		{
 			self.b_aiflags = self.b_aiflags - AI_PLAT_BOTTOM;
+		}
 	}
 	if (self.b_aiflags & AI_DIRECTIONAL)
 	{

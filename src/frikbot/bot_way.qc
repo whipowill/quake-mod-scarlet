@@ -594,13 +594,13 @@ entity(string s) FindThing =
 	local entity t;
 	local float tdst, dst;
 	local entity best;
-	dst = 100000;
+	dst = 100000; // distance of search could be a problem? -whipowill
 	best = world;
 	t = find (world, classname, s);
 	while (t != world)
 	{
 		tdst = vlen(((t.absmin + t.absmax) * 0.5) - self.origin);
-            if (tdst < dst)
+        if (tdst < dst)
 		{
 			dst = tdst;
 			best = t;
