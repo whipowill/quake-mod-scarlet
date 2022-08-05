@@ -449,6 +449,9 @@ entity() SelectSpawnPoint =
 	
 	if (deathmatch)
 	{
+		return RandomSpawnLocation(); // FRIKBOT - bots integration.
+
+		/*
 		spot = lastspawn;
 		pcount = ceil(random() * 4);
 		while (pcount)
@@ -463,6 +466,7 @@ entity() SelectSpawnPoint =
 		}
 		lastspawn = spot;
 		return spot;
+		*/
 	}
 
 	// choose a start point

@@ -20,11 +20,12 @@ frikbot/bot_misc.qc
 frikbot/bot_phys.qc
 frikbot/bot_move.qc
 frikbot/bot_ed.qc
-frikbot/nametags.qc // FRIKBOT - nametags integration.
-frikbot/gore.qc // FRIKBOT - gore integration.
-frikbot/football.qc // FRIKBOT - football integration.
-frikbot/corpses.qc // FRIKBOT - corpses integration.
-frikbot/teamscore.qc // FRIKBOT - teamscore integration.
+frikbot/spawn.qc // FRIKBOT - random spawn locations
+frikbot/nametags.qc // FRIKBOT - nametags
+frikbot/gore.qc // FRIKBOT - gore
+frikbot/football.qc // FRIKBOT - football
+frikbot/corpses.qc // FRIKBOT - corpses
+frikbot/teamscore.qc // FRIKBOT - teamscore
 // FRIKBOT - end.
 
 maths.qc
