@@ -296,7 +296,7 @@ void(entity targ) bot_check_lost =
 	}
 	// lose any target way above the bot's head
 	// FIXME: if the bot can fly in your mod..
-	if ((targ.origin_z - self.origin_z) > 64)
+	if ((targ.origin_z - self.origin_z) > 32) // make this shorter (64 original value) -whipowill
 	{
 		dist = targ.origin - self.origin;
 		dist_z = 0;
@@ -309,6 +309,10 @@ void(entity targ) bot_check_lost =
 	{
 		if (frik_recognize_plat(FALSE))
 			bot_lost(targ, TRUE);
+	}
+	else if (targ.classname == "trigger_teleport") // this is huge, was missing from original frikbot, no more spammy teleporting bots! -whipowill
+	{
+		bot_lost(targ, TRUE);
 	}
 	// targets are lost if the bot's search time has expired
 	if (time > self.search_time)
@@ -505,7 +509,6 @@ confused
 
 void() bot_path =
 {
-
 	local entity jj, tele;
 
 	bot_check_lost(self.target1_ent);
@@ -995,7 +998,7 @@ void() BotAI =
 		
 	// stagger the bot's AI out so they all don't think at the same time, causing game
 	// 'spikes'
-	if (self.b_skill < 3 && 0) // turn off staggered thinking! -whipowill
+	if (self.b_skill < 3 && self.target1_ent.classname != "player") // don't stagger brainpower when fighting! -whipowill
 	{
 		if (self.ai_time > time)
 			return;
@@ -1092,8 +1095,6 @@ void() BotAI =
     	}
 
 	// b_aiflags handling
-
-	
 	if (self.b_aiflags)
 		bot_handle_ai(); 
 	else

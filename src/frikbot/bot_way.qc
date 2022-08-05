@@ -588,13 +588,12 @@ in bot_ai.qc
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-
 entity(string s) FindThing =
 {
 	local entity t;
 	local float tdst, dst;
 	local entity best;
-	dst = 100000; // distance of search could be a problem? -whipowill
+	dst = 100000;
 	best = world;
 	t = find (world, classname, s);
 	while (t != world)
@@ -648,7 +647,7 @@ entity(entity lastone) FindRoute =
 	while(t)
 	{
 		tdst = vlen(t.origin - self.origin);
-		if ((tdst < dst) &&  (t.b_sound & flag))
+		if ((tdst < dst) && (t.b_sound & flag))
 		{
 			dst = tdst;
 			best = t;

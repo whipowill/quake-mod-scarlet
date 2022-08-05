@@ -94,8 +94,8 @@ void() CL_KeyMove = // CL_BaseMove + CL_AdjustAngles
 		if (self.b_skill == 0) boost = 0;
 
 		local float multiplier;
-		multiplier = (1 + boost);
-		//multiplier = 1; // not using this atm
+		//multiplier = (1 + boost);
+		multiplier = 1; // not using this atm
 
 		anglespeed = 1.5 * real_frametime; 
 		// 1.5 is the default cl_anglespeedkey & bot always has +speed
@@ -133,7 +133,6 @@ void() CL_KeyMove = // CL_BaseMove + CL_AdjustAngles
 	else if (self.v_angle_z < -50)
 		self.v_angle_z = -50;
 	self.v_angle_y = frik_anglemod(self.v_angle_y);
-
 };
 
 /*
@@ -148,7 +147,7 @@ void() SV_UserFriction =
 	local vector vel, start, stop;
 	local float sped, friction, newspeed;
 
-      vel = self.velocity;
+      	vel = self.velocity;
 	vel_z =0;
 	sped = vlen(vel);
 	vel = self.velocity;
@@ -156,7 +155,7 @@ void() SV_UserFriction =
 	if (!sped)
 		return;
 
-// if the leading edge is over a dropoff, increase friction
+	// if the leading edge is over a dropoff, increase friction
 
 	start_x = stop_x = self.origin_x + vel_x / (sped * 16);
 	start_y = stop_y = self.origin_y + vel_y / (sped * 16);
@@ -169,7 +168,7 @@ void() SV_UserFriction =
 		friction = sv_friction * 2; // 2 is default edgefriction, removed for QW compatability
 	else
                 friction = sv_friction;
-     if (sped < sv_stopspeed)
+     	if (sped < sv_stopspeed)
 		newspeed = sped - real_frametime * sv_stopspeed * friction;
 	else
 		newspeed = sped - real_frametime * sped * friction;
@@ -181,6 +180,7 @@ void() SV_UserFriction =
 	self.velocity_y = vel_y * newspeed;
 	self.velocity_x = vel_x * newspeed;
 };
+
 void() SV_WaterJump =
 {
 	if (time > self.teleport_time || !self.waterlevel)
@@ -538,7 +538,6 @@ void() PostPhysics =
 
 		if (self.movetype == MOVETYPE_WALK)
 		{
-
 			if (self.phys_obj.dest1_x || self.phys_obj.dest1_y)
 			{
 				if ((self.flags & FL_ONGROUND) || (self.waterlevel <= 2))
