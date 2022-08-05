@@ -226,6 +226,7 @@ entity	b_temp1, b_temp2, b_temp3;
 entity 	player_head, phys_head, way_head;
 float		busy_waypoints;
 float		saved_bots, saved_skills1, saved_skills2, current_bots;
+float searchtime_giveup = 3; // for tweaking how long it takes to give up -whipowill
 
 // -------ProtoTypes------
 // external
@@ -1297,16 +1298,18 @@ void() BotImpulses =
 		f = cvar("skill");
 		BotConnect(1, 0, f);
 	}
-	if (self.impulse == 110)
+	if (self.impulse == 110) // random team bot -whipowill
 	{
 		f = cvar("skill");
 		f = rint(random() * f);
+		if (f < 1) f = 1;
 		BotConnect(0, 0, f);
 	}
-	else if (self.impulse == 111)
+	else if (self.impulse == 111) // random enemy bot -whipowill
 	{
 		f = cvar("skill");
 		f = rint(random() * f);
+		if (f < 1) f = 1;
 		BotConnect(1, 0, f);
 	}
 	else if (self.impulse == 102)

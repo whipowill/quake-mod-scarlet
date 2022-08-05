@@ -89,7 +89,7 @@ void(entity ent) target_ent_add =
 	self.target3_ent = self.target2_ent;
 	self.target2_ent = self.target1_ent;
 	self.target1_ent = ent;
-	self.search_time = time + 5;
+	self.search_time = time + searchtime_giveup;
 };
 
 
@@ -132,7 +132,7 @@ void(entity ent) target_ent_drop =
 	}
 	else if (tg == 4)
 		self.target1_ent = self.target2_ent = self.target3_ent = self.target4_ent = world;
-	self.search_time = time + 5;
+	self.search_time = time + searchtime_giveup;
 };
 
 /*
@@ -257,7 +257,7 @@ void(entity targ) bot_check_lost =
 					self.keys = self.keys & 960;
 					bot_start_topic(4);
 				}
-				self.search_time = time + 5; // never time out
+				self.search_time = time + searchtime_giveup; // never time out
 			}
 			else if (!fisible(targ))
 				bot_lost(targ, FALSE);	
@@ -296,7 +296,7 @@ void(entity targ) bot_check_lost =
 	}
 	// lose any target way above the bot's head
 	// FIXME: if the bot can fly in your mod..
-	if ((targ.origin_z - self.origin_z) > 32) // make this shorter (64 original value) -whipowill
+	if ((targ.origin_z - self.origin_z) > 32) // make this shorter?  does it have any effect?  -whipowill
 	{
 		dist = targ.origin - self.origin;
 		dist_z = 0;
@@ -929,7 +929,7 @@ void() bot_angle_set =
 		if (self.b_skill == 0) accuracy = .25;
 
 		local float precision;
-		precision = 15 * (1 - accuracy); // 15 degrees is what I chose as the max amount the bots can be off their aim
+		precision = 20 * (1 - accuracy); // 15 degrees is what I chose as the max amount the bots can be off their aim
 
 		if (self.b_angle_x > 180)
 			self.b_angle_x = self.b_angle_x - 360;
