@@ -1001,6 +1001,24 @@ void() BotAI =
 	if (self.target1_ent.classname == "trigger_teleport")
 		if (self.teleport_time > time)
 			bot_lost(self.target1_ent, TRUE);
+
+	// description of the problem:  as the bot cycles thru pulses, it ends every pulse
+	// with a target (self.target1_ent) and a waypoint (self.last_way).  target is the immediate
+	// place it's heading and waypoint is the ultimate place it's heading.
+
+	// when the bot determines it needs to use a teleporter it adds it as a target but not a
+	// waypoint.  what happens is when the bot goes thru the teleporter, it still has the teleporter
+	// as the target and so it wants to go back thru it to get to it.
+
+	// the issue is how to remove the teleporter as a target after the bot has gone thru.
+	// normally this would be done in the function bot_check_lost(), which in the case of waypoints
+	// and items removes the target when the bots gets really close to it.
+
+	// but for some reason proximity calculation doesn't work w/ teleporters, i don't know why.
+	// moreover, bot_check_lost() is run AFTER movetotarget(), so target removal there is too late.
+	// my solution is to bypass bot_check_lost() and run this detection immediately upon teleportation.
+
+	// end. -whipowill
 		
 	// stagger the bot's AI out so they all don't think at the same time, causing game
 	// 'spikes'
