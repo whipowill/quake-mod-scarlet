@@ -195,8 +195,7 @@ removed.
 void(entity targ) bot_check_lost =
 {
 	local vector dist;
-	dist = realorigin(targ) - self.origin;
-	dist_z = 0;
+
 	if (targ == world)
 		return;
 
@@ -296,7 +295,7 @@ void(entity targ) bot_check_lost =
 	}
 	// lose any target way above the bot's head
 	// FIXME: if the bot can fly in your mod..
-	if ((targ.origin_z - self.origin_z) > 32) // make this shorter?  does it have any effect?  -whipowill
+	if ((targ.origin_z - self.origin_z) > 32) // make this shorter? does it have any effect? (original value was 64) -whipowill
 	{
 		dist = targ.origin - self.origin;
 		dist_z = 0;
@@ -312,8 +311,9 @@ void(entity targ) bot_check_lost =
 	}
 	else if (targ.classname == "trigger_teleport") // this is huge, was missing from original frikbot, no more spammy teleporting bots! -whipowill
 	{
-		bot_lost(targ, TRUE);
+		// teleport detection is handled in BotAI()
 	}
+
 	// targets are lost if the bot's search time has expired
 	if (time > self.search_time)
 		bot_lost(targ, FALSE);
@@ -548,6 +548,7 @@ void() bot_path =
 			tele = FindThing("trigger_teleport"); // this is probbly the teleport responsible
 			target_ent_add(tele);
 		}
+
 		traceline(self.last_way.origin, jj.origin, FALSE, self); // check for blockage
    		if (trace_fraction != 1)
 		{
@@ -929,7 +930,7 @@ void() bot_angle_set =
 		if (self.b_skill == 0) accuracy = .25;
 
 		local float precision;
-		precision = 20 * (1 - accuracy); // 15 degrees is what I chose as the max amount the bots can be off their aim
+		precision = 15 * (1 - accuracy); // 15 degrees is what I chose as the max amount the bots can be off their aim
 
 		if (self.b_angle_x > 180)
 			self.b_angle_x = self.b_angle_x - 360;
@@ -995,10 +996,15 @@ void() BotAI =
 
 	// alive again, reset respawn timer
 	self.respawn_time = 0;
+
+	// part of teleport logic bug solution -whipowill
+	if (self.target1_ent.classname == "trigger_teleport")
+		if (self.teleport_time > time)
+			bot_lost(self.target1_ent, TRUE);
 		
 	// stagger the bot's AI out so they all don't think at the same time, causing game
 	// 'spikes'
-	if (self.b_skill < 3 && self.target1_ent.classname != "player") // don't stagger brainpower when fighting! -whipowill
+	if (self.b_skill < 3 && self.target1_ent.classname != "player" && 0) // disable staggered thinking for now, bots play smoother. -whipowill
 	{
 		if (self.ai_time > time)
 			return;

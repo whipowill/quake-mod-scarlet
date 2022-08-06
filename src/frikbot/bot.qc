@@ -226,7 +226,7 @@ entity	b_temp1, b_temp2, b_temp3;
 entity 	player_head, phys_head, way_head;
 float		busy_waypoints;
 float		saved_bots, saved_skills1, saved_skills2, current_bots;
-float searchtime_giveup = 3; // for tweaking how long it takes to give up -whipowill
+float searchtime_giveup = 2; // for tweaking how long it takes to give up -whipowill
 
 // -------ProtoTypes------
 // external
@@ -655,11 +655,9 @@ float () BotPreFrame =
 			ClientFixRankings();
 		if (self.classname == "botcam")
 			return TRUE;
-		
 	}
 	if (self.b_frags != self.frags)
 	{
-		
 		if (self.b_frags > self.frags)
 		{
 			if (pointcontents(self.origin) == CONTENT_LAVA)
@@ -680,7 +678,6 @@ float () BotPostFrame =
 		return TRUE;
 	if (self.ishuman)
 	{
-
 		if (waypoint_mode > WM_LOADED)
 			bot_menu_display();
 
@@ -1301,15 +1298,15 @@ void() BotImpulses =
 	if (self.impulse == 110) // random team bot -whipowill
 	{
 		f = cvar("skill");
-		f = rint(random() * f);
-		if (f < 1) f = 1;
+		f = rint(random() * (f-1));
+		f++;
 		BotConnect(0, 0, f);
 	}
 	else if (self.impulse == 111) // random enemy bot -whipowill
 	{
 		f = cvar("skill");
-		f = rint(random() * f);
-		if (f < 1) f = 1;
+		f = rint(random() * (f-1));
+		f++;
 		BotConnect(1, 0, f);
 	}
 	else if (self.impulse == 102)

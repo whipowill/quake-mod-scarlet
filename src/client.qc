@@ -445,7 +445,7 @@ Returns the entity to spawn at
 entity() SelectSpawnPoint =
 {
 	entity spot;
-	float  pcount;
+	float pcount;
 	
 	if (deathmatch)
 	{

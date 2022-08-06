@@ -306,11 +306,10 @@ void() DynamicWaypoint =
 		}
 		self.portal_time = self.teleport_time;
 	}
-// stacking everything on waypoint_mode might've been good for the editor,
-// but it sucks to beat hell for this code.
+	// stacking everything on waypoint_mode might've been good for the editor,
+	// but it sucks to beat hell for this code.
 
-
-// convert waypoint_mode to something more usable..
+	// convert waypoint_mode to something more usable..
 	if (waypoint_mode > WM_LOADED)
 	{
 		if (self.ishuman)
@@ -325,21 +324,23 @@ void() DynamicWaypoint =
 	else if (waypoint_mode == WM_DYNAMIC)
 		dynlink = dynpoint = 1;
 
-// if there's nothing for dynamic to do..
+	// if there's nothing for dynamic to do..
 	if (!dynpoint)
 	{
 		if (!editor)
 			return;
 	}
-// for speed sake, I won't have bots dynamic waypoint in coop
+
+	// for speed sake, I won't have bots dynamic waypoint in coop
 	if (!self.ishuman)
 		if (coop)
 			return;
 
-// don't waypoint in single player
+	// don't waypoint in single player
 	if (max_clients < 2)
 		return; 
-// if you're dead
+
+	// if you're dead
 	else if (self.health <= 0)
 	{
 		if (dynpoint)
@@ -361,7 +362,7 @@ void() DynamicWaypoint =
 		return;
 	}
 
-// you shouldn't be making waypoints mid air
+	// you shouldn't be making waypoints mid air
 	if (dynpoint)
 	{
 		if (!((self.flags & FL_ONGROUND) || self.waterlevel == 3))
@@ -373,12 +374,12 @@ void() DynamicWaypoint =
 			return;
 		}
 	}
-// keep from doing the rest of this every frame
+	// keep from doing the rest of this every frame
 	if (self.dyn_time > time)
 		return;
 	self.dyn_time = time + 0.2;
 
-// display the links for editor mode
+	// display the links for editor mode
 	if (editor)
 	{
 		if (self.current_way)
