@@ -41,6 +41,558 @@ this notice in its entirety.
 
 */
 
+// names from the darkest dungeon -whipowill
+static string names[547] =
+{
+	"Reynauld",
+	"Dismas",
+	"Miron",
+	"Sigman",
+	"Bourassa",
+	"Tardif",
+	"Gordon",
+	"Achard",
+	"Addinell",
+	"Adeney",
+	"Aguilon",
+	"Albelin",
+	"Alevi",
+	"Alis",
+	"Altard",
+	"Ansgot",
+	"Anzeray",
+	"Arundel",
+	"Aschuill",
+	"Asselin",
+	"Auber",
+	"Aubert",
+	"Auffrye",
+	"Aungier",
+	"Auvray",
+	"Azor",
+	"Bachiler",
+	"Baignard",
+	"Bailleul",
+	"Bainard",
+	"Baliol",
+	"Ballard",
+	"Barkentin",
+	"Basnage",
+	"Basset",
+	"Baudry",
+	"Baujot",
+	"Bauldry",
+	"Bauquemare",
+	"Bavent",
+	"Becdelievre",
+	"Bele",
+	"Belet",
+	"Bellecote",
+	"Belmis",
+	"Beringar",
+	"Berners",
+	"Bernieres",
+	"Bertran",
+	"Bigod",
+	"Bertran",
+	"Blangi",
+	"Blosbeville",
+	"Blouet",
+	"Bohon",
+	"Bohun",
+	"Boisivon",
+	"Boislevesque",
+	"Boissel",
+	"Boivin",
+	"Bolam",
+	"Bolbec",
+	"Boleyn",
+	"Bondeville",
+	"Bonel",
+	"Bonenffant",
+	"Boneth",
+	"Bonvalet",
+	"Bordel",
+	"Bosanquet",
+	"Bosc",
+	"Bosiet",
+	"Bossard",
+	"Bostel",
+	"Boteler",
+	"Boterel",
+	"Botin",
+	"Bouchard",
+	"Bourchier",
+	"Bourdekin",
+	"Bourdet",
+	"Bourneville",
+	"Bradwardine",
+	"Brai",
+	"Braund",
+	"Brebeuf",
+	"Brereton",
+	"Bretel",
+	"Breteuil",
+	"Bretteville",
+	"Brevedent",
+	"Brimou",
+	"Brinon",
+	"Briouse",
+	"Briqueville",
+	"Brix",
+	"Buci",
+	"Budi",
+	"Bulli",
+	"Burci",
+	"Burguet",
+	"Buron",
+	"Bursigni",
+	"Busnois",
+	"Busquent",
+	"Caen",
+	"Cailli",
+	"Caillot",
+	"Cairon",
+	"Calmette",
+	"Cambrai",
+	"Campion",
+	"Canaigres",
+	"Canouville",
+	"Caradas",
+	"Carbonnel",
+	"Cardon",
+	"Cardonell",
+	"Carnet",
+	"Carteret",
+	"Castillon",
+	"Caunter",
+	"Cavelier",
+	"Ceauce",
+	"Cecil",
+	"Cely",
+	"Chandos",
+	"Chartres",
+	"Chauncy",
+	"Cheney",
+	"Cioches",
+	"Claville",
+	"Clerinell",
+	"Clinchamps",
+	"Coliar",
+	"Colombelles",
+	"Colombieres",
+	"Comyn",
+	"Conteville",
+	"Corbet",
+	"Corbiere",
+	"Corbon",
+	"Cormeilles",
+	"Corneilles",
+	"Corviser",
+	"Cosin",
+	"Couci",
+	"Couer",
+	"Courci",
+	"Courcon",
+	"Courcy",
+	"Courseume",
+	"Courteney",
+	"Craon",
+	"Crevecoeur",
+	"Croc",
+	"Cruel",
+	"Cugey",
+	"Culai",
+	"Cumin",
+	"Curteys",
+	"Dacre",
+	"Dalyngridge",
+	"Damours",
+	"Danneville",
+	"Danvers",
+	"Darcy",
+	"Darell",
+	"Daunger",
+	"Destain",
+	"Devereux",
+	"Digby",
+	"Ditton",
+	"Dive Beugelin",
+	"Douai",
+	"Dreux",
+	"Droullin",
+	"Druel",
+	"Dubosc",
+	"Dudley",
+	"Dufay",
+	"Dufour",
+	"Duhamel",
+	"Dumont",
+	"Dupasquier",
+	"Duquesne",
+	"Durandal",
+	"Durerie",
+	"Durjardin",
+	"Durville",
+	"Duval",
+	"Dyel",
+	"Ecouland",
+	"Elers",
+	"Emory",
+	"Engerrand",
+	"Erquemboure",
+	"Espec",
+	"Esteney",
+	"Evelyn",
+	"Eveque",
+	"Faceby",
+	"Faintree",
+	"Fairfax",
+	"Falaise",
+	"Fantosme",
+	"Faucon",
+	"Fecamp",
+	"Fergant",
+	"Ferrers",
+	"Ferrieres",
+	"Feu",
+	"Fiennes",
+	"Fitton",
+	"Fitzalan",
+	"Fitzherbert",
+	"Fitzhugh",
+	"Fitzroy",
+	"Flambard",
+	"Folet",
+	"Foliot",
+	"Fonnereau",
+	"Fontemai",
+	"Fossard",
+	"Fougeres",
+	"Fourneaux",
+	"Framan",
+	"Fresle",
+	"Fribois",
+	"Froissart",
+	"Fromentin",
+	"Furnival",
+	"Gael",
+	"Gand",
+	"Garin",
+	"Gaveston",
+	"Gibard",
+	"Giffard",
+	"Gillain",
+	"Gilpin",
+	"Giscard",
+	"Glanville",
+	"Godart",
+	"Godefroy",
+	"Gomboult",
+	"Gouel",
+	"Goulaffre",
+	"Gournai",
+	"Grai",
+	"Grancourt",
+	"Grentemesnil",
+	"Grenteville",
+	"Greslet",
+	"Griffin",
+	"Grimoult",
+	"Grouchet",
+	"Groulart",
+	"Gueribout",
+	"Guernon",
+	"Gueron",
+	"Guideville",
+	"Guiffart",
+	"Guildersleeve",
+	"Guinand",
+	"Gurney",
+	"Guyot",
+	"Hachet",
+	"Halacre",
+	"Halle",
+	"Hamage",
+	"Harcourt",
+	"Haute",
+	"Hauville",
+	"Hediart",
+	"Hendry",
+	"Herbard",
+	"Herbert",
+	"Heriet",
+	"Heuze",
+	"Hewse",
+	"Hodenc",
+	"Holland",
+	"Hotot",
+	"Howard",
+	"Hue",
+	"Hugonin",
+	"Hynde",
+	"Ide",
+	"Jolland",
+	"Jubert",
+	"Laci",
+	"Lanquetot",
+	"Lhuillier",
+	"Libourg",
+	"Ligonier",
+	"L'ile",
+	"Linesi",
+	"Lisieux",
+	"Loges",
+	"Lorz",
+	"Loucelles",
+	"Louet",
+	"Louvet",
+	"Lovell",
+	"Lovet",
+	"Lucy",
+	"Ludel",
+	"Lynom",
+	"Machault",
+	"Machel",
+	"Maci",
+	"Maignart",
+	"Malet",
+	"Mallebisse",
+	"Malleville",
+	"Mallilie",
+	"Mallory",
+	"Malvallet",
+	"Malveisin",
+	"Maminot",
+	"Mandeville",
+	"Manneilli",
+	"Mansel",
+	"Mantel",
+	"Marches",
+	"Marchmain",
+	"Marci",
+	"Marescot",
+	"Margas",
+	"Mariage",
+	"Marillac",
+	"Marisco",
+	"Martel",
+	"Mathan",
+	"Maubenc",
+	"Maudit",
+	"Mauduit",
+	"Maunsell",
+	"Maurouard",
+	"Mautravers",
+	"Maynet",
+	"Medley",
+	"Mercier",
+	"Meri",
+	"Merteberge",
+	"Mesnage",
+	"Meulan",
+	"Meules",
+	"Meverel",
+	"Middleton",
+	"Mobec",
+	"Moion",
+	"Monceaux",
+	"Montacute",
+	"Montague",
+	"Montaigu",
+	"Montbrai",
+	"Mont-Canisi",
+	"Montfiquet",
+	"Montfort",
+	"Montgomery",
+	"Morphew",
+	"Mortagne",
+	"Mortain",
+	"Mortemer",
+	"Mortimer",
+	"Mortmain",
+	"Mowbray",
+	"Moyaux",
+	"Mucedent",
+	"Munneville",
+	"Murdac",
+	"Musard",
+	"Musart",
+	"Mussegros",
+	"Mustel",
+	"Nelond",
+	"Neot",
+	"Nesdin",
+	"Neufmarche",
+	"Neuville",
+	"Neville",
+	"Noyers",
+	"Omand",
+	"Orlebar",
+	"Ormond",
+	"Osmond",
+	"Osmont",
+	"Ouistreham",
+	"Painel",
+	"Paixdecouer",
+	"Pancevolt",
+	"Pantoul",
+	"Papelion",
+	"Papon",
+	"Paris",
+	"Parry",
+	"Parthenai",
+	"Paschal",
+	"Pasquier",
+	"Pastforeire",
+	"Patris",
+	"Paumera",
+	"Peccoth",
+	"Peche",
+	"Peis",
+	"Pennant",
+	"Perci",
+	"Percy",
+	"Pericard",
+	"Perroy",
+	"Petremol",
+	"Peveril",
+	"Pevrel",
+	"Picard",
+	"Picot",
+	"Picvini",
+	"Pierrepont",
+	"Pinel",
+	"Pipin",
+	"Pippery",
+	"Piquiri",
+	"Pistres",
+	"Pithou",
+	"Plucknet",
+	"Poer",
+	"Poignant",
+	"Poillei",
+	"Pointel",
+	"Pont",
+	"Pontchardon",
+	"Port",
+	"Postel",
+	"Poussin",
+	"Prestcote",
+	"Puchot",
+	"Quesnel",
+	"Quievremont",
+	"Quincarnon",
+	"Quincey",
+	"Raimbeaucourt",
+	"Rainecourt",
+	"Raleigh",
+	"Rames",
+	"Raoullin",
+	"Rassent",
+	"Ravenot",
+	"Rennes",
+	"Renold",
+	"Restault",
+	"Reviers",
+	"Riebou",
+	"Riviere",
+	"Roard",
+	"Rocque",
+	"Roger",
+	"Rome",
+	"Romenel",
+	"Ros",
+	"Rosai",
+	"Rou",
+	"Roussel",
+	"Runeville",
+	"Russell",
+	"Sacquerville",
+	"Saisset",
+	"Sauvigni",
+	"Scolland",
+	"Seguier",
+	"Senarpont",
+	"Senlis",
+	"Sidney",
+	"Simnel",
+	"Sollers",
+	"Somneri",
+	"Sourdeval",
+	"Stafford",
+	"Stanley",
+	"Strivelyn",
+	"Stukely",
+	"Tabraham",
+	"Taillebois",
+	"Taillepied",
+	"Talbot",
+	"Talvace",
+	"Tessel",
+	"Thaon",
+	"Theroulde",
+	"Thibault",
+	"Thiboust",
+	"Thorel",
+	"Tibon",
+	"Tilly",
+	"Tinel",
+	"Tirel",
+	"Toclive",
+	"Torteval",
+	"Touchet",
+	"Tourlaville",
+	"Tourmente",
+	"Tournai",
+	"Tournebulle",
+	"Tournebut",
+	"Tourneville",
+	"Toustain",
+	"Tranchant",
+	"Trelli",
+	"Tulles",
+	"Umfraville",
+	"Urry",
+	"Valance",
+	"Valognes",
+	"Vane",
+	"Vastel",
+	"Vatteville",
+	"Vaubadon",
+	"Vaughan",
+	"Vauville",
+	"Vaux",
+	"Vavassour",
+	"Veci",
+	"Venois",
+	"Ventris",
+	"Ver",
+	"Verdun",
+	"Vernold",
+	"Vernon",
+	"Verrall",
+	"Vesci",
+	"Vesli",
+	"Veteripont",
+	"Vieuxpont",
+	"Villehardain",
+	"Villon",
+	"Vipont",
+	"Vitalis",
+	"Vivers",
+	"Viville",
+	"Voisin",
+	"Wadard",
+	"Warci",
+	"Watteau",
+	"Werables",
+	"Willoughby",
+	"Wissant",
+	"Woodville",
+	"Ygou"
+};
+
 /*
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -53,108 +605,12 @@ Sets bot's name and colors
 string(float r) BotName =
 {
 	self.b_num = r;
-	if (r == 1)
-	{	
-		self.b_pants = 11;
-		self.b_shirt = 0; 
-		return "Vincent";
-	}
-	else if (r == 2)
-	{
-		self.b_pants = 1;
-		self.b_shirt = 3;
-		return "Bishop";
-	}
-	else if (r == 3)
-	{	
-		self.b_pants = 13;
-		self.b_shirt = 2;
-		return "Nomad";
-	}
-	else if (r == 4)
-	{
-		self.b_pants = 7;
-		self.b_shirt = 6;
-		return "Hudson";
-	} 
-	else if (r == 5)
-	{
-		self.b_pants = 12;
-		self.b_shirt = 6;
-		return "Lore";
-	}
-	else if (r == 6)
-	{
-		self.b_pants = 4;
-		self.b_shirt = 4;
-		return "Servo";
-	}
-	else if (r == 7)
-	{
-		self.b_pants = 2;
-		self.b_shirt = 5;
-		return "Gort";
-	} 
-	else if (r == 8)
-	{	
-		self.b_pants = 10;
-		self.b_shirt = 3;
-		return "Kryten";
-	}
-	else if (r == 9)
-	{
-		self.b_pants = 9;
-		self.b_shirt = 4;
-		return "TigerJ";
-	}
-	else if (r == 10)
-	{
-		self.b_pants = 4;
-		self.b_shirt = 7;
-		return "Max";
-	}
-	else if (r == 11)
-	{
-		self.b_pants = 3;
-		self.b_shirt = 11;
-		return "Marvin";
-	} 
-	else if (r == 12)
-	{
-		self.b_pants = 13;
-		self.b_shirt = 12;
-		return "Erwin";
-	}
-	else if (r == 13)
-	{
-		self.b_pants = 11;
-		self.b_shirt = 2;
-		return "FrikaC";
-	}
-	else if (r == 14)
-	{
-		self.b_pants = 0;
-		self.b_shirt = 2;
-		return "Krosis";
-	}
-	else if (r == 15)
-	{
-		self.b_pants = 8;
-		self.b_shirt = 9;
-		return "Gypsy";
-	}
-	else if (r == 16)
-	{
-		self.b_pants = 5;
-		self.b_shirt = 10;
-		return "Hal";
-	}
-	else // repeat just to silence warning
-	{
-		self.b_pants = 11;
-		self.b_shirt = 2;
-		return "FrikaC";
-	}
+
+	// set random params
+	self.b_shirt = floor(random() * 14);
+	self.b_pants = floor(random() * 14);
+
+	return names[floor(random() * names.length)];
 };
 string () PickARandomName =
 {
@@ -175,8 +631,6 @@ string () PickARandomName =
 	}
 	return h;
 };
-
-
 
 // I didn't like the old code so this is very stripped down
 
