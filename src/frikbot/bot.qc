@@ -1298,15 +1298,13 @@ void() BotImpulses =
 	if (self.impulse == 110) // random team bot -whipowill
 	{
 		f = cvar("skill");
-		f = rint(random() * (f-1));
-		f++;
+		f = ceil(random() * f);
 		BotConnect(0, 0, f);
 	}
 	else if (self.impulse == 111) // random enemy bot -whipowill
 	{
 		f = cvar("skill");
-		f = rint(random() * (f-1));
-		f++;
+		f = ceil(random() * f);
 		BotConnect(1, 0, f);
 	}
 	else if (self.impulse == 102)
