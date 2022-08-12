@@ -41,558 +41,6 @@ this notice in its entirety.
 
 */
 
-// names from the darkest dungeon -whipowill
-static string names[547] =
-{
-	"Reynauld",
-	"Dismas",
-	"Miron",
-	"Sigman",
-	"Bourassa",
-	"Tardif",
-	"Gordon",
-	"Achard",
-	"Addinell",
-	"Adeney",
-	"Aguilon",
-	"Albelin",
-	"Alevi",
-	"Alis",
-	"Altard",
-	"Ansgot",
-	"Anzeray",
-	"Arundel",
-	"Aschuill",
-	"Asselin",
-	"Auber",
-	"Aubert",
-	"Auffrye",
-	"Aungier",
-	"Auvray",
-	"Azor",
-	"Bachiler",
-	"Baignard",
-	"Bailleul",
-	"Bainard",
-	"Baliol",
-	"Ballard",
-	"Barkentin",
-	"Basnage",
-	"Basset",
-	"Baudry",
-	"Baujot",
-	"Bauldry",
-	"Bauquemare",
-	"Bavent",
-	"Becdelievre",
-	"Bele",
-	"Belet",
-	"Bellecote",
-	"Belmis",
-	"Beringar",
-	"Berners",
-	"Bernieres",
-	"Bertran",
-	"Bigod",
-	"Bertran",
-	"Blangi",
-	"Blosbeville",
-	"Blouet",
-	"Bohon",
-	"Bohun",
-	"Boisivon",
-	"Boislevesque",
-	"Boissel",
-	"Boivin",
-	"Bolam",
-	"Bolbec",
-	"Boleyn",
-	"Bondeville",
-	"Bonel",
-	"Bonenffant",
-	"Boneth",
-	"Bonvalet",
-	"Bordel",
-	"Bosanquet",
-	"Bosc",
-	"Bosiet",
-	"Bossard",
-	"Bostel",
-	"Boteler",
-	"Boterel",
-	"Botin",
-	"Bouchard",
-	"Bourchier",
-	"Bourdekin",
-	"Bourdet",
-	"Bourneville",
-	"Bradwardine",
-	"Brai",
-	"Braund",
-	"Brebeuf",
-	"Brereton",
-	"Bretel",
-	"Breteuil",
-	"Bretteville",
-	"Brevedent",
-	"Brimou",
-	"Brinon",
-	"Briouse",
-	"Briqueville",
-	"Brix",
-	"Buci",
-	"Budi",
-	"Bulli",
-	"Burci",
-	"Burguet",
-	"Buron",
-	"Bursigni",
-	"Busnois",
-	"Busquent",
-	"Caen",
-	"Cailli",
-	"Caillot",
-	"Cairon",
-	"Calmette",
-	"Cambrai",
-	"Campion",
-	"Canaigres",
-	"Canouville",
-	"Caradas",
-	"Carbonnel",
-	"Cardon",
-	"Cardonell",
-	"Carnet",
-	"Carteret",
-	"Castillon",
-	"Caunter",
-	"Cavelier",
-	"Ceauce",
-	"Cecil",
-	"Cely",
-	"Chandos",
-	"Chartres",
-	"Chauncy",
-	"Cheney",
-	"Cioches",
-	"Claville",
-	"Clerinell",
-	"Clinchamps",
-	"Coliar",
-	"Colombelles",
-	"Colombieres",
-	"Comyn",
-	"Conteville",
-	"Corbet",
-	"Corbiere",
-	"Corbon",
-	"Cormeilles",
-	"Corneilles",
-	"Corviser",
-	"Cosin",
-	"Couci",
-	"Couer",
-	"Courci",
-	"Courcon",
-	"Courcy",
-	"Courseume",
-	"Courteney",
-	"Craon",
-	"Crevecoeur",
-	"Croc",
-	"Cruel",
-	"Cugey",
-	"Culai",
-	"Cumin",
-	"Curteys",
-	"Dacre",
-	"Dalyngridge",
-	"Damours",
-	"Danneville",
-	"Danvers",
-	"Darcy",
-	"Darell",
-	"Daunger",
-	"Destain",
-	"Devereux",
-	"Digby",
-	"Ditton",
-	"Dive Beugelin",
-	"Douai",
-	"Dreux",
-	"Droullin",
-	"Druel",
-	"Dubosc",
-	"Dudley",
-	"Dufay",
-	"Dufour",
-	"Duhamel",
-	"Dumont",
-	"Dupasquier",
-	"Duquesne",
-	"Durandal",
-	"Durerie",
-	"Durjardin",
-	"Durville",
-	"Duval",
-	"Dyel",
-	"Ecouland",
-	"Elers",
-	"Emory",
-	"Engerrand",
-	"Erquemboure",
-	"Espec",
-	"Esteney",
-	"Evelyn",
-	"Eveque",
-	"Faceby",
-	"Faintree",
-	"Fairfax",
-	"Falaise",
-	"Fantosme",
-	"Faucon",
-	"Fecamp",
-	"Fergant",
-	"Ferrers",
-	"Ferrieres",
-	"Feu",
-	"Fiennes",
-	"Fitton",
-	"Fitzalan",
-	"Fitzherbert",
-	"Fitzhugh",
-	"Fitzroy",
-	"Flambard",
-	"Folet",
-	"Foliot",
-	"Fonnereau",
-	"Fontemai",
-	"Fossard",
-	"Fougeres",
-	"Fourneaux",
-	"Framan",
-	"Fresle",
-	"Fribois",
-	"Froissart",
-	"Fromentin",
-	"Furnival",
-	"Gael",
-	"Gand",
-	"Garin",
-	"Gaveston",
-	"Gibard",
-	"Giffard",
-	"Gillain",
-	"Gilpin",
-	"Giscard",
-	"Glanville",
-	"Godart",
-	"Godefroy",
-	"Gomboult",
-	"Gouel",
-	"Goulaffre",
-	"Gournai",
-	"Grai",
-	"Grancourt",
-	"Grentemesnil",
-	"Grenteville",
-	"Greslet",
-	"Griffin",
-	"Grimoult",
-	"Grouchet",
-	"Groulart",
-	"Gueribout",
-	"Guernon",
-	"Gueron",
-	"Guideville",
-	"Guiffart",
-	"Guildersleeve",
-	"Guinand",
-	"Gurney",
-	"Guyot",
-	"Hachet",
-	"Halacre",
-	"Halle",
-	"Hamage",
-	"Harcourt",
-	"Haute",
-	"Hauville",
-	"Hediart",
-	"Hendry",
-	"Herbard",
-	"Herbert",
-	"Heriet",
-	"Heuze",
-	"Hewse",
-	"Hodenc",
-	"Holland",
-	"Hotot",
-	"Howard",
-	"Hue",
-	"Hugonin",
-	"Hynde",
-	"Ide",
-	"Jolland",
-	"Jubert",
-	"Laci",
-	"Lanquetot",
-	"Lhuillier",
-	"Libourg",
-	"Ligonier",
-	"L'ile",
-	"Linesi",
-	"Lisieux",
-	"Loges",
-	"Lorz",
-	"Loucelles",
-	"Louet",
-	"Louvet",
-	"Lovell",
-	"Lovet",
-	"Lucy",
-	"Ludel",
-	"Lynom",
-	"Machault",
-	"Machel",
-	"Maci",
-	"Maignart",
-	"Malet",
-	"Mallebisse",
-	"Malleville",
-	"Mallilie",
-	"Mallory",
-	"Malvallet",
-	"Malveisin",
-	"Maminot",
-	"Mandeville",
-	"Manneilli",
-	"Mansel",
-	"Mantel",
-	"Marches",
-	"Marchmain",
-	"Marci",
-	"Marescot",
-	"Margas",
-	"Mariage",
-	"Marillac",
-	"Marisco",
-	"Martel",
-	"Mathan",
-	"Maubenc",
-	"Maudit",
-	"Mauduit",
-	"Maunsell",
-	"Maurouard",
-	"Mautravers",
-	"Maynet",
-	"Medley",
-	"Mercier",
-	"Meri",
-	"Merteberge",
-	"Mesnage",
-	"Meulan",
-	"Meules",
-	"Meverel",
-	"Middleton",
-	"Mobec",
-	"Moion",
-	"Monceaux",
-	"Montacute",
-	"Montague",
-	"Montaigu",
-	"Montbrai",
-	"Mont-Canisi",
-	"Montfiquet",
-	"Montfort",
-	"Montgomery",
-	"Morphew",
-	"Mortagne",
-	"Mortain",
-	"Mortemer",
-	"Mortimer",
-	"Mortmain",
-	"Mowbray",
-	"Moyaux",
-	"Mucedent",
-	"Munneville",
-	"Murdac",
-	"Musard",
-	"Musart",
-	"Mussegros",
-	"Mustel",
-	"Nelond",
-	"Neot",
-	"Nesdin",
-	"Neufmarche",
-	"Neuville",
-	"Neville",
-	"Noyers",
-	"Omand",
-	"Orlebar",
-	"Ormond",
-	"Osmond",
-	"Osmont",
-	"Ouistreham",
-	"Painel",
-	"Paixdecouer",
-	"Pancevolt",
-	"Pantoul",
-	"Papelion",
-	"Papon",
-	"Paris",
-	"Parry",
-	"Parthenai",
-	"Paschal",
-	"Pasquier",
-	"Pastforeire",
-	"Patris",
-	"Paumera",
-	"Peccoth",
-	"Peche",
-	"Peis",
-	"Pennant",
-	"Perci",
-	"Percy",
-	"Pericard",
-	"Perroy",
-	"Petremol",
-	"Peveril",
-	"Pevrel",
-	"Picard",
-	"Picot",
-	"Picvini",
-	"Pierrepont",
-	"Pinel",
-	"Pipin",
-	"Pippery",
-	"Piquiri",
-	"Pistres",
-	"Pithou",
-	"Plucknet",
-	"Poer",
-	"Poignant",
-	"Poillei",
-	"Pointel",
-	"Pont",
-	"Pontchardon",
-	"Port",
-	"Postel",
-	"Poussin",
-	"Prestcote",
-	"Puchot",
-	"Quesnel",
-	"Quievremont",
-	"Quincarnon",
-	"Quincey",
-	"Raimbeaucourt",
-	"Rainecourt",
-	"Raleigh",
-	"Rames",
-	"Raoullin",
-	"Rassent",
-	"Ravenot",
-	"Rennes",
-	"Renold",
-	"Restault",
-	"Reviers",
-	"Riebou",
-	"Riviere",
-	"Roard",
-	"Rocque",
-	"Roger",
-	"Rome",
-	"Romenel",
-	"Ros",
-	"Rosai",
-	"Rou",
-	"Roussel",
-	"Runeville",
-	"Russell",
-	"Sacquerville",
-	"Saisset",
-	"Sauvigni",
-	"Scolland",
-	"Seguier",
-	"Senarpont",
-	"Senlis",
-	"Sidney",
-	"Simnel",
-	"Sollers",
-	"Somneri",
-	"Sourdeval",
-	"Stafford",
-	"Stanley",
-	"Strivelyn",
-	"Stukely",
-	"Tabraham",
-	"Taillebois",
-	"Taillepied",
-	"Talbot",
-	"Talvace",
-	"Tessel",
-	"Thaon",
-	"Theroulde",
-	"Thibault",
-	"Thiboust",
-	"Thorel",
-	"Tibon",
-	"Tilly",
-	"Tinel",
-	"Tirel",
-	"Toclive",
-	"Torteval",
-	"Touchet",
-	"Tourlaville",
-	"Tourmente",
-	"Tournai",
-	"Tournebulle",
-	"Tournebut",
-	"Tourneville",
-	"Toustain",
-	"Tranchant",
-	"Trelli",
-	"Tulles",
-	"Umfraville",
-	"Urry",
-	"Valance",
-	"Valognes",
-	"Vane",
-	"Vastel",
-	"Vatteville",
-	"Vaubadon",
-	"Vaughan",
-	"Vauville",
-	"Vaux",
-	"Vavassour",
-	"Veci",
-	"Venois",
-	"Ventris",
-	"Ver",
-	"Verdun",
-	"Vernold",
-	"Vernon",
-	"Verrall",
-	"Vesci",
-	"Vesli",
-	"Veteripont",
-	"Vieuxpont",
-	"Villehardain",
-	"Villon",
-	"Vipont",
-	"Vitalis",
-	"Vivers",
-	"Viville",
-	"Voisin",
-	"Wadard",
-	"Warci",
-	"Watteau",
-	"Werables",
-	"Willoughby",
-	"Wissant",
-	"Woodville",
-	"Ygou"
-};
-
 /*
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -610,7 +58,7 @@ string(float r) BotName =
 	self.b_shirt = floor(random() * 14);
 	self.b_pants = floor(random() * 14);
 
-	return names[floor(random() * names.length)];
+	return bot_names[floor(random() * bot_names.length)];
 };
 string () PickARandomName =
 {
@@ -623,7 +71,7 @@ string () PickARandomName =
 	y = TRUE;
 	while(y)
 	{
-		test = ceil(random() * 16);
+		test = floor(random() * 16);
 		h = BotName(test);
 		t = find(world, netname, h);
 		if (t == world)
@@ -636,32 +84,48 @@ string () PickARandomName =
 
 entity b_originator;
 float b_topic;
-/* FBX Topics
+float b_chattime_system;
 
-b_originator == self
- 1 - sign on
- 2 - killed targ
- 3 - team message "friendly eyes"
- 4 - team message "on your back"
- 5 - team message "need back up"
- 6 - excuses
- ----
- 7 - gameover
- ----
- 8 - welcoming someone onto server
- 9 - ridicule lost frag (killed self?)
- 10 - ridicule lost frag (lava)
- 11 - lag
-b_originator == targ
+// 1 - connect
+// 2 - welcome
+// 3 - victory
+// 4 - deathsdoor
+// 5 - death
+// 6 - powerup
+// 7 - team
+// 8 - suicide
+// 9 - ridicule
+// 10 - intermission
+// 13 - response to victories
+// 15 - response to deaths
+// 16 - response to powerups
+// 17 - response to team chatter
 
- 
-*/
-void(float tpic) bot_start_topic =
+void(float topic) bot_start_topic =
 {
-	if (random() < 0.2)
+	if (!cvar("frikbot_dialogue")) return;
+
+	local float odds;
+	odds = 0.2;
+
+	if (topic == 1) odds = 0.8; // connect
+	if (topic == 2) odds = 0.6; // welcome
+	if (topic == 3) odds = 0.4; // victory
+	if (topic == 4) odds = 0.2; // deathsdoor
+	if (topic == 5) odds = 0.2; // death
+	if (topic == 6) odds = 0.2; // powerup -- not actually used, always triggers from bot_ai.qc
+	if (topic == 7) odds = 0.2; // team
+	if (topic == 8) odds = 0.8; // suicide
+	if (topic == 9) odds = 0.6; // ridicule
+	if (topic == 10) odds = 0.2; // intermission
+
+	if (random() < odds)
 	{
-		b_topic = tpic;
+		b_topic = topic;
 		b_originator = self;
+
+		// trigger immediately, no need to wait
+		bot_chat();
 	}
 	else
 		b_topic = 0;
@@ -669,318 +133,187 @@ void(float tpic) bot_start_topic =
 
 void() bot_chat =
 {
-	local float r;
+	// if no chat allowed
 	if (b_options & OPT_NOCHAT)
 		return;
-	r = ceil (random() * 6);
 	
-	if (self.b_chattime > time)
-	{
-		if (self.b_skill < 2)
-			self.keys = self.button0 = self.button2 = 0;
+	if (b_chattime_system > time || self.b_chattime > time || b_topic < 1)
 		return;
-	}
-	else if (self.b_chattime)
-	{
-		if (b_topic == 1)
-		{
-			if (b_originator == self)
-			{
-				if (r == 1)
-				{
-					BotSay(": lo all\n");
-					bot_start_topic(8);
-				}
-				else if (r == 2)
-				{
-					BotSay(": hey everyone\n");
-					bot_start_topic(8);
-				}
-				else if (r == 3)
-				{
-					BotSay(": prepare to be fragged!\n");
-					bot_start_topic(0);
-				}
-				else if (r == 4)
-				{
-					BotSay(": boy this is laggy\n");
-					bot_start_topic(11);
-				}
-				else if (r == 5)
-				{
-					BotSay(": #mm getting some lag here\n");
-					bot_start_topic(11);
-				}
-				else
-				{
-					BotSay(": hi everyone\n");
-					bot_start_topic(8);
-				}
-			}
-		}
-		else if (b_topic == 2)
-		{
-			if (b_originator == self)
-			{
-				if (r == 1)
-					BotSay(": take that\n");
-				else if (r == 2)
-					BotSay(": yehaww!\n");
-				else if (r == 3)
-					BotSay(": wh00p\n");
-				else if (r == 4)
-					BotSay(": j00_sawk();\n");
-				else if (r == 5)
-					BotSay(": i rule\n");
-				else
-					BotSay(": eat that\n");
-				bot_start_topic(0);
-			}
-		}
-		else if (b_topic == 3)
-		{
-			if (b_originator == self)
-			{
-				if (r < 3)
-					BotSayTeam(": friendly eyes\n");
-				else
-					BotSayTeam(": team eyes\n");
-				bot_start_topic(0);
-			}
-		}
-		else if (b_topic == 4)
-		{
-			if (b_originator == self)
-			{
-				if (r < 3)
-					BotSayTeam(": on your back\n");
-				else
-					BotSayTeam(": I'm with you\n");
-				bot_start_topic(0);
-			}
-		}
-		else if (b_topic == 5)
-		{
-			if (b_originator == self)
-			{
-				if (r < 3)
-					BotSayTeam(": I need help\n");
-				else
-					BotSayTeam(": need backup\n");
-				bot_start_topic(0);
-			}
-		}
-		else if (b_topic == 6)
-		{
-			if (b_originator == self)
-			{
-				if (r == 1)
-				{
-					BotSay(": sun got in my eyes\n");
-					bot_start_topic(0);
-				}
-				else if (r == 2)
-				{
-					BotSay(": mouse needs cleaning\n");
-					bot_start_topic(0);
-				}
-				else if (r == 3)
-				{
-					BotSay(": i meant to do that\n");
-					bot_start_topic(0);
-				}
-				else if (r == 4)
-				{
-					BotSay(": lag\n");
-					bot_start_topic(11);
-				}
-				else if (r == 5)
-				{
-					BotSay(": killer lag\n");
-					bot_start_topic(11);
-				}
-				else
-				{
-					BotSay(": 100% lag\n");
-					bot_start_topic(11);
-				}
-			}
-		}
-		else if (b_topic == 7)
-		{
-			if (r == 1)
-				BotSay(": gg\n");
-			else if (r == 2)
-				BotSay(": gg all\n");
-			else if (r == 3)
-				BotSay(": that was fun\n");
-			else if (r == 4)
-				BotSay(": good game\n");
-			else if (r == 5)
-				BotSay(": pah\n");
-			else
-				BotSay(": hrm\n");
-			bot_start_topic(0);
-		}
-		else if (b_topic == 8)
-		{
-			if (b_originator != self)
-			{
-				if (r == 1)
-				{
-					BotSay(": heya\n");
-					bot_start_topic(0);
-				}
-				else if (r == 2)
-				{
-					BotSay(": welcome\n");
-					bot_start_topic(0);
-				}
-				else if (r == 3)
-				{
-					BotSayInit();
-					BotSay2(": hi ");
-					BotSay2(b_originator.netname);
-					BotSay2("\n");
-					bot_start_topic(0);
-				}
-				else if (r == 4)
-				{
-					BotSayInit();
-					BotSay2(": hey ");
-					BotSay2(b_originator.netname);
-					BotSay2("\n");
-					bot_start_topic(0);
-				}
-				else if (r == 5)
-				{
-					BotSay(": howdy\n");
-					bot_start_topic(0);
-				}
-				else
-				{
-					BotSay(": lo\n");
-					bot_start_topic(0);	
-				}
-			}
-		}
+	if (self.b_chattime_alt > time && (b_topic == 4 || b_topic == 7)) // alt topics are spammy topics, deathsdoor and team
+		return;
 
-		else if (b_topic == 9)
-		{
-			if (b_originator != self)
-			{
-				if (r == 1)
-					BotSay(": hah\n");
-				else if (r == 2)
-					BotSay(": heheh\n");
-				else if (r == 3)
-				{
-					BotSayInit();
-					BotSay2(": good work ");
-					BotSay2(b_originator.netname);
-					BotSay2("\n");
-				}
-				else if (r == 4)
-				{
-					BotSayInit();
-					BotSay2(": nice1 ");
-					BotSay2(b_originator.netname);
-					BotSay2("\n");
-				}
-				else if (r == 5)
-					BotSay(": lol\n");
-				else
-					BotSay(": :)\n");
-				b_topic = 6;
-			}
-		}
-		else if (b_topic == 10)
-		{
-			if (b_originator != self)
-			{
-				if (r == 1)
-					BotSay(": have a nice dip?\n");
-				else if (r == 2)
-					BotSay(": bah I hate levels with lava\n");
-				else if (r == 3)
-				{
-					BotSayInit();
-					BotSay2(": good job ");
-					BotSay2(b_originator.netname);
-					BotSay2("\n");
-				}
-				else if (r == 4)
-				{
-					BotSayInit();
-					BotSay2(": nice backflip ");
-					BotSay2(b_originator.netname);
-					BotSay2("\n");
-				}
-				else if (r == 5)
-					BotSay(": watch your step\n");
-				else
-					BotSay(": hehe\n");
-				b_topic = 6;
-			}
-		}
+	// for random nums
+	local float r;
 
-		else if (b_topic == 11)
-		{
-			if (b_originator != self)
-			{
-				if (r == 1)
-				{
-					BotSayInit();
-					BotSay2(": yeah right ");
-					BotSay2(b_originator.netname);
-					BotSay2("\n");
-					bot_start_topic(0);
-				}
-				else if (r == 2)
-				{
-					BotSay(": ping\n");
-					bot_start_topic(0);
-				}
-				else if (r == 3)
-				{
-					BotSay(": shuddup, you're an lpb\n");
-					bot_start_topic(0);
-				}
-				else if (r == 4)
-				{
-					BotSay(": lag my eye\n");
-					bot_start_topic(0);
-				}
-				else if (r == 5)
-				{
-					BotSay(": yeah\n");
-					bot_start_topic(11);
-				}
-				else
-				{
-					BotSay(": totally\n");
-					bot_start_topic(11);
-				}
-			}
-		}
-		self.b_chattime = 0;
-	}
-	else if (b_topic)
+	// the quote we will use
+	local string quote;
+
+	// if the quote is for teams only
+	local float quote_is_to_team;
+
+	// for setting the next topic
+	local float next_topic = 0;
+
+	// determine if bot is winning or losing
+	local float is_winning = AmIWinning(self, clients); // pass num of clients, needed for player rank
+
+	// for testing easily
+	local float is_testing = cvar("frikbot_testing");
+
+	if (b_topic == 1) // connect
 	{
-		if (random() < 0.5)
+		if (b_originator == self)
 		{
-			if (self == b_originator)
+			r = floor(random() * quotes_connect.length);
+			quote = quotes_connect[r];
+			if (is_testing) quote = "connect";
+			next_topic = 2;
+		}
+	}
+	else if (b_topic == 2) // welcome
+	{
+		if (b_originator != self)
+		{
+			r = floor(random() * quotes_welcome.length);
+			quote = quotes_welcome[r];
+			if (is_testing) quote = "welcome";
+		}
+	}
+	else if (b_topic == 3) // victory
+	{
+		if (b_originator == self)
+		{
+			if (is_winning || is_testing)
 			{
-				if (b_topic <= 7)
-					self.b_chattime = time + 2;
+				r = floor(random() * quotes_victory.length);
+				quote = quotes_victory[r];
+				if (is_testing) quote = "victory";
 			}
 			else
 			{
-				if (b_topic >= 7)
-					self.b_chattime = time + 2;
+				// if losing don't gloat on victory
 			}
 		}
 	}
+	else if (b_topic == 4) // deaths door
+	{
+		if (b_originator == self)
+		{
+			quote_is_to_team = 1;
+			if (!is_winning || is_testing)
+			{
+				r = floor(random() * quotes_deathsdoor.length);
+				quote = quotes_deathsdoor[r];
+				if (is_testing) quote = "deathsdoor";
+			}
+			else
+			{
+				// if winning do not comment on deathsdoor
+			}
+		}
+	}
+	else if (b_topic == 5) // death
+	{
+		if (b_originator == self)
+		{
+			if (!is_winning || is_testing)
+			{
+				r = floor(random() * quotes_death.length);
+				quote = quotes_death[r];
+				if (is_testing) quote = "death";
+			}
+			else
+			{
+				// if winning, do not comment on death
+			}
+		}
+	}
+	else if (b_topic == 6) // powerup
+	{
+		if (b_originator == self)
+		{
+			// this is handled individually in bot_ai.qc - whpowill
+		}
+	}
+	else if (b_topic == 7) // team chatter
+	{
+		if (b_originator == self)
+		{
+			quote_is_to_team = 1;
+			if (!is_winning || is_testing)
+			{
+				r = floor(random() * quotes_team.length);
+				quote = quotes_team[r];
+				if (is_testing) quote = "team";
+
+			}
+			else
+			{
+				// if winning, don't speak to team.
+			}
+		}
+	}
+	else if (b_topic == 8) // suicide
+	{
+		if (b_originator == self)
+		{
+			r = floor(random() * quotes_suicide.length);
+			quote = quotes_suicide[r];
+			if (is_testing) quote = "suicide";
+			next_topic = 9;
+		}
+	}
+	else if (b_topic == 9) // ridicule
+	{
+		if (b_originator != self)
+		{
+			r = floor(random() * quotes_ridicule.length);
+			quote = quotes_ridicule[r];
+			if (is_testing) quote = "ridicule";
+			next_topic = 9;
+		}
+	}
+	else if (b_topic == 10) // intermission
+	{
+		if (is_winning)
+		{
+			r = floor(random() * quotes_intermission_positive.length);
+			quote = quotes_intermission_positive[r];
+			if (is_testing) quote = "intermission_positive";
+		}
+		else
+		{
+			r = floor(random() * quotes_intermission_negative.length);
+			quote = quotes_intermission_negative[r];
+			if (is_testing) quote = "intermission_negative";
+		}
+		next_topic = 10;
+	}
+
+	// say the quote
+	if (quote && quote != "")
+	{
+		quote = strcat(": ", quote);
+		quote = strcat(quote, "\n");
+		if (quote_is_to_team && teamplay > 0)
+			BotSayTeam(quote);
+		else
+			BotSay(quote);
+
+		// reset the chattime
+		self.b_chattime = time + 2; // player cannot speak
+
+		if (b_topic == 4 || b_topic == 7)
+			self.b_chattime_alt = time + 30 + (random() * 30); // player cannot speak re: alternative topics (spammy topics)
+
+		if (b_topic == 10)
+			b_chattime_system = time + 2; // nobody can speak
+		else
+			b_chattime_system = time + 1; // nobody can speak
+	}
+
+	// set the next chat topic
+	bot_start_topic(next_topic);
 };
 
 /*

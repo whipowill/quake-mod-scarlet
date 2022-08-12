@@ -137,7 +137,7 @@ for all variables in the bot...
 .float	b_frags, b_clientno, b_shirt, b_pants; 
 .float	priority, ai_time, b_sound, missile_speed;
 .float	portal_time, b_skill, switch_wallhug;
-.float	b_aiflags, b_num, b_chattime;
+.float	b_aiflags, b_num, b_chattime, b_chattime_alt;
 .float	b_menu, b_menu_time, b_menu_value;
 .float route_failed, dyn_flags, dyn_time;
 .float dyn_plat;
@@ -282,7 +282,7 @@ void(entity targ, float success) bot_lost;
 string(float r)			BotName;
 float(float v)			frik_anglemod;
 void() bot_chat;
-void(float tpic) bot_start_topic;
+void(float topic) bot_start_topic;
 
 
 // editor stuffs
@@ -379,7 +379,6 @@ void(entity	client, string s) sprint =
 		}
 		b_temp1 = b_temp1._next;
 	}
-
 };
 
 void(entity	client, string s) centerprint =
@@ -407,7 +406,6 @@ vector(entity e, float sped) aim =
 
 void(entity e, float chan, string samp, float vol, float atten) sound = 
 {
-
 	frik_sound(e, chan, samp, vol, atten);
 	if (samp == "items/inv3.wav")
 		return;
@@ -415,7 +413,6 @@ void(entity e, float chan, string samp, float vol, float atten) sound =
 		e.b_sound = time + 1;
 	else if (other.classname == "player")
 		other.b_sound = time + 1;
-
 };
 
 void(float to, float f) WriteByte =
@@ -560,8 +557,6 @@ void() botcam_u =
 	sprint(self, "\n");
 };
 
-
-
 /*
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -590,14 +585,14 @@ void() ClientFixRankings =
 		b_temp2 = nextent(b_temp2);
 	}
 };
-		
+
 void() ClientInRankings =
 {
 	local float cno;
 
    	cno = self.colormap - 1;
 	BotInvalidClientNo (cno);
-	
+
 	if (player_head)
 		player_head._last = self;
 
@@ -619,12 +614,11 @@ void() ClientInRankings =
 		return;
 	}
 	active_clients = active_clients | ClientBitFlag(cno);
-	
+
 	self.b_clientno = cno;
 	self.ishuman = TRUE;
 	self.switch_wallhug = time + 1;
 };
-
 
 void() ClientDisconnected =
 {
@@ -636,7 +630,11 @@ void() ClientDisconnected =
 		self._last._next = self._next;
 
 	active_clients = active_clients - active_clients & ClientBitFlag(self.b_clientno);
+
+	// remove from scorekeeper
+	ScoreKeeperRemovePlayer(self.netname); // -whipowill
 };
+
 /*
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -645,6 +643,7 @@ bot easier to install
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
+
 float () BotPreFrame =
 {
 	if (self.b_clientno == -1)
@@ -656,22 +655,10 @@ float () BotPreFrame =
 		if (self.classname == "botcam")
 			return TRUE;
 	}
-	if (self.b_frags != self.frags)
-	{
-		if (self.b_frags > self.frags)
-		{
-			if (pointcontents(self.origin) == CONTENT_LAVA)
-				bot_start_topic(10);
-			else
-				bot_start_topic(9);
-		}
-		else
-			bot_start_topic(2);
-		self.b_frags = self.frags;
-	}
 	DynamicWaypoint();
 	return FALSE;
 };
+
 float () BotPostFrame =
 {
 	if (self.b_clientno == -1)
@@ -698,6 +685,7 @@ The rest of this code is in bot_misc.qc
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
+
 void(string h) BotSay = // simulate talking by composing a 'chat' message
 {
 	WriteByte(MSG_ALL, 8);
@@ -707,18 +695,21 @@ void(string h) BotSay = // simulate talking by composing a 'chat' message
 	WriteByte(MSG_ALL, 2);
 	WriteString(MSG_ALL, h);
 };
+
 void() BotSayInit =
 {
 	WriteByte(MSG_ALL, 8);
 	WriteByte(MSG_ALL, 1);
 	WriteString(MSG_ALL, self.netname);
 };
+
 void(string h) BotSay2 =
 {
 	WriteByte(MSG_ALL, 8);
 	WriteByte(MSG_ALL, 2);
 	WriteString(MSG_ALL, h);
 };
+
 void(string h) BotSayTeam = 
 {
 	local entity t;
@@ -742,6 +733,7 @@ void(string h) BotSayTeam =
 		t = t._next;
 	}
 };
+
 /*
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -749,7 +741,6 @@ BotInit
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
-
 
 void() BotInit =
 {
@@ -798,7 +789,6 @@ signs on to the server.
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
-
 
 void(entity who) UpdateClient =
 {
@@ -972,8 +962,6 @@ void(float whichteam, float whatbot, float whatskill) BotConnect =
 	if (whichteam == 1) bot_team1_count = bot_team1_count + 1;
 
 	self = GetClientEntity(f);
-	if (!saved_bots)
-		bot_start_topic(1);
 	self.b_clientno = f;
 	self.colormap = f + 1;
 	if (whatbot)
@@ -993,6 +981,9 @@ void(float whichteam, float whatbot, float whatskill) BotConnect =
 	dprint("Adding bot of skill ");
 	dprint(ftos(self.b_skill));
 	dprint(" to the game.\n");
+
+	bot_start_topic(1); // welcome msg
+	self.b_chattime_alt = time + 30 + (random() * 30); // for making sure they don't spam team msgs right away. -whipowill
 
 	if (teamplay) // choose same team on coop! -whipowill
 	{
@@ -1099,6 +1090,7 @@ void(entity bot) BotDisconnect =
    	}
 	self = uself;
 };
+
 /*
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -1318,6 +1310,3 @@ void() BotImpulses =
 
 	self.impulse = 0;
 };
-
-
-

@@ -400,11 +400,7 @@ void() bot_fight_style =
 		{
 			if (teamplay)
 			{
-				if (random() < 0.02)
-				{
-					bot_start_topic(5);
-					self.b_chattime = 1;
-				}
+				bot_start_topic(7); // team chatter
 			}
 			
 			return;

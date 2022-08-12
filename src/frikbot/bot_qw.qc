@@ -284,7 +284,7 @@ void(entity targ, float success) bot_lost;
 string(float r)			BotName;
 float(float v)			frik_anglemod;
 void() bot_chat;
-void(float tpic) bot_start_topic;
+void(float topic) bot_start_topic;
 
 
 // ----------Commands---------
@@ -523,25 +523,6 @@ float () BotPreFrame =
 	if (self.ishuman)
 		if (self.switch_wallhug)
 			ClientFixRankings();
-	if (self.b_frags != self.frags)
-	{
-		if (self.b_frags > self.frags)
-		{
-			if (pointcontents(self.origin) == CONTENT_LAVA)
-				bot_start_topic(10);
-			else
-				bot_start_topic(9);
-		}
-		else
-			bot_start_topic(2);
-		self.b_frags = self.frags;
-		if (!self.ishuman)
-		{
-			WriteByte(2, 14);
-			WriteByte(2, self.b_clientno);
-			WriteShort(2, self.frags);
-		}
-	}
 	DynamicWaypoint();
 	return FALSE;
 };
@@ -793,7 +774,6 @@ void(float whatbot, float whatskill) BotConnect =
 
 	bot_count = bot_count + 1;
 	self = GetClientEntity(f);
-	bot_start_topic(1);
 	self.b_clientno = f;
 	self.colormap = f + 1;
 	if (whatbot)
@@ -819,6 +799,9 @@ void(float whatbot, float whatskill) BotConnect =
 	else
 		active_clients1 = active_clients1 | ClientBitFlag(f);
 	self = uself;
+
+	bot_start_topic(1); // welcome msg
+	self.b_chattime_alt = time + 30 + (random() * 30); // for making sure they don't spam team msgs right away. -whipowill
 };
 
 void(entity bot) BotDisconnect =

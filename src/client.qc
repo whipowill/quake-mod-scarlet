@@ -1665,8 +1665,6 @@ called when a player dies
 */
 void() ClientObituary =
 {
-	if (TeamScoreEndgame(self)) execute_changelevel(); // FRIKBOT - team score integration.
-
 	local	float rnum;
 	local	string deathstring, deathstring2;
 	rnum = random();
@@ -1694,7 +1692,7 @@ void() ClientObituary =
 		*/
 	}
 	
-	if (attacker.deathtype != string_null && attacker.classname != "player" )
+	if (attacker.deathtype != string_null && attacker.classname != "player")
 	{
 		bprint(self.netname);
 		bprint(" ");

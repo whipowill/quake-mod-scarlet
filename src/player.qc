@@ -477,6 +477,9 @@ void() PlayerDie =
 	clientsAlive -= 1;
 
 	ClientObituary();	// moved from Killed() so it doesn't get called when non-players die
+
+	if (ScoreKeeperEndgame()) execute_changelevel(); // FRIKBOT - team score integration.
+
 	set_respawn_delay();	// coop 1 respawn lockout
 	
 	if ((deathmatch || coop) && mapname != "start")

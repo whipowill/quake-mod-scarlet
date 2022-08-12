@@ -165,9 +165,33 @@ void(entity targ, float success) bot_lost =
         else
         {
 		if (targ.classname == "item_artifact_invisibility")
-			if (self.items & 524288)
-				bot_start_topic(3);
-                
+			if (self.items & IT_INVISIBILITY)
+				BotSayTeam(": friendly eyes\n");
+		if (targ.classname == "item_armor1")
+			if (self.items & IT_ARMOR1)
+				//BotSayTeam(": @ green armor\n");
+		if (targ.classname == "item_armor2")
+			if (self.items & IT_ARMOR2)
+				BotSayTeam(": @ yellow armor\n");
+		if (targ.classname == "item_armorInv")
+			if (self.items & IT_ARMOR3)
+				BotSayTeam(": @ red armor\n");
+		if (targ.classname == "item_artifact_invulnerability")
+			if (self.items & IT_INVULNERABILITY)
+				BotSayTeam(": @ pent\n");
+		if (targ.classname == "item_artifact_super_damage")
+			if (self.items & IT_QUAD)
+				BotSayTeam(": @ quad\n");
+		if (targ.classname == "item_artifact_envirosuit")
+			if (self.items & IT_SUIT)
+				BotSayTeam(": @ suit\n");
+		if (targ.classname == "item_health")
+			if (self.health == 200)
+				//BotSayTeam(": @ megahealth\n"); // too unreliable to detect
+		if (targ.classname == "weapon_rocketlauncher")
+			if (self.items & IT_ROCKET_LAUNCHER)
+				BotSayTeam(": @ rocket\n");
+
                 if (targ.flags & FL_ITEM)
                 {
                         if (targ.model == string_null)
@@ -254,7 +278,7 @@ void(entity targ) bot_check_lost =
 				else
 				{
 					self.keys = self.keys & 960;
-					bot_start_topic(4);
+					bot_start_topic(7);
 				}
 				self.search_time = time + searchtime_giveup; // never time out
 			}
@@ -1036,8 +1060,7 @@ void() BotAI =
 		else
 			return;
 	}
-	if (self.view_ofs == '0 0 0')
-		bot_start_topic(7);
+
 	stagger_think = time;
 
 	// shut the bot's buttons off, various functions will turn them on by AI end
@@ -1045,7 +1068,6 @@ void() BotAI =
 	self.button2 = 0;
 	self.button0 = 0;
 	
-
 	// target1_ent is like goalentity in normal Quake monster AI.
 	// it's the bot's most immediate target
 	if (route_table == self)
@@ -1118,9 +1140,33 @@ void() BotAI =
 		}
     	}
 
-	// b_aiflags handling
-	if (self.b_aiflags)
-		bot_handle_ai(); 
-	else
-		bot_chat(); // don't want chat to screw him up if he's rjing or something
+	bot_handle_ai();
+
+	// if deaths door
+	if (self.health < 20 && self.target1_ent.classname != "player")
+		bot_start_topic(4);
+
+	// if victory
+	if (self.b_frags != self.frags) // moved from bot.qc bc did not trigger reliably
+	{
+		if (self.b_frags > self.frags)
+			bot_start_topic(8);
+		else
+			bot_start_topic(3);
+		self.b_frags = self.frags;
+		/*
+		if (!self.ishuman) // if moving to bot_qw.qc then uncomment this
+		{
+			WriteByte(2, 14);
+			WriteByte(2, self.b_clientno);
+			WriteShort(2, self.frags);
+		}
+		*/
+	}
+
+	// if intermission
+	if (self.view_ofs == '0 0 0')
+		bot_start_topic(10);
+
+	bot_chat();
 };

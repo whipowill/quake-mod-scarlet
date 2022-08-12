@@ -16,6 +16,8 @@ frikbot/bot.qc
 frikbot/bot_way.qc
 frikbot/bot_fight.qc
 frikbot/bot_ai.qc
+frikbot/bot_misc_names.qc
+frikbot/bot_misc_quotes.qc
 frikbot/bot_misc.qc
 frikbot/bot_phys.qc
 frikbot/bot_move.qc
@@ -25,7 +27,7 @@ frikbot/nametags.qc // FRIKBOT - nametags
 frikbot/gore.qc // FRIKBOT - gore
 frikbot/football.qc // FRIKBOT - football
 frikbot/corpses.qc // FRIKBOT - corpses
-frikbot/teamscore.qc // FRIKBOT - teamscore
+frikbot/scorekeeper.qc // FRIKBOT - teamscore
 // FRIKBOT - end.
 
 maths.qc
