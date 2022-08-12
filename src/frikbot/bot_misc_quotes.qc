@@ -21,13 +21,13 @@ string quotes_victory[6] = { // only sent if winning
     "pwned!",
     "eat that",
     "too easy",
-    "wh00p",
+    "haha!",
 };
 
 string quotes_deathsdoor[6] = { // only sent if losing
     "almost dead",
-    "need health",
-    "i need help",
+    "low health",
+    "need help",
     "hurt bad",
     "ughh",
     "medic!",
@@ -38,8 +38,8 @@ string quotes_death[6] = { // only sent if losing
     "camper",
     "ouch",
     "hate u",
-    "i suk",
-    "messy",
+    "i suck",
+    ":(",
 };
 
 string quotes_powerup[1] = { // handled individually in bot_ai.qc
@@ -57,7 +57,7 @@ string quotes_team[6] = { // only sent if losing
 
 string quotes_suicide[6] = {
     "my bad",
-    ":(",
+    "i'm awful",
     "afk",
     "whoops",
     "lag",

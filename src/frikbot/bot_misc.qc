@@ -96,10 +96,6 @@ float b_chattime_system;
 // 8 - suicide
 // 9 - ridicule
 // 10 - intermission
-// 13 - response to victories
-// 15 - response to deaths
-// 16 - response to powerups
-// 17 - response to team chatter
 
 void(float topic) bot_start_topic =
 {
@@ -266,6 +262,16 @@ void() bot_chat =
 	else if (b_topic == 9) // ridicule
 	{
 		if (b_originator != self)
+		{
+			r = floor(random() * quotes_ridicule.length);
+			quote = quotes_ridicule[r];
+			if (is_testing) quote = "ridicule";
+			next_topic = 9;
+		}
+	}
+	else if (b_topic == 9.5) // ridicule via telefrag
+	{
+		if (1) // let anyone make fun of it
 		{
 			r = floor(random() * quotes_ridicule.length);
 			quote = quotes_ridicule[r];

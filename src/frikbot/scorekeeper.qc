@@ -26,6 +26,9 @@ float() ScoreKeeperEndgame =
         if (self.enemy.classname == "player")
                 if (self != self.enemy && !self.ishuman)
                         bot_start_topic(5); // death chat
+        if (self.enemy.classname == "teledeath")
+                if (!self.ishuman)
+                        bot_start_topic(9.5); // ridicule chat
 
         // update stats on attacker
         ScoreKeeper(self.enemy);

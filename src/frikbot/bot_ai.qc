@@ -190,7 +190,7 @@ void(entity targ, float success) bot_lost =
 				//BotSayTeam(": @ megahealth\n"); // too unreliable to detect
 		if (targ.classname == "weapon_rocketlauncher")
 			if (self.items & IT_ROCKET_LAUNCHER)
-				BotSayTeam(": @ rocket\n");
+				//BotSayTeam(": @ rocket\n");
 
                 if (targ.flags & FL_ITEM)
                 {
