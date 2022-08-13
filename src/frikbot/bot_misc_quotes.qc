@@ -35,10 +35,10 @@ string quotes_deathsdoor[6] = { // only sent if losing
 
 string quotes_death[6] = { // only sent if losing
     "...",
-    "camper",
+    "camping",
     "ouch",
-    "hate u",
-    "i suck",
+    "lame",
+    "sucks",
     ":(",
 };
 
@@ -51,15 +51,15 @@ string quotes_team[6] = { // only sent if losing
     "this is a beat down",
     "could use some help",
     "getting dominated",
-    "this is abusive",
+    "getting abused",
     "they're too good",
 };
 
 string quotes_suicide[6] = {
     "my bad",
-    "i'm awful",
+    "awful",
     "afk",
-    "whoops",
+    "oops",
     "lag",
     "fail",
 };

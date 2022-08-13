@@ -102,18 +102,12 @@ void(float topic) bot_start_topic =
 	if (!cvar("frikbot_dialogue")) return;
 
 	local float odds;
-	odds = 0.2;
+	odds = 0.3;
 
-	if (topic == 1) odds = 0.8; // connect
+	if (topic == 1) odds = 0.6; // connect
 	if (topic == 2) odds = 0.6; // welcome
-	if (topic == 3) odds = 0.3; // victory
-	if (topic == 4) odds = 0.2; // deathsdoor
-	if (topic == 5) odds = 0.2; // death
-	if (topic == 6) odds = 0.2; // powerup -- not actually used, always triggers from bot_ai.qc
-	if (topic == 7) odds = 0.2; // team
-	if (topic == 8) odds = 0.8; // suicide
+	if (topic == 8) odds = 0.6; // suicide
 	if (topic == 9) odds = 0.6; // ridicule
-	if (topic == 10) odds = 0.2; // intermission
 
 	if (random() < odds)
 	{
@@ -301,10 +295,15 @@ void() bot_chat =
 	{
 		quote = strcat(": ", quote);
 		quote = strcat(quote, "\n");
-		if (quote_is_to_team && teamplay > 0)
-			BotSayTeam(quote);
+		if (quote_is_to_team)
+		{
+			if (teamplay > 0)
+				BotSayTeam(quote);
+		}
 		else
+		{
 			BotSay(quote);
+		}
 
 		// reset the chattime
 		self.b_chattime = time + 2; // player cannot speak
