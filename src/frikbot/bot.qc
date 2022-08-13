@@ -133,157 +133,163 @@ for all variables in the bot...
 
 // ----- entity fields ---
 .float respawn_time;
-.float	wallhug, keys, oldkeys, ishuman;
-.float	b_frags, b_clientno, b_shirt, b_pants; 
-.float	priority, ai_time, b_sound, missile_speed;
-.float	portal_time, b_skill, switch_wallhug;
-.float	b_aiflags, b_num, b_chattime, b_chattime_alt;
-.float	b_menu, b_menu_time, b_menu_value;
+.float wallhug, keys, oldkeys, ishuman;
+.float b_frags, b_clientno, b_shirt, b_pants;
+.float priority, ai_time, b_sound, missile_speed;
+.float portal_time, b_skill, switch_wallhug;
+.float b_aiflags, b_num, b_chattime, b_chattime_alt;
+.float b_menu, b_menu_time, b_menu_value;
 .float route_failed, dyn_flags, dyn_time;
 .float dyn_plat;
-.entity	temp_way, last_way, phys_obj;
-.entity	target1_ent, target2_ent, target3_ent, target4_ent;
-.entity	_next, _last;
-.entity	current_way;
-.vector	b_angle, b_dest, mouse_emu, obs_dir;
-.vector	movevect, b_dir;
+.entity temp_way, last_way, phys_obj;
+.entity target1_ent, target2_ent, target3_ent, target4_ent;
+.entity _next, _last;
+.entity current_way;
+.vector b_angle, b_dest, mouse_emu, obs_dir;
+.vector movevect, b_dir;
 .vector dyn_dest;
 
 // --------defines-----
-float SVC_UPDATENAME	= 13;
-float SVC_UPDATEFRAGS	= 14;
-float SVC_UPDATECOLORS	= 17;
+float SVC_UPDATENAME = 13;
+float SVC_UPDATEFRAGS = 14;
+float SVC_UPDATECOLORS = 17;
 
 // used for the physics & movement AI
-float KEY_MOVEUP 		= 1;
-float KEY_MOVEDOWN 	= 2;
-float KEY_MOVELEFT 	= 4;
-float KEY_MOVERIGHT 	= 8;
-float KEY_MOVEFORWARD	= 16;
-float KEY_MOVEBACK	= 32;
-float KEY_LOOKUP		= 64;
-float KEY_LOOKDOWN	= 128;
-float KEY_LOOKLEFT	= 256;
-float KEY_LOOKRIGHT	= 512;
+float KEY_MOVEUP = 1;
+float KEY_MOVEDOWN = 2;
+float KEY_MOVELEFT = 4;
+float KEY_MOVERIGHT = 8;
+float KEY_MOVEFORWARD = 16;
+float KEY_MOVEBACK = 32;
+float KEY_LOOKUP = 64;
+float KEY_LOOKDOWN = 128;
+float KEY_LOOKLEFT = 256;
+float KEY_LOOKRIGHT = 512;
 
 // these are aiflags for waypoints
 // some overlap to the bot
-float AI_TELELINK_1	= 1; // link type
-float AI_TELELINK_2	= 2; // link type
-float AI_TELELINK_3	= 4; // link type
-float AI_TELELINK_4	= 8; // link type
-float AI_DOORFLAG		= 16; // read ahead
-float AI_PRECISION	= 32; // read ahead + point
-float AI_SURFACE		= 64; // point 
-float AI_BLIND		= 128; // read ahead + point
-float AI_JUMP		= 256; // point + ignore
-float AI_DIRECTIONAL	= 512; // read ahead + ignore
-float AI_PLAT_BOTTOM	= 1024; // read ahead 
-float AI_RIDE_TRAIN	= 2048; // read ahead 
-float AI_SUPER_JUMP	= 4096; // point + ignore + route test
-float AI_SNIPER		= 8192; // point type 
-float AI_AMBUSH		= 16384; // point type
-float AI_DOOR_NO_OPEN	= 32768; // read ahead
-float AI_DIFFICULT	= 65536; // route test
-float AI_TRACE_TEST	= 131072; // route test
+float AI_TELELINK_1 = 1; // link type
+float AI_TELELINK_2 = 2; // link type
+float AI_TELELINK_3 = 4; // link type
+float AI_TELELINK_4 = 8; // link type
+float AI_DOORFLAG = 16; // read ahead
+float AI_PRECISION = 32; // read ahead + point
+float AI_SURFACE = 64; // point
+float AI_BLIND = 128; // read ahead + point
+float AI_JUMP = 256; // point + ignore
+float AI_DIRECTIONAL = 512; // read ahead + ignore
+float AI_PLAT_BOTTOM = 1024; // read ahead
+float AI_RIDE_TRAIN = 2048; // read ahead
+float AI_SUPER_JUMP = 4096; // point + ignore + route test
+float AI_SNIPER = 8192; // point type
+float AI_AMBUSH = 16384; // point type
+float AI_DOOR_NO_OPEN = 32768; // read ahead
+float AI_DIFFICULT = 65536; // route test
+float AI_TRACE_TEST = 131072; // route test
 
 // these are flags for bots/players (dynamic/editor flags)
 float AI_OBSTRUCTED	= 1;
-float AI_HOLD_SELECT	= 2;
-float AI_ROUTE_FAILED	= 2;
-float AI_WAIT		= 4;
-float AI_DANGER		= 8;
+float AI_HOLD_SELECT = 2;
+float AI_ROUTE_FAILED = 2;
+float AI_WAIT = 4;
+float AI_DANGER = 8;
 
 
 // addition masks
-float AI_POINT_TYPES 	= 29152;
-float AI_READAHEAD_TYPES	= 36528;
-float AI_IGNORE_TYPES	= 4864;
+float AI_POINT_TYPES = 29152;
+float AI_READAHEAD_TYPES = 36528;
+float AI_IGNORE_TYPES = 4864;
 
-float WM_UNINIT		= 0;
-float WM_DYNAMIC		= 1;
-float WM_LOADING		= 2;
-float WM_LOADED		= 3;
-float WM_EDITOR		= 4;
+float WM_UNINIT = 0;
+float WM_DYNAMIC = 1;
+float WM_LOADING = 2;
+float WM_LOADED = 3;
+float WM_EDITOR = 4;
 float WM_EDITOR_DYNAMIC	= 5;
 float WM_EDITOR_DYNLINK	= 6;
 
 
-float OPT_SAVEBOTS	= 1;
-float OPT_NOCHAT	= 2;
+float OPT_SAVEBOTS = 1;
+float OPT_NOCHAT = 2;
 
 // -------globals-----
-float 		active_clients;
-float		max_clients, real_frametime;
-float		bot_count, b_options, bot_team0_count, bot_team1_count;
-float		waypoint_mode, dump_mode; 
-float		waypoints, direct_route;
-float		sv_friction, sv_gravity;
-float		sv_accelerate, sv_maxspeed, sv_stopspeed;
-entity	fixer;
-entity	route_table;
-entity	b_temp1, b_temp2, b_temp3;
-entity 	player_head, phys_head, way_head;
-float		busy_waypoints;
-float		saved_bots, saved_skills1, saved_skills2, current_bots;
+float active_clients;
+float max_clients, real_frametime;
+float bot_count, b_options, bot_team0_count, bot_team1_count;
+float waypoint_mode, dump_mode;
+float waypoints, direct_route;
+float sv_friction, sv_gravity;
+float sv_accelerate, sv_maxspeed, sv_stopspeed;
+entity fixer;
+entity route_table;
+entity b_temp1, b_temp2, b_temp3;
+entity player_head, phys_head, way_head;
+float busy_waypoints;
+float saved_bots, saved_skills1, saved_skills2, current_bots;
 float searchtime_giveup = 2; // for tweaking how long it takes to give up -whipowill
 
 // -------ProtoTypes------
 // external
-void()				ClientConnect;
-void()				ClientDisconnect;
-void()				SetNewParms;
+void() ClientConnect;
+void() ClientDisconnect;
+void() SetNewParms;
 
 // rankings
-float(float clientno)		ClientBitFlag;
-float()				ClientNextAvailable;
+float(float clientno) ClientBitFlag;
+float() ClientNextAvailable;
 void(float whichteam, float whatbot, float whatskill) BotConnect;
-void(entity bot)			BotDisconnect;
-void(float clientno)		BotInvalidClientNo;
-void(entity who)			UpdateClient;
+void(entity bot) BotDisconnect;
+void(float clientno) BotInvalidClientNo;
+void(entity who) UpdateClient;
 
 // waypointing
-void()				DynamicWaypoint;
-entity(vector org)		make_waypoint;
-void()				ClearAllWays;
-void()				FixWaypoints;
-float()				begin_route;
-void(entity this, float direct)			bot_get_path;
-void()				WaypointThink;
-entity(entity start)				FindWayPoint;
+void() DynamicWaypoint;
+entity(vector org) make_waypoint;
+void() ClearAllWays;
+void() FixWaypoints;
+float() begin_route;
+void(entity this, float direct) bot_get_path;
+void() WaypointThink;
+entity(entity start) FindWayPoint;
 
 // physics & movement
-float(entity e)			bot_can_rj;
-void()				bot_jump;
-void()				frik_bot_roam;
-float(vector weird)		frik_walkmove;
-void()				frik_movetogoal;
-void()				frik_obstacles;
-float(float flag)			frik_recognize_plat;
-float(vector sdir)		frik_KeysForDir;
+float(entity e) bot_can_rj;
+void() bot_jump;
+void() frik_bot_roam;
+float(vector weird) frik_walkmove;
+void() frik_movetogoal;
+void() frik_obstacles;
+float(float flag) frik_recognize_plat;
+float(vector sdir) frik_KeysForDir;
 void(vector whichway, float danger) frik_obstructed;
-void()				SV_Physics_Client;
-void()				SV_ClientThink;
-void() 				CL_KeyMove;
+void() SV_Physics_Client;
+void() SV_ClientThink;
+void() CL_KeyMove;
 
 // ai & misc
-string()				PickARandomName;
-float(entity targ)		fov;
-float(float y1, float y2)	angcomp;
-float(entity targ1, entity targ2)		wisible;
-float(entity targ)		sisible;
-float(entity targ)		fisible;
-vector(entity ent)		realorigin;
-void(entity ent)			target_ent_drop;
-void(entity ent)			target_ent_add;
-void()				KickABot;
-void()				BotImpulses;
+string() PickARandomName;
+float(entity targ) fov;
+float(float y1, float y2) angcomp;
+float(entity targ1, entity targ2) wisible;
+float(entity targ) sisible;
+float(entity targ) fisible;
+vector(entity ent) realorigin;
+void(entity ent) target_ent_drop;
+void(entity ent) target_ent_add;
+void() KickABot;
+void() BotImpulses;
 void(entity targ, float success) bot_lost;
-string(float r)			BotName;
-float(float v)			frik_anglemod;
+string(float r) BotName;
+float(float v) frik_anglemod;
 void() bot_chat;
 void(float topic) bot_start_topic;
 
+// scorekeeper
+float() ScoreKeeperEndgame;
+void(string name) ScoreKeeperRemovePlayer;
+float(float rankkey, string roster_type) ScoreKeeperFragsForRank;
+float(entity player) ScoreKeeper;
+float(entity player) AmIWinning;
 
 // editor stuffs
 

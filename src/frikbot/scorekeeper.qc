@@ -244,15 +244,12 @@ float(entity player) ScoreKeeper =
         return ScoreKeeperFragsForRank(0, "score_player_rank");
 };
 
-float(entity player, float num_of_players) AmIWinning =
+float(entity player) AmIWinning =
 {
-        if (self.enemy.classname != "player") return FALSE;
-
         // This is used for dialogue between the bots,
         // I want them to get depressed if they're losing
         // and prideful if they're winning.
 
-        local string t;
         local float i;
         local float is_winning = FALSE;
 
@@ -275,19 +272,18 @@ float(entity player, float num_of_players) AmIWinning =
                 // for testing
                 if (cvar("frikbot_testing"))
                 {
-                        t = "TESTING -- ";
-                        t = strcat(t, player.netname);
-                        t = strcat(t, " team (#");
-                        t = strcat(t, ftos(player.team));
-                        t = strcat(t, ") is rank ");
-                        t = strcat(t, ftos(team_rank+1));
-                        t = strcat(t, "/");
-                        t = strcat(t, ftos(num_of_teams));
-                        t = strcat(t, " (");
-                        t = strcat(t, ftos(is_winning));
-                        t = strcat(t, ")");
-                        t = strcat(t, "\n");
-                        bprint(t);
+                        bprint("TESTING -- ");
+                        bprint(player.netname);
+                        bprint(" team (#");
+                        bprint(ftos(player.team));
+                        bprint(") is rank ");
+                        bprint(ftos(team_rank+1));
+                        bprint("/");
+                        bprint(ftos(num_of_teams));
+                        bprint(" (");
+                        bprint(ftos(is_winning));
+                        bprint(")");
+                        bprint("\n");
                 }
 
                 // are you in the top half?
@@ -315,23 +311,28 @@ float(entity player, float num_of_players) AmIWinning =
                 }
         }
 
+        // calc num of players
+        local float num_of_players = 0;
+        for (i=0; i<16; i++)
+                if (score_player_roster[i].name != "")
+                        num_of_players++;
+
         if ((player_rank+1) <= (num_of_players/2))
                 is_winning = TRUE;
 
         // for testing
         if (cvar("frikbot_testing"))
         {
-                t = "TESTING -- ";
-                t = strcat(t, player.netname);
-                t = strcat(t, " is rank ");
-                t = strcat(t, ftos(player_rank+1));
-                t = strcat(t, "/");
-                t = strcat(t, ftos(num_of_players));
-                t = strcat(t, " (");
-                t = strcat(t, ftos(is_winning));
-                t = strcat(t, ")");
-                t = strcat(t, "\n");
-                bprint(t);
+                bprint("TESTING -- ");
+                bprint(player.netname);
+                bprint(" is rank ");
+                bprint(ftos(player_rank+1));
+                bprint("/");
+                bprint(ftos(num_of_players));
+                bprint(" (");
+                bprint(ftos(is_winning));
+                bprint(")");
+                bprint("\n");
         }
 
         // return

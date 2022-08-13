@@ -106,7 +106,7 @@ void(float topic) bot_start_topic =
 
 	if (topic == 1) odds = 0.8; // connect
 	if (topic == 2) odds = 0.6; // welcome
-	if (topic == 3) odds = 0.4; // victory
+	if (topic == 3) odds = 0.3; // victory
 	if (topic == 4) odds = 0.2; // deathsdoor
 	if (topic == 5) odds = 0.2; // death
 	if (topic == 6) odds = 0.2; // powerup -- not actually used, always triggers from bot_ai.qc
@@ -132,7 +132,7 @@ void() bot_chat =
 	// if no chat allowed
 	if (b_options & OPT_NOCHAT)
 		return;
-	
+
 	if (b_chattime_system > time || self.b_chattime > time || b_topic < 1)
 		return;
 	if (self.b_chattime_alt > time && (b_topic == 4 || b_topic == 7)) // alt topics are spammy topics, deathsdoor and team
@@ -151,7 +151,7 @@ void() bot_chat =
 	local float next_topic = 0;
 
 	// determine if bot is winning or losing
-	local float is_winning = AmIWinning(self, clients); // pass num of clients, needed for player rank
+	local float is_winning = AmIWinning(self); // pass num of clients, needed for player rank
 
 	// for testing easily
 	local float is_testing = cvar("frikbot_testing");
@@ -310,7 +310,7 @@ void() bot_chat =
 		self.b_chattime = time + 2; // player cannot speak
 
 		if (b_topic == 4 || b_topic == 7)
-			self.b_chattime_alt = time + 30 + (random() * 30); // player cannot speak re: alternative topics (spammy topics)
+			self.b_chattime_alt = time + 60 + (random() * 60); // player cannot speak re: alternative topics (spammy topics)
 
 		if (b_topic == 10)
 			b_chattime_system = time + 2; // nobody can speak
