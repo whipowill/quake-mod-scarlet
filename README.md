@@ -2,7 +2,7 @@
 
 A Quake mod for adding multiplayer bots and new configuration options to the game.
 
-This mod started as a merger of [Copper](http://lunaran.com/copper/) and [FrikBot](https://www.moddb.com/mods/frikbot-x).  I've spent the last several months fixing bugs and adding new features to create a game w/ on-demand high-wire multiplayer, blood-bathing gore, and configurable weapons.
+This mod begins as a merger of [Copper](http://lunaran.com/copper/) and [FrikBot](https://www.moddb.com/mods/frikbot-x).  I've spent the last several months fixing bugs and adding new features to create a game w/ on-demand high-wire multiplayer, blood-bathing gore, and configurable weapons.
 
 ### Features
 
@@ -12,7 +12,7 @@ This mod started as a merger of [Copper](http://lunaran.com/copper/) and [FrikBo
 - **Weapons Rebalance** - tweak the game how you want it w/ configurable weapon damage values
 - **Item Resupply** - force items to respawn in singleplayer and coop games
 - **Score Keeper** - play teamplay games that combine scores to achieve fraglimit
-- **Name Tags** - see other player's names on screen Halo-style when aiming at them
+- **Name Tags** - see other player's names on screen when aiming at them
 
 ## Install
 
