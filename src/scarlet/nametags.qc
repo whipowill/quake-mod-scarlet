@@ -13,7 +13,7 @@
 // meant to be called every frame (ie in PlayerPreThink)
 void() NameTag=
 {
-    if (!cvar("frikbot_nametags")) return;
+    if (!cvar("scarlet_nametags")) return;
 
     local vector source;
     local float has_invis;

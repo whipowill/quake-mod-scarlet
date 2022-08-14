@@ -57,8 +57,8 @@ void(string gibname, float dm) ThrowHead =
 	self.nextthink = -1;
 	self.movetype = MOVETYPE_BOUNCE;
 	self.takedamage = DAMAGE_NO;
-	self.solid = SOLID_TRIGGER; // FRIKBOT - football integration.
-	self.touch = KickGibs; // FRIKBOT - football integration.
+	self.solid = SOLID_TRIGGER; // SCARLET - football integration.
+	self.touch = KickGibs; // SCARLET - football integration.
 	self.view_ofs = '0 0 8';
 	setsize (self, '-16 -16 0', '16 16 56');
 	self.velocity += GibVelocityForHealth(dm);
@@ -77,14 +77,14 @@ void(string headmdl, float dm) GibSpray =
 	ThrowGib ("progs/gib2.mdl", dm);
 	ThrowGib ("progs/gib3.mdl", dm);
 
-	// FRIKBOT - gore integration.
-	if (cvar("frikbot_gore"))
+	// SCARLET - gore integration.
+	if (cvar("scarlet_gore"))
 	{
 		ThrowGib ("progs/gib1.mdl", dm);
 		ThrowGib ("progs/gib2.mdl", dm);
 		ThrowGib ("progs/gib3.mdl", dm);
 	}
-	// FRIKBOT - end.
+	// SCARLET - end.
 	
 	if (self.classname != "player")
 	{
@@ -135,8 +135,8 @@ SpawnBlood
 */
 void(vector org, vector vel, float damage) SpawnBlood =
 {
-	// FRIKBOT - gore integration.
-	if (cvar("frikbot_gore"))
+	// SCARLET - gore integration.
+	if (cvar("scarlet_gore"))
 	{
 		particle (org, vel*0.1, 79, damage*1);
 		particle (org, vel*0.2, 74, damage*5);
@@ -146,7 +146,7 @@ void(vector org, vector vel, float damage) SpawnBlood =
 	{
 		particle (org, vel*0.1, 73, damage*2);
 	}
-	// FRIKBOT - end.
+	// SCARLET - end.
 }
 
 //============================================================================

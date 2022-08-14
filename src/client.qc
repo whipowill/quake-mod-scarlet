@@ -68,7 +68,7 @@ void() SetChangeParms =
 
 void() SetNewParms =
 {
-	if (skill == 3 && !deathmatch) // FRIKBOT - error fix.
+	if (skill == 3 && !deathmatch) // SCARLET - error fix.
 		parm2 = 50;
 	else
 		parm2 = 100;
@@ -449,7 +449,7 @@ entity() SelectSpawnPoint =
 	
 	if (deathmatch)
 	{
-		return RandomSpawnLocation(); // FRIKBOT - bots integration.
+		return RandomSpawnLocation(); // SCARLET - bots integration.
 
 		/*
 		spot = lastspawn;
@@ -530,7 +530,7 @@ void() PutClientInServer =
 	self.classname = "player";
 	
 	// new for nightmare: reduced max health instead of the manky attack time scale
-	if (skill == 3 && !deathmatch) // FRIKBOT - error fix.
+	if (skill == 3 && !deathmatch) // SCARLET - error fix.
 		self.max_health = 50;
 	else
 		self.max_health = 100;
@@ -1422,9 +1422,9 @@ Called every frame before physics are run
 */
 void() PlayerPreThink =
 {
-	if (BotPreFrame()) return; // FRIKBOT - bots integration.
+	if (BotPreFrame()) return; // SCARLET - bots integration.
 
-	NameTag(); // FRIKBOT - nametags integration.
+	NameTag(); // SCARLET - nametags integration.
 
 	if (cleanUpClientShit)
 	{
@@ -1505,7 +1505,7 @@ Called every frame after physics are run
 */
 void() PlayerPostThink =
 {
-	if (BotPostFrame())	return; // FRIKBOT - bots integration.
+	if (BotPostFrame())	return; // SCARLET - bots integration.
 
 	if ( intermission_running ) return;
 	
@@ -1601,7 +1601,7 @@ called when a player connects to a server
 */
 void() ClientConnect =
 {
-	ClientInRankings(); // FRIKBOT - bots integration.
+	ClientInRankings(); // SCARLET - bots integration.
 
 	bprint (self.netname);
 	bprint (" entered the game\n");
@@ -1624,7 +1624,7 @@ called when a player disconnects from a server
 */
 void() ClientDisconnect =
 {
-	ClientDisconnected(); // FRIKBOT - bots integration.
+	ClientDisconnected(); // SCARLET - bots integration.
 
 	if (gameover)
 		return;

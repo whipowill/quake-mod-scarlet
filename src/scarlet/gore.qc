@@ -52,7 +52,7 @@ void() SplatTouch =
 
 void(vector dir, vector org, entity own, float damage) ThrowBloodSplat =
 {
-        if (!cvar("frikbot_gore")) return;
+        if (!cvar("scarlet_gore")) return;
 
         local entity splat;
 

@@ -400,7 +400,7 @@ void(entity e, vector min, vector max) setsize = #4;
 // #5 was removed
 void() break						= #6;
 float() random						= #7;		// returns 0 - 1
-// FRIKBOT OVERRIDE void(entity e, float chan, string samp, float vol, float atten) sound = #8;
+// SCARLET OVERRIDE void(entity e, float chan, string samp, float vol, float atten) sound = #8;
 vector(vector v) normalize			= #9;
 void(string e) error				= #10;
 void(string e) objerror				= #11;
@@ -422,10 +422,10 @@ entity() checkclient				= #17;	// returns a client to look for
 entity(entity start, .string fld, string match) find = #18;
 string(string s) precache_sound		= #19;
 string(string s) precache_model		= #20;
-// FRIKBOT OVERRIDE void(entity client, string s)stuffcmd = #21;
+// SCARLET OVERRIDE void(entity client, string s)stuffcmd = #21;
 entity(vector org, float rad) findradius = #22; // findradius only works on solid entities
 void(string s) bprint				= #23;
-// FRIKBOT OVERRIDE void(entity client, string s) sprint = #24;
+// SCARLET OVERRIDE void(entity client, string s) sprint = #24;
 void(string s) dprint				= #25;
 string(float f) ftos				= #26;
 string(vector v) vtos				= #27;
@@ -448,7 +448,7 @@ float(entity e) checkbottom			= #40;		// true if self is on ground
 float(vector v) pointcontents		= #41;		// returns a CONTENT_*
 // #42 was removed
 float(float f) fabs = #43;
-// FRIKBOT OVERRIDE vector(entity e, float speed) aim = #44;		// returns the shooting vector
+// SCARLET OVERRIDE vector(entity e, float speed) aim = #44;		// returns the shooting vector
 float(string s) cvar = #45;						// return cvar.value
 void(string s) localcmd = #46;					// put string into local que
 entity(entity e) nextent = #47;					// for looping through all ents
@@ -459,14 +459,14 @@ void() ChangeYaw = #49;						// turn towards self.ideal_yaw
 vector(vector v) vectoangles			= #51;
 
 // direct client message generation
-// FRIKBOT OVERRIDE void(float to, float f) WriteByte		= #52;
-// FRIKBOT OVERRIDE void(float to, float f) WriteChar		= #53;
-// FRIKBOT OVERRIDE void(float to, float f) WriteShort		= #54;
-// FRIKBOT OVERRIDE void(float to, float f) WriteLong		= #55;
-// FRIKBOT OVERRIDE void(float to, float f) WriteCoord		= #56;
-// FRIKBOT OVERRIDE void(float to, float f) WriteAngle		= #57;
-// FRIKBOT OVERRIDE void(float to, string s) WriteString	= #58;
-// FRIKBOT OVERRIDE void(float to, entity s) WriteEntity	= #59;
+// SCARLET OVERRIDE void(float to, float f) WriteByte		= #52;
+// SCARLET OVERRIDE void(float to, float f) WriteChar		= #53;
+// SCARLET OVERRIDE void(float to, float f) WriteShort		= #54;
+// SCARLET OVERRIDE void(float to, float f) WriteLong		= #55;
+// SCARLET OVERRIDE void(float to, float f) WriteCoord		= #56;
+// SCARLET OVERRIDE void(float to, float f) WriteAngle		= #57;
+// SCARLET OVERRIDE void(float to, string s) WriteString	= #58;
+// SCARLET OVERRIDE void(float to, entity s) WriteEntity	= #59;
 
 // broadcast client message generation
 // void(float f) bWriteByte		= #59;
@@ -488,7 +488,7 @@ void(string s) changelevel = #70;
 
 void(string var, string val) cvar_set = #72;	// sets cvar.value
 
-// FRIKBOT OVERRIDE void(entity client, string s) centerprint = #73;	// sprint, but in middle
+// SCARLET OVERRIDE void(entity client, string s) centerprint = #73;	// sprint, but in middle
 void(entity client, string s, string s) centerprint2 = #73;	// sprint, but in middle
 void(entity client, string s, string s, string s) centerprint3 = #73;	// sprint, but in middle
 void(entity client, string s, string s, string s, string s) centerprint4 = #73;	// sprint, but in middle
@@ -500,7 +500,7 @@ string(string s) precache_model2	= #75;		// registered version only
 string(string s) precache_sound2	= #76;		// registered version only
 string(string s) precache_file2		= #77;		// registered version only
 
-// FRIKBOT OVERRIDE void(entity e) setspawnparms		= #78;		// set parm1... to the
+// SCARLET OVERRIDE void(entity e) setspawnparms		= #78;		// set parm1... to the
 												// values at level start
 												// for coop respawn
 

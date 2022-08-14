@@ -99,7 +99,7 @@ float b_chattime_system;
 
 void(float topic) bot_start_topic =
 {
-	if (!cvar("frikbot_dialogue")) return;
+	if (!cvar("scarlet_dialogue")) return;
 
 	local float odds;
 	odds = 0.3;
@@ -148,7 +148,7 @@ void() bot_chat =
 	local float is_winning = AmIWinning(self); // pass num of clients, needed for player rank
 
 	// for testing easily
-	local float is_testing = cvar("frikbot_testing");
+	local float is_testing = cvar("scarlet_testing");
 
 	if (b_topic == 1) // connect
 	{

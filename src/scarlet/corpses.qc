@@ -30,7 +30,7 @@ void() CorpseDie =
 void() BecomeCorpse =
 {
         // if gore is turned off, or this is copper...
-        if (!cvar("frikbot_corpses"))
+        if (!cvar("scarlet_corpses"))
         {
                 self.solid = SOLID_NOT;
                 return;

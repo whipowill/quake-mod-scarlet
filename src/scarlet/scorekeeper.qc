@@ -40,7 +40,7 @@ float() ScoreKeeperEndgame =
         local float fraglimit = cvar("fraglimit");
 
         // if conditions
-        if (cvar("frikbot_teamscores") && coop < 1 && deathmatch > 0 && teamplay > 0 && fraglimit > 0 && maxscore >= fraglimit)
+        if (cvar("scarlet_teamscores") && coop < 1 && deathmatch > 0 && teamplay > 0 && fraglimit > 0 && maxscore >= fraglimit)
                 return TRUE;
 
         // return
@@ -253,7 +253,7 @@ float(entity player) AmIWinning =
         local float i;
         local float is_winning = FALSE;
 
-        local float is_testing = cvar("frikbot_testing");
+        local float is_testing = cvar("scarlet_testing");
 
         // if teams
         if (teamplay > 0)
@@ -270,7 +270,7 @@ float(entity player) AmIWinning =
                         is_winning = TRUE;
 
                 // for testing
-                if (cvar("frikbot_testing"))
+                if (cvar("scarlet_testing"))
                 {
                         bprint("TESTING -- ");
                         bprint(player.netname);
@@ -321,7 +321,7 @@ float(entity player) AmIWinning =
                 is_winning = TRUE;
 
         // for testing
-        if (cvar("frikbot_testing"))
+        if (cvar("scarlet_testing"))
         {
                 bprint("TESTING -- ");
                 bprint(player.netname);

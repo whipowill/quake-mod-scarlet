@@ -148,14 +148,14 @@ void() spike_touch =
 			spawn_touchblood (self.dmg);
 			T_Damage (other, self, self.trueowner, self.dmg);
 
-			// FRIKBOT - gore integration.
+			// SCARLET - gore integration.
 			if (random() < 0.8)
 			{
 		        self.angles_x = self.angles_x*-1;
 		        makevectors(self.angles);
 		        ThrowBloodSplat(v_forward, self.origin, other, self.dmg);
 			}
-			// FRIKBOT - end.
+			// SCARLET - end.
 		}
 		else
 		{

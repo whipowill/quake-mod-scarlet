@@ -51,7 +51,7 @@ void() W_Precache =
 	precache_model ("progs/v_light.mdl");
 
 
-	precache_model ("progs/zom_gib.mdl"); // FRIKBOT - gore integration.
+	precache_model ("progs/zom_gib.mdl"); // SCARLET - gore integration.
 }
 
 

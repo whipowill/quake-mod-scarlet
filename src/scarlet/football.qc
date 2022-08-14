@@ -7,7 +7,7 @@
 
 void() KickGibs =
 {
-    if (!cvar("frikbot_football")) return;
+    if (!cvar("scarlet_football")) return;
 
     local vector v;
 

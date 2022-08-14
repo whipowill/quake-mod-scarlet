@@ -49,7 +49,7 @@ void() T_MissileExplode =
 	// don't do radius damage to other, because all damage will be done in the impact
 	T_RadiusDamage (self, self.trueowner, 120, other);
 
-	ThrowBloodSplatByExplosion(self, 120); // FRIKBOT - gore integration.
+	ThrowBloodSplatByExplosion(self, 120); // SCARLET - gore integration.
 }
 
 void() T_MissileTouch =
@@ -108,7 +108,7 @@ void() GrenadeExplode =
 	T_RadiusDamage (self, self.trueowner, 120, world);
 	//T_GibDownedZombies (self, 120);
 
-	ThrowBloodSplatByExplosion(self, 120); // FRIKBOT - gore integration.
+	ThrowBloodSplatByExplosion(self, 120); // SCARLET - gore integration.
 	
 	BecomeExplosion ();
 }

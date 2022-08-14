@@ -208,7 +208,7 @@ void() worldspawn =
 	lastspawn = world;
 	startingserverflags = serverflags;
 
-	BotInit(); // FRIKBOT - bots integration.
+	BotInit(); // SCARLET - bots integration.
 	
 	InitBodyQueue ();
 	InitLightStyles();	// moved to lights.qc
@@ -345,7 +345,7 @@ void() worldspawn =
 
 void() StartFrame =
 {
-	BotFrame();	// FRIKBOT - bots integration.
+	BotFrame();	// SCARLET - bots integration.
 
 	teamplay = cvar("teamplay");
 	skill = cvar("skill");
@@ -423,8 +423,8 @@ void() InitBodyQueue =
 // respawned elsewhere
 void(entity ent) CopyToBodyQueue =
 {
-	bodyqueue_head.touch = ent.touch; // FRIKBOT - football integration.
-	bodyqueue_head.solid = ent.solid; // FRIKBOT - football integration.
+	bodyqueue_head.touch = ent.touch; // SCARLET - football integration.
+	bodyqueue_head.solid = ent.solid; // SCARLET - football integration.
 	bodyqueue_head.angles = ent.angles;
 	bodyqueue_head.model = ent.model;
 	bodyqueue_head.modelindex = ent.modelindex;
