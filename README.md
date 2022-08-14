@@ -1,15 +1,15 @@
 # Scarlet
 
-A mod for playing Quake w/ multiplayer bots and additional configuration options.
+A Quake mod for adding multiplayer bots and new configuration options to the game.
 
-This mod is for me, to play the game how I want to play it.  What started off as tinkering w/ some old bot code has become something a little more.  At it's core, this mod is a merger of [Copper](http://lunaran.com/copper/) and [FrikBot](https://www.moddb.com/mods/frikbot-x).  I've spent the last several months fixing bugs and adding new features to create a game w/ on-demand high-wire multiplayer, blood-bathing gore, and configurable weapons.
+This mod started as a merger of [Copper](http://lunaran.com/copper/) and [FrikBot](https://www.moddb.com/mods/frikbot-x).  I've spent the last several months fixing bugs and adding new features to create a game w/ on-demand high-wire multiplayer, blood-bathing gore, and configurable weapons.
 
 ### Features
 
 - **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.19)
-- **Multiplayer Bots** - add killer bots to both deathmatch and coop games
-- **Blood & Gore** - bathe in the blood of your enemies and kick their head for laughs
-- **Weapons Config** - tweak the game how you want it w/ configurable weapon damage values
+- **Multiplayer Bots** - add killer bots to deathmatch, teamplay, and coop games
+- **Blood & Gore** - bathe in the blood of your enemies and kick their heads for laughs
+- **Weapons Rebalance** - tweak the game how you want it w/ configurable weapon damage values
 - **Item Resupply** - force items to respawn in singleplayer and coop games
 - **Score Keeper** - play teamplay games that combine scores to achieve fraglimit
 - **Name Tags** - see other player's names on screen Halo-style when aiming at them
@@ -17,9 +17,9 @@ This mod is for me, to play the game how I want to play it.  What started off as
 ## Install
 
 - Find your Quake install directory
-- Download this [zipfile](https://github.com/whipowill/quake-mod-scarlet/archive/master.zip) and unzip to your ``quake/scarlet/`` folder
-- Make sure your ``quake/id1/maps`` folder has all your map files
-- Make sure your ``quake/id1/maps`` folder has all your [waypoint](https://github.com/whipowill/quake-mod-frikbot-waypoints) files
+- Download this [zipfile](https://github.com/whipowill/quake-mod-scarlet/archive/master.zip) and unzip to your ``/quake/scarlet/`` folder
+- Make sure your ``/quake/id1/maps/`` folder has all your map files
+- Make sure your ``/quake/id1/maps/`` folder has all your [waypoint](https://github.com/whipowill/quake-mod-frikbot-waypoints) files
 - Run the game w/ ``-particles 16384`` in the target to increase the number of particles allowed
 
 See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory.
@@ -77,7 +77,6 @@ Reference the included ``instructions.html`` file from FrikaC for detailed infor
 - Chat system has been completely overhauled (new feature)
     - Deathmatch bots now know if they are losing and become depressed
     - Team bots now report when they pickup important items
-- New score keeper function that opens door for achievements! (upcoming)
 
 ## Credits
 
