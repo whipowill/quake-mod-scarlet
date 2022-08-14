@@ -29,7 +29,7 @@ string quotes_deathsdoor[6] = { // only sent if losing
     "low health",
     "need help",
     "hurt bad",
-    "ughh",
+    "dyin here",
     "medic!",
 };
 
@@ -37,8 +37,8 @@ string quotes_death[6] = { // only sent if losing
     "...",
     "camping",
     "ouch",
-    "lame",
-    "sucks",
+    "ow!",
+    "i$uk",
     ":(",
 };
 
@@ -51,13 +51,13 @@ string quotes_team[6] = { // only sent if losing
     "this is a beat down",
     "could use some help",
     "getting dominated",
-    "getting abused",
+    "not looking good for us",
     "they're too good",
 };
 
 string quotes_suicide[6] = {
-    "my bad",
-    "awful",
+    "oof",
+    "shame",
     "afk",
     "oops",
     "lag",
@@ -84,7 +84,7 @@ string quotes_intermission_positive[6] = {
 
 string quotes_intermission_negative[6] = {
     "gg",
-    "lol",
+    "sad",
     "cya",
     "i'm out",
     "later",
