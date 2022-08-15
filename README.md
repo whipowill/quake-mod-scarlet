@@ -1,6 +1,8 @@
 # Scarlet
 
-A Quake mod for adding multiplayer bots and new configuration options to the game.
+A Quake mod for adding bots, blood, guts, and gore to the game.
+
+[![Watch the video](https://i.imgur.com/7Ok5q1W.png)](https://mega.nz/file/eypwhI5T#6MTGhIC4wFgXIdBggrOp-2D5p_DsSWMhi471RW9gCtk)
 
 This mod begins as a merger of [Copper](http://lunaran.com/copper/) and [FrikBot](https://www.moddb.com/mods/frikbot-x).  I've spent the last several months fixing bugs and adding new features to create a game w/ on-demand high-wire multiplayer, blood-bathing gore, and configurable weapons.
 
@@ -9,7 +11,7 @@ This mod begins as a merger of [Copper](http://lunaran.com/copper/) and [FrikBot
 - **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.19)
 - **Multiplayer Bots** - add killer bots to deathmatch, teamplay, and coop games
 - **Blood & Gore** - bathe in the blood of your enemies and kick their heads for laughs
-- **Weapons Rebalance** - tweak the game how you want it w/ configurable weapon damage values
+- **Weapons Balance** - find the perfect balance w/ configurable weapon damage values
 - **Item Resupply** - force items to respawn in singleplayer and coop games
 - **Score Keeper** - play teamplay games that combine scores to achieve fraglimit
 - **Name Tags** - see other player's names on screen when aiming at them
@@ -46,6 +48,10 @@ Control the following features using cvars in your ``autoexec.cfg`` file:
 - ``scarlet_dmg_nails`` - set the damage done by nails (default is ``9``)
 - ``scarlet_dmg_rockets`` - set the damage done by rockets (default is ``120``)
 - ``scarlet_dmg_cells`` - set the damage done by lightning (default is ``30``)
+- ``scarlet_ammo_bullets`` - set the ammo consuption of bullets (default is ``1``)
+- ``scarlet_ammo_nails`` - set the ammo consuption of nails (default is ``1``)
+- ``scarlet_ammo_rockets`` - set the ammo consuption of rockets (default is ``1``)
+- ``scarlet_ammo_cells`` - set the ammo consuption of cells (default is ``1``)
 
 ## Usage
 
