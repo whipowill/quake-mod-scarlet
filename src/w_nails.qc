@@ -45,7 +45,7 @@ void() W_FireNailgun =
 	makevectors( v );
 
 	sound (self, CHAN_WEAPON, "weapons/rocket1i.wav", 1, ATTN_NORM);
-	self.currentammo = self.ammo_nails = self.ammo_nails - 1;
+	self.currentammo = self.ammo_nails = self.ammo_nails - cvar("scarlet_ammo_nails"); // was 1, SCARLET - custom ammo integration.
 	m = VEC_ORIGIN;
 	if ( mod( self.cnt, 2 ) ) m_x = -2.5;
 	else m_x = 2.5;	
@@ -65,7 +65,7 @@ void() W_FirePerforator =
 {
 	vector m;
 	sound (self, CHAN_WEAPON, "weapons/spike2.wav", 1, ATTN_NORM);
-	self.currentammo = self.ammo_nails = self.ammo_nails - 2;
+	self.currentammo = self.ammo_nails = self.ammo_nails - (cvar("scarlet_ammo_nails") * 2); // was 2, SCARLET - custom ammo integration.
 	
 	if (mod(self.cnt, 4) == 0) m = '0 0 1.25';
 	else if (mod(self.cnt, 4) == 1) m = '1 0 1';

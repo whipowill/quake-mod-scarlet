@@ -90,19 +90,83 @@ T_Damage (trace_ent, self, self, cvar("scarlet_dmg_axe")); // was 24, SCARLET - 
 In ``w_shotguns.qc``:
 
 ```
-local float calc = (cvar("scarlet_dmg_bullets")/2)+(cvar("scarlet_dmg_bullets")/2*random());
-BulletImpact (calc, direction); // was 2+2*random(), SCARLET - custom dmg integration.
+void(float shotcount, vector dir, vector spread) FireBullets =
+{
+    ...
+    for (s = 0; s < shotcount; s++)
+    {
+        ...
+        // check for trace-through cases
+        for (ig = self; ig != world; lim++) // ig == world if we hit a wall or hit nothing
+        {
+            ...
+            if (trace_ent.takedamage &&
+                (trace_ent.flags & FL_MONSTER || trace_ent.classname == "player" ) &&
+                // some id shootables are actually trigger_multiples with health and SOLID_BBOX, so this doesn't work (see e1m6):
+                //( trace_ent.solid == SOLID_BBOX || trace_ent.solid == SOLID_SLIDEBOX ) &&
+                HasBeenShotToDeath(trace_ent) )
+            {
+                local float calc = (cvar("scarlet_dmg_bullets")/2)+(cvar("scarlet_dmg_bullets")/2*random());
+                BulletImpact (calc, direction); // was 2+2*random(), SCARLET - custom dmg integration.
+                ...
+            }
+            ...
+        }
+
+        if (trace_fraction != 1.0)
+        {
+            BulletImpact (cvar("scarlet_dmg_bullets"), direction); // was 4, SCARLET - custom dmg integration.
+        }
+        ...
+    }
+}
 ...
-BulletImpact (cvar("scarlet_dmg_bullets"), direction); // was 4, SCARLET - custom dmg integration.
+void() W_FireShotgun =
+{
+    ...
+    self.currentammo = self.ammo_shells = self.ammo_shells - cvar("scarlet_ammo_bullets"); // was 1, SCARLET - custom ammo integration.
+    ...
+}
+...
+void() W_FireSuperShotgun =
+{
+    ...
+    self.currentammo = self.ammo_shells = self.ammo_shells - (cvar("scarlet_ammo_bullets") * 2); // was 2, SCARLET - custom ammo integration.
+    ...
+}
 ```
 
 In ``w_nails.qc``:
 
 ```
-spike2.dmg = cvar("scarlet_dmg_nails")*2; // SCARLET - custom dmg integration.
-spike1.dmg = cvar("scarlet_dmg_nails")*2; // SCARLET - custom dmg integration.
-spike2.buddy = spike1;
-spike1.buddy = spike2;
+void() W_FireNailgun =
+{
+    vector m, v, org, dir;
+    // remember sv_aim
+    v = vectoangles( aim( self, AUTOAIM_DIST ) );
+    v_x *= -1;  // pitch comes back inverted from vectoangles :|
+    makevectors( v );
+
+    sound (self, CHAN_WEAPON, "weapons/rocket1i.wav", 1, ATTN_NORM);
+    self.currentammo = self.ammo_nails = self.ammo_nails - cvar("scarlet_ammo_nails"); // was 1, SCARLET - custom ammo integration.
+    ...
+}
+...
+void() W_FirePerforator =
+{
+    ...
+    self.currentammo = self.ammo_nails = self.ammo_nails - (cvar("scarlet_ammo_nails") * 2); // was 2, SCARLET - custom ammo integration.
+    ...
+
+    if (has_quad(self))
+    {
+        ...
+        spike2.dmg = cvar("scarlet_dmg_nails")*2; // SCARLET - custom dmg integration.
+        spike1.dmg = cvar("scarlet_dmg_nails")*2; // SCARLET - custom dmg integration.
+        ...
+    }
+    ...
+}
 ```
 
 In ``w_rockets.qc``:
@@ -113,19 +177,21 @@ void() T_MissileExplode =
     local float damg;
     damg = cvar("scarlet_dmg_rockets") - 20 + random()*20; // was 100, SCARLET - custom dmg integration.
     
-    if (other.health)
-    {
-        if (other.classname == "monster_shambler")
-            damg = damg * 0.5;
-        if (other.type == "zombie")
-            damg = max(damg, other.health + 25);    // so ogre rockets kill zombies despite being too weak
-        T_Damage (other, self, self.trueowner, damg );
-    }
+    ...
 
     // don't do radius damage to other, because all damage will be done in the impact
     T_RadiusDamage (self, self.trueowner, cvar("scarlet_dmg_rockets"), other); // was 120, SCARLET - custom dmg integration.
 
     ThrowBloodSplatByExplosion(self, cvar("scarlet_dmg_rockets")); // SCARLET - gore integration.
+}
+...
+void() W_FireRocket =
+{
+    local entity missile;
+    local vector loc;
+
+    self.currentammo = self.ammo_rockets = self.ammo_rockets - cvar("scarlet_ammo_rockets"); // was 1, SCARLET - custom ammo integration.
+    ...
 }
 ...
 void() GrenadeExplode =
@@ -137,12 +203,27 @@ void() GrenadeExplode =
     
     BecomeExplosion ();
 }
+...
+void() W_FireGrenade =
+{
+    entity g;
+    float base;
+    vector gvel;
+
+    self.currentammo = self.ammo_rockets = self.ammo_rockets - cvar("scarlet_ammo_rockets"); // was 1, SCARLET - custom ammo integration.
+    ...
+}
 ```
 
 In ``w_lightning.qc``:
 
 ```
-ClearMultiDamage();
-LightningBeam(org, trace_endpos + v_forward * 8, self, cvar("scarlet_dmg_cells")); // was 30, SCARLET - custom dmg integration.
-ApplyMultiDamage();
+void() W_FireLightning =
+{
+    ...
+    self.currentammo = self.ammo_cells = self.ammo_cells - cvar("scarlet_ammo_cells"); // was 1, SCARLET - custom ammo integration.
+    ...
+    ClearMultiDamage();
+    LightningBeam(org, trace_endpos + v_forward * 8, self, cvar("scarlet_dmg_cells")); // was 30, SCARLET - custom dmg integration.
+    ApplyMultiDamage();
 ```
