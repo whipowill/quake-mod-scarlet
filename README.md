@@ -39,7 +39,7 @@ Control the following features using cvars in your ``autoexec.cfg`` file:
 - ``scarlet_dialogue``- enable random comments from bots in the game (``0`` or ``1``)
 - ``scarlet_resupply`` - force items to respawn on singleplayer and coop (``0`` or ``1``)
 - ``scarlet_respawn`` - force bots to wait before respawning after they die (anything >= ``0``)
-- ``scarlet_teamscores`` - combine team mates scores to achieve ``fraglimit`` in ``teamplay`` (``0`` or ``1``)
+- ``scarlet_teamscores`` - combine team mates scores to achieve fraglimit (``0`` or ``1``)
 - ``scarlet_nametags`` - display player names on screen when aiming at them (``0`` or ``1``)
 - ``scarlet_gore`` - make enemies bleed when hit from direct or blast damage (``0`` or ``1``)
 - ``scarlet_football`` - make enemy heads kickable like a football (``0`` or ``1``)
@@ -48,10 +48,10 @@ Control the following features using cvars in your ``autoexec.cfg`` file:
 - ``scarlet_dmg_nails`` - set the damage done by nails (default is ``9``)
 - ``scarlet_dmg_rockets`` - set the damage done by rockets (default is ``120``)
 - ``scarlet_dmg_cells`` - set the damage done by lightning (default is ``30``)
-- ``scarlet_ammo_bullets`` - set the ammo consuption of bullets (default is ``1``)
-- ``scarlet_ammo_nails`` - set the ammo consuption of nails (default is ``1``)
-- ``scarlet_ammo_rockets`` - set the ammo consuption of rockets (default is ``1``)
-- ``scarlet_ammo_cells`` - set the ammo consuption of cells (default is ``1``)
+- ``scarlet_ammo_bullets`` - set the ammo consumption of bullets (default is ``1``)
+- ``scarlet_ammo_nails`` - set the ammo consumption of nails (default is ``1``)
+- ``scarlet_ammo_rockets`` - set the ammo consumption of rockets (default is ``1``)
+- ``scarlet_ammo_cells`` - set the ammo consumption of cells (default is ``1``)
 
 ## Usage
 
