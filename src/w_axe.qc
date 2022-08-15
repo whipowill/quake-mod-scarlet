@@ -92,8 +92,8 @@ void() W_FireAxe =
 		if (trace_ent.takedamage)
 		{
 			trace_ent.customflags = trace_ent.customflags | CFL_AXEHITME;
-			SpawnBlood (org, '0 0 0', 20);
-			T_Damage (trace_ent, self, self, 24);
+			SpawnBlood (org, '0 0 0', cvar("scarlet_dmg_axe")); // was 20, SCARLET - custom dmg integration
+			T_Damage (trace_ent, self, self, cvar("scarlet_dmg_axe")); // was 24, SCARLET - custom dmg integration.
 			
 			if (trace_ent.flags & FL_MONSTER)
 			{

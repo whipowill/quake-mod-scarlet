@@ -70,7 +70,7 @@ entity(vector org, vector vel) launch_rocket =
     entity missile;
     
     missile = launch_projectile(org, vel, "rocket");    // FLYMISSILE
-    missile.dmg = cvar("scarlet_dmg_nails"); // was 100, SCARLET - custom dmg integration.
+    missile.dmg = cvar("scarlet_dmg_rockets"); // was 100, SCARLET - custom dmg integration.
     missile.touch = T_MissileTouch;
     missile.type = "missile";
     

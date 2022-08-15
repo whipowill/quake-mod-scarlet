@@ -325,7 +325,7 @@ void() W_FireLightning =
 	traceline2(org, org + v_forward * 720, self, TRACE_NOMONSTERS);
 
 	ClearMultiDamage();
-	LightningBeam(org, trace_endpos + v_forward * 8, self, 30);
+	LightningBeam(org, trace_endpos + v_forward * 8, self, cvar("scarlet_dmg_cells")); // was 30, SCARLET - custom dmg integration.
 	ApplyMultiDamage();
 	
 /*	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);

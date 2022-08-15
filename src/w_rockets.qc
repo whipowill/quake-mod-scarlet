@@ -35,7 +35,7 @@ void(vector org, float rad) T_GibDownedZombies =
 void() T_MissileExplode =
 {
 	local float	damg;
-	damg = 100 + random()*20;
+	damg = cvar("scarlet_dmg_rockets"); // was 100, SCARLET - custom dmg integration.
 	
 	if (other.health)
 	{
@@ -47,9 +47,9 @@ void() T_MissileExplode =
 	}
 
 	// don't do radius damage to other, because all damage will be done in the impact
-	T_RadiusDamage (self, self.trueowner, 120, other);
+	T_RadiusDamage (self, self.trueowner, cvar("scarlet_dmg_rockets"), other); // was 120, SCARLET - custom dmg integration.
 
-	ThrowBloodSplatByExplosion(self, 120); // SCARLET - gore integration.
+    ThrowBloodSplatByExplosion(self, cvar("scarlet_dmg_rockets")); // SCARLET - gore integration.
 }
 
 void() T_MissileTouch =
@@ -105,10 +105,10 @@ GERNADES
 
 void() GrenadeExplode =
 {
-	T_RadiusDamage (self, self.trueowner, 120, world);
-	//T_GibDownedZombies (self, 120);
+	T_RadiusDamage (self, self.trueowner, cvar("scarlet_dmg_rockets"), world); // was 120, SCARLET - custom dmg integration.
+    //T_GibDownedZombies (self, cvar("scarlet_dmg_rockets"));
 
-	ThrowBloodSplatByExplosion(self, 120); // SCARLET - gore integration.
+    ThrowBloodSplatByExplosion(self, cvar("scarlet_dmg_rockets")); // SCARLET - gore integration.
 	
 	BecomeExplosion ();
 }

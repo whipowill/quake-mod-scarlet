@@ -93,8 +93,8 @@ void() W_FirePerforator =
 		
 		// the dumb solution is to make one nail do 0 dmg and the other do 18 in quad mode
 		//   so the math works out like the old math and the quad SNG still feels right
-		spike2.dmg = 18;
-		spike1.dmg = 18;
+		spike2.dmg = cvar("scarlet_dmg_nails")*2; // SCARLET - custom dmg integration.
+		spike1.dmg = cvar("scarlet_dmg_nails")*2; // SCARLET - custom dmg integration.
 		spike2.buddy = spike1;
 		spike1.buddy = spike2;
 		// first one to hit does its damage and then nerfs its 'buddy'
