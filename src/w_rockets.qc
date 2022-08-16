@@ -35,7 +35,7 @@ void(vector org, float rad) T_GibDownedZombies =
 void() T_MissileExplode =
 {
 	local float	damg;
-	damg = cvar("scarlet_dmg_rockets"); // was 100, SCARLET - custom dmg integration.
+    damg = cvar("scarlet_dmg_rockets") - ((cvar("scarlet_dmg_rockets")/5) + random()*(cvar("scarlet_dmg_rockets")/5)); // was 100, SCARLET - custom dmg integration.
 	
 	if (other.health)
 	{

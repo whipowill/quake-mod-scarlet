@@ -175,7 +175,7 @@ In ``w_rockets.qc``:
 void() T_MissileExplode =
 {
     local float damg;
-    damg = cvar("scarlet_dmg_rockets") - 20 + random()*20; // was 100, SCARLET - custom dmg integration.
+    damg = cvar("scarlet_dmg_rockets") - ((cvar("scarlet_dmg_rockets")/5) + random()*(cvar("scarlet_dmg_rockets")/5)); // was 100, SCARLET - custom dmg integration.
     
     ...
 
