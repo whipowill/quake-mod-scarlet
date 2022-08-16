@@ -11,7 +11,7 @@ This mod begins as a merger of [Copper](http://lunaran.com/copper/) and [FrikBot
 - **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.19)
 - **Multiplayer Bots** - add killer bots to deathmatch, teamplay, and coop games
 - **Blood & Gore** - bathe in the blood of your enemies and kick their heads for laughs
-- **Weapons Balance** - find the perfect balance w/ configurable weapon damage
+- **Weapons Balance** - find the perfect balance w/ [configurable](https://github.com/whipowill/quake-dir/tree/master/scarlet/settings) weapon damage
 - **Item Resupply** - force items to respawn in singleplayer and coop games
 - **Score Keeper** - play teamplay games that combine scores to achieve fraglimit
 - **Name Tags** - see other player's names on screen when aiming at them
