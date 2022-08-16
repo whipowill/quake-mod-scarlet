@@ -84,6 +84,7 @@ Reference the included ``instructions.html`` file from FrikaC for detailed infor
 - Chat system has been completely overhauled (new feature)
     - Deathmatch bots now know if they are losing and become depressed
     - Team bots now report when they pickup important items
+- Bots can now teleport to your location in coop (new feature)
 
 ## Credits
 
