@@ -9,6 +9,7 @@ typedef struct
         string name;
         float frags;
         float team;
+        entity player;
 } playerkeep;
 playerkeep score_player_roster[16]; // index of player names and scores
 float score_player_rank[8]; // player ranks where key is rank and value is roster index key (only tracking up to 8 players)
@@ -57,6 +58,7 @@ void(string name) ScoreKeeperRemovePlayer =
                         score_player_roster[i].name = "",
                         score_player_roster[i].frags = 0;
                         score_player_roster[i].team = -1;
+                        score_player_roster[i].player = world;
                 }
         }
 };
@@ -81,7 +83,7 @@ float(float rankkey, string roster_type) ScoreKeeperFragsForRank =
 
 float(entity player) ScoreKeeper =
 {
-        if (self.enemy.classname != "player") return 0;
+        //if (self.enemy.classname != "player") return 0;
 
         // We're always going to track team ranks and player ranks
         // bc the server may swap settings on midgame and we don't
@@ -104,6 +106,7 @@ float(entity player) ScoreKeeper =
                 score_player_roster[playerkey].name = player.netname;
                 score_player_roster[playerkey].frags = player.frags;
                 score_player_roster[playerkey].team = player.team;
+                score_player_roster[playerkey].player = player; // should be store by reference
         }
 
         // reset player ranks
@@ -337,4 +340,23 @@ float(entity player) AmIWinning =
 
         // return
         return is_winning;
+};
+
+void() ScoreKeeperList =
+{
+        // this is for testing and debugging
+        bprint("Scorekeeper list of tracked players.\n");
+
+        local float i;
+        for (i=0; i<16; i++)
+        {
+                if (score_player_roster[i].name && score_player_roster[i].name != "")
+                {
+                        bprint("SCOREKEEPER -- ");
+                        bprint(score_player_roster[i].name);
+                        bprint(" - ");
+                        bprint(ftos(score_player_roster[i].frags));
+                        bprint("\n");
+                }
+        }
 };

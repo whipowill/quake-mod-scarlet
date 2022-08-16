@@ -337,7 +337,6 @@ void() KickABot =
 	{
 		if (!(ty.ishuman))
 		{
-			
 			BotDisconnect(ty);
 			ty.ishuman = TRUE;
 			ty = world;
@@ -345,7 +344,6 @@ void() KickABot =
 		else
 			ty = find(ty, classname, "player");
 	}
-
 };
 
 

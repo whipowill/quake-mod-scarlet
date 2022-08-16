@@ -155,3 +155,27 @@ entity() RandomSpawnLocation =
         }
         */
 };
+
+float tele_tome_timer; // for limiting how often this can be used
+void() TeleBotsToMe =
+{
+        if (!coop) return;
+
+        if (tele_tome_timer > time) return;
+
+        centerprint(self, "Bringing old friends back together...");
+
+        local float i;
+        local entity player;
+
+        for (i=0; i<16; i++)
+        {
+                if (score_player_roster[i].name && score_player_roster[i].name != "")
+                {
+                        player = score_player_roster[i].player;
+                        teleport(player, self, 1, 0);
+                }
+        }
+
+        tele_tome_timer = time + 60;
+};

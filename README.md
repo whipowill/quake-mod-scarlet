@@ -62,12 +62,13 @@ Control bots via the console:
 - ``deathmatch 1`` - turn on deathmatch mode (``1`` or ``0``)
 - ``coop 0`` - turn on coop mode (``1`` or ``0``)
 - ``impulse 100`` - add a bot to the game
-- ``impulse 110`` - add a bot to the game of random skill level (up to ``skill``)
 - ``impulse 101`` - add a bot to the other team
-- ``impulse 110`` - add a bot to the other team of random skill level (up to ``skill``)
 - ``impulse 102`` - remove most recently added bot
 - ``impulse 103`` - spectate other players
-- ``impulse 104`` - enter dev mode for editing waypoints (must run game w/ ``-condebug``)
+- ``impulse 104`` - enter dev mode for editing waypoints
+- ``impulse 110`` - add a bot to the game of random skill level (up to ``skill``)
+- ``impulse 111`` - add a bot to the other team of random skill level (up to ``skill``)
+- ``impulse 113`` - teleport bots to your location in coop (only once per minute)
 
 Reference the included ``instructions.html`` file from FrikaC for detailed information about the bots.
 

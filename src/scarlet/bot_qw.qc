@@ -286,13 +286,6 @@ float(float v)			frik_anglemod;
 void() bot_chat;
 void(float topic) bot_start_topic;
 
-// scorekeeper
-float() ScoreKeeperEndgame;
-void(string name) ScoreKeeperRemovePlayer;
-float(float rankkey, string roster_type) ScoreKeeperFragsForRank;
-float(entity player) ScoreKeeper;
-float(entity player) AmIWinning;
-
 
 // ----------Commands---------
 void(entity e, float chan, string samp, float vol, float atten) frik_sound = #8;

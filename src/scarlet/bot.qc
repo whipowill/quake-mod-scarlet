@@ -284,13 +284,6 @@ float(float v) frik_anglemod;
 void() bot_chat;
 void(float topic) bot_start_topic;
 
-// scorekeeper
-float() ScoreKeeperEndgame;
-void(string name) ScoreKeeperRemovePlayer;
-float(float rankkey, string roster_type) ScoreKeeperFragsForRank;
-float(entity player) ScoreKeeper;
-float(entity player) AmIWinning;
-
 // editor stuffs
 
 void()				bot_way_edit;
@@ -594,6 +587,9 @@ void() ClientFixRankings =
 
 void() ClientInRankings =
 {
+	// add to scorekeeper
+	ScoreKeeper(self); // whipowill
+
 	local float cno;
 
    	cno = self.colormap - 1;
@@ -628,6 +624,9 @@ void() ClientInRankings =
 
 void() ClientDisconnected =
 {
+	// remove from scorekeeper
+	ScoreKeeperRemovePlayer(self.netname); // whipowill
+
 	if (player_head == self)
 		player_head = self._next;
 	if (self._next)
@@ -636,9 +635,6 @@ void() ClientDisconnected =
 		self._last._next = self._next;
 
 	active_clients = active_clients - active_clients & ClientBitFlag(self.b_clientno);
-
-	// remove from scorekeeper
-	ScoreKeeperRemovePlayer(self.netname); // -whipowill
 };
 
 /*
@@ -1216,7 +1212,8 @@ void() WaypointWatch =
 	{
 		// the bots return!
 		b_options = cvar("saved1");
-		if (coop || (b_options & OPT_SAVEBOTS))
+		//if (coop || (b_options & OPT_SAVEBOTS))
+		if ((b_options & OPT_SAVEBOTS)) // remove coop condition for bots sticking around -whipowill
 		{
 			saved_bots = cvar("scratch1");
 			saved_skills1 = cvar("scratch2");
@@ -1293,6 +1290,12 @@ void() BotImpulses =
 		f = cvar("skill");
 		BotConnect(1, 0, f);
 	}
+	else if (self.impulse == 102)
+		KickABot();
+	else if (self.impulse == 103)
+		botcam_u();
+	else if (self.impulse == 104)
+		bot_way_edit();
 	if (self.impulse == 110) // random team bot -whipowill
 	{
 		f = cvar("skill");
@@ -1305,12 +1308,14 @@ void() BotImpulses =
 		f = ceil(random() * f);
 		BotConnect(1, 0, f);
 	}
-	else if (self.impulse == 102)
-		KickABot();
-	else if (self.impulse == 103)
-		botcam_u();
-	else if (self.impulse == 104)
-		bot_way_edit();
+	else if (self.impulse == 113) // tele bots to player in coop -whipowill
+	{
+		TeleBotsToMe();
+	}
+	else if (self.impulse == 114) // list all the scorekeeper entities -whipowill
+	{
+		ScoreKeeperList();
+	}
 	else
 		return;
 
