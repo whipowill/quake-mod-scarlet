@@ -146,7 +146,7 @@ void() W_FireShotgun =
 	self.punchangle_x = -2;
 	makevectors(self.v_angle);
 	
-	self.currentammo = self.ammo_shells = self.ammo_shells - cvar("scarlet_ammo_bullets"); // was 1, SCARLET - custom ammo integration.
+	self.currentammo = self.ammo_shells = self.ammo_shells - cvar("scarlet_dec_bullets"); // was 1, SCARLET - custom ammo integration.
 	dir = aim (self, AUTOAIM_DIST);
 
 	ClearMultiDamage ();
@@ -184,7 +184,7 @@ void() W_FireSuperShotgun =
 
 	self.punchangle_x = -4;
 	
-	self.currentammo = self.ammo_shells = self.ammo_shells - (cvar("scarlet_ammo_bullets") * 2); // was 2, SCARLET - custom ammo integration.
+	self.currentammo = self.ammo_shells = self.ammo_shells - (cvar("scarlet_dec_bullets") * 2); // was 2, SCARLET - custom ammo integration.
 	dir = aim (self, AUTOAIM_DIST);
 
 	ClearMultiDamage ();

@@ -22,7 +22,7 @@ This mod begins as a merger of [Copper](http://lunaran.com/copper/) and [FrikBot
 - Download this [zipfile](https://github.com/whipowill/quake-mod-scarlet/archive/master.zip) and unzip to your ``/quake/scarlet/`` folder
 - Make sure your ``/quake/id1/maps/`` folder has all your map files
 - Make sure your ``/quake/id1/maps/`` folder has all your [waypoint](https://github.com/whipowill/quake-mod-frikbot-waypoints) files
-- Run the game w/ ``-particles 16384`` in the target to increase the number of particles allowed
+- Run the game w/ ``-game scarlet -particles 16384 -listen 16 -condebug``
 
 See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory.
 
@@ -48,10 +48,10 @@ Control the following features using cvars in your ``autoexec.cfg`` file:
 - ``scarlet_dmg_nails`` - set the damage done by nails (default is ``9``)
 - ``scarlet_dmg_rockets`` - set the damage done by rockets (default is ``120``)
 - ``scarlet_dmg_cells`` - set the damage done by lightning (default is ``30``)
-- ``scarlet_ammo_bullets`` - set the ammo consumption of bullets (default is ``1``)
-- ``scarlet_ammo_nails`` - set the ammo consumption of nails (default is ``1``)
-- ``scarlet_ammo_rockets`` - set the ammo consumption of rockets (default is ``1``)
-- ``scarlet_ammo_cells`` - set the ammo consumption of cells (default is ``1``)
+- ``scarlet_dec_bullets`` - set the ammo consumption of bullets (default is ``1``)
+- ``scarlet_dec_nails`` - set the ammo consumption of nails (default is ``1``)
+- ``scarlet_dec_rockets`` - set the ammo consumption of rockets (default is ``1``)
+- ``scarlet_dec_cells`` - set the ammo consumption of cells (default is ``1``)
 
 ## Usage
 

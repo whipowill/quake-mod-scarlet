@@ -319,7 +319,7 @@ void() W_FireLightning =
 	}
 	self.punchangle_x = -2;
 
-	self.currentammo = self.ammo_cells = self.ammo_cells - cvar("scarlet_ammo_cells"); // was 1, SCARLET - custom ammo integration.
+	self.currentammo = self.ammo_cells = self.ammo_cells - cvar("scarlet_dec_cells"); // was 1, SCARLET - custom ammo integration.
 	org = self.origin + '0 0 16'+ v_forward * 8;
 	
 	traceline2(org, org + v_forward * 720, self, TRACE_NOMONSTERS);

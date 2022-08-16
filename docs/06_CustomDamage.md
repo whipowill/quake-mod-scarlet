@@ -124,14 +124,14 @@ void(float shotcount, vector dir, vector spread) FireBullets =
 void() W_FireShotgun =
 {
     ...
-    self.currentammo = self.ammo_shells = self.ammo_shells - cvar("scarlet_ammo_bullets"); // was 1, SCARLET - custom ammo integration.
+    self.currentammo = self.ammo_shells = self.ammo_shells - cvar("scarlet_dec_bullets"); // was 1, SCARLET - custom ammo integration.
     ...
 }
 ...
 void() W_FireSuperShotgun =
 {
     ...
-    self.currentammo = self.ammo_shells = self.ammo_shells - (cvar("scarlet_ammo_bullets") * 2); // was 2, SCARLET - custom ammo integration.
+    self.currentammo = self.ammo_shells = self.ammo_shells - (cvar("scarlet_dec_bullets") * 2); // was 2, SCARLET - custom ammo integration.
     ...
 }
 ```
@@ -148,14 +148,14 @@ void() W_FireNailgun =
     makevectors( v );
 
     sound (self, CHAN_WEAPON, "weapons/rocket1i.wav", 1, ATTN_NORM);
-    self.currentammo = self.ammo_nails = self.ammo_nails - cvar("scarlet_ammo_nails"); // was 1, SCARLET - custom ammo integration.
+    self.currentammo = self.ammo_nails = self.ammo_nails - cvar("scarlet_dec_nails"); // was 1, SCARLET - custom ammo integration.
     ...
 }
 ...
 void() W_FirePerforator =
 {
     ...
-    self.currentammo = self.ammo_nails = self.ammo_nails - (cvar("scarlet_ammo_nails") * 2); // was 2, SCARLET - custom ammo integration.
+    self.currentammo = self.ammo_nails = self.ammo_nails - (cvar("scarlet_dec_nails") * 2); // was 2, SCARLET - custom ammo integration.
     ...
 
     if (has_quad(self))
@@ -190,7 +190,7 @@ void() W_FireRocket =
     local entity missile;
     local vector loc;
 
-    self.currentammo = self.ammo_rockets = self.ammo_rockets - cvar("scarlet_ammo_rockets"); // was 1, SCARLET - custom ammo integration.
+    self.currentammo = self.ammo_rockets = self.ammo_rockets - cvar("scarlet_dec_rockets"); // was 1, SCARLET - custom ammo integration.
     ...
 }
 ...
@@ -210,7 +210,7 @@ void() W_FireGrenade =
     float base;
     vector gvel;
 
-    self.currentammo = self.ammo_rockets = self.ammo_rockets - cvar("scarlet_ammo_rockets"); // was 1, SCARLET - custom ammo integration.
+    self.currentammo = self.ammo_rockets = self.ammo_rockets - cvar("scarlet_dec_rockets"); // was 1, SCARLET - custom ammo integration.
     ...
 }
 ```
@@ -221,7 +221,7 @@ In ``w_lightning.qc``:
 void() W_FireLightning =
 {
     ...
-    self.currentammo = self.ammo_cells = self.ammo_cells - cvar("scarlet_ammo_cells"); // was 1, SCARLET - custom ammo integration.
+    self.currentammo = self.ammo_cells = self.ammo_cells - cvar("scarlet_dec_cells"); // was 1, SCARLET - custom ammo integration.
     ...
     ClearMultiDamage();
     LightningBeam(org, trace_endpos + v_forward * 8, self, cvar("scarlet_dmg_cells")); // was 30, SCARLET - custom dmg integration.

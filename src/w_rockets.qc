@@ -80,7 +80,7 @@ void() W_FireRocket =
 	local entity missile;
 	local vector loc;
 	
-	self.currentammo = self.ammo_rockets = self.ammo_rockets - cvar("scarlet_ammo_rockets"); // was 1, SCARLET - custom ammo integration.
+	self.currentammo = self.ammo_rockets = self.ammo_rockets - cvar("scarlet_dec_rockets"); // was 1, SCARLET - custom ammo integration.
 	
 	sound (self, CHAN_WEAPON, "weapons/sgun1.wav", 1, ATTN_NORM);
 
@@ -140,7 +140,7 @@ void() W_FireGrenade =
 	float base;
 	vector gvel;
 	
-	self.currentammo = self.ammo_rockets = self.ammo_rockets - cvar("scarlet_ammo_rockets"); // was 1, SCARLET - custom ammo integration.
+	self.currentammo = self.ammo_rockets = self.ammo_rockets - cvar("scarlet_dec_rockets"); // was 1, SCARLET - custom ammo integration.
 	sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
 	self.punchangle_x = -2;
 
