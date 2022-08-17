@@ -4,16 +4,16 @@ A Quake mod for adding bots, blood, guts, and gore to the game.
 
 [![Watch the video](https://i.imgur.com/EVb4OjN.png)](https://mega.nz/file/eypwhI5T#6MTGhIC4wFgXIdBggrOp-2D5p_DsSWMhi471RW9gCtk)
 
-### Features
+## Features
 
 - **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.19)
 - **Multiplayer Bots** - add killer bots to deathmatch, teamplay, and coop games
 - **Blood & Gore** - bathe in the blood of your enemies and kick their heads for laughs
 - **Weapons Balance** - find the perfect balance w/ configurable weapon damage
 - **Item Resupply** - force items to respawn in singleplayer and coop games
-- **Score Keeper** - play teamplay games that combine scores to achieve fraglimit
 - **Name Tags** - see other player's names on screen when aiming at them
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
+- **Score Keeper** - play teamplay games that combine scores to achieve fraglimit
 
 ## Install
 
@@ -27,7 +27,7 @@ See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded 
 
 ### Recommended
 
-A companion mod you may also want to install:
+Some companion mods you may also want to install:
 
 - [HUD](https://github.com/whipowill/quake-mod-hud) - a client-side mod that adds custom HUD layouts and team scoreboards
 - [Right Handed Weapons](https://www.moddb.com/games/quake/addons/quake-right-handed-weapons) - a pak file that gives you right-handed weapon models
@@ -37,12 +37,13 @@ A companion mod you may also want to install:
 Control the following features using cvars in your ``autoexec.cfg`` file:
 
 - ``scarlet_dialogue``- enable random comments from bots in the game (``0`` or ``1``)
-- ``scarlet_resupply`` - force items to respawn on singleplayer and coop (``0`` or ``1``)
-- ``scarlet_respawn`` - force bots to wait before respawning after they die (anything >= ``0``)
-- ``scarlet_teamscores`` - combine team mates scores to achieve fraglimit (``0`` or ``1``)
-- ``scarlet_nametags`` - display player names on screen when aiming at them (``0`` or ``1``)
-- ``scarlet_gore`` - make enemies bleed when hit from direct or blast damage (``0`` or ``1``)
 - ``scarlet_football`` - make enemy heads kickable like a football (``0`` or ``1``)
+- ``scarlet_footsteps``- enable footstep sounds for players (``0`` or ``1``)
+- ``scarlet_gore`` - make enemies bleed when hit from direct or blast damage (``0`` or ``1``)
+- ``scarlet_nametags`` - display player names on screen when aiming at them (``0`` or ``1``)
+- ``scarlet_respawn`` - force bots to wait before respawning after they die (anything >= ``0``)
+- ``scarlet_resupply`` - force items to respawn on singleplayer and coop (``0`` or ``1``)
+- ``scarlet_teamscores`` - combine team mates scores to achieve fraglimit (``0`` or ``1``)
 - ``scarlet_dmg_axe`` - set the damage done by axes (default is ``24``)
 - ``scarlet_dmg_bullets`` - set the damage done by bullets (default is ``4``)
 - ``scarlet_dmg_nails`` - set the damage done by nails (default is ``9``)
