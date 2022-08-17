@@ -4,8 +4,6 @@ A Quake mod for adding bots, blood, guts, and gore to the game.
 
 [![Watch the video](https://i.imgur.com/EVb4OjN.png)](https://mega.nz/file/eypwhI5T#6MTGhIC4wFgXIdBggrOp-2D5p_DsSWMhi471RW9gCtk)
 
-The core of this mod is a merge of [Copper](http://lunaran.com/copper/) and [FrikBot](https://www.moddb.com/mods/frikbot-x).  I've spent the last several months fixing bugs and adding new features to create a game w/ on-demand high-intensity multiplayer, blood-bathing gore, and configurable weapons.
-
 ### Features
 
 - **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.19)
