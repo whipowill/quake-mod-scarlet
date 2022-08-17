@@ -11,10 +11,11 @@ The core of this mod is a merge of [Copper](http://lunaran.com/copper/) and [Fri
 - **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.19)
 - **Multiplayer Bots** - add killer bots to deathmatch, teamplay, and coop games
 - **Blood & Gore** - bathe in the blood of your enemies and kick their heads for laughs
-- **Weapons Balance** - find the perfect balance w/ [configurable](https://github.com/whipowill/quake-dir/tree/master/scarlet/settings) weapon damage
+- **Weapons Balance** - find the perfect balance w/ configurable weapon damage
 - **Item Resupply** - force items to respawn in singleplayer and coop games
 - **Score Keeper** - play teamplay games that combine scores to achieve fraglimit
 - **Name Tags** - see other player's names on screen when aiming at them
+- **Foot Steps** - hear your boots touch the ground as you stalk your prey
 
 ## Install
 
@@ -31,7 +32,7 @@ See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded 
 A companion mod you may also want to install:
 
 - [HUD](https://github.com/whipowill/quake-mod-hud) - a client-side mod that adds custom HUD layouts and team scoreboards
-- [RH Weapons](https://www.moddb.com/games/quake/addons/quake-right-handed-weapons) - a pak file that gives you right-handed weapon models
+- [Right Handed Weapons](https://www.moddb.com/games/quake/addons/quake-right-handed-weapons) - a pak file that gives you right-handed weapon models
 
 ## Options
 
@@ -96,6 +97,7 @@ Reference the included ``instructions.html`` file from FrikaC for detailed infor
 - Original corpse gibbing code by [Kryten](https://www.insideqc.com/qctut/qctut-33.shtml)
 - Original head kicking code by [Ivana](http://www.insideqc.com/qctut/lesson-52.shtml)
 - Original enemy bleeding code by [Maniac](https://www.insideqc.com/qctut/qctut-47.shtml)
+- Original footsteps code by [Seven](https://www.quakewiki.net/quake-1/mods/footsteps-pack/)
 
 ## External Links
 

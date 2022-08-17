@@ -245,6 +245,15 @@ void() worldspawn =
 	precache_sound ("misc/h2ohit1.wav");		// landing splash
 
 	// player sounds
+	precache_sound ("walk/generic1.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/generic2.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/generic3.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/generic4.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/generic5.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/metal1.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/metal2.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/metal3.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/metal4.wav"); // SCARLET - footstep integration.
 	precache_sound ("items/itembk2.wav");		// item respawn sound
 	precache_sound ("player/plyrjmp8.wav");		// player jump
 	precache_sound ("player/land.wav");			// player landing

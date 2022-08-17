@@ -22,12 +22,13 @@ scarlet/bot_misc.qc
 scarlet/bot_phys.qc
 scarlet/bot_move.qc
 scarlet/bot_ed.qc
-scarlet/spawn.qc // SCARLET - random spawn locations
-scarlet/nametags.qc // SCARLET - nametags
-scarlet/gore.qc // SCARLET - gore
-scarlet/football.qc // SCARLET - football
 scarlet/corpses.qc // SCARLET - corpses
+scarlet/football.qc // SCARLET - football
+scarlet/footsteps.qc // SCARLET - footsteps
+scarlet/gore.qc // SCARLET - gore
+scarlet/nametags.qc // SCARLET - nametags
 scarlet/scorekeeper.qc // SCARLET - teamscore
+scarlet/spawn.qc // SCARLET - random spawn locations
 // SCARLET - end.
 
 maths.qc

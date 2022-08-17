@@ -98,6 +98,14 @@ void()	player_run =[	$rockrun1,	player_run	]
 			self.walkframe = 0;
 		self.frame = self.frame + self.walkframe;
 	}
+
+	// SCARLET - footsteps integration.
+    if (self.walkframe == 1 || self.walkframe == 4 )
+		if (checkbottom(self) == TRUE)
+			if (self.waterlevel == 0)
+				WalkSound (self);
+    // SCARLET - end.
+
 	self.walkframe = self.walkframe + 1;
 }
 

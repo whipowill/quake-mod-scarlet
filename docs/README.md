@@ -28,7 +28,7 @@ Everything else in the bot programming is about the particulars of navigating ta
 
 ## Integration Notes
 
-The process for hooking into Copper, for when I have to do it again.
+The process for hooking into Copper, for when I have to do it again:
 
 - Load Order
 - Definitions
@@ -39,6 +39,7 @@ The process for hooking into Copper, for when I have to do it again.
 - Score Keeper
 - Name Tags
 - Blood & Gore
+- Footsteps
 
 ## Special Thanks
 
