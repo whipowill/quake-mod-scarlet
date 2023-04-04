@@ -53,7 +53,7 @@ Control the following features using cvars in your ``autoexec.cfg`` file:
 - ``scarlet_dec_nails`` - set the ammo consumption of nails (default is ``1``)
 - ``scarlet_dec_rockets`` - set the ammo consumption of rockets (default is ``1``)
 - ``scarlet_dec_cells`` - set the ammo consumption of cells (default is ``1``)
-- ``scarlet_autoswitch`` - set if the game will autoswitch weapons (default is ``1``)
+- ``scarlet_autoswitch`` - set if the game will autoswitch weapons (``0`` or ``1``, default is ``1``)
 
 ## Usage
 
