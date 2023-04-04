@@ -162,6 +162,8 @@ Deathmatch weapon change rules for picking up a weapon
 */
 void(float new) W_BetterWeapon =
 {
+	if (!cvar("scarlet_autoswitch")) return; // if no autoswitch, bail -whipowill
+
 	if (!deathmatch)
 	{
 		// don't switch to explosive weapons with quad
@@ -180,6 +182,8 @@ void(float new) W_BetterWeapon =
 
 float() W_BestWeapon =
 {
+	//if (!cvar("scarlet_autoswitch")) return; // if no autoswitch, bail -whipowill
+
 	local	float	it;
 	
 	self.lip = 0;	// reset nailgun barrel cycle
