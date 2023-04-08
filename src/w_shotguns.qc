@@ -95,7 +95,7 @@ void(float shotcount, vector dir, vector spread) FireBullets =
 				//( trace_ent.solid == SOLID_BBOX || trace_ent.solid == SOLID_SLIDEBOX ) &&	
 				HasBeenShotToDeath(trace_ent) )
 			{
-				local float calc = (cvar("scarlet_dmg_bullets")/2)+(cvar("scarlet_dmg_bullets")/2*random());
+				local float calc = (cvar("scarlet_dmg_shells")/2)+(cvar("scarlet_dmg_shells")/2*random());
 				BulletImpact (calc, direction); // was 2+2*random(), SCARLET - custom dmg integration.
 
 				// start 0.1 unit forward, or else when shooting an adjacent enemy we'll
@@ -118,7 +118,7 @@ void(float shotcount, vector dir, vector spread) FireBullets =
 		
 		if (trace_fraction != 1.0)
 		{
-			BulletImpact (cvar("scarlet_dmg_bullets"), direction); // was 4, SCARLET - custom dmg integration.
+			BulletImpact (cvar("scarlet_dmg_shells"), direction); // was 4, SCARLET - custom dmg integration.
 		}
 		
 		if (trace_debug) dprint("bullet is over\n\n");
@@ -146,7 +146,7 @@ void() W_FireShotgun =
 	self.punchangle_x = -2;
 	makevectors(self.v_angle);
 	
-	self.currentammo = self.ammo_shells = self.ammo_shells - cvar("scarlet_dec_bullets"); // was 1, SCARLET - custom ammo integration.
+	self.currentammo = self.ammo_shells = self.ammo_shells - cvar("scarlet_dec_shells"); // was 1, SCARLET - custom ammo integration.
 	dir = aim (self, AUTOAIM_DIST);
 
 	ClearMultiDamage ();
@@ -184,7 +184,7 @@ void() W_FireSuperShotgun =
 
 	self.punchangle_x = -4;
 	
-	self.currentammo = self.ammo_shells = self.ammo_shells - (cvar("scarlet_dec_bullets") * 2); // was 2, SCARLET - custom ammo integration.
+	self.currentammo = self.ammo_shells = self.ammo_shells - (cvar("scarlet_dec_shells") * 2); // was 2, SCARLET - custom ammo integration.
 	dir = aim (self, AUTOAIM_DIST);
 
 	ClearMultiDamage ();

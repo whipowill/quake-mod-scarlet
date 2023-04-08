@@ -150,25 +150,25 @@ void() BackpackAutoTouch =
 	else
 		sprint (other, "You found a backpack\n");
 		
-	if (other.ammo_shells + self.ammo_shells > MAX_AMMO_SHELLS)
+	if (other.ammo_shells + self.ammo_shells > cvar("scarlet_max_shells"))
 	{
-		self.armorvalue += other.ammo_shells + self.ammo_shells - MAX_AMMO_SHELLS;
-		self.ammo_shells = MAX_AMMO_SHELLS - other.ammo_shells;
+		self.armorvalue += other.ammo_shells + self.ammo_shells - cvar("scarlet_max_shells");
+		self.ammo_shells = cvar("scarlet_max_shells") - other.ammo_shells;
 	}
-	if (other.ammo_nails + self.ammo_nails > MAX_AMMO_NAILS)
+	if (other.ammo_nails + self.ammo_nails > cvar("scarlet_max_nails"))
 	{
-		self.armorvalue += ceil((other.ammo_nails + self.ammo_nails - MAX_AMMO_NAILS) / 2);
-		self.ammo_nails = MAX_AMMO_NAILS - other.ammo_nails;
+		self.armorvalue += ceil((other.ammo_nails + self.ammo_nails - cvar("scarlet_max_nails")) / 2);
+		self.ammo_nails = cvar("scarlet_max_nails") - other.ammo_nails;
 	}
-	if (other.ammo_rockets + self.ammo_rockets > MAX_AMMO_ROCKETS)
+	if (other.ammo_rockets + self.ammo_rockets > cvar("scarlet_max_rockets"))
 	{
-		self.armorvalue += (other.ammo_rockets + self.ammo_rockets - MAX_AMMO_ROCKETS) * 3;
-		self.ammo_rockets = MAX_AMMO_ROCKETS - other.ammo_rockets;
+		self.armorvalue += (other.ammo_rockets + self.ammo_rockets - cvar("scarlet_max_rockets")) * 3;
+		self.ammo_rockets = cvar("scarlet_max_rockets") - other.ammo_rockets;
 	}
-	if (other.ammo_cells + self.ammo_cells > MAX_AMMO_CELLS)
+	if (other.ammo_cells + self.ammo_cells > cvar("scarlet_max_cells"))
 	{
-		self.armorvalue += (other.ammo_cells + self.ammo_cells - MAX_AMMO_CELLS) * 3;
-		self.ammo_cells = MAX_AMMO_CELLS - other.ammo_cells;
+		self.armorvalue += (other.ammo_cells + self.ammo_cells - cvar("scarlet_max_cells")) * 3;
+		self.ammo_cells = cvar("scarlet_max_cells") - other.ammo_cells;
 	}
 	
 	self.armorvalue = floor(self.armorvalue / 2);
