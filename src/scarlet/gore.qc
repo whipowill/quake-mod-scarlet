@@ -18,14 +18,23 @@ void() SplatThink =
         self.angles = vectoangles(self.velocity); // point in direction of movement
         if (self.flags & FL_ONGROUND)
         {
-                // trying to get blood stains on the ground
-                particle (self.origin, self.velocity*0.2, 64+(random()*15), 100 * random());
-                particle (self.origin, self.velocity*0.4, 64+(random()*15), 100 * random());
-                particle (self.origin, self.velocity*0.6, 64+(random()*15), 100 * random());
-                self.nextthink = time + random();
+                remove(self);
+                return;
+
+                // trying to get blood stains on the ground NONE OF THIS LOOKED GOOD :(
+                //particle (self.origin, '0 0 0', 64+(random()*3), random()*44);
+                //particle (self.origin, '0 0 0', 64+(random()*6), random()*22);
+                //particle (self.origin, '0 0 0', 64+(random()*9), random()*11);
+                //self.nextthink = time + 1 + (3*random());
         }
         else
         {
+                if (self.type != "gib")
+                {
+                        remove(self); // remove if: land anywhere or in liquid
+                        return;
+                }
+
                 // splat slowly slides down walls, changing speed
                 self.velocity_z = random()*-10;
                 self.nextthink = time + 0.2;
@@ -37,21 +46,26 @@ void() SplatTouch =
 {
         if ((other != world) || (pointcontents(self.origin) <= -3))
         {
-                remove(self); // remove if: didn't hit wall, in liquid
+                remove(self); // remove if: land anywhere or in liquid
                 return;
         }
 
-        self.velocity = self.avelocity = '0 0 0'; // stop moving and spinning
-        self.movetype = MOVETYPE_FLY; // changed to remove effect of gravity
+        if (random() > .25) // let half the gibs bounce, half hit the walls
+        {
+                self.velocity = self.avelocity = '0 0 0'; // stop moving and spinning
+                self.movetype = MOVETYPE_FLY; // changed to remove effect of gravity
+        }
         self.touch = SUB_Null; // don't call this (touch) function again
-        self.attack_finished = time + 4 + (2*random()); // set random "time limit"
+        self.attack_finished = time + 6 + (4*random()); // set random "time limit"
 
         self.think = SplatThink;
         self.nextthink = time + 0.2;
 };
 
-void(vector dir, vector org, entity own, float damage) ThrowBloodSplat =
+void(vector dir, vector org, entity own, float damage, float weap = 1) ThrowBloodSplat =
 {
+        // weap is a made up var, 1=nail,2=shell,3=rock,4=cell,5=axe
+
         if (!cvar("scarlet_gore")) return;
 
         local entity splat;
@@ -59,28 +73,55 @@ void(vector dir, vector org, entity own, float damage) ThrowBloodSplat =
         if ( !((own.flags & FL_MONSTER) || (own.classname == "player")) )
                 return; // only monsters and players should create splats!
 
-        splat = spawn();
-        splat.owner = own; // move through hit monster/player
-        splat.movetype = MOVETYPE_TOSS;
-        splat.solid = SOLID_BBOX; // does not move through other entities (besides owner)
+        // loop
+        local float i;
+        local float j = cvar("scarlet_gore") * weap; // number of times to loop
+        for (i=1; i<j; i++)
+        {
+                splat = spawn();
+                splat.owner = own; // move through hit monster/player
+                splat.movetype = MOVETYPE_BOUNCE; //MOVETYPE_TOSS;
+                splat.solid = SOLID_BBOX; // does not move through other entities (besides owner)
 
-        dir = normalize(dir); //make sure "dir" has length 1
-        splat.velocity = dir * ((450 - (damage*2)) + (50*random())); // less velocity the more damage is dealt
-        splat.velocity_x = splat.velocity_x + (crandom()*90); // 90 degree arc of splash
-        splat.velocity_y = splat.velocity_y + (crandom()*90); // 90 degree arc of splash
-        splat.velocity_z = splat.velocity_z + 90 + (100*random()); // random arc of spatter
-        splat.avelocity = '3000 1000 2000'; //spin fast!
-        splat.touch = SplatTouch;
-    
-        splat.nextthink = time + 2;
-        splat.think = SUB_Remove;
+                dir = normalize(dir); //make sure "dir" has length 1
+                splat.velocity = dir * ((450 - (damage*2)) + (50*random())); // less velocity the more damage is dealt
+                splat.velocity_x = splat.velocity_x + (crandom()*180); // 90 degree arc of splash
+                splat.velocity_y = splat.velocity_y + (crandom()*180); // 90 degree arc of splash
+                splat.velocity_z = splat.velocity_z + 90 + (crandom()*180); // random arc of spatter
+                //splat.avelocity = '3000 1000 2000'; //spin fast!
+                splat.avelocity = Vector(random(),random(),random()) * 600;
+                splat.touch = SplatTouch;
 
-        // the damage is sent to this method so you could do different
-        // gibs based on how much damage was dealt, but it didn't look right to me.
+                splat.nextthink = time + 2;
+                splat.think = SUB_Remove;
 
-        setmodel (splat, "progs/zom_gib.mdl");
-        setsize (splat, '0 0 0', '0 0 0');
-        setorigin (splat, org); //start splat at point of damage
+                // the damage is sent to this method so you could do different
+                // gibs based on how much damage was dealt, but it didn't look right to me.
+
+                local float rand = crandom();
+                if (rand >= .95)
+                {
+                        setmodel (splat, "progs/gib2.mdl"); // lungs
+                        splat.type = "lung";
+                }
+                if (rand >= .90 && rand < .95)
+                {
+                        setmodel (splat, "progs/gib3.mdl"); // chunk
+                        splat.type = "chunk";
+                }
+                else if (rand >= .8 && rand < .90)
+                {
+                        setmodel (splat, "progs/gib1.mdl"); // arm?
+                        splat.type = "arm";
+                }
+                else
+                {
+                        setmodel (splat, "progs/zom_gib.mdl");
+                        splat.type = "gib";
+                }
+                setsize (splat, '0 0 0', '0 0 0');
+                setorigin (splat, org); //start splat at point of damage
+        }
 };
 
 void(entity explosive, float damage) ThrowBloodSplatByExplosion =
@@ -98,12 +139,7 @@ void(entity explosive, float damage) ThrowBloodSplatByExplosion =
 
                 while (count < 3)
                 {
-                        if (random() < 0.8)
-                        {
-                                ThrowBloodSplat(v_forward, head.origin, head, damage);
-                                ThrowBloodSplat(v_forward, head.origin, head, damage);
-                                ThrowBloodSplat(v_forward, head.origin, head, damage);
-                        }
+                        if (random() < 0.8) ThrowBloodSplat(v_forward, head.origin, head, damage, 3);
                         count++;
                 }
 
@@ -118,11 +154,7 @@ void(vector dir, vector org, entity own, float damage) ThrowBloodSplatByLightnin
 
         while (count < 3)
         {
-                if (random() < 0.6)
-                {
-                        ThrowBloodSplat(dir, org, own, damage);
-                        ThrowBloodSplat(dir, org, own, damage);
-                }
+                if (random() < 0.6) ThrowBloodSplat(dir, org, own, damage, 4);
                 count++;
         }
 };

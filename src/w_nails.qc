@@ -153,7 +153,7 @@ void() spike_touch =
 			{
 		        self.angles_x = self.angles_x*-1;
 		        makevectors(self.angles);
-		        ThrowBloodSplat(v_forward, self.origin, other, self.dmg);
+		        ThrowBloodSplat(v_forward, self.origin, other, self.dmg, 1);
 			}
 			// SCARLET - end.
 		}

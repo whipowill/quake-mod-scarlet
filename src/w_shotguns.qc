@@ -38,7 +38,7 @@ vector(float damage, vector dir) BulletImpact =
 		SpawnBlood (org, vel*40, damage);
 		AddMultiDamage (trace_ent, damage);
 
-		if(random() < 0.4) ThrowBloodSplat(dir, trace_endpos, trace_ent, damage); // SCARLET - gore integration.
+		if(random() < 0.4) ThrowBloodSplat(dir, trace_endpos, trace_ent, damage, 2); // SCARLET - gore integration.
 	}
 	else gunshot(org);
 

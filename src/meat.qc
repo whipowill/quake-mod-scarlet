@@ -80,9 +80,14 @@ void(string headmdl, float dm) GibSpray =
 	// SCARLET - gore integration.
 	if (cvar("scarlet_gore"))
 	{
-		ThrowGib ("progs/gib1.mdl", dm);
-		ThrowGib ("progs/gib2.mdl", dm);
-		ThrowGib ("progs/gib3.mdl", dm);
+		local float i;
+        local float j = cvar("scarlet_gore"); // number of times to loop
+        for (i=1; i<=j; i++)
+        {
+			ThrowGib ("progs/gib1.mdl", dm);
+			ThrowGib ("progs/gib2.mdl", dm);
+			ThrowGib ("progs/gib3.mdl", dm);
+		}
 	}
 	// SCARLET - end.
 	
@@ -136,17 +141,18 @@ SpawnBlood
 void(vector org, vector vel, float damage) SpawnBlood =
 {
 	// SCARLET - gore integration.
-	if (cvar("scarlet_gore"))
-	{
-		particle (org, vel*0.1, 79, damage*1);
-		particle (org, vel*0.2, 74, damage*5);
-		particle (org, vel*0.3, 69, damage*2);
-	}
-	else
-	{
-		particle (org, vel*0.1, 73, damage*2);
-	}
-	// SCARLET - end.
+    if (cvar("scarlet_gore"))
+    {
+            local float i;
+            local float j = cvar("scarlet_gore"); // number of times to loop
+            for (i=1; i<=j; i++)
+            {
+                    particle (org, vel*i, 64+(random()*12), damage*i);
+            }
+    }
+    // SCARLET - end.
+
+	particle (org, vel*0.1, 73, damage*2);
 }
 
 //============================================================================

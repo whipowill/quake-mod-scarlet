@@ -15,6 +15,23 @@ A Quake mod for adding bots, blood, guts, and gore to the game.
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
 - **Score Keeper** - play teamplay games that combine scores to achieve fraglimit
 
+### Changelog
+
+- August 2022
+    - Bots ``skill`` now scales linearly from ``0`` to ``3``
+    - Bots can now be spawned w/ random ``skill`` levels
+    - Bots no longer crowd together in team deathmatch games
+    - Bots no longer spam teleporters repeatedly
+    - Bots now wear proper team color in coop games
+    - Bots now recover from fool's errands more quickly
+    - Bots now choose from over 500 random names
+    - Deathmatch bots now know if they are losing and become depressed
+    - Team bots now report when they pickup important items
+    - Bots can now teleport to your location in coop
+- April 2023
+    - Weapons system completely configurable
+    - Gore system reworked and is now scalable
+
 ## Install
 
 - Find your Quake install directory
@@ -34,12 +51,12 @@ Some companion mods you may also want to install:
 
 ## Options
 
-Control the following features using cvars in your ``autoexec.cfg`` file:
+Control the following features using cvars in your ``autoexec.cfg`` file or via console:
 
 - ``scarlet_dialogue``- enable random comments from bots in the game (``0`` or ``1``)
 - ``scarlet_football`` - make enemy heads kickable like a football (``0`` or ``1``)
 - ``scarlet_footsteps``- enable footstep sounds for players (``0`` or ``1``)
-- ``scarlet_gore`` - make enemies bleed when hit from direct or blast damage (``0`` or ``1``)
+- ``scarlet_gore`` - make enemies bleed when hit from direct or blast damage (default is ``3``, multiplies gore)
 - ``scarlet_nametags`` - display player names on screen when aiming at them (``0`` or ``1``)
 - ``scarlet_respawn`` - force bots to wait before respawning after they die (anything >= ``0``)
 - ``scarlet_resupply`` - force items to respawn on singleplayer and coop (``0`` or ``1``)
@@ -61,7 +78,7 @@ Control the following features using cvars in your ``autoexec.cfg`` file:
 
 ## Usage
 
-Control bots via the console:
+Control bots via these console commands:
 
 - ``skill 3`` - set the bot skill level (``0`` to ``3``)
 - ``teamplay 1`` - turn on teamplay mode (``1`` or ``0``)
@@ -77,20 +94,6 @@ Control bots via the console:
 - ``impulse 113`` - teleport bots to your location in coop (only once per minute)
 
 Reference the included ``instructions.html`` file from FrikaC for detailed information about the bots.
-
-## Changelog
-
-- Bots ``skill`` now scales linearly from ``0`` to ``3`` (optimization)
-- Bots can now be spawned w/ random ``skill`` levels (new feature)
-- Bots no longer crowd together in team deathmatch games (bug fix)
-- Bots no longer spam teleporters repeatedly (bug fix)
-- Bots now wear proper team color in coop games (bug fix)
-- Bots now recover from fool's errands more quickly (optimization)
-- Bots now choose from over 500 random names (new feature)
-- Chat system has been completely overhauled (new feature)
-    - Deathmatch bots now know if they are losing and become depressed
-    - Team bots now report when they pickup important items
-- Bots can now teleport to your location in coop (new feature)
 
 ## Credits
 
