@@ -145,9 +145,9 @@ void(vector org, vector vel, float damage) SpawnBlood =
     {
             local float i;
             local float j = cvar("scarlet_gore"); // number of times to loop
-            for (i=1; i<=j; i++)
+            for (i=1; i<=j*2; i++)
             {
-                    particle (org, vel*i, 64+(random()*12), damage*i);
+                    particle (org, vel*i*random(), 64+(random()*12), damage*random());
             }
     }
     // SCARLET - end.
