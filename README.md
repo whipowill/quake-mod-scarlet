@@ -56,7 +56,7 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_dialogue``- enable random comments from bots in the game (``0`` or ``1``)
 - ``scarlet_football`` - make enemy heads kickable like a football (``0`` or ``1``)
 - ``scarlet_footsteps``- enable footstep sounds for players (``0`` or ``1``)
-- ``scarlet_gore`` - make enemies bleed when hit from direct or blast damage (default is ``3``, multiplies gore)
+- ``scarlet_gore`` - make enemies bleed when taking damage (default is ``3``, multiplier)
 - ``scarlet_nametags`` - display player names on screen when aiming at them (``0`` or ``1``)
 - ``scarlet_respawn`` - force bots to wait before respawning after they die (anything >= ``0``)
 - ``scarlet_resupply`` - force items to respawn on singleplayer and coop (``0`` or ``1``)
