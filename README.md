@@ -38,7 +38,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.
 - Download this [zipfile](https://github.com/whipowill/quake-mod-scarlet/archive/master.zip) and unzip to your ``/quake/scarlet/`` folder
 - Make sure your ``/quake/id1/maps/`` folder has all your map files
 - Make sure your ``/quake/id1/maps/`` folder has all your [waypoint](https://github.com/whipowill/quake-mod-frikbot-waypoints) files
-- Run the game w/ ``-game scarlet -particles 16384 -listen 16 -condebug``
+- Run the game w/ ``-game scarlet -particles 99999 -listen 16 -condebug``
 
 See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory.
 
