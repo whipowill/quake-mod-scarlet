@@ -6,13 +6,13 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Sate your blood
 
 ## Features
 
-- **User Control** - everything in this mod is a setting you control
-- **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.19)
+- **User Control** - take control of the game w/ a host of new config options
 - **Multiplayer Bots** - add robot players to deathmatch, teamplay, and coop games
+- **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.19)
 - **Blood & Gore** - bathe in the blood of your enemies w/ scalable gore setting
 - **Weapons Balance** - find the perfect balance w/ configurable weapon damage
 - **Item Resupply** - force items to respawn in singleplayer and coop games
-- **Name Tags** - see other player's names when aiming at them
+- **Name Tags** - see other player's names Halo-style when aiming at them
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
 - **Score Keeper** - make teamplay games combine scores to achieve fraglimit
 - **No Autoswitch** - nobody takes the gun out of your hand anymore
