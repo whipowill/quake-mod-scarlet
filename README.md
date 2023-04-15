@@ -2,7 +2,7 @@
 
 A Quake mod for adding blood, bots, guts, and gore to the game.  Checkout my [channel](https://rumble.com/c/c-2815508) showcasing videos from the development of this mod.
 
-[![Scarlet Logo](https://i.imgur.com/4o2EPCa.png)](https://rumble.com/c/c-2815508)
+[![](https://i.imgur.com/4o2EPCa.png)](https://rumble.com/c/c-2815508)
 
 ## Features
 
@@ -19,7 +19,8 @@ A Quake mod for adding blood, bots, guts, and gore to the game.  Checkout my [ch
 
 ## Changelog
 
-![Shotgun Animated GIF](https://i.imgur.com/FabFtS1.gif)
+![](https://i.imgur.com/FabFtS1.gif | width=100%)
+
 
 - April 2023 - ``v1.2.x``
     - Allow option to disable weapon autoswitch
