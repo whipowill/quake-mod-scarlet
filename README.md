@@ -1,6 +1,6 @@
 # Scarlet
 
-A Quake mod for adding bots, blood, guts, and gore to the game.  Sate your bloodlust w/ heart-pumping multiplayer games on demand.  Checkout my [channel](https://rumble.com/user/whipowill24) showcasing videos from the development of this mod.
+A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for the multiplayer enthusiast, sate your bloodlust w/ heart-pumping multiplayer games on demand.  Checkout my [channel](https://rumble.com/user/whipowill24) showcasing videos from the development of this mod.
 
 [![](https://i.imgur.com/4o2EPCa.png)](https://rumble.com/user/whipowill24)
 
@@ -12,7 +12,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Sate your blood
 - **Blood & Gore** - bathe in the blood of your enemies w/ scalable gore setting
 - **Weapons Balance** - find the perfect balance w/ configurable weapon damage
 - **Item Resupply** - force items to respawn in singleplayer and coop games
-- **Name Tags** - see other player's names Halo-style when aiming at them
+- **Name Tags** - see other player names Halo-style when aiming at them
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
 - **Score Keeper** - make teamplay games combine scores to achieve fraglimit
 - **No Autoswitch** - nobody takes the gun out of your hand anymore
