@@ -19,8 +19,7 @@ A Quake mod for adding blood, bots, guts, and gore to the game.  Checkout my [ch
 
 ## Changelog
 
-![](https://i.imgur.com/FabFtS1.gif | width=100%)
-
+<img src="https://i.imgur.com/FabFtS1.gif" width="100%">
 
 - April 2023 - ``v1.2.x``
     - Allow option to disable weapon autoswitch
