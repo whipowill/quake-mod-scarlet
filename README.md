@@ -125,4 +125,3 @@ Reference the included ``instructions.html`` file from FrikaC for detailed infor
 - [QuakeC Tutorials](https://quakewiki.org/wiki/QuakeC_tutorials) - a list of tutorials for modding QuakeC
 - [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history
 - [FrikBot Waypoint Files](https://github.com/whipowill/quake-mod-frikbot-waypoints) - an archive of all the bot waypoints files
-- [OBS Studio](https://obsproject.com/) - multi-platform app for making game recordings
