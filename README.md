@@ -1,16 +1,16 @@
 # Scarlet
 
-A Quake mod for adding blood, bots, guts, and gore to the game.  Checkout my [channel](https://rumble.com/c/c-2815508) showcasing videos from the development of this mod.
+A Quake mod for adding bots, blood, guts, and gore to the game.  Sate your bloodlust w/ heart-pumping multiplayer games on demand.  Checkout my [channel](https://rumble.com/c/c-2815508) showcasing videos from the development of this mod.
 
 [![](https://i.imgur.com/4o2EPCa.png)](https://rumble.com/c/c-2815508)
 
 ## Features
 
-- **User Control** - everything in is an option setting you control
+- **User Control** - everything in this mod is a setting you control
 - **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.19)
 - **Multiplayer Bots** - add robot players to deathmatch, teamplay, and coop games
-- **Blood & Gore** - bathe in the blood of your enemies and kick their heads for laughs
-- **Weapons Balance** - find the perfect balance w/ configurable weapons
+- **Blood & Gore** - bathe in the blood of your enemies w/ scalable gore setting
+- **Weapons Balance** - find the perfect balance w/ configurable weapon damage
 - **Item Resupply** - force items to respawn in singleplayer and coop games
 - **Name Tags** - see other player's names when aiming at them
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
@@ -22,7 +22,7 @@ A Quake mod for adding blood, bots, guts, and gore to the game.  Checkout my [ch
 <img src="https://i.imgur.com/FabFtS1.gif" width="100%">
 
 - April 2023 - ``v1.2.x``
-    - Allow option to disable weapon autoswitch
+    - Added option to disable weapon autoswitch
     - Weapons system now completely configurable
     - Gore system overhauled and is now scalable
 - August 2022 - ``v1.1.x``
