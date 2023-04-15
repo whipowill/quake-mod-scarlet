@@ -55,8 +55,8 @@ See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded 
 
 Some companion mods you may also want to install:
 
-- [HUD](https://github.com/whipowill/quake-mod-hud) - a client-side mod that adds custom HUD layouts and team scoreboards
-- [RHW](https://www.moddb.com/games/quake/addons/quake-right-handed-weapons) - a pak file that gives you right-handed weapon models
+- [HUD](https://github.com/whipowill/quake-mod-hud) - custom HUD layouts and team scoreboards
+- [RHW](https://www.moddb.com/games/quake/addons/quake-right-handed-weapons) - right-handed weapon models
 
 ## Options
 
