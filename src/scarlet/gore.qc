@@ -78,23 +78,23 @@ void(vector dir, vector org, entity own, float damage, float weap = 1) ThrowBloo
 
         if (weap == 1)
         {
-                c = cvar("scarlet_gore_chance_bullet");
-                m = cvar("scarlet_gore_multiplier_bullet");
+                c = cvar("scarlet_gore_chance_bullets");
+                m = cvar("scarlet_gore_multiplier_bullets");
         }
         else if (weap == 2)
         {
-                c = cvar("scarlet_gore_chance_nail");
-                m = cvar("scarlet_gore_multiplier_nail");
+                c = cvar("scarlet_gore_chance_nails");
+                m = cvar("scarlet_gore_multiplier_nails");
         }
         else if (weap == 3)
         {
-                c = cvar("scarlet_gore_chance_rocket");
-                m = cvar("scarlet_gore_multiplier_rocket");
+                c = cvar("scarlet_gore_chance_rockets");
+                m = cvar("scarlet_gore_multiplier_rockets");
         }
         else if (weap == 4)
         {
-                c = cvar("scarlet_gore_chance_cell");
-                m = cvar("scarlet_gore_multiplier_cell");
+                c = cvar("scarlet_gore_chance_cells");
+                m = cvar("scarlet_gore_multiplier_cells");
         }
 
         local float pass = 1;
