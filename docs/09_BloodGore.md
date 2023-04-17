@@ -2,28 +2,57 @@
 
 For adding gore features (lots of blood) to the game, optionally activated w/ ``scarlet_gore 1`` in console.
 
+In ``weapons.qc``:
+
+```
+void() W_Precache =
+{
+    precache_sound ("weapons/r_exp3.wav");
+    precache_sound ("weapons/rocket1i.wav");    // nailgun
+    precache_sound ("weapons/sgun1.wav");
+    precache_sound ("weapons/guncock.wav");     // sg
+    precache_sound ("weapons/ric1.wav");        // ricochet (used in c code)
+    precache_sound ("weapons/ric2.wav");        // ricochet (used in c code)
+    precache_sound ("weapons/ric3.wav");        // ricochet (used in c code)
+    precache_sound ("weapons/spike2.wav");      // super spikes
+    precache_sound ("weapons/tink1.wav");       // spikes tink (used in c code)
+    precache_sound ("weapons/grenade.wav");     // grenade launcher
+    precache_sound ("weapons/bounce.wav");      // grenade bounce
+    precache_sound ("weapons/shotgn2.wav");     // ssg
+    precache_model2 ("progs/k_spike.mdl");
+    precache_model ("progs/lavaball.mdl");
+    precache_sound ("weapons/lhit.wav");        //lightning
+    precache_sound ("weapons/lstart.wav");      //lightning start
+//  precache_sound ("items/damage3.wav");
+
+// ax sounds
+    precache_sound ("weapons/ax1.wav");         // ax swoosh
+    precache_sound2 ("weapons/axhit1.wav");     // ax hit meat
+    precache_sound2 ("weapons/axhit2.wav");     // ax hit meat 2
+    precache_sound ("player/axhit1.wav");       // ax hit me
+    precache_sound ("player/axhit2.wav");       // ax hit world
+
+    precache_sound ("zombie/z_hit.wav");
+
+
+
+    precache_model ("progs/v_axe2.mdl");
+    precache_model ("progs/v_shot.mdl");
+    precache_model ("progs/v_nail.mdl");
+    precache_model ("progs/v_rock.mdl");
+    precache_model ("progs/v_shot2.mdl");
+    precache_model ("progs/v_nail2.mdl");
+    precache_model ("progs/v_rock2.mdl");
+    precache_model ("progs/v_light.mdl");
+
+
+    precache_model ("progs/zom_gib.mdl"); // SCARLET - gore integration.
+}
+```
+
 In ``meat.qc``:
 
 ```
-void(vector org, vector vel, float damage) SpawnBlood =
-{
-    // SCARLET - gore integration.
-    if (cvar("scarlet_gore"))
-    {
-            local float i;
-            local float j = cvar("scarlet_gore"); // number of times to loop
-            for (i=1; i<=j; i++)
-            {
-                    particle (org, vel*i, 64+(random()*12), damage*i);
-            }
-    }
-    // SCARLET - end.
-
-    particle (org, vel*0.1, 73, damage*2);
-}
-
-...
-
 void(string headmdl, float dm) GibSpray =
 {
     ThrowGib ("progs/gib1.mdl", dm);
@@ -35,14 +64,35 @@ void(string headmdl, float dm) GibSpray =
     {
         local float i;
         local float j = cvar("scarlet_gore"); // number of times to loop
-        for (i=1; i<=j; i++)
+        for (i=1; i<=j*2; i++)
         {
             ThrowGib ("progs/gib1.mdl", dm);
-            ThrowGib ("progs/gib2.mdl", dm);
+            //ThrowGib ("progs/gib2.mdl", dm); // don't throw lungs more than once, makes no sense
             ThrowGib ("progs/gib3.mdl", dm);
         }
     }
     // SCARLET - end.
+
+...
+
+void(vector org, vector vel, float damage) SpawnBlood =
+{
+    // SCARLET - gore integration.
+    if (cvar("scarlet_gore"))
+    {
+            local float i;
+            local float j = cvar("scarlet_gore"); // number of times to loop
+            for (i=1; i<=j*2; i++)
+            {
+                    vel = normalize(vel) * -1;
+                    vel = normalize(vel + v_up*(random()- 0.5) + v_right*(random()- 0.5));
+                    particle (org, vel*i*random(), 64+(random()*12), damage*random());
+            }
+    }
+    // SCARLET - end.
+
+    particle (org, vel*0.1, 73, damage*2);
+}
 ```
 
 In ``w_lightning.qc``:

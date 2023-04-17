@@ -38,7 +38,7 @@ vector(float damage, vector dir) BulletImpact =
 		SpawnBlood (org, vel*40, damage);
 		AddMultiDamage (trace_ent, damage);
 
-		if(random() < 0.4) ThrowBloodSplat(dir, trace_endpos, trace_ent, damage, 2); // SCARLET - gore integration.
+		ThrowBloodSplat(dir, trace_endpos, trace_ent, damage, 1); // SCARLET - gore integration.
 	}
 	else gunshot(org);
 
@@ -95,7 +95,7 @@ void(float shotcount, vector dir, vector spread) FireBullets =
 				//( trace_ent.solid == SOLID_BBOX || trace_ent.solid == SOLID_SLIDEBOX ) &&	
 				HasBeenShotToDeath(trace_ent) )
 			{
-				local float calc = (cvar("scarlet_dmg_shells")/2)+(cvar("scarlet_dmg_shells")/2*random());
+				local float calc = (cvar("scarlet_dmg_bullets")/2)+(cvar("scarlet_dmg_bullets")/2*random());
 				BulletImpact (calc, direction); // was 2+2*random(), SCARLET - custom dmg integration.
 
 				// start 0.1 unit forward, or else when shooting an adjacent enemy we'll
@@ -118,7 +118,7 @@ void(float shotcount, vector dir, vector spread) FireBullets =
 		
 		if (trace_fraction != 1.0)
 		{
-			BulletImpact (cvar("scarlet_dmg_shells"), direction); // was 4, SCARLET - custom dmg integration.
+			BulletImpact (cvar("scarlet_dmg_bullets"), direction); // was 4, SCARLET - custom dmg integration.
 		}
 		
 		if (trace_debug) dprint("bullet is over\n\n");
@@ -150,7 +150,7 @@ void() W_FireShotgun =
 	dir = aim (self, AUTOAIM_DIST);
 
 	ClearMultiDamage ();
-	FireBullets (6, dir, '0.04 0.04 0');
+	FireBullets (cvar("scarlet_bullets_in_shell_sg"), dir, '0.04 0.04 0'); // was 6, SCARLET - custom ammo integration.
 	self.attack_finished = time + 0.5;
 	
 	ApplyMultiDamage ();
@@ -180,7 +180,7 @@ void() W_FireSuperShotgun =
 		return;
 	}
 		
-	sound (self ,CHAN_WEAPON, "weapons/shotgn2.wav", 1, ATTN_NORM);	
+	sound (self, CHAN_WEAPON, "weapons/shotgn2.wav", 1, ATTN_NORM);
 
 	self.punchangle_x = -4;
 	
@@ -189,7 +189,7 @@ void() W_FireSuperShotgun =
 
 	ClearMultiDamage ();
 
-	FireBullets (14, dir, '0.14 0.08 0');
+	FireBullets (cvar("scarlet_bullets_in_shell_ssg"), dir, '0.14 0.08 0'); // was 14, SCARLET - custom ammo integration.
 	self.attack_finished = time + 0.7;
 	
 	ApplyMultiDamage ();

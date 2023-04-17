@@ -82,10 +82,10 @@ void(string headmdl, float dm) GibSpray =
 	{
 		local float i;
         local float j = cvar("scarlet_gore"); // number of times to loop
-        for (i=1; i<=j; i++)
+        for (i=1; i<j; i++)
         {
 			ThrowGib ("progs/gib1.mdl", dm);
-			ThrowGib ("progs/gib2.mdl", dm);
+			//ThrowGib ("progs/gib2.mdl", dm); // don't throw lungs more than once, makes no sense
 			ThrowGib ("progs/gib3.mdl", dm);
 		}
 	}
@@ -140,19 +140,21 @@ SpawnBlood
 */
 void(vector org, vector vel, float damage) SpawnBlood =
 {
+	particle (org, vel*0.1, 73, damage*2);
+
 	// SCARLET - gore integration.
     if (cvar("scarlet_gore"))
     {
             local float i;
             local float j = cvar("scarlet_gore"); // number of times to loop
-            for (i=1; i<=j*2; i++)
+            for (i=1; i<j; i++)
             {
+			        vel = normalize(vel) * -1;
+			        vel = normalize(vel + v_up*(random()- 0.5) + v_right*(random()- 0.5));
                     particle (org, vel*i*random(), 64+(random()*12), damage*random());
             }
     }
     // SCARLET - end.
-
-	particle (org, vel*0.1, 73, damage*2);
 }
 
 //============================================================================

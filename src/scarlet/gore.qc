@@ -29,7 +29,7 @@ void() SplatThink =
         }
         else
         {
-                if (self.type != "gib")
+                if (self.type != "drop")
                 {
                         remove(self); // remove if: land anywhere or in liquid
                         return;
@@ -50,7 +50,7 @@ void() SplatTouch =
                 return;
         }
 
-        if (random() > .25) // let half the gibs bounce, half hit the walls
+        if (random() > .25) // let 3/4 the gibs bounce, rest hit the walls
         {
                 self.velocity = self.avelocity = '0 0 0'; // stop moving and spinning
                 self.movetype = MOVETYPE_FLY; // changed to remove effect of gravity
@@ -64,7 +64,7 @@ void() SplatTouch =
 
 void(vector dir, vector org, entity own, float damage, float weap = 1) ThrowBloodSplat =
 {
-        // weap is a made up var, 1=nail,2=shell,3=rock,4=cell,5=axe
+        // weap is a made up var, 1=bullet,2=nail,3=rock,4=cell,5=axe
 
         if (!cvar("scarlet_gore")) return;
 
@@ -73,61 +73,102 @@ void(vector dir, vector org, entity own, float damage, float weap = 1) ThrowBloo
         if ( !((own.flags & FL_MONSTER) || (own.classname == "player")) )
                 return; // only monsters and players should create splats!
 
-        // loop
-        local float i;
-        local float j = cvar("scarlet_gore") * weap; // number of times to loop
-        for (i=1; i<j; i++)
+        local float c = 1; // chances that a shot will splatter
+        local float m = 1; // multiplier
+
+        if (weap == 1)
         {
-                splat = spawn();
-                splat.owner = own; // move through hit monster/player
-                splat.movetype = MOVETYPE_BOUNCE; //MOVETYPE_TOSS;
-                splat.solid = SOLID_BBOX; // does not move through other entities (besides owner)
+                c = cvar("scarlet_gore_chance_bullet");
+                m = cvar("scarlet_gore_multiplier_bullet");
+        }
+        else if (weap == 2)
+        {
+                c = cvar("scarlet_gore_chance_nail");
+                m = cvar("scarlet_gore_multiplier_nail");
+        }
+        else if (weap == 3)
+        {
+                c = cvar("scarlet_gore_chance_rocket");
+                m = cvar("scarlet_gore_multiplier_rocket");
+        }
+        else if (weap == 4)
+        {
+                c = cvar("scarlet_gore_chance_cell");
+                m = cvar("scarlet_gore_multiplier_cell");
+        }
 
-                dir = normalize(dir); //make sure "dir" has length 1
-                splat.velocity = dir * ((450 - (damage*2)) + (50*random())); // less velocity the more damage is dealt
-                splat.velocity_x = splat.velocity_x + (crandom()*180); // 90 degree arc of splash
-                splat.velocity_y = splat.velocity_y + (crandom()*180); // 90 degree arc of splash
-                splat.velocity_z = splat.velocity_z + (crandom()*180); // random arc of spatter
-                //splat.avelocity = '3000 1000 2000'; //spin fast!
-                splat.avelocity = Vector(random(),random(),random()) * 600;
-                splat.touch = SplatTouch;
+        local float pass = 1;
+        if (cvar("scarlet_gore_limit_shot"))
+        {
+                if (random() > c) pass = 0;
+        }
 
-                splat.nextthink = time + 2;
-                splat.think = SUB_Remove;
+        if (pass)
+        {
+                // loop
+                local float i;
+                local float j = cvar("scarlet_gore"); // number of times to loop
+                for (i=1; i<=j*m; i++)
+                {
+                        pass = 1;
+                        if (cvar("scarlet_gore_limit_drop"))
+                        {
+                                if (random() > c) pass = 0;
+                        }
 
-                // the damage is sent to this method so you could do different
-                // gibs based on how much damage was dealt, but it didn't look right to me.
+                        if (pass) // reroll chance for each loop
+                        {
+                                splat = spawn();
+                                splat.owner = own; // move through hit monster/player
+                                splat.movetype = MOVETYPE_BOUNCE; //MOVETYPE_TOSS;
+                                splat.solid = SOLID_BBOX; // does not move through other entities (besides owner)
 
-                local float rand = crandom();
-                if (rand >= .95)
-                {
-                        setmodel (splat, "progs/gib2.mdl"); // lungs
-                        splat.type = "lung";
+                                dir = normalize(dir); //make sure "dir" has length 1
+                                splat.velocity = dir * ((450 - (damage*2)) + (50*random())); // less velocity the more damage is dealt
+                                splat.velocity_x = splat.velocity_x + (crandom()*180); // 90 degree arc of splash
+                                splat.velocity_y = splat.velocity_y + (crandom()*180); // 90 degree arc of splash
+                                splat.velocity_z = splat.velocity_z + (crandom()*180); // random arc of spatter
+                                //splat.avelocity = '3000 1000 2000'; //spin fast!
+                                splat.avelocity = Vector(random(),random(),random()) * 600;
+                                splat.touch = SplatTouch;
+
+                                splat.nextthink = time + 2;
+                                splat.think = SUB_Remove;
+
+                                // the damage is sent to this method so you could do different
+                                // gibs based on how much damage was dealt, but it didn't look right to me.
+
+                                local float rand = crandom();
+                                if (rand >= .95)
+                                {
+                                        setmodel (splat, "progs/gib2.mdl"); // lungs
+                                        splat.type = "lung";
+                                }
+                                if (rand >= .90 && rand < .95)
+                                {
+                                        setmodel (splat, "progs/gib3.mdl"); // chunk
+                                        splat.type = "chunk";
+                                }
+                                else if (rand >= .8 && rand < .90)
+                                {
+                                        setmodel (splat, "progs/gib1.mdl"); // arm?
+                                        splat.type = "arm";
+                                }
+                                else
+                                {
+                                        setmodel (splat, "progs/zom_gib.mdl");
+                                        splat.type = "drop";
+                                }
+                                setsize (splat, '0 0 0', '0 0 0');
+                                setorigin (splat, org); //start splat at point of damage
+                        }
                 }
-                if (rand >= .90 && rand < .95)
-                {
-                        setmodel (splat, "progs/gib3.mdl"); // chunk
-                        splat.type = "chunk";
-                }
-                else if (rand >= .8 && rand < .90)
-                {
-                        setmodel (splat, "progs/gib1.mdl"); // arm?
-                        splat.type = "arm";
-                }
-                else
-                {
-                        setmodel (splat, "progs/zom_gib.mdl");
-                        splat.type = "gib";
-                }
-                setsize (splat, '0 0 0', '0 0 0');
-                setorigin (splat, org); //start splat at point of damage
         }
 };
 
 void(entity explosive, float damage) ThrowBloodSplatByExplosion =
 {
         local entity head;
-        local float count;
 
         explosive.angles_x = (explosive.angles_x + 180)*-1; // grenades and rockets explode in front of you, reverse direction
         makevectors(explosive.angles); //find direction rocket is facing
@@ -135,13 +176,7 @@ void(entity explosive, float damage) ThrowBloodSplatByExplosion =
         head = findradius(explosive.origin, damage+40);
         while (head)
         {
-                count = 0;
-
-                while (count < 3)
-                {
-                        if (random() < 0.8) ThrowBloodSplat(v_forward, head.origin, head, damage, 3);
-                        count++;
-                }
+                ThrowBloodSplat(v_forward, head.origin, head, damage, 3);
 
                 head = head.chain;
         }
@@ -149,12 +184,11 @@ void(entity explosive, float damage) ThrowBloodSplatByExplosion =
 
 void(vector dir, vector org, entity own, float damage) ThrowBloodSplatByLightning =
 {
-        local float count;
-        count = 0;
+        local vector vel;
 
-        while (count < 3)
-        {
-                if (random() < 0.6) ThrowBloodSplat(dir, org, own, damage, 4);
-                count++;
-        }
+        vel = normalize(dir) * -1;
+        vel = normalize(vel + v_up*(random()- 0.5) + v_right*(random()- 0.5));
+
+        SpawnBlood (org + vel, vel*40, damage/4);
+        ThrowBloodSplat(dir, org, own, damage, 4);
 };

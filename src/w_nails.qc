@@ -16,7 +16,7 @@ void(float damage) spawn_touchblood =
 	// nailguns don't do traces so there is no valid trace plane normal
 	// (which explains why nailgun blood spurts always seemed to be caught in some strange wind)
 	
-	SpawnBlood (self.origin + vel, vel * 40, damage);
+	SpawnBlood (self.origin + vel, vel*40, damage);
 }
 
 
@@ -149,12 +149,9 @@ void() spike_touch =
 			T_Damage (other, self, self.trueowner, self.dmg);
 
 			// SCARLET - gore integration.
-			if (random() < 0.8)
-			{
-		        self.angles_x = self.angles_x*-1;
-		        makevectors(self.angles);
-		        ThrowBloodSplat(v_forward, self.origin, other, self.dmg, 1);
-			}
+	        self.angles_x = self.angles_x*-1;
+	        makevectors(self.angles);
+	        ThrowBloodSplat(v_forward, self.origin, other, self.dmg, 2);
 			// SCARLET - end.
 		}
 		else

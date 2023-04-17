@@ -25,6 +25,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
     - Added option to disable weapon autoswitch
     - Weapons system now completely configurable
     - Gore system overhauled and is now scalable
+    - Shotgun bullets-per-shell now configurable
 - August 2022 - ``v1.1.x``
     - Bots now choose from over 500 random names
     - Bots now know if they are losing and become depressed
@@ -51,27 +52,40 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
 
 See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory, including all the best multiplayer maps and waypoint files to use w/ Scarlet.
 
-### Recommended
-
-Some companion mods you may also want to install:
-
-- [HUD](https://github.com/whipowill/quake-mod-hud) - custom HUD layouts and team scoreboards
-- [RHW](https://www.moddb.com/games/quake/addons/quake-right-handed-weapons) - right-handed weapon models
-
 ## Options
 
 Control the following features using cvars in your ``autoexec.cfg`` file or via console:
 
+### Misc Settings
+
 - ``scarlet_dialogue``- enable random comments from bots in the game (``0`` or ``1``)
-- ``scarlet_football`` - make enemy heads kickable like a football (``0`` or ``1``)
 - ``scarlet_footsteps``- enable footstep sounds for players (``0`` or ``1``)
-- ``scarlet_gore`` - make enemies bleed when taking damage (anything >= ``0``)
 - ``scarlet_nametags`` - display player names on screen when aiming at them (``0`` or ``1``)
 - ``scarlet_respawn`` - seconds to wait before bots respawn (anything >= ``0``)
 - ``scarlet_resupply`` - force items to respawn on singleplayer and coop (``0`` or ``1``)
 - ``scarlet_teamscores`` - combine players' scores (if ``teamplay 1``) to achieve fraglimit (``0`` or ``1``)
+
+### Gore Settings
+
+- ``scarlet_gore`` - multiplier for bleed effects (anything >= ``0``, default is ``3``)
+- ``scarlet_gore_chance_bullet`` - how likely will a bullet cuase bleeding (default is ``.3``)
+- ``scarlet_gore_multiplier_bullet`` - how many drops of blood per bullet (default is ``1``)
+- ``scarlet_gore_chance_nail`` - how likely will a nail cuase bleeding (default is ``.6``)
+- ``scarlet_gore_multiplier_nail`` - how many drops of blood per nail (default is ``1``)
+- ``scarlet_gore_chance_rocket`` - how likely will a rocket cuase bleeding (default is ``.8``)
+- ``scarlet_gore_multiplier_rocket`` - how many drops of blood per rocket (default is ``12``)
+- ``scarlet_gore_chance_cell`` - how likely will lightning cuase bleeding (default is ``.6``)
+- ``scarlet_gore_multiplier_cell`` - how many drops of blood per lightning (default is ``6``)
+- ``scarlet_gore_limit_shot`` - roll chance to bleed for the entire shot (``0`` or ``1``, default is ``0``)
+- ``scarlet_gore_limit_drop`` - roll chance to bleed for each individual blood drop (``0`` or ``1``, default is ``1``)
+- ``scarlet_football`` - make enemy heads kickable like a football (``0`` or ``1``, default is ``1``)
+
+### Weapon Settings
+
 - ``scarlet_dmg_axe`` - set the damage done by axes (default is ``24``)
-- ``scarlet_dmg_shells`` - set the damage done by bullets (default is ``4``)
+- ``scarlet_bullets_in_shell_sg`` - set # bullets in a shell from a shotgun (default is ``6``)
+- ``scarlet_bullets_in_shell_ssg`` - set # bullets in 2 shells from a super shotgun (default is ``14``)
+- ``scarlet_dmg_bullets`` - set the damage done by bullets (default is ``4``)
 - ``scarlet_dmg_nails`` - set the damage done by nails (default is ``9``)
 - ``scarlet_dmg_rockets`` - set the damage done by rockets (default is ``120``)
 - ``scarlet_dmg_cells`` - set the damage done by lightning (default is ``30``)
@@ -89,10 +103,10 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 
 Control bots via these console commands:
 
-- ``skill 3`` - set the bot skill level (``0`` to ``3``)
-- ``teamplay 1`` - turn on teamplay mode (``1`` or ``0``)
-- ``deathmatch 1`` - turn on deathmatch mode (``1`` or ``0``)
-- ``coop 0`` - turn on coop mode (``1`` or ``0``)
+- ``skill`` - set the bot skill level (``0`` to ``3``)
+- ``teamplay`` - turn on teamplay mode (``0`` or ``1``)
+- ``deathmatch`` - turn on deathmatch mode (``0`` or ``1``)
+- ``coop`` - turn on coop mode (``0`` or ``1``)
 - ``impulse 100`` - add a bot to the game
 - ``impulse 101`` - add a bot to the other team
 - ``impulse 102`` - remove most recently added bot
