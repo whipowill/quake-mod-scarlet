@@ -68,13 +68,13 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 ### Gore Settings
 
 - ``scarlet_gore`` - multiplier for bleed effects (anything >= ``0``, default is ``3``)
-- ``scarlet_gore_chance_bullet`` - how likely will a bullet cuase bleeding (default is ``.3``)
+- ``scarlet_gore_chance_bullet`` - how likely will a bullet cause bleeding (default is ``.3``)
 - ``scarlet_gore_multiplier_bullet`` - how many drops of blood per bullet (default is ``1``)
-- ``scarlet_gore_chance_nail`` - how likely will a nail cuase bleeding (default is ``.6``)
+- ``scarlet_gore_chance_nail`` - how likely will a nail cause bleeding (default is ``.6``)
 - ``scarlet_gore_multiplier_nail`` - how many drops of blood per nail (default is ``1``)
-- ``scarlet_gore_chance_rocket`` - how likely will a rocket cuase bleeding (default is ``.8``)
+- ``scarlet_gore_chance_rocket`` - how likely will a rocket cause bleeding (default is ``.8``)
 - ``scarlet_gore_multiplier_rocket`` - how many drops of blood per rocket (default is ``12``)
-- ``scarlet_gore_chance_cell`` - how likely will lightning cuase bleeding (default is ``.6``)
+- ``scarlet_gore_chance_cell`` - how likely will lightning cause bleeding (default is ``.6``)
 - ``scarlet_gore_multiplier_cell`` - how many drops of blood per lightning (default is ``6``)
 - ``scarlet_gore_limit_shot`` - roll chance to bleed for the entire shot (``0`` or ``1``, default is ``0``)
 - ``scarlet_gore_limit_drop`` - roll chance to bleed for each individual blood drop (``0`` or ``1``, default is ``1``)
