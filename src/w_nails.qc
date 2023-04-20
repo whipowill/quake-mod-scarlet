@@ -56,7 +56,7 @@ void() W_FireNailgun =
 	// default sv_maxvelocity is 2000, any higher leads to weird 
 	// angular offsets caused by clamping the velocity
 	launch_nail(org, dir * 1996);
-	self.attack_finished = time + 0.095;
+	self.attack_finished = time + cvar("scarlet_rof_ng");
 }
 
 void() spike_unfatten = { self.movetype = MOVETYPE_FLY; }
@@ -82,7 +82,7 @@ void() W_FirePerforator =
 	spike1.nextthink = time + 0.25;
 	spike2.nextthink = time + 0.3;
 	
-	self.attack_finished = time + 0.095;
+	self.attack_finished = time + cvar("scarlet_rof_sng");
 	
 	if (has_quad(self))
 	{

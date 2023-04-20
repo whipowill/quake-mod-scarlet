@@ -137,7 +137,7 @@ void() W_FireShotgun =
 	// for ai_nav:
 	/*if (nav_w_nodeLink())
 	{
-		self.attack_finished = time + 0.5;
+		self.attack_finished = time + cvar("scarlet_rof_sg");
 		return;
 	}*/
 	
@@ -151,7 +151,7 @@ void() W_FireShotgun =
 
 	ClearMultiDamage ();
 	FireBullets (cvar("scarlet_bullets_in_shell_sg"), dir, '0.04 0.04 0'); // was 6, SCARLET - custom ammo integration.
-	self.attack_finished = time + 0.5;
+	self.attack_finished = time + cvar("scarlet_rof_sg");
 	
 	ApplyMultiDamage ();
 }
@@ -169,7 +169,7 @@ void() W_FireSuperShotgun =
 	// for ai_nav:
 	/*if (nav_w_nodeLinkSpecial())
 	{
-		self.attack_finished = time + 0.5;
+		self.attack_finished = time + cvar("scarlet_rof_ssg");
 		return;
 	}*/
 
@@ -190,7 +190,7 @@ void() W_FireSuperShotgun =
 	ClearMultiDamage ();
 
 	FireBullets (cvar("scarlet_bullets_in_shell_ssg"), dir, '0.14 0.08 0'); // was 14, SCARLET - custom ammo integration.
-	self.attack_finished = time + 0.7;
+	self.attack_finished = time + cvar("scarlet_rof_ssg");
 	
 	ApplyMultiDamage ();
 

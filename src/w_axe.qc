@@ -60,7 +60,7 @@ void() W_AxeSwing =
 	W_AxeWhiffSound();
 		self.weaponframe = 10 * (floor(4.99 * random()));
 		self.touch_time = time + 0.1;
-		self.attack_finished = time + 0.49;
+		self.attack_finished = time + cvar("scarlet_rof_axe");
 	self.think1 = player_axe;
 	W_AxeThink();
 }

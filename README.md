@@ -10,7 +10,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
 - **Multiplayer Bots** - add robot players to deathmatch, teamplay, and coop games
 - **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.19)
 - **Blood & Gore** - bathe in the blood of your enemies w/ scalable gore setting
-- **Weapons Balance** - find the perfect balance w/ configurable weapon damage
+- **Weapons Balance** - find the perfect balance w/ configurable weapons
 - **Item Resupply** - force items to respawn in singleplayer and coop games
 - **Name Tags** - see other player names Halo-style when aiming at them
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
@@ -22,10 +22,11 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
 <img src="https://i.imgur.com/FabFtS1.gif" width="100%">
 
 - April 2023 - ``v1.2.x``
-    - Added option to disable weapon autoswitch
-    - Weapons system now completely configurable
     - Gore system overhauled and is now scalable
-    - Shotgun bullets-per-shell now configurable
+    - Added option to disable weapon autoswitch
+    - Weapons damage now completely configurable
+    - Weapons bullets-per-shell now configurable
+    - Weapons rate of fire now configurable
 - August 2022 - ``v1.1.x``
     - Bots now choose from over 500 random names
     - Bots now know if they are losing and become depressed
@@ -97,6 +98,13 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_max_nails`` - set the max amount of nails (default is ``200``)
 - ``scarlet_max_rockets`` - set the max amount of rockets (default is ``100``)
 - ``scarlet_max_cells`` - set the max amount of cells (default is ``100``)
+- ``scarlet_rof_axe`` - set axe rate of fire delay in seconds (default is ``.49
+- ``scarlet_rof_sg`` - set shotgun rate of fire delay in seconds (default is ``.5``)
+- ``scarlet_rof_ssg`` - set super shotgun rate of fire delay in seconds (default is ``.7``)
+- ``scarlet_rof_ng`` - set nailgun rate of fire delay in seconds (default is ``.095``)
+- ``scarlet_rof_sng`` - set perforator rate rate of fire delay in seconds (default is ``.095``)
+- ``scarlet_rof_rl`` - set rocket launcher rate of fire delay in seconds (default is ``.8``)
+- ``scarlet_rof_gl`` - set grenade launcher rate of fire delay in seconds (default is ``.6``)
 - ``scarlet_autoswitch`` - set if the game will autoswitch weapons (``0`` or ``1``, default is ``1``)
 
 ## Usage

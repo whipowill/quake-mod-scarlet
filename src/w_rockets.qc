@@ -90,7 +90,7 @@ void() W_FireRocket =
 	loc = self.origin + v_forward * 8 + '0 0 16';
 	
 		missile = launch_rocket( loc, v_forward * 1000 );
-		self.attack_finished = time + 0.8;
+		self.attack_finished = time + cvar("scarlet_rof_rl");
 }
 
 //=============================================================================
@@ -157,7 +157,7 @@ void() W_FireGrenade =
 	}
 	
 	g = launch_grenade(self.origin, gvel);
-	self.attack_finished = time + 0.6;
+	self.attack_finished = time + cvar("scarlet_rof_gl");
 	g.touch = GrenadeTouch;
 	g.th_die = GrenadeExplode;
 }
