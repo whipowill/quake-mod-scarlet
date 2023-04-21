@@ -27,7 +27,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
     - Weapons damage now completely configurable
     - Weapons bullets-per-shell now configurable
     - Weapons rate of fire now configurable
-    - Perforator spread and speed no configurable
+    - Perforator spread and speed now configurable
 - August 2022 - ``v1.1.x``
     - Bots now choose from over 500 random names
     - Bots now know if they are losing and become depressed
@@ -52,7 +52,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
 - Make sure your ``C:/path/to/quake/id1/maps/`` folder has all your [waypoint](https://github.com/whipowill/quake-mod-frikbot-waypoints) files
 - Run the game w/ ``-game scarlet -particles 99999 -listen 16 -condebug``
 
-See my other [repository](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory, which includes all the best multiplayer maps and waypoint files to use w/ Scarlet.  Of particulate note is this [directory](https://github.com/whipowill/quake-dir/tree/master/scarlet/settings) where I experiment w/ custom settings.
+See my other [repository](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory, which includes all the best multiplayer maps and waypoint files to use w/ Scarlet.  Of note is this [directory](https://github.com/whipowill/quake-dir/tree/master/scarlet/settings) where I experiment w/ custom Scarlet settings.
 
 ## Options
 
