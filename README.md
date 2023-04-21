@@ -27,6 +27,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
     - Weapons damage now completely configurable
     - Weapons bullets-per-shell now configurable
     - Weapons rate of fire now configurable
+    - Perforator spread and speed no configurable
 - August 2022 - ``v1.1.x``
     - Bots now choose from over 500 random names
     - Bots now know if they are losing and become depressed
@@ -51,7 +52,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
 - Make sure your ``C:/path/to/quake/id1/maps/`` folder has all your [waypoint](https://github.com/whipowill/quake-mod-frikbot-waypoints) files
 - Run the game w/ ``-game scarlet -particles 99999 -listen 16 -condebug``
 
-See my other [repo](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory, including all the best multiplayer maps and waypoint files to use w/ Scarlet.
+See my other [repository](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory, which includes all the best multiplayer maps and waypoint files to use w/ Scarlet.  Of particulate note is this [directory](https://github.com/whipowill/quake-dir/tree/master/scarlet/settings) where I experiment w/ custom settings.
 
 ## Options
 
@@ -98,13 +99,15 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_max_nails`` - set the max amount of nails (default is ``200``)
 - ``scarlet_max_rockets`` - set the max amount of rockets (default is ``100``)
 - ``scarlet_max_cells`` - set the max amount of cells (default is ``100``)
-- ``scarlet_rof_axe`` - set axe rate of fire delay in seconds (default is ``.49
+- ``scarlet_rof_axe`` - set axe rate of fire delay in seconds (default is ``.49``)
 - ``scarlet_rof_sg`` - set shotgun rate of fire delay in seconds (default is ``.5``)
 - ``scarlet_rof_ssg`` - set super shotgun rate of fire delay in seconds (default is ``.7``)
 - ``scarlet_rof_ng`` - set nailgun rate of fire delay in seconds (default is ``.095``)
-- ``scarlet_rof_sng`` - set perforator rate rate of fire delay in seconds (default is ``.095``)
+- ``scarlet_rof_sng`` - set perforator rate of fire delay in seconds (default is ``.095``)
 - ``scarlet_rof_rl`` - set rocket launcher rate of fire delay in seconds (default is ``.8``)
 - ``scarlet_rof_gl`` - set grenade launcher rate of fire delay in seconds (default is ``.6``)
+- ``scarlet_spr_sng`` - set spread of nail from perferator (default is ``2``)
+- ``scarlet_spd_sng`` - set speed of nails from perferator (default is ``1020``)
 - ``scarlet_autoswitch`` - set if the game will autoswitch weapons (``0`` or ``1``, default is ``1``)
 
 ## Usage

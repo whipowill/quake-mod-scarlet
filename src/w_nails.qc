@@ -73,8 +73,8 @@ void() W_FirePerforator =
 	else if (mod(self.cnt, 4) == 3) m = '1 0 -1';
 	
 	entity spike1, spike2;
-	spike1 = launch_nail(W_SpikeOrigin(m), W_SpikeDir(v_forward, 2) * (940 + random()*30));
-	spike2 = launch_nail(W_SpikeOrigin(-m), W_SpikeDir(v_forward, 2) * (1020 + random()*30));
+	spike1 = launch_nail(W_SpikeOrigin(m), W_SpikeDir(v_forward, cvar("scarlet_spr_sng")) * cvar("scarlet_spd_sng"));
+	spike2 = launch_nail(W_SpikeOrigin(-m), W_SpikeDir(v_forward, cvar("scarlet_spr_sng")) * cvar("scarlet_spd_sng"));
 
 	// weaken the SNG at long distance while keeping the spread under control
 	spike1.think = spike_unfatten;
