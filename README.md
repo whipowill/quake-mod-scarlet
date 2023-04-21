@@ -24,10 +24,12 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
 - April 2023 - ``v1.2.x``
     - Gore system overhauled and is now scalable
     - Added option to disable weapon autoswitch
-    - Weapons damage now completely configurable
-    - Weapons bullets-per-shell now configurable
-    - Weapons rate of fire now configurable
-    - Perforator spread and speed now configurable
+    - Weapon damage now configurable
+    - Weapon bullets-per-shell now configurable
+    - Weapo rate of fire now configurable
+    - Weapon spread now configurable
+    - Weapon projectile speed now configurable
+    - Random bots will never be ``skill 0``
 - August 2022 - ``v1.1.x``
     - Bots now choose from over 500 random names
     - Bots now know if they are losing and become depressed
@@ -106,7 +108,11 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_rof_sng`` - set perforator rate of fire delay in seconds (default is ``.095``)
 - ``scarlet_rof_rl`` - set rocket launcher rate of fire delay in seconds (default is ``.8``)
 - ``scarlet_rof_gl`` - set grenade launcher rate of fire delay in seconds (default is ``.6``)
+- ``scarlet_spr_sg`` - set spread of bullets from shotgun (default is ``4``)
+- ``scarlet_spr_ssg`` - set spread of bullets from super shotgun (default is ``14``)
+- ``scarlet_spr_ng`` - set spread of bullets from nailgun (default is ``0``)
 - ``scarlet_spr_sng`` - set spread of nail from perferator (default is ``2``)
+- ``scarlet_spd_ng`` - set speed of nails from nailgun (default is ``1996``)
 - ``scarlet_spd_sng`` - set speed of nails from perferator (default is ``1020``)
 - ``scarlet_autoswitch`` - set if the game will autoswitch weapons (``0`` or ``1``, default is ``1``)
 

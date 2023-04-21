@@ -13,7 +13,7 @@ ssg:	12 * 5 = 60		/ 120 / 180 / 240 / 300
 ===============
 */
 
-vector(vector dir, vector spread) SpreadVector = 
+vector(vector dir, vector spread) SpreadVector =
 {
 	return dir + crandom()*spread_x*v_right + crandom()*spread_y*v_up;
 }
@@ -150,7 +150,7 @@ void() W_FireShotgun =
 	dir = aim (self, AUTOAIM_DIST);
 
 	ClearMultiDamage ();
-	FireBullets (cvar("scarlet_bullets_in_shell_sg"), dir, '0.04 0.04 0'); // was 6, SCARLET - custom ammo integration.
+	FireBullets (cvar("scarlet_bullets_in_shell_sg"), dir, Vector(cvar("scarlet_spr_sg")/100, cvar("scarlet_spr_sg")/100/2, 0)); // was 6, SCARLET - custom ammo integration.
 	self.attack_finished = time + cvar("scarlet_rof_sg");
 	
 	ApplyMultiDamage ();
@@ -189,7 +189,7 @@ void() W_FireSuperShotgun =
 
 	ClearMultiDamage ();
 
-	FireBullets (cvar("scarlet_bullets_in_shell_ssg"), dir, '0.14 0.08 0'); // was 14, SCARLET - custom ammo integration.
+	FireBullets (cvar("scarlet_bullets_in_shell_ssg"), dir, Vector(cvar("scarlet_spr_ssg")/100, cvar("scarlet_spr_ssg")/100/2, 0)); // was 14, SCARLET - custom ammo integration.
 	self.attack_finished = time + cvar("scarlet_rof_ssg");
 	
 	ApplyMultiDamage ();

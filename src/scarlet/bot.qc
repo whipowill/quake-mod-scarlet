@@ -1298,14 +1298,14 @@ void() BotImpulses =
 		bot_way_edit();
 	if (self.impulse == 110) // random team bot -whipowill
 	{
-		f = cvar("skill");
-		f = ceil(random() * f);
+		f = cvar("skill")-1;
+		f = 1+ceil(random() * f);
 		BotConnect(0, 0, f);
 	}
 	else if (self.impulse == 111) // random enemy bot -whipowill
 	{
-		f = cvar("skill");
-		f = ceil(random() * f);
+		f = cvar("skill")-1;
+		f = 1+ceil(random() * f);
 		BotConnect(1, 0, f);
 	}
 	else if (self.impulse == 113) // tele bots to player in coop -whipowill

@@ -51,11 +51,11 @@ void() W_FireNailgun =
 	else m_x = 2.5;	
 
 	org = W_SpikeOrigin(m);
-	dir = W_SpikeDir(v_forward, 0);
+	dir = W_SpikeDir(v_forward, cvar("scarlet_spr_ng"));
 
 	// default sv_maxvelocity is 2000, any higher leads to weird 
 	// angular offsets caused by clamping the velocity
-	launch_nail(org, dir * 1996);
+	launch_nail(org, dir * cvar("scarlet_spd_ng"));
 	self.attack_finished = time + cvar("scarlet_rof_ng");
 }
 

@@ -673,7 +673,7 @@ void() ClearRouteTable =
 	t = way_head;
 	while (t)
 	{
-		t. keys = FALSE;
+		t.keys = FALSE;
 		t.enemy = world;
 		t.items = -1; // not in table
 		t = t._next;
@@ -811,7 +811,7 @@ void() WaypointThink =
 		{
 			traceline(self.origin, self.target3_ent.origin, TRUE, self);
 			if (trace_fraction == 1)
-			FollowLink(self.target3_ent, AI_TELELINK_3);
+				FollowLink(self.target3_ent, AI_TELELINK_3);
 		}
 		if (self.target4_ent)
 		{
