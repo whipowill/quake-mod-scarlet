@@ -1,0 +1,90 @@
+{
+	"episodes": [
+		{
+			"dir": "copper",
+			"name": "Underdark Overbright"
+		}
+	],
+	"maps": [
+		{
+			"title": "Trapped in the Past",
+			"bsp": "start",
+			"episode": "copper",
+			"game": "copper",
+			"dm": false,
+			"coop": true,
+			"bots": false,
+			"sp": true
+		},
+		{
+			"title": "Space Jam",
+			"bsp": "udob1",
+			"episode": "copper",
+			"game": "copper",
+			"dm": false,
+			"coop": true,
+			"bots": false,
+			"sp": true
+		},
+		{
+			"title": "A Drowning",
+			"bsp": "udob2",
+			"episode": "copper",
+			"game": "copper",
+			"dm": false,
+			"coop": true,
+			"bots": false,
+			"sp": true
+		},
+		{
+			"title": "Pit of the Living Dead",
+			"bsp": "udob3",
+			"episode": "copper",
+			"game": "copper",
+			"dm": false,
+			"coop": true,
+			"bots": false,
+			"sp": true
+		},
+		{
+			"title": "A Saint Nobody Has Heard Of",
+			"bsp": "udob4",
+			"episode": "copper",
+			"game": "copper",
+			"dm": false,
+			"coop": true,
+			"bots": false,
+			"sp": true
+		},
+		{
+			"title": "Last Waltz",
+			"bsp": "udob5",
+			"episode": "copper",
+			"game": "copper",
+			"dm": false,
+			"coop": true,
+			"bots": false,
+			"sp": true
+		},
+		{
+			"title": "How Deep Is Your Lava",
+			"bsp": "udob6",
+			"episode": "copper",
+			"game": "copper",
+			"dm": false,
+			"coop": true,
+			"bots": false,
+			"sp": true
+		},
+		{
+			"title": "House of Pain",
+			"bsp": "udob7",
+			"episode": "copper",
+			"game": "copper",
+			"dm": false,
+			"coop": true,
+			"bots": false,
+			"sp": true
+		}
+	]
+}
