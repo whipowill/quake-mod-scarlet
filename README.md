@@ -26,10 +26,12 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
     - Added option to disable weapon autoswitch
     - Weapon damage now configurable
     - Weapon bullets-per-shell now configurable
-    - Weapo rate of fire now configurable
+    - Weapon rate of fire now configurable
     - Weapon spread now configurable
     - Weapon projectile speed now configurable
     - Random bots will never be ``skill 0``
+    - Thunderbolt range now extended to infinite
+    - Thunderbolt can now have a rate of fire
 - August 2022 - ``v1.1.x``
     - Bots now choose from over 500 random names
     - Bots now know if they are losing and become depressed
@@ -54,7 +56,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
 - Make sure your ``C:/path/to/quake/id1/maps/`` folder has all your [waypoint](https://github.com/whipowill/quake-mod-frikbot-waypoints) files
 - Run the game w/ ``-game scarlet -particles 99999 -listen 16 -condebug``
 
-See my other [repository](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory, which includes all the best multiplayer maps and waypoint files to use w/ Scarlet.  Of note is this [directory](https://github.com/whipowill/quake-dir/tree/master/scarlet/settings) where I experiment w/ custom Scarlet settings.
+See my other [repository](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory, which includes all the best multiplayer maps and waypoint files to use w/ Scarlet.  The reason I created this mod is so I can change the game to my tastes, and this [directory](https://github.com/whipowill/quake-dir/tree/master/scarlet/settings) is where I experiment w/ custom settings.
 
 ## Options
 
@@ -108,6 +110,7 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_rof_sng`` - set perforator rate of fire delay in seconds (default is ``.095``)
 - ``scarlet_rof_rl`` - set rocket launcher rate of fire delay in seconds (default is ``.8``)
 - ``scarlet_rof_gl`` - set grenade launcher rate of fire delay in seconds (default is ``.6``)
+- ``scarlet_rof_tb`` - set thunderbolt rate of fire delayd in seconds (default is ``0``)
 - ``scarlet_spr_sg`` - set spread of bullets from shotgun (default is ``4``)
 - ``scarlet_spr_ssg`` - set spread of bullets from super shotgun (default is ``14``)
 - ``scarlet_spr_ng`` - set spread of bullets from nailgun (default is ``0``)

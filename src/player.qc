@@ -238,6 +238,13 @@ void() player_light1   =[$light1, player_light2  ]
 		self.weaponframe = 1;
 	SuperDamageSound();
 	W_FireLightning();
+
+	if (cvar("scarlet_rof_tb"))
+	{
+		player_run();
+		return;
+	}
+
 	self.attack_finished = time + 0.2;
 }
 void() player_light2   =[$light2, player_light1  ]
@@ -254,6 +261,13 @@ void() player_light2   =[$light2, player_light1  ]
 		self.weaponframe = 1;
 	SuperDamageSound();
 	W_FireLightning();
+
+	if (cvar("scarlet_rof_tb"))
+	{
+		player_run();
+		return;
+	}
+
 	self.attack_finished = time + 0.2;
 }
 
