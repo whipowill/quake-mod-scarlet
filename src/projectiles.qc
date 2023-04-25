@@ -406,7 +406,7 @@ entity(vector org, vector vel) launch_nail =
 	spike.touch = spike_touch;
 	
 	SUB_ChangeModel (spike, "progs/spike.mdl");	
-	spike.dmg = 9;
+	spike.dmg = cvar("scarlet_dmg_nails"); // was 9, SCARLET - custom dmg integration.
 	
 	return spike;
 }
@@ -425,7 +425,7 @@ entity(vector org, vector vel) launch_knightspike =
 	spike.touch = spike_touch;
 	SUB_ChangeModel (spike, "progs/k_spike.mdl");
 	
-	spike.dmg = 8;
+	spike.dmg = cvar("scarlet_dmg_nails"); // was 8, SCARLET - custom dmg integration.
 	
 	return spike;
 }
@@ -443,7 +443,7 @@ entity(vector org, vector vel) launch_wizspike =
 	
 	spike = launch_projectile(org, vel, "wizspike");	// FLYMISSILE
 	spike.touch = spike_touch;
-	spike.dmg = 9;
+	spike.dmg = cvar("scarlet_dmg_nails"); // was 9, SCARLET - custom dmg integration.
 	SUB_ChangeModel (spike, "progs/w_spike.mdl");
 	
 	return spike;	
@@ -466,7 +466,7 @@ entity(vector org, vector vel) launch_laser =
 
 	SUB_ChangeModel (spike, "progs/laser.mdl");
 
-	spike.dmg = 12;
+	spike.dmg = cvar("scarlet_dmg_cells") / 2; // was 12, SCARLET - custom dmg integration.
 	
 	return spike;
 }
@@ -483,7 +483,7 @@ entity(vector org, vector vel) launch_rocket =
 	entity missile;
 	
 	missile = launch_projectile(org, vel, "rocket");	// FLYMISSILE
-	missile.dmg = 100;
+	missile.dmg = cvar("scarlet_dmg_rockets"); // was 100, SCARLET - custom dmg integration.
 	missile.touch = T_MissileTouch;
 	missile.type = "missile";
 	

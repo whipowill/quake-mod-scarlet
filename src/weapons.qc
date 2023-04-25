@@ -50,6 +50,7 @@ void() W_Precache =
 	precache_model ("progs/v_rock2.mdl");
 	precache_model ("progs/v_light.mdl");
 
+	precache_model ("progs/zom_gib.mdl"); // SCARLET - gore integration.
 }
 
 
@@ -161,6 +162,8 @@ Deathmatch weapon change rules for picking up a weapon
 */
 void(float new) W_BetterWeapon =
 {
+	if (!cvar("scarlet_autoswitch")) return; // if no autoswitch, bail -whipowill
+
 	if (!deathmatch)
 	{
 		// don't switch to explosive weapons with quad
@@ -196,6 +199,8 @@ float(float weap) W_HasAmmo =
 
 float() W_BestWeapon =
 {
+	//if (!cvar("scarlet_autoswitch")) return; // if no autoswitch, bail -whipowill
+
 	self.lip = 0;	// reset nailgun barrel cycle
 	
 	if(W_HasAmmo(IT_SUPER_NAILGUN))
@@ -286,7 +291,7 @@ void() W_Attack =
 	else if (self.weapon == IT_LIGHTNING)
 	{
 		player_light1();
-		self.attack_finished = time + 0.1;
+		//self.attack_finished = time + 0.1;
 		sound (self, CHAN_AUTO, "weapons/lstart.wav", 1, ATTN_NORM);
 	}
 }

@@ -98,6 +98,15 @@ void()	player_run =[	$rockrun1,	player_run	]
 			self.walkframe = 0;
 		self.frame = self.frame + self.walkframe;
 	}
+
+	// SCARLET - footsteps integration.
+	if (self.walkframe == 1 || self.walkframe == 4 )
+		if (checkbottom(self) == TRUE)
+			if (self.waterlevel == 0)
+				WalkSound (self);
+	// SCARLET - end.
+
+
 	self.walkframe = self.walkframe + 1;
 }
 
@@ -230,6 +239,13 @@ void() player_light1   =[$light1, player_light2  ]
 		self.weaponframe = 1;
 
 	W_FireLightning();
+
+	if (cvar("scarlet_rof_tb"))
+	{
+		player_run();
+		return;
+	}
+
 	self.attack_finished = time + 0.2;
 }
 void() player_light2   =[$light2, player_light1  ]
@@ -246,6 +262,13 @@ void() player_light2   =[$light2, player_light1  ]
 		self.weaponframe = 1;
 
 	W_FireLightning();
+
+	if (cvar("scarlet_rof_tb"))
+	{
+		player_run();
+		return;
+	}
+
 	self.attack_finished = time + 0.2;
 }
 
@@ -477,6 +500,9 @@ void() PlayerDie =
 	clientsAlive -= 1;
 
 	ClientObituary();	// moved from Killed() so it doesn't get called when non-players die
+
+	if (ScoreKeeperEndgame()) execute_changelevel(); // SCARLET - team score integration.
+
 	set_respawn_delay();	// coop 1 respawn lockout
 	
 	if ((deathmatch || coop) && mapname != "start")

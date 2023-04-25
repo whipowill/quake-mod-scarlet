@@ -43,7 +43,7 @@ void() T_ExplosiveTouch =
 void() T_MissileExplode =
 {
 	local float	damg;
-	damg = 100 + random()*20;
+	damg = cvar("scarlet_dmg_rockets") - ((cvar("scarlet_dmg_rockets")/5) + random()*(cvar("scarlet_dmg_rockets")/5)); // was 100, SCARLET - custom dmg integration.
 	
 	if (other.health)
 	{
@@ -55,7 +55,9 @@ void() T_MissileExplode =
 	}
 
 	// don't do radius damage to other, because all damage will be done in the impact
-	T_RadiusDamage (self, self.trueowner, 120, other);
+	T_RadiusDamage (self, self.trueowner, cvar("scarlet_dmg_rockets"), other); // was 120, SCARLET - custom dmg integration.
+
+	ThrowBloodSplatByExplosion(self, cvar("scarlet_dmg_rockets")); // SCARLET - gore integration.
 }
 
 void() T_MissileTouch =
@@ -86,7 +88,7 @@ void() W_FireRocket =
 	local entity missile;
 	local vector loc;
 	
-	self.currentammo = self.ammo_rockets = self.ammo_rockets - 1;
+	self.currentammo = self.ammo_rockets = self.ammo_rockets - cvar("scarlet_dec_rockets"); // was 1, SCARLET - custom ammo integration.
 	
 	sound (self, CHAN_WEAPON, "weapons/sgun1.wav", 1, ATTN_NORM);
 
@@ -96,7 +98,7 @@ void() W_FireRocket =
 	loc = self.origin + v_forward * 8 + '0 0 16';
 	
 		missile = launch_rocket( loc, v_forward * 1000 );
-		self.attack_finished = time + 0.8;
+		self.attack_finished = time + cvar("scarlet_rof_rl");
 }
 
 //=============================================================================
@@ -111,8 +113,10 @@ GERNADES
 
 void() GrenadeExplode =
 {
-	T_RadiusDamage (self, self.trueowner, 120, world);
-	//T_GibDownedZombies (self, 120);
+	T_RadiusDamage (self, self.trueowner, cvar("scarlet_dmg_rockets"), world); // was 120, SCARLET - custom dmg integration.
+	//T_GibDownedZombies (self, cvar("scarlet_dmg_rockets"));
+
+	ThrowBloodSplatByExplosion(self, cvar("scarlet_dmg_rockets")); // SCARLET - gore integration.
 	
 	BecomeExplosion ();
 }
@@ -144,7 +148,7 @@ void() W_FireGrenade =
 	float base;
 	vector gvel;
 	
-	self.currentammo = self.ammo_rockets = self.ammo_rockets - 1;
+	self.currentammo = self.ammo_rockets = self.ammo_rockets - cvar("scarlet_dec_rockets"); // was 1, SCARLET - custom ammo integration.
 	sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
 	self.punchangle_x = -2;
 
@@ -161,7 +165,7 @@ void() W_FireGrenade =
 	}
 	
 	g = launch_grenade(self.origin, gvel);
-	self.attack_finished = time + 0.6;
+	self.attack_finished = time + cvar("scarlet_rof_gl");
 	g.touch = GrenadeTouch;
 	g.th_die = GrenadeExplode;
 }

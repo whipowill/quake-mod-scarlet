@@ -127,7 +127,7 @@ void() item_artifact_invulnerability =
 	self.netname = "Pentagram of Protection";
 	self.items = IT_INVULNERABILITY;
 	setsize (self, '-16 -16 -24', '16 16 32');
-	if (deathmatch)
+	if (deathmatch || cvar("scarlet_resupply")) // SCARLET - resupply integration.
 		self.wait = 300;
 	StartItem ();
 }
@@ -170,7 +170,7 @@ void() item_artifact_envirosuit =
 	self.netname = "Biosuit";
 	self.items = IT_SUIT;
 	setsize (self, '-16 -16 -8', '16 16 48');
-	if (deathmatch)
+	if (deathmatch || cvar("scarlet_resupply")) // SCARLET - resupply integration.
 		self.wait = 60;
 	StartItem ();
 }
@@ -216,7 +216,7 @@ void() item_artifact_invisibility =
 	self.netname = "Ring of Shadows";
 	self.items = IT_INVISIBILITY;
 	setsize (self, '-16 -16 -24', '16 16 32');
-	if (deathmatch)
+	if (deathmatch || cvar("scarlet_resupply")) // SCARLET - resupply integration.
 		self.wait = 300;
 	StartItem ();
 }
@@ -261,7 +261,7 @@ void() item_artifact_super_damage =
 	self.noise = "items/damage.wav";
 	self.items = IT_QUAD;
 	setsize (self, '-16 -16 -24', '16 16 32');
-	if (deathmatch)
+	if (deathmatch || cvar("scarlet_resupply")) // SCARLET - resupply integration.
 		self.wait = 60;
 	StartItem ();
 }

@@ -8,7 +8,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
 
 - **User Control** - take control of the game w/ a host of new config options
 - **Multiplayer Bots** - add robot players to deathmatch, teamplay, and coop games
-- **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.19)
+- **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.20)
 - **Blood & Gore** - bathe in the blood of your enemies w/ scalable gore setting
 - **Weapons Balance** - find the perfect balance w/ configurable weapons
 - **Item Resupply** - force items to respawn in singleplayer and coop games
@@ -32,6 +32,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
     - Random bots will never be ``skill 0``
     - Thunderbolt range now extended to infinite
     - Thunderbolt can now have a rate of fire
+    - Upgraded to Copper v1.20
 - August 2022 - ``v1.1.x``
     - Bots now choose from over 500 random names
     - Bots now know if they are losing and become depressed
@@ -39,7 +40,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
     - Bots can now teleport to your location in coop
     - Added nametags, footsteps, and gore
 - July 2022 - ``v1.0.x``
-    - Merged FrikBot w/ Copper
+    - Merged FrikBot w/ Copper v1.19
     - Bots ``skill`` now scales linearly from ``0`` to ``3``
     - Bots can now be spawned w/ random ``skill`` levels
     - Bots no longer crowd together in team games

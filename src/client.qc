@@ -68,7 +68,7 @@ void() SetChangeParms =
 
 void() SetNewParms =
 {
-	if (skill == 3)
+	if (skill == 3 && !deathmatch) // SCARLET - error fix.
 		parm2 = 50;
 	else
 		parm2 = 100;
@@ -466,6 +466,9 @@ entity() SelectSpawnPoint =
 	
 	if (deathmatch)
 	{
+		return RandomSpawnLocation(); // SCARLET - bots integration.
+
+		/*
 		spot = lastspawn;
 		pcount = ceil(random() * 4);
 		while (pcount)
@@ -480,6 +483,7 @@ entity() SelectSpawnPoint =
 		}
 		lastspawn = spot;
 		return spot;
+		*/
 	}
 
 	// choose a start point
@@ -543,7 +547,7 @@ void() PutClientInServer =
 	self.classname = "player";
 	
 	// new for nightmare: reduced max health instead of the manky attack time scale
-	if (skill == 3)
+	if (skill == 3 && !deathmatch) // SCARLET - error fix.
 		self.max_health = 50;
 	else
 		self.max_health = 100;
@@ -1438,6 +1442,9 @@ Called every frame before physics are run
 */
 void() PlayerPreThink =
 {
+	if (BotPreFrame()) return; // SCARLET - bots integration.
+	NameTag(); // SCARLET - nametags integration.
+
 	if (cleanUpClientShit)
 	{
 		fog_setFromEnt( self, self );
@@ -1517,6 +1524,8 @@ Called every frame after physics are run
 */
 void() PlayerPostThink =
 {
+	if (BotPostFrame()) return; // SCARLET - bots integration.
+
 	if ( intermission_running ) return;
 	
 	if (self.view_ofs == '0 0 0')
@@ -1611,6 +1620,8 @@ called when a player connects to a server
 */
 void() ClientConnect =
 {
+	ClientInRankings(); // SCARLET - bots integration.
+
 	bprint (self.netname);
 	bprint (" entered the game\n");
 	
@@ -1632,6 +1643,8 @@ called when a player disconnects from a server
 */
 void() ClientDisconnect =
 {
+	ClientDisconnected(); // SCARLET - bots integration.
+
 	if (gameover)
 		return;
 	// if the level end trigger has been activated, just return

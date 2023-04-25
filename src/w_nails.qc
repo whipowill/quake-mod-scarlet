@@ -46,17 +46,18 @@ void() W_FireNailgun =
 	makevectors( v );
 
 	sound (self, CHAN_WEAPON, "weapons/rocket1i.wav", 1, ATTN_NORM);
-	self.currentammo = self.ammo_nails = self.ammo_nails - 1;
+	self.currentammo = self.ammo_nails = self.ammo_nails - cvar("scarlet_dec_nails"); // was 1, SCARLET - custom ammo integration.
 	offset = VEC_ORIGIN;
 	if ( mod( self.cnt, 2 ) ) offset_x = -2.5;
 	else offset_x = 2.5;	
 
 	org = W_SpikeOrigin(offset);
+	dir = W_SpikeDir(v_forward, cvar("scarlet_spr_ng")); // Lunaran removed this in 1.20? SCARLET spread
 
 	// default sv_maxvelocity is 2000, any higher leads to weird 
 	// angular offsets caused by clamping the velocity
-	launch_nail(org, dir * 1996);
-	self.attack_finished = time + 0.095;
+	launch_nail(org, dir * cvar("scarlet_spd_ng"));
+	self.attack_finished = time + cvar("scarlet_rof_ng");
 }
 
 void() spike_unfatten = { self.movetype = MOVETYPE_FLY; }
@@ -65,7 +66,7 @@ void() W_FirePerforator =
 {
 	vector offset;
 	sound (self, CHAN_WEAPON, "weapons/spike2.wav", 1, ATTN_NORM);
-	self.currentammo = self.ammo_nails = self.ammo_nails - 2;
+	self.currentammo = self.ammo_nails = self.ammo_nails - (cvar("scarlet_dec_nails") * 2); // was 2, SCARLET - custom ammo integration.
 	
 	if (mod(self.cnt, 4) == 0) offset = '0 0 1.25';
 	else if (mod(self.cnt, 4) == 1) offset = '1 0 1';
@@ -73,8 +74,8 @@ void() W_FirePerforator =
 	else if (mod(self.cnt, 4) == 3) offset = '1 0 -1';
 	
 	entity spike1, spike2;
-	spike1 = launch_nail(W_SpikeOrigin(offset), W_SpikeDir(v_forward, 2) * (940 + random()*30));
-	spike2 = launch_nail(W_SpikeOrigin(-offset), W_SpikeDir(v_forward, 2) * (1020 + random()*30));
+	spike1 = launch_nail(W_SpikeOrigin(offset), W_SpikeDir(v_forward, cvar("scarlet_spr_sng")) * cvar("scarlet_spd_sng"));
+	spike2 = launch_nail(W_SpikeOrigin(-offset), W_SpikeDir(v_forward, cvar("scarlet_spr_sng")) * cvar("scarlet_spd_sng"));
 
 	// weaken the SNG at long distance while keeping the spread under control
 	spike1.think = spike_unfatten;
@@ -82,7 +83,7 @@ void() W_FirePerforator =
 	spike1.nextthink = time + 0.25;
 	spike2.nextthink = time + 0.3;
 	
-	self.attack_finished = time + 0.095;
+	self.attack_finished = time + cvar("scarlet_rof_sng");
 	
 	if (has_quad(self))
 	{
@@ -93,8 +94,8 @@ void() W_FirePerforator =
 		
 		// the dumb solution is to make one nail do 0 dmg and the other do 18 in quad mode
 		//   so the math works out like the old math and the quad SNG still feels right
-		spike2.dmg = 18;
-		spike1.dmg = 18;
+		spike2.dmg = cvar("scarlet_dmg_nails")*2; // SCARLET - custom dmg integration.
+		spike1.dmg = cvar("scarlet_dmg_nails")*2; // SCARLET - custom dmg integration.
 		spike2.buddy = spike1;
 		spike1.buddy = spike2;
 		// first one to hit does its damage and then nerfs its 'buddy'
@@ -147,6 +148,12 @@ void() spike_touch =
 		{
 			spawn_touchblood (self.dmg);
 			T_Damage (other, self, self.trueowner, self.dmg);
+
+			// SCARLET - gore integration.
+			self.angles_x = self.angles_x*-1;
+			makevectors(self.angles);
+			ThrowBloodSplat(v_forward, self.origin, other, self.dmg, 2);
+			// SCARLET - end.
 		}
 		else
 		{

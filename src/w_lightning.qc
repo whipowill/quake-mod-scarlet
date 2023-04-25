@@ -116,7 +116,9 @@ void(vector start, vector limit, entity from, float damage) LightningBeam =
 		// need to preserve that flag until we're done so we don't double damage
 		AddMultiDamage (targ, damage);
 		// clear and apply multidamage must be called in an enclosing function!
-		particle (end, '0 0 100', 225, damage*4);
+		//particle (end, '0 0 100', 225, damage*4);
+
+		ThrowBloodSplatByLightning(start, trace_endpos, trace_ent, damage); // SCARLET - gore integration.
 	}
 	
 	// we do the lightning beam after the chain lightning recursion as the stack unwinds,
@@ -151,16 +153,18 @@ void(vector start, vector limit, entity from, float damage) LightningBeam =
 	if (trace_ent.takedamage && !(trace_ent.customflags & CFL_ZAPPED))	// don't add damage to any target twice
 	{
 		trace_ent.customflags |= CFL_ZAPPED;
-		particle (trace_endpos, '0 0 100', 225, damage*4);
+		//particle (trace_endpos, '0 0 100', 225, damage*4);
 		AddMultiDamage (trace_ent, damage);
+		ThrowBloodSplatByLightning(start, trace_endpos, trace_ent, damage); // SCARLET - gore integration.
 	}
 
 	traceline2(start - left, end - left, from, 0);
 	if (trace_ent.takedamage && !(trace_ent.customflags & CFL_ZAPPED))
 	{
 		trace_ent.customflags |= CFL_ZAPPED;
-		particle (trace_endpos, '0 0 100', 225, damage*4);
+		//particle (trace_endpos, '0 0 100', 225, damage*4);
 		AddMultiDamage (trace_ent, damage);
+		ThrowBloodSplatByLightning(start, trace_endpos, trace_ent, damage); // SCARLET - gore integration.
 	}
 }
 
@@ -257,7 +261,7 @@ float(entity src, entity att, float dmg) W_ChainLightning =
 			WriteCoord (MSG_BROADCAST, dst_y - dir_y);
 			WriteCoord (MSG_BROADCAST, dst_z - dir_z);					
 			dmgback = W_ChainLightning(targ1, att, dmg - LG_DMG_OUT);
-			particle (hit1, '0 0 100', 225, 3 * dmgback);
+			//particle (hit1, '0 0 100', 225, 3 * dmgback);
 			
 			if (targ2 != src) {
 				dst = BoundsCenter(targ2);
@@ -274,7 +278,7 @@ float(entity src, entity att, float dmg) W_ChainLightning =
 				WriteCoord (MSG_BROADCAST, dst_y - dir_y);
 				WriteCoord (MSG_BROADCAST, dst_z - dir_z);					
 				dmgback = min(dmgback, W_ChainLightning(targ1, att, dmg - LG_DMG_OUT));
-				particle (hit2, '0 0 100', 225, 3 * dmgback);
+				//particle (hit2, '0 0 100', 225, 3 * dmgback);
 			}
 		}
 	}
@@ -313,14 +317,16 @@ void() W_FireLightning =
 	}
 	self.punchangle_x = -2;
 
-	self.currentammo = self.ammo_cells = self.ammo_cells - 1;
+	self.currentammo = self.ammo_cells = self.ammo_cells - cvar("scarlet_dec_cells"); // was 1, SCARLET - custom ammo integration.
 	org = self.origin + '0 0 16'+ v_forward * 8;
 	
 	traceline2(org, org + v_forward * 720, self, TRACE_NOMONSTERS);
 
 	ClearMultiDamage();
-	LightningBeam(org, trace_endpos + v_forward * 8, self, 30);
+	LightningBeam(org, trace_endpos + v_forward * 8, self, cvar("scarlet_dmg_cells")); // was 30, SCARLET - custom dmg integration.
 	ApplyMultiDamage();
+
+	self.attack_finished = time + cvar("scarlet_rof_tb");
 	
 /*	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 	WriteByte (MSG_BROADCAST, TE_LIGHTNING2);	// kabewm
@@ -335,7 +341,7 @@ void() W_FireLightning =
 	if (trace_ent.takedamage) {
 		//trace_ent.customflags = trace_ent.customflags | CFL_ZAPPED;
 		org = trace_endpos;
-		particle (org, '0 0 100', 225, 3 * W_ChainLightning(trace_ent, self, 32));
+		//particle (org, '0 0 100', 225, 3 * W_ChainLightning(trace_ent, self, 32));
 	}
 */
 }

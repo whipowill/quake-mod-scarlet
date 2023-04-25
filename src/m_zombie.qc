@@ -381,7 +381,7 @@ void() zombie_paine8	=[	$paine8,	zombie_paine9	] {ai_pain(1);}
 void() zombie_paine9	=[	$paine9,	zombie_paine10	] {ai_pain(2);}
 void() zombie_paine10	=[	$paine10,	zombie_paine11	] {
 	sound (self, CHAN_BODY, "zombie/z_fall.wav", 1, ATTN_NORM);
-	self.solid = SOLID_NOT;
+	BecomeCorpse();
 }
 void() zombie_paine11	=[	$paine11,	zombie_paine12	] {}
 void() zombie_paine12	=[	$paine12,	zombie_paine13	] {
@@ -427,14 +427,14 @@ void() zombie_try_stand =
 	if (!walkmove (0, 0))
 	{
 		self.think = zombie_paine12;
-		self.solid = SOLID_NOT;
+		BecomeCorpse();
 	}
 }
 
 void() zombie_layidle	=[	$paine12,	zombie_layidle	] {
 	ai_stand();
 	self.customflags = self.customflags | (CFL_INPAIN | CFL_KNOCKEDDOWN);
-	self.solid = SOLID_NOT;
+	BecomeCorpse();
 }
 
 void() zombie_getup	=[	$paine12,	zombie_paine13	]{
@@ -552,6 +552,7 @@ void() monster_zombie_spawn =
 	self.solid = SOLID_SLIDEBOX;
 	//self.movetype = MOVETYPE_STEP;
 
+	self.headmdl = "progs/h_zombie.mdl";
 	setmodel (self, "progs/zombie.mdl");
 
 	if (self.deathtype == string_null)

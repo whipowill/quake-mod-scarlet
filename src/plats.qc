@@ -345,7 +345,7 @@ void() func_plat =
 	self.mangle = self.angles;
 	self.angles = '0 0 0';
 
-//	self.classname = "plat";
+	self.classname = "plat"; // SCARLET - bots integration (Lunaran commented this out?)
 	self.solid = SOLID_BSP;
 	self.movetype = MOVETYPE_PUSH;
 	setorigin (self, self.origin);	

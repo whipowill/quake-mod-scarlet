@@ -57,7 +57,8 @@ void(string gibname, float dm) ThrowHead =
 	self.nextthink = -1;
 	self.movetype = MOVETYPE_BOUNCE;
 	self.takedamage = DAMAGE_NO;
-	self.solid = SOLID_NOT;
+	self.solid = SOLID_TRIGGER; // SCARLET - football integration.
+	self.touch = KickGibs; // SCARLET - football integration.
 	self.view_ofs = '0 0 8';
 	setsize (self, '-16 -16 0', '16 16 56');
 	self.velocity += GibVelocityForHealth(dm);
@@ -75,6 +76,20 @@ void(string headmdl, float dm) GibSpray =
 	ThrowGib ("progs/gib1.mdl", dm);
 	ThrowGib ("progs/gib2.mdl", dm);
 	ThrowGib ("progs/gib3.mdl", dm);
+
+	// SCARLET - gore integration.
+	if (cvar("scarlet_gore"))
+	{
+		local float i;
+		local float j = cvar("scarlet_gore"); // number of times to loop
+		for (i=1; i<j; i++)
+		{
+			ThrowGib ("progs/gib1.mdl", dm);
+			//ThrowGib ("progs/gib2.mdl", dm); // don't throw lungs more than once, makes no sense
+			ThrowGib ("progs/gib3.mdl", dm);
+		}
+	}
+	// SCARLET - end.
 	
 	if (self.classname != "player")
 		if (damage_attacker.classname == "trigger_void" || damage_attacker.classname == "func_void" )
@@ -125,6 +140,20 @@ SpawnBlood
 void(vector org, vector vel, float damage) SpawnBlood =
 {
 	particle (org, vel*0.1, 73, damage*2);
+
+	// SCARLET - gore integration.
+	if (cvar("scarlet_gore"))
+	{
+		local float i;
+		local float j = cvar("scarlet_gore"); // number of times to loop
+		for (i=1; i<j; i++)
+		{
+			vel = normalize(vel) * -1;
+			vel = normalize(vel + v_up*(random()- 0.5) + v_right*(random()- 0.5));
+			particle (org, vel*i*random(), 64+(random()*12), damage*random());
+		}
+	}
+	// SCARLET - end.
 }
 
 //============================================================================

@@ -207,6 +207,8 @@ void() worldspawn =
 {
 	lastspawn = world;
 	startingserverflags = serverflags;
+
+	BotInit(); // SCARLET - bots integration.
 	
 	InitBodyQueue ();
 	InitLightStyles();	// moved to lights.qc
@@ -245,6 +247,15 @@ void() worldspawn =
 	precache_sound ("misc/h2ohit1.wav");		// landing splash
 
 	// player sounds
+	precache_sound ("walk/generic1.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/generic2.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/generic3.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/generic4.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/generic5.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/metal1.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/metal2.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/metal3.wav"); // SCARLET - footstep integration.
+	precache_sound ("walk/metal4.wav"); // SCARLET - footstep integration.
 	precache_sound ("items/itembk2.wav");		// item respawn sound
 	precache_sound ("player/plyrjmp8.wav");		// player jump
 	precache_sound ("player/land.wav");			// player landing
@@ -345,6 +356,8 @@ void() worldspawn =
 
 void() StartFrame =
 {
+	BotFrame();	// SCARLET - bots integration.
+
 	teamplay = cvar("teamplay");
 	skill = cvar("skill");
 	
@@ -421,6 +434,8 @@ void() InitBodyQueue =
 // respawned elsewhere
 void(entity ent) CopyToBodyQueue =
 {
+	bodyqueue_head.touch = ent.touch; // SCARLET - football integration.
+	bodyqueue_head.solid = ent.solid; // SCARLET - football integration.
 	bodyqueue_head.angles = ent.angles;
 	bodyqueue_head.model = ent.model;
 	bodyqueue_head.modelindex = ent.modelindex;

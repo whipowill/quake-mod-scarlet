@@ -11,10 +11,10 @@ float	ITEM_AMMO_BIG = 1;
 
 void(entity e) bound_ammo =
 {
-	e.ammo_shells = min(e.ammo_shells, MAX_AMMO_SHELLS);
-	e.ammo_nails = min(e.ammo_nails, MAX_AMMO_NAILS);
-	e.ammo_rockets = min(e.ammo_rockets, MAX_AMMO_ROCKETS);
-	e.ammo_cells = min(e.ammo_cells, MAX_AMMO_CELLS);
+	e.ammo_shells = min(e.ammo_shells, cvar("scarlet_max_shells"));
+	e.ammo_nails = min(e.ammo_nails, cvar("scarlet_max_nails"));
+	e.ammo_rockets = min(e.ammo_rockets, cvar("scarlet_max_rockets"));
+	e.ammo_cells = min(e.ammo_cells, cvar("scarlet_max_cells"));
 }
 
 /*
@@ -63,7 +63,7 @@ void() weapon_touch =
 
 	if (!CheckValidTouch()) return;
 
-	if (deathmatch == 2 || deathmatch == 3 || coop > 1)
+	if (deathmatch == 2 || deathmatch == 3 || (coop && !cvar("scarlet_resupply"))) // SCARLET - resupply integration.
 		leave = 1;
 	else
 		leave = 0;
@@ -120,7 +120,7 @@ void() StartWeapon =
 	self.type = "weapon";
 	self.touch = weapon_touch;
 	setsize (self, '-16 -16 0', '16 16 56');
-	if (deathmatch == 1)
+	if (deathmatch == 1 || cvar("scarlet_resupply")) // SCARLET - resupply integration.
 		self.wait = 30;
 	StartItem ();
 }
@@ -318,25 +318,25 @@ void() ammo_touch =
 	// structured in dual if's instead of using && to preserve ammo_touch maphacks
 	if (self.ammo_shells)
 	{
-		if (other.ammo_shells < MAX_AMMO_SHELLS)
+		if (other.ammo_shells < cvar("scarlet_max_shells"))
 			other.ammo_shells += self.ammo_shells;
 		else return;
 	}
 	else if (self.ammo_nails)
 	{
-		if (other.ammo_nails < MAX_AMMO_NAILS)
+		if (other.ammo_nails < cvar("scarlet_max_nails"))
 			other.ammo_nails += self.ammo_nails;
 		else return;
 	}
 	else if (self.ammo_rockets)
 	{
-		if (other.ammo_rockets < MAX_AMMO_ROCKETS)
+		if (other.ammo_rockets < cvar("scarlet_max_rockets"))
 			other.ammo_rockets += self.ammo_rockets;
 		else return;
 	}
 	else if (self.ammo_cells)
 	{
-		if (other.ammo_cells < MAX_AMMO_CELLS)
+		if (other.ammo_cells < cvar("scarlet_max_cells"))
 			other.ammo_cells += self.ammo_cells;
 		else return;
 	}
@@ -367,7 +367,7 @@ void() StartAmmo =
 	self.type = "ammo";
 	setsize (self, '0 0 0', '32 32 56');
 	self.touch = ammo_touch;
-	if (deathmatch == 1)
+	if (deathmatch == 1 || cvar("scarlet_resupply")) // SCARLET - resupply integration.
 		self.wait = 30;
 	if (deathmatch == 3)
 		self.wait = 15;

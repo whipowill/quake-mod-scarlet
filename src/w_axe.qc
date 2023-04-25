@@ -60,7 +60,7 @@ void() W_AxeSwing =
 	W_AxeWhiffSound();
 		self.weaponframe = 10 * (floor(4.99 * random()));
 		self.touch_time = time + 0.1;
-		self.attack_finished = time + 0.49;
+		self.attack_finished = time + cvar("scarlet_rof_axe");
 	self.think1 = player_axe;
 	W_AxeThink();
 }
@@ -92,8 +92,9 @@ void() W_FireAxe =
 		if (trace_ent.takedamage)
 		{
 			trace_ent.customflags = trace_ent.customflags | CFL_AXEHITME;
-			SpawnBlood (org, '0 0 0', 20);
-			T_Damage (trace_ent, self, self, 24);
+			SpawnBlood (org, '0 0 0', cvar("scarlet_dmg_axe")); // was 20, SCARLET - custom dmg integration.
+			T_Damage (trace_ent, self, self, cvar("scarlet_dmg_axe")); // was 24, SCARLET - custom dmg integration.
+			ThrowBloodSplat(org, trace_endpos, trace_ent, cvar("scarlet_dmg_axe"), 5); // SCARLET - gore integration.
 			
 			if (trace_ent.flags & FL_MONSTER)
 			{

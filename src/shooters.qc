@@ -70,7 +70,7 @@ void() spikeshooter_fire =
 		{
 			e.classname = "superspike";
 			e.skin = 1;
-			e.dmg = 18;
+			e.dmg = cvar("scarlet_dmg_nails") * 2; // was 18, SCARLET - custom dmg integration.
 		}
 	}
 }
