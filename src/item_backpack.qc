@@ -254,7 +254,7 @@ void() DropBackpack =
 {
 	entity item;
 
-	if (!(self.ammo_shells + self.ammo_nails + self.ammo_rockets + self.ammo_cells))
+	if (!floor(fabs(self.ammo_shells + self.ammo_nails + self.ammo_rockets + self.ammo_cells)))
 		return;	// nothing in it
 
 	item = spawn();
@@ -287,13 +287,13 @@ void() DropBackpack =
 	if (coop == 1)
 	{
 		// keep half your shells and nails on respawn to make getting your backpack possible
-		self.ammo_shells = floor(self.ammo_shells / 2);
-		self.ammo_nails = floor(self.ammo_nails / 2);
+		self.ammo_shells = floor(fabs(self.ammo_shells / 2));
+		self.ammo_nails = floor(fabs(self.ammo_nails / 2));
 	}
-	item.ammo_shells = self.ammo_shells;
-	item.ammo_nails = self.ammo_nails;
-	item.ammo_rockets = self.ammo_rockets;
-	item.ammo_cells = self.ammo_cells;
+	item.ammo_shells = floor(fabs(self.ammo_shells));
+	item.ammo_nails = floor(fabs(self.ammo_nails));
+	item.ammo_rockets = floor(fabs(self.ammo_rockets));
+	item.ammo_cells = floor(fabs(self.ammo_cells));
 
 	item.velocity_z = 300;
 	item.velocity_x = -100 + (random() * 200);
