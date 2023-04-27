@@ -1,5 +1,5 @@
 // -------------------------------------------------
-// Make players respawn in a random location (avoid telegrags).
+// Make players respawn in a random location (avoid telefrags).
 // #
 // by FrikaC, adapted by whipowill
 // -------------------------------------------------

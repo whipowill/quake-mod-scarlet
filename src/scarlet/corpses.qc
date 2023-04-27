@@ -29,6 +29,8 @@ void() CorpseDie =
 
 void() BecomeCorpse =
 {
+        SpawnShards(self.origin, self); // SCARLET - shards integration
+
         // if gore is turned off, or this is copper...
         if (!cvar("scarlet_corpses"))
         {

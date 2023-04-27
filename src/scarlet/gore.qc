@@ -11,11 +11,16 @@ void() SplatThink =
 {
         if ((self.attack_finished <= time))
         {
-                remove(self); // remove if: time "runs out"
+                remove(self);
                 return;
         }
 
-        self.angles = vectoangles(self.velocity); // point in direction of movement
+        if (self.type != "drop")
+        {
+                remove(self);
+                return;
+        }
+
         if (self.flags & FL_ONGROUND)
         {
                 remove(self);
@@ -27,36 +32,31 @@ void() SplatThink =
                 //particle (self.origin, '0 0 0', 64+(random()*9), random()*11);
                 //self.nextthink = time + 1 + (3*random());
         }
-        else
-        {
-                if (self.type != "drop")
-                {
-                        remove(self); // remove if: land anywhere or in liquid
-                        return;
-                }
 
-                // splat slowly slides down walls, changing speed
-                self.velocity_z = random()*-10;
-                self.nextthink = time + 0.2;
-        }
-
+        // splat slowly slides down walls, changing speed
+        self.angles = vectoangles(self.velocity); // point in direction of movement
+        self.velocity_z = random()*-10;
+        self.nextthink = time + 0.2;
 };
 
 void() SplatTouch =
 {
+        if (CheckProjectilePassthru()) return;
+
         if ((other != world) || (pointcontents(self.origin) <= -3))
         {
-                remove(self); // remove if: land anywhere or in liquid
+                remove(self);
                 return;
         }
 
-        if (random() > .25) // let 3/4 the gibs bounce, rest hit the walls
+        if (other == world)
         {
-                self.velocity = self.avelocity = '0 0 0'; // stop moving and spinning
-                self.movetype = MOVETYPE_FLY; // changed to remove effect of gravity
+                self.velocity = self.avelocity = '0 0 0';
+                self.movetype = MOVETYPE_FLY;
         }
+
         self.touch = SUB_Null; // don't call this (touch) function again
-        self.attack_finished = time + 6 + (4*random()); // set random "time limit"
+        self.attack_finished = time + 5 + (5*random()); // set random "time limit"
 
         self.think = SplatThink;
         self.nextthink = time + 0.2;
@@ -132,8 +132,8 @@ void(vector dir, vector org, entity own, float damage, float weap = 1) ThrowBloo
                                 splat.avelocity = Vector(random(),random(),random()) * 600;
                                 splat.touch = SplatTouch;
 
-                                splat.nextthink = time + 2;
-                                splat.think = SUB_Remove;
+                                splat.nextthink = time + 0.2;
+                                splat.think = SUB_Null;
 
                                 // the damage is sent to this method so you could do different
                                 // gibs based on how much damage was dealt, but it didn't look right to me.

@@ -513,7 +513,8 @@ void() PlayerDie =
 	self.weaponmodel = string_null;
 	self.view_ofs = '0 0 0';
 //	self.deadflag = DEAD_DYING;	// moved to Killed() so I can use this flag on monsters
-	self.solid = SOLID_NOT;
+	//self.solid = SOLID_NOT;
+	BecomeCorpse(); // SCARLET - corpse integration
 	self.flags = self.flags - (self.flags & FL_ONGROUND);
 	self.movetype = MOVETYPE_TOSS;
 	//setsize(self, '-16 -16 -16', '16 16 8');
@@ -551,7 +552,6 @@ void() PlayerDie =
 		player_died1();
 	else
 		player_diee1();
-
 }
 
 void() set_suicide_frame =

@@ -6,6 +6,8 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
 
 ## Features
 
+Every feature in this mod is optional and configurable.
+
 - **User Control** - take control of the game w/ a host of new config options
 - **Multiplayer Bots** - add robot players to deathmatch, teamplay, and coop games
 - **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.20)
@@ -16,6 +18,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
 - **Score Keeper** - make teamplay games combine scores to achieve fraglimit
 - **No Autoswitch** - nobody takes the gun out of your hand anymore
+- **Shards & Stimpacks** - build momentum w/ [powerups](https://rumble.com/v2knss6-quake-scarlet-v1.2.6-quake-addiction.html) that drop from the dead (**experimental!**)
 
 ## Changelog
 
@@ -33,6 +36,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
     - Thunderbolt range now extended to infinite
     - Thunderbolt can now have a rate of fire
     - Upgraded to Copper v1.20
+    - Added new shards feature on kills
 - August 2022 - ``v1.1.x``
     - Bots now choose from over 500 random names
     - Bots now know if they are losing and become depressed
@@ -71,6 +75,15 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_respawn`` - seconds to wait before bots respawn (anything >= ``0``)
 - ``scarlet_resupply`` - force items to respawn on singleplayer and coop (``0`` or ``1``)
 - ``scarlet_teamscores`` - combine players' scores (if ``teamplay 1``) to achieve fraglimit (``0`` or ``1``)
+
+### Shard Settings
+
+- ``scarlet_shards`` - enable health/armor shards on kills (``0`` or ``1``, default is ``0``)
+- ``scarlet_shards_count`` - how many shards to roll as drops (default is ``20``)
+- ``scarlet_shards_chance`` - chances that each shard will drop (default is ``.4``)
+- ``scarlet_shards_armor`` - amount of armor gained per shard (default is ``2``)
+- ``scarlet_shards_health`` - amount of health gained per shard (default is ``2``)
+- ``scarlet_shards_expire`` - seconds until all shards have disappeared (default is ``15``)
 
 ### Gore Settings
 
@@ -158,5 +171,6 @@ Reference the included ``instructions.html`` file from FrikaC for detailed infor
 - [FTEQCC Docs](https://fte.triptohell.info/moodles/fteqcc/README.html) - the difficult to find docs about FTEQCC
 - [QuakeC Manual](http://www.cataboligne.org/extra/qcmanual.html#Names) - helpful list of available functions
 - [QuakeC Tutorials](https://quakewiki.org/wiki/QuakeC_tutorials) - a list of tutorials for modding QuakeC
+- [Level Book Design](https://book.leveldesignbook.com/appendix/resources/quake) - some modding instructions from a slick website
 - [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history
 - [FrikBot Waypoint Files](https://github.com/whipowill/quake-mod-frikbot-waypoints) - an archive of all the bot waypoints files
