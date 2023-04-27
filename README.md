@@ -18,7 +18,7 @@ Every feature in this mod is optional and configurable.
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
 - **Score Keeper** - make teamplay games combine scores to achieve fraglimit
 - **No Autoswitch** - nobody takes the gun out of your hand anymore
-- **Shards & Stimpacks** - build momentum w/ [powerups](https://rumble.com/v2knss6-quake-scarlet-v1.2.6-quake-addiction.html) that drop from the dead (**experimental!**)
+- **Shards & Stimpacks** - build momentum w/ [powerups](https://rumble.com/v2komce-quake-scarlet-v1.2.6-quake-addiction.html) that drop from the dead (**experimental!**)
 
 ## Changelog
 
