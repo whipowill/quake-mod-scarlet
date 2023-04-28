@@ -11,7 +11,22 @@ void() ShardThink =
         return;
     }
 
-    self.nextthink = time + 0.5;
+    /*
+    if (self.alpha > .9)
+        self.alpha = 0.8;
+    else if (self.alpha == 0.8)
+        self.alpha = 0.6;
+    else if (self.alpha == 0.6)
+        self.alpha = 0.5;
+    else if (self.alpha == 0.5)
+        self.alpha = 0.7;
+    else if (self.alpha == 0.7)
+        self.alpha = 0.9;
+    else if (self.alpha < .1)
+        self.alpha = 1;
+    */
+
+    self.nextthink = time + .2;
 };
 
 void() ShardTouch =
@@ -56,22 +71,23 @@ void(vector org, entity own) SpawnShards =
             shard.movetype = MOVETYPE_TOSS;
             shard.solid = SOLID_TRIGGER;
 
-            shard.avelocity = Vector(random(), random(), random()) * 300;
-            shard.velocity = Vector(random(), random(), random()) * 200;
-            shard.velocity_z = random() * 100;
+            shard.angles = '0 180 0';
+            //shard.avelocity = Vector(random(),random(),random()) * 100;
+            shard.velocity = Vector(random(), random(), random()) * 240;
 
             shard.touch = ShardTouch;
             shard.think = ShardThink;
-            shard.nextthink = time + 0.5;
+            shard.nextthink = time + (random()/2);
 
             shard.attack_finished = time + (cvar("scarlet_shards_expire")/2) + ((cvar("scarlet_shards_expire")/2)*random());
 
             setmodel (shard, "progs/items/mervup.mdl");
             shard.type = "shard1";
             shard.noise = "items/r_item1.wav";
-            setsize (shard, '-24 -24 -8', '24 24 8');
-
+            setsize (shard, '-24 -24 -12', '24 24 12');
             setorigin (shard, org); //start shard at point of damage
+
+            shard.alpha = 1;
         }
     }
 }

@@ -164,6 +164,9 @@ void(vector dir, vector org, entity own, float damage, float weap = 1) ThrowBloo
                         }
                 }
         }
+
+        // testing
+        //SpawnShards(org, own);
 };
 
 void(entity explosive, float damage) ThrowBloodSplatByExplosion =
