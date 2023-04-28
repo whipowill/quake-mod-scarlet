@@ -372,7 +372,7 @@ void() W_ChangeWeapon =
 		return;
 	}
 
-	if (self.weapon != fl) self.attack_finished = 0; // SCARLET - don't let time delay effect new weapon
+	//if (self.weapon != fl) self.attack_finished = 0; // SCARLET - might not be a good idea to do this
 
 	self.weapon = fl;		
 	W_ResetWeaponState();

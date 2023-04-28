@@ -37,7 +37,6 @@ Every feature in this mod is optional and configurable.
     - Thunderbolt can now have a rate of fire
     - Upgraded to Copper v1.20
     - Added new shards feature on kills
-    - Made cooldown on weapons reset on switch
 - August 2022 - ``v1.1.x``
     - Bots now choose from over 500 random names
     - Bots now know if they are losing and become depressed
