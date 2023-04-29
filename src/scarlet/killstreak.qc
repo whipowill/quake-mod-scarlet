@@ -7,7 +7,7 @@
 
 void(entity player) KillstreakReset =
 {
-    if (player.killstreak >= 6)
+    if (cvar("scarlet_killstreaks") && player.killstreak >= 6)
     {
         bprint(player.netname);
         bprint("'s kill streak has ended (");
