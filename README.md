@@ -27,10 +27,6 @@ Every feature in this mod is optional and configurable.
 - **Killstreaks** - every kill adds to your killstreak, increasing rewards for the one who kills you
 - **Highlander** - the higher a player's killstreak, the more stimpacks they drop when they die
 
-### Upcoming Features
-
-- **Battle Royal**
-
 ## Changelog
 
 <img src="https://i.imgur.com/FabFtS1.gif" width="100%">
