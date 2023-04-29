@@ -1690,6 +1690,8 @@ void() ClientObituary =
 	
 	entity attacker = self.enemy;
 
+	KillstreakReset(self); // SCARLET - killstreak integration
+
 	if (coop == 1)
 	{
 		// centerprint before bprint if you want players to see both
@@ -1798,7 +1800,10 @@ void() ClientObituary =
 		else
 		{
 			if (deathmatch)
+			{
 				attacker.frags = attacker.frags + 1;
+				KillstreakAdd(attacker); // SCARLET - killstreak integration
+			}
 
 			rnum = attacker.weapon;
 			if (rnum == IT_AXE)

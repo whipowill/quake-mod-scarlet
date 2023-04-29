@@ -8,6 +8,8 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
 
 Every feature in this mod is optional and configurable.
 
+### Base Features
+
 - **User Control** - take control of the game w/ a host of new config options
 - **Multiplayer Bots** - add robot players to deathmatch, teamplay, and coop games
 - **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.20)
@@ -18,7 +20,16 @@ Every feature in this mod is optional and configurable.
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
 - **Score Keeper** - make teamplay games combine scores to achieve fraglimit
 - **No Autoswitch** - nobody takes the gun out of your hand anymore
-- **Shards & Stimpacks** - build momentum w/ [powerups](https://rumble.com/v2komce-quake-scarlet-v1.2.6-quake-addiction.html) that drop from the dead (**experimental!**)
+
+### Experimental Features
+
+- **Stimpacks** - build momentum w/ health, armor, and powerups that drop from the dead
+- **Killstreaks** - every kill adds to your killstreak, increasing rewards for the one who kills you
+- **Highlander** - the higher a player's killstreak, the more stimpacks they drop when they die
+
+### Upcoming Features
+
+- **Battle Royal**
 
 ## Changelog
 
@@ -37,6 +48,7 @@ Every feature in this mod is optional and configurable.
     - Thunderbolt can now have a rate of fire
     - Upgraded to Copper v1.20
     - Added new shards feature on kills
+    - Added new killstreak feature
 - August 2022 - ``v1.1.x``
     - Bots now choose from over 500 random names
     - Bots now know if they are losing and become depressed
@@ -79,8 +91,9 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 ### Shard Settings
 
 - ``scarlet_shards`` - enable health/armor shards on kills (``0`` or ``1``, default is ``0``)
-- ``scarlet_shards_count`` - how many shards to roll as drops (default is ``20``)
-- ``scarlet_shards_chance`` - chances that each shard will drop (default is ``.4``)
+- ``scarlet_shards_powerups`` - include powerups in shards dice rolls (``0`` or ``1``, default is ``1``)
+- ``scarlet_shards_multiplier`` - how many shards to drop per killstreak (default is ``20``)
+- ``scarlet_shards_chance`` - chances that each shard will actually drop (default is ``.4``)
 - ``scarlet_shards_armor`` - amount of armor gained per shard (default is ``2``)
 - ``scarlet_shards_health`` - amount of health gained per shard (default is ``2``)
 - ``scarlet_shards_expire`` - seconds until all shards have disappeared (default is ``15``)

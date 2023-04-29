@@ -11,21 +11,6 @@ void() ShardThink =
         return;
     }
 
-    /*
-    if (self.alpha > .9)
-        self.alpha = 0.8;
-    else if (self.alpha == 0.8)
-        self.alpha = 0.6;
-    else if (self.alpha == 0.6)
-        self.alpha = 0.5;
-    else if (self.alpha == 0.5)
-        self.alpha = 0.7;
-    else if (self.alpha == 0.7)
-        self.alpha = 0.9;
-    else if (self.alpha < .1)
-        self.alpha = 1;
-    */
-
     self.nextthink = time + .2;
 };
 
@@ -39,30 +24,48 @@ void() ShardTouch =
     // if touched by owner...
     //if (other == self.owner) return;
 
-    if (self.type == "shard1")
+    if (self.type == "shard_health")
     {
+        sound(other, CHAN_ITEM, self.noise, 1, ATTN_NORM);
         T_Heal(other, cvar("scarlet_shards_health"), TRUE);
         armor_give(other, cvar("scarlet_shards_armor"), other.armortype, FALSE);
     }
-
-    sound(other, CHAN_ITEM, self.noise, 1, ATTN_NORM);
+    else if (self.type == "shard_armor") // not in use atm
+    {
+        sound(other, CHAN_ITEM, self.noise, 1, ATTN_NORM);
+        armor_give(other, cvar("scarlet_shards_armor"), other.armortype, FALSE);
+    }
+    else if (self.type == "shard_mega")
+    {
+        sound(other, CHAN_POWERUP, self.noise, 1, ATTN_NORM);
+        T_Heal(other, 100, TRUE);
+    }
+    else if (self.type == "shard_quad")
+    {
+        sound(other, CHAN_POWERUP, self.noise, 1, ATTN_NORM);
+        powerup_super_damage(other, 30);
+    }
+    else if (self.type == "shard_pent")
+    {
+        sound(other, CHAN_POWERUP, self.noise, 1, ATTN_NORM);
+        powerup_invulnerability(other, 30);
+    }
 
     remove(self);
 }
 
 void(vector org, entity own) SpawnShards =
 {
-    if (!cvar("scarlet_shards")) return;
+    if (!cvar("scarlet_shards") || !deathmatch) return;
 
     local entity shard;
+    local float rand, is_rune;
 
     // loop
     local float i;
-    local float j = cvar("scarlet_shards_count"); // number of times to loop
+    local float m = cvar("scarlet_shards_multiplier") * (own.killstreak + 1);
 
-    if (!deathmatch) j = ceil(j / 3);
-
-    for (i=1; i<=j; i++)
+    for (i=1; i<=m; i++)
     {
         if (random() <= cvar("scarlet_shards_chance"))
         {
@@ -71,8 +74,6 @@ void(vector org, entity own) SpawnShards =
             shard.movetype = MOVETYPE_TOSS;
             shard.solid = SOLID_TRIGGER;
 
-            shard.angles = '0 180 0';
-            //shard.avelocity = Vector(random(),random(),random()) * 100;
             shard.velocity = Vector(random(), random(), random()) * 240;
 
             shard.touch = ShardTouch;
@@ -81,13 +82,58 @@ void(vector org, entity own) SpawnShards =
 
             shard.attack_finished = time + (cvar("scarlet_shards_expire")/2) + ((cvar("scarlet_shards_expire")/2)*random());
 
-            setmodel (shard, "progs/items/mervup.mdl");
-            shard.type = "shard1";
-            shard.noise = "items/r_item1.wav";
-            setsize (shard, '-24 -24 -12', '24 24 12');
-            setorigin (shard, org); //start shard at point of damage
+            rand = random();
+            if (rand >= 0 && rand < .985)
+            {
+                shard.angles = '0 180 0'; // for stimpack
+                setmodel (shard, "progs/items/rogue/mervup.mdl");
+                shard.type = "shard_health";
+                shard.noise = "items/r_item1.wav";
+                setsize (shard, '-24 -24 -12', '24 24 12');
+            }
+            /*
+            if (rand >= .50 && rand < .985)
+            {
+                shard.angles = '-90 180 -90';
+                setmodel (shard, "progs/items/quoth/glass.mdl");
+                shard.type = "shard_armor";
+                shard.noise = "items/empathy2.wav";
+                setsize (shard, '-24 -24 -12', '24 24 12');
+            }
+            */
+            if (!is_rune && cvar("scarlet_shards_powerups"))
+            {
+                if (rand >= .985 && rand < .990)
+                {
+                    is_rune = 1;
 
-            shard.alpha = 1;
+                    setmodel (shard, "progs/items/quoth/cross.mdl");
+                    shard.type = "shard_mega";
+                    shard.noise = "items/r_item2.wav";
+                    setsize (self, '-16 -16 -24', '16 16 32');
+                }
+                else if (rand >= .990 && rand < .995)
+                {
+                    is_rune = 1;
+
+                    setmodel (shard, "progs/quaddama.mdl");
+                    shard.type = "shard_quad";
+                    shard.noise = "items/damage.wav";
+                    setsize (shard, '-16 -16 -24', '16 16 32');
+                }
+                else if (rand >= .995)
+                {
+                    is_rune = 1;
+
+                    setmodel (shard, "progs/invul.mdl");
+                    shard.type = "shard_pent";
+                    shard.noise = "items/protect.wav";
+                    setsize (shard, '-16 -16 -24', '16 16 32');
+                }
+            }
+
+
+            setorigin (shard, org); //start shard at point of damage
         }
     }
 }
