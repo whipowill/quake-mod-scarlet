@@ -1690,8 +1690,6 @@ void() ClientObituary =
 	
 	entity attacker = self.enemy;
 
-	KillstreakReset(self); // SCARLET - killstreak integration
-
 	if (coop == 1)
 	{
 		// centerprint before bprint if you want players to see both

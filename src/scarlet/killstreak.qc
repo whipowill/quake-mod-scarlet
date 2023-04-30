@@ -7,7 +7,7 @@
 
 void(entity player) KillstreakReset =
 {
-    if (cvar("scarlet_killstreaks") && player.killstreak >= 6)
+    if (cvar("scarlet_killstreaks") && player.killstreak >= 5)
     {
         bprint(player.netname);
         bprint("'s kill streak has ended (");
@@ -24,34 +24,71 @@ void(entity player) KillstreakAdd =
 
     if (cvar("scarlet_killstreaks"))
     {
-        if (player.killstreak > 0 && player.killstreak <= 6)
-            player.wait_before_show_time = time + 1; // prevent nametags from erasing
-
-        if (player.killstreak == 2)
+        if (player.killstreak == 5)
         {
-            centerprint(player, "Double Kill!\n");
-        }
-        else if (player.killstreak == 3)
-        {
-            centerprint(player, "Triple Kill!\n");
-        }
-        else if (player.killstreak == 4)
-        {
-            centerprint(player, "Killtacular!\n");
-        }
-        else if (player.killstreak == 5)
-        {
+            player.wait_before_show_time = time + 1;
             centerprint(player, "Killing Spree!\n");
+
+            bprint(player.netname);
+            bprint(" is on a Killing Spree!\n");
         }
-        else if (player.killstreak == 6)
+        else if (player.killstreak == 10)
+        {
+            centerprint(player, "Killing Frenzy!\n");
+
+            bprint(player.netname);
+            bprint(" is on a Killing Frenzy!\n");
+        }
+        else if (player.killstreak == 15)
         {
             centerprint(player, "Running Riot!\n");
+
+            bprint(player.netname);
+            bprint(" is on a Running Riot!\n");
         }
-        else
+        else if (player.killstreak == 20)
         {
-            //sprint(player, "Your killstreak is ");
-            //sprint(player, ftos(player.killstreak));
-            //sprint(player, ".\n");
+            centerprint(player, "Rampage!\n");
+
+            bprint(player.netname);
+            bprint(" is on a Rampage!\n");
         }
+        else if (player.killstreak == 25)
+        {
+            centerprint(player, "Nightmare!\n");
+
+            bprint(player.netname);
+            bprint(" is a Nightmare!\n");
+        }
+        else if (player.killstreak == 30)
+        {
+            centerprint(player, "Boogeyman!\n");
+
+            bprint(player.netname);
+            bprint(" is a Boogeyman!\n");
+        }
+        else if (player.killstreak == 35)
+        {
+            centerprint(player, "Grim Reaper!\n");
+
+            bprint(player.netname);
+            bprint(" is a Grim Reaper!\n");
+        }
+        else if (player.killstreak == 40)
+        {
+            centerprint(player, "Demon!\n");
+
+            bprint(player.netname);
+            bprint(" is a Demon!\n");
+        }
+        /*
+        else if (player.killstreak == 6)
+        {
+            bprint(player.netname);
+            bprint("'s kill streak is ");
+            bprint(ftos(player.killstreak));
+            bprint("!\n");
+        }
+        */
     }
 }

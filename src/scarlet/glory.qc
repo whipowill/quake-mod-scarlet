@@ -30,11 +30,6 @@ void() ShardTouch =
         T_Heal(other, cvar("scarlet_shards_health"), TRUE);
         armor_give(other, cvar("scarlet_shards_armor"), other.armortype, FALSE);
     }
-    else if (self.type == "shard_armor") // not in use atm
-    {
-        sound(other, CHAN_ITEM, self.noise, 1, ATTN_NORM);
-        armor_give(other, cvar("scarlet_shards_armor"), other.armortype, FALSE);
-    }
     else if (self.type == "shard_mega")
     {
         sound(other, CHAN_POWERUP, self.noise, 1, ATTN_NORM);
@@ -61,6 +56,9 @@ void(vector org, entity own) SpawnShards =
     local entity shard;
     local float rand, is_rune;
 
+    local float rune_chance = cvar("scarlet_shards_powerups") ? cvar("scarlet_shards_powerups_chance") : 0;
+    local float rune_nochance = 1 - (rune_chance * 3);
+
     // loop
     local float i;
     local float m = cvar("scarlet_shards_multiplier") * (own.killstreak + 1);
@@ -83,7 +81,7 @@ void(vector org, entity own) SpawnShards =
             shard.attack_finished = time + (cvar("scarlet_shards_expire")/2) + ((cvar("scarlet_shards_expire")/2)*random());
 
             rand = random();
-            if (rand >= 0 && rand < .985)
+            if (rand >= 0 && rand < rune_nochance)
             {
                 shard.angles = '0 180 0'; // for stimpack
                 setmodel (shard, "progs/items/rogue/mervup.mdl");
@@ -91,19 +89,9 @@ void(vector org, entity own) SpawnShards =
                 shard.noise = "items/r_item1.wav";
                 setsize (shard, '-24 -24 -12', '24 24 12');
             }
-            /*
-            if (rand >= .50 && rand < .985)
-            {
-                shard.angles = '-90 180 -90';
-                setmodel (shard, "progs/items/quoth/glass.mdl");
-                shard.type = "shard_armor";
-                shard.noise = "items/empathy2.wav";
-                setsize (shard, '-24 -24 -12', '24 24 12');
-            }
-            */
             if (!is_rune && cvar("scarlet_shards_powerups"))
             {
-                if (rand >= .985 && rand < .990)
+                if (rand >= rune_nochance && rand < (rune_nochance + (rune_chance*1)))
                 {
                     is_rune = 1;
 
@@ -112,7 +100,7 @@ void(vector org, entity own) SpawnShards =
                     shard.noise = "items/r_item2.wav";
                     setsize (self, '-16 -16 -24', '16 16 32');
                 }
-                else if (rand >= .990 && rand < .995)
+                else if (rand >= (rune_nochance + (rune_chance*1)) && rand < (rune_nochance + (rune_chance*2)))
                 {
                     is_rune = 1;
 
@@ -121,7 +109,7 @@ void(vector org, entity own) SpawnShards =
                     shard.noise = "items/damage.wav";
                     setsize (shard, '-16 -16 -24', '16 16 32');
                 }
-                else if (rand >= .995)
+                else if (rand >= (rune_nochance + (rune_chance*2)))
                 {
                     is_rune = 1;
 

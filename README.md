@@ -23,43 +23,9 @@ Every feature in this mod is optional and configurable.
 
 ### Experimental Features
 
-- **Stimpacks** - build momentum w/ stimpacks and powerups that drop from the dead
-- **Killstreaks** - every kill adds to your killstreak, increasing rewards for the one who kills you
-- **Highlander** - the higher a player's killstreak, the more rewards they drop when they die
-
-## Changelog
-
-<img src="https://i.imgur.com/FabFtS1.gif" width="100%">
-
-- April 2023 - ``v1.2.x``
-    - Gore system overhauled and is now scalable
-    - Added option to disable weapon autoswitch
-    - Weapon damage now configurable
-    - Weapon bullets-per-shell now configurable
-    - Weapon rate of fire now configurable
-    - Weapon spread now configurable
-    - Weapon projectile speed now configurable
-    - Random bots will never be ``skill 0``
-    - Thunderbolt range now extended to infinite
-    - Thunderbolt can now have a rate of fire
-    - Upgraded to Copper v1.20
-    - Added new shards feature on kills
-    - Added new killstreak feature
-- August 2022 - ``v1.1.x``
-    - Bots now choose from over 500 random names
-    - Bots now know if they are losing and become depressed
-    - Team bots now report when they pickup important items
-    - Bots can now teleport to your location in coop
-    - Added nametags, footsteps, and gore
-- July 2022 - ``v1.0.x``
-    - Merged FrikBot w/ Copper v1.19
-    - Bots ``skill`` now scales linearly from ``0`` to ``3``
-    - Bots can now be spawned w/ random ``skill`` levels
-    - Bots no longer crowd together in team games
-    - Bots no longer spam teleporters repeatedly
-    - Bots now wear proper team color in coop games
-    - Bots now recover from fool's errand more quickly
-    - Added item respawn for singleplayer and coop
+- **Killstreaks** - game announces when you're on a killing spree, and when it ends
+- **Stimpacks** - build momentum between fights w/ stimpacks and powerup kill rewards
+- **Highlander** - higher the killstreak, the more rewards for the one who takes your head!
 
 ## Install
 
@@ -160,6 +126,40 @@ Control bots via these console commands:
 - ``impulse 113`` - teleport bots to your location in coop (only once per minute)
 
 Reference the included ``instructions.html`` file from FrikaC for detailed information about the bots.
+
+## Changelog
+
+<img src="https://i.imgur.com/FabFtS1.gif" width="100%">
+
+- April 2023 - ``v1.2.x``
+    - Gore system overhauled and is now scalable
+    - Added option to disable weapon autoswitch
+    - Weapon damage now configurable
+    - Weapon bullets-per-shell now configurable
+    - Weapon rate of fire now configurable
+    - Weapon spread now configurable
+    - Weapon projectile speed now configurable
+    - Random bots always be within 1 range of ``skill``
+    - Thunderbolt range now extended to infinite
+    - Thunderbolt can now have a rate of fire
+    - Upgraded to Copper v1.20
+    - Added new shards feature on kills
+    - Added new killstreak feature
+- August 2022 - ``v1.1.x``
+    - Bots now choose from over 500 random names
+    - Bots now know if they are losing and become depressed
+    - Team bots now report when they pickup important items
+    - Bots can now teleport to your location in coop
+    - Added nametags, footsteps, and gore
+- July 2022 - ``v1.0.x``
+    - Merged FrikBot w/ Copper v1.19
+    - Bots ``skill`` now scales linearly from ``0`` to ``3``
+    - Bots can now be spawned w/ random ``skill`` levels
+    - Bots no longer crowd together in team games
+    - Bots no longer spam teleporters repeatedly
+    - Bots now wear proper team color in coop games
+    - Bots now recover from fool's errand more quickly
+    - Added item respawn for singleplayer and coop
 
 ## Credits
 

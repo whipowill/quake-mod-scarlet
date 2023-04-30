@@ -30,6 +30,7 @@ void() CorpseDie =
 void() BecomeCorpse =
 {
         SpawnShards(self.origin, self); // SCARLET - shards integration
+        KillstreakReset(self); // SCARLET - killstreak integration
 
         // if gore is turned off, or this is copper...
         if (!cvar("scarlet_corpses"))
