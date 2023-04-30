@@ -23,9 +23,9 @@ Every feature in this mod is optional and configurable.
 
 ### Experimental Features
 
-- **Power Shards** - build momentum w/ health, armor, and power shards that drop from the dead
+- **Stimpacks** - build momentum w/ stimpacks and powerups that drop from the dead
 - **Killstreaks** - every kill adds to your killstreak, increasing rewards for the one who kills you
-- **Highlander** - the higher a player's killstreak, the more power shards they drop when they die
+- **Highlander** - the higher a player's killstreak, the more rewards they drop when they die
 
 ## Changelog
 
