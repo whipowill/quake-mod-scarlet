@@ -1,6 +1,6 @@
 # Scarlet
 
-A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for the multiplayer enthusiast, sate your bloodlust w/ heart-pumping multiplayer games on demand.  Checkout my [channel](https://rumble.com/user/whipowill24) showcasing videos from the development of this mod.
+A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for the multiplayer enthusiast, sate your bloodlust w/ heart-pumping multiplayer games on demand.  Checkout my [channel](https://www.youtube.com/@wscarlet) showcasing videos from the development of this mod.
 
 [![](https://i.imgur.com/4o2EPCa.png)](https://rumble.com/user/whipowill24)
 
