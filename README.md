@@ -39,7 +39,7 @@ Every feature in this mod is optional and configurable.
     - Weapon rate of fire now configurable
     - Weapon spread now configurable
     - Weapon projectile speed now configurable
-    - Random bots always be within 1 range of ``skill``
+    - Random bots will now be closer to ``skill``
     - Thunderbolt range now extended to infinite
     - Thunderbolt can now have a rate of fire
     - Upgraded to Copper v1.20
