@@ -84,10 +84,10 @@ void(vector org, entity own) SpawnShards =
             if (rand >= 0 && rand < rune_nochance)
             {
                 shard.angles = '0 180 0'; // for stimpack
-                setmodel (shard, "progs/items/rogue/mervup.mdl");
+                setmodel (shard, "progs/items/rogue/mervup_enlarged.mdl");
                 shard.type = "shard_health";
                 shard.noise = "items/r_item1.wav";
-                setsize (shard, '-24 -24 -12', '24 24 12');
+                setsize (shard, '-24 -24 -16', '24 24 16');
             }
             if (!is_rune && cvar("scarlet_shards_powerups"))
             {
