@@ -8,7 +8,7 @@ void() S_Precache =
 
     // models
     precache_model("progs/zom_gib.mdl");
-    precache_model("progs/items/rogue/mervup_enlarged.mdl");
+    precache_model("progs/items/rogue/mervup_75.mdl");
     precache_model("progs/items/quoth/cross.mdl");
     precache_model("progs/invul.mdl");
     precache_model("progs/quaddama.mdl");

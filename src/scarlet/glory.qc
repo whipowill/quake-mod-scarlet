@@ -72,8 +72,7 @@ void(vector org, entity own) SpawnShards =
             shard.movetype = MOVETYPE_TOSS;
             shard.solid = SOLID_TRIGGER;
 
-            shard.velocity = Vector(random(), random(), random()) * 240;
-
+            shard.velocity = Vector(random(), random(), random()) * (50 + 300);
             shard.touch = ShardTouch;
             shard.think = ShardThink;
             shard.nextthink = time + (random()/2);
@@ -84,7 +83,7 @@ void(vector org, entity own) SpawnShards =
             if (rand >= 0 && rand < rune_nochance)
             {
                 shard.angles = '0 180 0'; // for stimpack
-                setmodel (shard, "progs/items/rogue/mervup_enlarged.mdl");
+                setmodel (shard, "progs/items/rogue/mervup_75.mdl");
                 shard.type = "shard_health";
                 shard.noise = "items/r_item1.wav";
                 setsize (shard, '-24 -24 -16', '24 24 16');
