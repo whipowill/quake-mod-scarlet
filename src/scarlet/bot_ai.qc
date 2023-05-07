@@ -661,9 +661,13 @@ float(entity thing) priority_for_thing =
 			if (self.health < 40)
 				thisp = thisp + 50;
 		}
-		else if (thing.model == "progs/items/mervup.mdl") // adding shards/stims -whipowill
+		else if (thing.model == "progs/items/mervup_75.mdl") // adding shards/stims -whipowill
 		{
 			thisp = 30;
+		}
+		else if (thing.model == "progs/items/cross.mdl") // adding shards/stims -whipowill
+		{
+			thisp = 60;
 		}
 		else if (thing.model == "progs/armor.mdl")
 		{

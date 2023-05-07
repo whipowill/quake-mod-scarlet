@@ -294,6 +294,9 @@ void() W_Attack =
 		//self.attack_finished = time + 0.1;
 		sound (self, CHAN_AUTO, "weapons/lstart.wav", 1, ATTN_NORM);
 	}
+
+	if (!W_CheckNoAmmo ()) // switch weap after attack if empty - whipowill
+		return;
 }
 
 /*

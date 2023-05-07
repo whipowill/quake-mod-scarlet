@@ -30,6 +30,10 @@ Every feature in this mod is optional and configurable.
 
 <img src="https://i.imgur.com/FabFtS1.gif" width="100%">
 
+- May 2023 - ``v1.3.x``
+    - Added new shards feature on kills
+    - Added new killstreak feature
+    - Weapons will switch to best on empty ammo
 - April 2023 - ``v1.2.x``
     - Gore system overhauled and is now scalable
     - Added option to disable weapon autoswitch
@@ -42,8 +46,6 @@ Every feature in this mod is optional and configurable.
     - Thunderbolt range now extended to infinite
     - Thunderbolt can now have a rate of fire
     - Upgraded to Copper v1.20
-    - Added new shards feature on kills
-    - Added new killstreak feature
 - August 2022 - ``v1.1.x``
     - Bots now choose from over 500 random names
     - Bots now know if they are losing and become depressed
