@@ -196,7 +196,7 @@ void() weapon_supershotgun =
 	setmodel (self, "progs/g_shot.mdl");
 	self.items = IT_SUPER_SHOTGUN;
 	self.ammo_shells = 10;
-	self.netname = "Double-barreled Shotgun";
+	self.netname = "Super Shotgun";
 	StartWeapon();
 }
 

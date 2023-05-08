@@ -268,7 +268,7 @@ void() DropBackpack =
 		else if (item.items == IT_SHOTGUN)
 			item.netname = "Shotgun";
 		else if (item.items == IT_SUPER_SHOTGUN)
-			item.netname = "Double-Barrelled Shotgun";
+			item.netname = "Super Shotgun";
 		else if (item.items == IT_NAILGUN)
 			item.netname = "Nailgun";
 		else if (item.items == IT_SUPER_NAILGUN)

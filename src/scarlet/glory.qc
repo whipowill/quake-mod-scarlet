@@ -138,7 +138,9 @@ void(vector org, entity own) SpawnShards =
 
 void(entity item) SpawnWeapons =
 {
-    //if (!item.netname) return;
+    if (cvar("weapons")) return;
+    if (cvar("scarlet_limited") && item.netname == "Super Shotgun") return;
+    //if (cvar("scarlet_limited") && item.netname == "Perforator") return;
 
     local entity weap;
 
@@ -163,11 +165,11 @@ void(entity item) SpawnWeapons =
         weap.items = IT_SHOTGUN;
         weap.netname = "Shotgun";
     }
-    else if (item.netname == "Double-barreled Shotgun")
+    else if (item.netname == "Super Shotgun")
     {
         setmodel (weap, "progs/g_shot.mdl");
         weap.items = IT_SUPER_SHOTGUN;
-        weap.netname = "Double-barreled Shotgun";
+        weap.netname = "Super Shotgun";
     }
     else if (item.netname == "Nailgun")
     {
