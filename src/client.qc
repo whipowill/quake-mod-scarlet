@@ -73,13 +73,13 @@ void() SetNewParms =
 	else
 		parm2 = 100;
 
-	parm1 = IT_SHOTGUN | IT_AXE;
-	parm4 = 25;
-	parm8 = IT_SHOTGUN;
+	parm1 = LoadoutParamOne(); // SCARLET - loadout
+	parm4 = LoadoutParamShells(); // shells
+	parm8 = LoadoutParamEight(); // SCARLET - loadout
 	parm3 = 0;
-	parm5 = 0;
-	parm6 = 0;
-	parm7 = 0;
+	parm5 = LoadoutParamNails(); // nails
+	parm6 = LoadoutParamRockets(); // rockets
+	parm7 = LoadoutParamCells(); // cells
 	parm9 = 0;
 //	parm10 = 0;
 }

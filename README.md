@@ -12,20 +12,22 @@ Every feature in this mod is optional and configurable.
 
 - **Multiplayer Bots** - add robot players to deathmatch, teamplay, and coop games
 - **Blood & Gore** - bathe in the blood of your enemies w/ scalable gore setting
-- **Copper Tweaks** - all the vanilla+ improvements from the popular [Copper](http://lunaran.com/copper/) mod (v1.20)
-- **Weapons Balance** - find the perfect balance w/ configurable weapons
+- **Copper Tweaks** - all the vanilla improvements from [Copper](http://lunaran.com/copper/) mod (v1.20)
 - **Item Resupply** - force items to respawn in singleplayer and coop games
 - **Name Tags** - see other player names Halo-style when aiming at them
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
 - **Score Keeper** - make teamplay games combine scores to achieve fraglimit
 - **No Autoswitch** - nobody will take the gun out of your hand anymore
+- **Perfect Balance** - find the perfect balance w/ configurable weapons
 - **Visible Weapons** - force weapons to drop visibly outside the backpack
+- **Limited Arsenal** - remove Shotgun and Nailgun from the game entirely
 
 ### Experimental Features
 
-- **Killstreaks** - game announces when you're on a killing spree, and when it ends
-- **Stimpacks** - build momentum between fights w/ stimpacks and powerup kill rewards
-- **Highlander** - higher the killstreak, the more rewards for the one who takes your head!
+- **Killing Spree** - game announces when you're on a killing spree, and when it ends
+- **Stimpacks & Powerups** - build momentum between fights w/ stimpacks and powerups rewards
+- **Highlander Games** - higher the killstreak, the more rewards for the one who takes your head!
+- **Custom Loadouts** - play rockets only, shotguns only, nailguns only, railguns only
 
 ## Changelog
 
@@ -36,6 +38,7 @@ Every feature in this mod is optional and configurable.
     - Added new killstreak feature
     - Weapons will switch to best on empty ammo
     - Weapons now visibly drop outside the backpack
+    - Added custom weapon loadouts feature
 - April 2023 - ``v1.2.x``
     - Gore system overhauled and is now scalable
     - Added option to disable weapon autoswitch
@@ -86,7 +89,6 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_respawn`` - seconds to wait before bots respawn (anything >= ``0``)
 - ``scarlet_resupply`` - force items to respawn on singleplayer and coop (``0`` or ``1``)
 - ``scarlet_teamscores`` - combine players' scores (if ``teamplay 1``) to achieve fraglimit (``0`` or ``1``)
-- ``scarlet_weapons`` - enable weapons drop outside of backpack (``0`` or ``1``)
 
 ### Shard Settings
 
@@ -145,6 +147,12 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_spd_ng`` - set speed of nails from nailgun (default is ``1996``)
 - ``scarlet_spd_sng`` - set speed of nails from perferator (default is ``1020``)
 - ``scarlet_autoswitch`` - set if the game will autoswitch weapons (``0`` or ``1``, default is ``1``)
+- ``scarlet_visible`` - enable weapons drop outside of backpack (``0`` or ``1``)
+- ``scarlet_limited`` - remove Shotgun and Nailgun from the game (``0`` or ``1``)
+
+### Loadout Settings
+
+- ``weapons`` - replace all weapons and ammo in the game (``0`` thru ``8`` for each weapon)
 
 ## Usage
 

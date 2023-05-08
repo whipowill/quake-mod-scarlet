@@ -282,7 +282,7 @@ void() DropBackpack =
 		else
 			item.netname = string_null;
 
-		if (cvar("scarlet_weapons")) // SCARLET - drop weapons integration
+		if (cvar("scarlet_visible")) // SCARLET - drop weapons integration
 		{
 			SpawnWeapons(item);
 

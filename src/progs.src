@@ -23,6 +23,7 @@ scarlet/bot_phys.qc
 scarlet/bot_move.qc
 scarlet/bot_ed.qc
 scarlet/precache.qc // SCARLET - models used
+scarlet/loadout.qc // SCARLET - custom loadouts
 scarlet/corpses.qc // SCARLET - corpses
 scarlet/football.qc // SCARLET - football
 scarlet/footsteps.qc // SCARLET - footsteps

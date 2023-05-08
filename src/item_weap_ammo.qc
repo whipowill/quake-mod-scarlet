@@ -148,6 +148,18 @@ Keys:
 */
 void() weapon_shotgun =
 {
+	if (!LoadoutWeaponCheck(2))
+	{
+		LoadoutWeaponOverride();
+		return;
+	}
+
+	if (cvar("scarlet_limited"))
+	{
+		weapon_supershotgun();
+		return;
+	}
+
 	if (!SUB_ShouldSpawn()) return;
 	precache_model3 ("progs/g_shotgn.mdl");
 	setmodel (self, "progs/g_shotgn.mdl");
@@ -173,6 +185,12 @@ Keys:
 */
 void() weapon_supershotgun =
 {
+	if (!LoadoutWeaponCheck(3))
+	{
+		LoadoutWeaponOverride();
+		return;
+	}
+
 	if (!SUB_ShouldSpawn()) return;
 	precache_model_safe ("progs/g_shot.mdl");
 	setmodel (self, "progs/g_shot.mdl");
@@ -197,6 +215,18 @@ Keys:
 */
 void() weapon_nailgun =
 {
+	if (!LoadoutWeaponCheck(4))
+	{
+		LoadoutWeaponOverride();
+		return;
+	}
+
+	if (cvar("scarlet_limited"))
+	{
+		weapon_supernailgun();
+		return;
+	}
+
 	if (!SUB_ShouldSpawn()) return;
 	precache_model_safe ("progs/g_nail.mdl");
 	setmodel (self, "progs/g_nail.mdl");
@@ -221,6 +251,12 @@ Keys:
 */
 void() weapon_supernailgun =
 {
+	if (!LoadoutWeaponCheck(5))
+	{
+		LoadoutWeaponOverride();
+		return;
+	}
+
 	if (!SUB_ShouldSpawn()) return;
 	precache_model_safe ("progs/g_nail2.mdl");
 	setmodel (self, "progs/g_nail2.mdl");
@@ -245,6 +281,12 @@ Keys:
 */
 void() weapon_grenadelauncher =
 {
+	if (!LoadoutWeaponCheck(6))
+	{
+		LoadoutWeaponOverride();
+		return;
+	}
+
 	if (!SUB_ShouldSpawn()) return;
 	precache_model_safe ("progs/g_rock.mdl");
 	setmodel (self, "progs/g_rock.mdl");
@@ -269,6 +311,12 @@ Keys:
 */
 void() weapon_rocketlauncher =
 {
+	if (!LoadoutWeaponCheck(7))
+	{
+		LoadoutWeaponOverride();
+		return;
+	}
+
 	if (!SUB_ShouldSpawn()) return;
 	precache_model_safe ("progs/g_rock2.mdl");
 	setmodel (self, "progs/g_rock2.mdl");
@@ -294,6 +342,12 @@ Keys:
 */
 void() weapon_lightning =
 {
+	if (!LoadoutWeaponCheck(8))
+	{
+		LoadoutWeaponOverride();
+		return;
+	}
+
 	if (!SUB_ShouldSpawn()) return;
 	precache_model_safe ("progs/g_light.mdl");
 	setmodel (self, "progs/g_light.mdl");
@@ -402,6 +456,12 @@ Keys:
 */
 void() item_shells =
 {
+	if (!LoadoutAmmoCheck(3))
+	{
+		LoadoutAmmoOverride();
+		return;
+	}
+
 	if (!SUB_ShouldSpawn()) return;
 	if (self.spawnflags & ITEM_AMMO_BIG)
 	{
@@ -443,6 +503,12 @@ Keys:
 */
 void() item_spikes =
 {
+	if (!LoadoutAmmoCheck(5))
+	{
+		LoadoutAmmoOverride();
+		return;
+	}
+
 	if (!SUB_ShouldSpawn()) return;
 	if (self.spawnflags & ITEM_AMMO_BIG)
 	{
@@ -485,6 +551,12 @@ Keys:
 */
 void() item_rockets =
 {
+	if (!LoadoutAmmoCheck(7))
+	{
+		LoadoutAmmoOverride();
+		return;
+	}
+
 	if (!SUB_ShouldSpawn()) return;
 	if (self.spawnflags & ITEM_AMMO_BIG)
 	{
@@ -527,6 +599,12 @@ Keys:
 */
 void() item_cells =
 {
+	if (!LoadoutAmmoCheck(8))
+	{
+		LoadoutAmmoOverride();
+		return;
+	}
+
 	if (!SUB_ShouldSpawn()) return;
 	if (self.spawnflags & ITEM_AMMO_BIG)
 	{
