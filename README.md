@@ -19,6 +19,7 @@ Every feature in this mod is optional and configurable.
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
 - **Score Keeper** - make teamplay games combine scores to achieve fraglimit
 - **No Autoswitch** - nobody takes the gun out of your hand anymore
+- **Visible Weapons** - weapons can drop visibly outside the backpack
 
 ### Experimental Features
 
@@ -34,6 +35,7 @@ Every feature in this mod is optional and configurable.
     - Added new shards feature on kills
     - Added new killstreak feature
     - Weapons will switch to best on empty ammo
+    - Weapons now visibly drop outside the backpack
 - April 2023 - ``v1.2.x``
     - Gore system overhauled and is now scalable
     - Added option to disable weapon autoswitch
@@ -84,6 +86,7 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_respawn`` - seconds to wait before bots respawn (anything >= ``0``)
 - ``scarlet_resupply`` - force items to respawn on singleplayer and coop (``0`` or ``1``)
 - ``scarlet_teamscores`` - combine players' scores (if ``teamplay 1``) to achieve fraglimit (``0`` or ``1``)
+- ``scarlet_weapons`` - enable weapons drop outside of backpack (``0`` or ``1``)
 
 ### Shard Settings
 

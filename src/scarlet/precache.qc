@@ -12,4 +12,7 @@ void() S_Precache =
     precache_model("progs/items/quoth/cross.mdl");
     precache_model("progs/invul.mdl");
     precache_model("progs/quaddama.mdl");
+
+    precache_model("progs/g_shotgn.mdl");
+
 }

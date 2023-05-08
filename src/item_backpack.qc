@@ -281,7 +281,14 @@ void() DropBackpack =
 			item.netname = "Thunderbolt";
 		else
 			item.netname = string_null;
-		
+
+		if (cvar("scarlet_weapons")) // SCARLET - drop weapons integration
+		{
+			SpawnWeapons(item);
+
+			item.items = 0;
+			item.netname = string_null;
+		}
 	}
 	
 	if (coop == 1)

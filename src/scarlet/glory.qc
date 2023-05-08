@@ -45,6 +45,18 @@ void() ShardTouch =
         sound(other, CHAN_POWERUP, self.noise, 1, ATTN_NORM);
         powerup_invulnerability(other, 30);
     }
+    else if (self.type == "shard_weapon" || self.type == "item")
+    {
+        sound(other, CHAN_WEAPON, self.noise, 1, ATTN_NORM);
+
+        other.items |= self.items;
+
+        local entity oself = self;
+        self = other;
+        // change to the weapon
+        W_BetterWeapon(oself.items);
+        self = oself;
+    }
 
     remove(self);
 }
@@ -119,8 +131,78 @@ void(vector org, entity own) SpawnShards =
                 }
             }
 
-
             setorigin (shard, org); //start shard at point of damage
         }
     }
+}
+
+void(entity item) SpawnWeapons =
+{
+    //if (!item.netname) return;
+
+    local entity weap;
+
+    weap = spawn();
+    weap.movetype = MOVETYPE_TOSS;
+    weap.solid = SOLID_TRIGGER;
+
+    weap.velocity = Vector(random(), random(), random()) * (50 + 150);
+    weap.touch = ShardTouch;
+    weap.think = ShardThink;
+    weap.nextthink = time + (random()/2);
+
+    weap.attack_finished = time + (cvar("scarlet_shards_expire")/2) + ((cvar("scarlet_shards_expire")/2)*random());
+
+    weap.flags = FL_ITEM;
+
+    if (item.netname == "Shotgun")
+    {
+        return;
+
+        setmodel (weap, "progs/g_shotgn.mdl");
+        weap.items = IT_SHOTGUN;
+        weap.netname = "Shotgun";
+    }
+    else if (item.netname == "Double-barreled Shotgun")
+    {
+        setmodel (weap, "progs/g_shot.mdl");
+        weap.items = IT_SUPER_SHOTGUN;
+        weap.netname = "Double-barreled Shotgun";
+    }
+    else if (item.netname == "Nailgun")
+    {
+        setmodel (weap, "progs/g_nail.mdl");
+        weap.items = IT_NAILGUN;
+        weap.netname = "Nailgun";
+    }
+    else if (item.netname == "Perforator")
+    {
+        setmodel (weap, "progs/g_nail2.mdl");
+        weap.items = IT_SUPER_NAILGUN;
+        weap.netname = "Perforator";
+    }
+    else if (item.netname == "Grenade Launcher")
+    {
+        setmodel (weap, "progs/g_rock.mdl");
+        weap.items = IT_GRENADE_LAUNCHER;
+        weap.netname = "Grenade Launcher";
+    }
+    else if (item.netname == "Rocket Launcher")
+    {
+        setmodel (weap, "progs/g_rock2.mdl");
+        weap.items = IT_ROCKET_LAUNCHER;
+        weap.netname = "Rocket Launcher";
+    }
+    else if (item.netname == "Thunderbolt")
+    {
+        setmodel (weap, "progs/g_light.mdl");
+        weap.items = IT_LIGHTNING;
+        weap.netname = "Thunderbolt";
+    }
+
+    weap.type = "shard_weapon";
+    weap.noise = "weapons/pkup.wav";
+
+    setsize (weap, '-16 -16 0', '16 16 56');
+    setorigin (weap, item.origin); //start shard at point of damage
 }
