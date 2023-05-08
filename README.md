@@ -24,7 +24,7 @@ Every feature in this mod is optional and configurable.
 
 ### Experimental Features
 
-- **Killing Spree** - game announces when you're on a killing spree, and when it ends
+- **Killing Spree** - game announces when you're on a killstreak and when it ends
 - **Stimpacks & Powerups** - build momentum between fights w/ stimpacks and powerups rewards
 - **Highlander Games** - higher the killstreak, the more rewards for the one who takes your head!
 - **Custom Loadouts** - play rockets only, shotguns only, nailguns only, railguns only
