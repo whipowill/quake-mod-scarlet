@@ -18,8 +18,8 @@ Every feature in this mod is optional and configurable.
 - **Name Tags** - see other player names Halo-style when aiming at them
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
 - **Score Keeper** - make teamplay games combine scores to achieve fraglimit
-- **No Autoswitch** - nobody takes the gun out of your hand anymore
-- **Visible Weapons** - weapons can drop visibly outside the backpack
+- **No Autoswitch** - nobody will take the gun out of your hand anymore
+- **Visible Weapons** - force weapons to drop visibly outside the backpack
 
 ### Experimental Features
 

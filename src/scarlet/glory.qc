@@ -151,7 +151,7 @@ void(entity item) SpawnWeapons =
     weap.think = ShardThink;
     weap.nextthink = time + (random()/2);
 
-    weap.attack_finished = time + (cvar("scarlet_shards_expire")/2) + ((cvar("scarlet_shards_expire")/2)*random());
+    weap.attack_finished = time + cvar("scarlet_shards_expire");
 
     weap.flags = FL_ITEM;
 
