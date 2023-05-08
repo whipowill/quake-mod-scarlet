@@ -18,9 +18,9 @@ Every feature in this mod is optional and configurable.
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
 - **Score Keeper** - make teamplay games combine scores to achieve fraglimit
 - **No Autoswitch** - nobody will take the gun out of your hand anymore
-- **Perfect Balance** - find the perfect balance w/ configurable weapons
 - **Visible Weapons** - force weapons to drop visibly outside the backpack
-- **Limited Arsenal** - remove Shotgun and Nailgun from the game entirely
+- **Perfect Balance** - find the perfect balance w/ configurable weapons
+- **Limited Arsenal** - remove Shotgun/Nailgun from the game for better balance
 
 ### Experimental Features
 
@@ -83,12 +83,15 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 
 ### Misc Settings
 
-- ``scarlet_dialogue``- enable random comments from bots in the game (``0`` or ``1``)
-- ``scarlet_footsteps``- enable footstep sounds for players (``0`` or ``1``)
-- ``scarlet_nametags`` - display player names on screen when aiming at them (``0`` or ``1``)
-- ``scarlet_respawn`` - seconds to wait before bots respawn (anything >= ``0``)
-- ``scarlet_resupply`` - force items to respawn on singleplayer and coop (``0`` or ``1``)
-- ``scarlet_teamscores`` - combine players' scores (if ``teamplay 1``) to achieve fraglimit (``0`` or ``1``)
+- ``scarlet_dialogue``- enable random comments from bots in the game (``0`` or ``1``, default is ``1``)
+- ``scarlet_footsteps``- enable footstep sounds for players (``0`` or ``1``, default is ``1``)
+- ``scarlet_nametags`` - display player names on screen when aiming at them (``0`` or ``1``, default is ``0``)
+- ``scarlet_respawn`` - seconds to wait before bots respawn (anything >= ``0``, default is ``5``)
+- ``scarlet_resupply`` - force items to respawn on singleplayer and coop (``0`` or ``1``, default is ``1``)
+- ``scarlet_teamscores`` - combine players' scores (if ``teamplay 1``) to achieve fraglimit (``0`` or ``1``, default is ``1``)
+- ``scarlet_autoswitch`` - set if the game will autoswitch weapons (``0`` or ``1``, default is ``1``)
+- ``scarlet_visible`` - enable weapons drop outside of backpack (``0`` or ``1``, default is ``0``)
+- ``scarlet_limited`` - remove Shotgun and Nailgun from the game (``0`` or ``1``, default is ``0``)
 
 ### Shard Settings
 
@@ -146,13 +149,10 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_spr_sng`` - set spread of nail from perferator (default is ``2``)
 - ``scarlet_spd_ng`` - set speed of nails from nailgun (default is ``1996``)
 - ``scarlet_spd_sng`` - set speed of nails from perferator (default is ``1020``)
-- ``scarlet_autoswitch`` - set if the game will autoswitch weapons (``0`` or ``1``, default is ``1``)
-- ``scarlet_visible`` - enable weapons drop outside of backpack (``0`` or ``1``)
-- ``scarlet_limited`` - remove Shotgun and Nailgun from the game (``0`` or ``1``)
 
 ### Loadout Settings
 
-- ``weapons`` - replace all weapons and ammo in the game (``0`` thru ``8`` for each weapon)
+- ``weapons`` - replace all weapons and ammo in the game (``1`` thru ``8`` for each weapon, default is ``0``)
 
 ## Usage
 
