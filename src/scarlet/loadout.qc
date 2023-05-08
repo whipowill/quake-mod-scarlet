@@ -10,7 +10,8 @@ float() LoadoutParamOne =
     local float desired = cvar("weapons");
     if (desired)
     {
-        if (desired == 2) r = IT_SHOTGUN | IT_AXE;
+        if (desired == 1) r = IT_AXE;
+        else if (desired == 2) r = IT_SHOTGUN | IT_AXE;
         else if (desired == 3) r = IT_SUPER_SHOTGUN | IT_AXE;
         else if (desired == 4) r = IT_NAILGUN | IT_AXE;
         else if (desired == 5) r = IT_SUPER_NAILGUN | IT_AXE;
@@ -34,7 +35,8 @@ float() LoadoutParamEight =
     local float desired = cvar("weapons");
     if (desired)
     {
-        if (desired == 2) r = IT_SHOTGUN;
+        if (desired == 1) r = 0;
+        else if (desired == 2) r = IT_SHOTGUN;
         else if (desired == 3) r = IT_SUPER_SHOTGUN;
         else if (desired == 4) r = IT_NAILGUN;
         else if (desired == 5) r = IT_SUPER_NAILGUN;
