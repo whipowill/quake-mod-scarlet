@@ -59,7 +59,7 @@ FireBullets
 Used by shotgun, super shotgun, and enemy soldier firing
 ================
 */
-void(float shotcount, vector dir, vector spread) FireBullets =
+void(float shotcount, float dmg, vector dir, vector spread) FireBullets =
 {
 	vector src, direction;
 	entity ig;
@@ -95,8 +95,7 @@ void(float shotcount, vector dir, vector spread) FireBullets =
 				//( trace_ent.solid == SOLID_BBOX || trace_ent.solid == SOLID_SLIDEBOX ) &&	
 				HasBeenShotToDeath(trace_ent) )
 			{
-				local float calc = (cvar("scarlet_dmg_bullets")/2)+(cvar("scarlet_dmg_bullets")/2*random());
-				BulletImpact (calc, direction); // was 2+2*random(), SCARLET - custom dmg integration.
+				BulletImpact (dmg, direction); // was 2+2*random(), SCARLET - custom dmg integration.
 
 				// start 0.1 unit forward, or else when shooting an adjacent enemy we'll
 				// just hit ourselves again
@@ -118,7 +117,7 @@ void(float shotcount, vector dir, vector spread) FireBullets =
 		
 		if (trace_fraction != 1.0)
 		{
-			BulletImpact (cvar("scarlet_dmg_bullets"), direction); // was 4, SCARLET - custom dmg integration.
+			BulletImpact (dmg, direction); // was 4, SCARLET - custom dmg integration.
 		}
 		
 		if (trace_debug) dprint("bullet is over\n\n");
@@ -143,14 +142,14 @@ void() W_FireShotgun =
 	
 	sound (self, CHAN_WEAPON, "weapons/guncock.wav", 1, ATTN_NORM);	
 
-	self.punchangle_x = -2;
+	self.punchangle_x = -1 * cvar("scarlet_kick_sg");
 	makevectors(self.v_angle);
 	
 	self.currentammo = self.ammo_shells = self.ammo_shells - cvar("scarlet_dec_shells"); // was 1, SCARLET - custom ammo integration.
 	dir = aim (self, AUTOAIM_DIST);
 
 	ClearMultiDamage ();
-	FireBullets (cvar("scarlet_bullets_in_shell_sg"), dir, Vector(cvar("scarlet_spr_sg")/100, cvar("scarlet_spr_sg")/100/2, 0)); // was 6, SCARLET - custom ammo integration.
+	FireBullets (cvar("scarlet_bullets_in_shell_sg"), cvar("scarlet_dmg_bullets"), dir, Vector(cvar("scarlet_spr_sg")/100, cvar("scarlet_spr_sg")/100/2, 0)); // was 6, SCARLET - custom ammo integration.
 	self.attack_finished = time + cvar("scarlet_rof_sg");
 	
 	ApplyMultiDamage ();
@@ -182,14 +181,14 @@ void() W_FireSuperShotgun =
 		
 	sound (self, CHAN_WEAPON, "weapons/shotgn2.wav", 1, ATTN_NORM);
 
-	self.punchangle_x = -4;
+	self.punchangle_x = -1 * cvar("scarlet_kick_ssg");
 	
 	self.currentammo = self.ammo_shells = self.ammo_shells - (cvar("scarlet_dec_shells") * 2); // was 2, SCARLET - custom ammo integration.
 	dir = aim (self, AUTOAIM_DIST);
 
 	ClearMultiDamage ();
 
-	FireBullets (cvar("scarlet_bullets_in_shell_ssg"), dir, Vector(cvar("scarlet_spr_ssg")/100, cvar("scarlet_spr_ssg")/100/2, 0)); // was 14, SCARLET - custom ammo integration.
+	FireBullets (cvar("scarlet_bullets_in_shell_ssg"), cvar("scarlet_dmg_bullets"), dir, Vector(cvar("scarlet_spr_ssg")/100, cvar("scarlet_spr_ssg")/100/2, 0)); // was 14, SCARLET - custom ammo integration.
 	self.attack_finished = time + cvar("scarlet_rof_ssg");
 	
 	ApplyMultiDamage ();

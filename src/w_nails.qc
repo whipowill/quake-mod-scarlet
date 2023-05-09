@@ -56,7 +56,16 @@ void() W_FireNailgun =
 
 	// default sv_maxvelocity is 2000, any higher leads to weird 
 	// angular offsets caused by clamping the velocity
-	launch_nail(org, dir * cvar("scarlet_spd_ng"));
+	if (cvar("scarlet_spd_ng") >= 1999)
+	{
+		ClearMultiDamage();
+		FireBullets(1, cvar("scarlet_dmg_nails"), aim(self, AUTOAIM_DIST), Vector(cvar("scarlet_spr_ng")/100, cvar("scarlet_spr_ng")/100/2, 0));
+		ApplyMultiDamage();
+	}
+	else
+	{
+		launch_nail(org, dir * cvar("scarlet_spd_ng"));
+	}
 	self.attack_finished = time + cvar("scarlet_rof_ng");
 }
 
@@ -73,33 +82,42 @@ void() W_FirePerforator =
 	else if (mod(self.cnt, 4) == 2) offset = '1.25 0 0';
 	else if (mod(self.cnt, 4) == 3) offset = '1 0 -1';
 	
-	entity spike1, spike2;
-	spike1 = launch_nail(W_SpikeOrigin(offset), W_SpikeDir(v_forward, cvar("scarlet_spr_sng")) * cvar("scarlet_spd_sng"));
-	spike2 = launch_nail(W_SpikeOrigin(-offset), W_SpikeDir(v_forward, cvar("scarlet_spr_sng")) * cvar("scarlet_spd_sng"));
-
-	// weaken the SNG at long distance while keeping the spread under control
-	spike1.think = spike_unfatten;
-	spike2.think = spike_unfatten;
-	spike1.nextthink = time + 0.25;
-	spike2.nextthink = time + 0.3;
-	
-	self.attack_finished = time + cvar("scarlet_rof_sng");
-	
-	if (has_quad(self))
+	if (cvar("scarlet_spd_sng") >= 1999)
 	{
-		// here's a silly thing:
-		// one vanilla SNG nail does 18 dmg, 72 with quad, enough to gib zombies and grunts.
-		// two copper nails do 9 each, 36 each with quad, for the same total damage, but that
-		//   only kills grunts and knocks zombies down because the second nail doesn't hit.
-		
-		// the dumb solution is to make one nail do 0 dmg and the other do 18 in quad mode
-		//   so the math works out like the old math and the quad SNG still feels right
-		spike2.dmg = cvar("scarlet_dmg_nails")*2; // SCARLET - custom dmg integration.
-		spike1.dmg = cvar("scarlet_dmg_nails")*2; // SCARLET - custom dmg integration.
-		spike2.buddy = spike1;
-		spike1.buddy = spike2;
-		// first one to hit does its damage and then nerfs its 'buddy'
+		ClearMultiDamage();
+		FireBullets(2, cvar("scarlet_dmg_nails"), aim(self, AUTOAIM_DIST), Vector(cvar("scarlet_spr_sng")/100, cvar("scarlet_spr_sng")/100/2, 0));
+		ApplyMultiDamage();
 	}
+	else
+	{
+		entity spike1, spike2;
+		spike1 = launch_nail(W_SpikeOrigin(offset), W_SpikeDir(v_forward, cvar("scarlet_spr_sng")) * cvar("scarlet_spd_sng"));
+		spike2 = launch_nail(W_SpikeOrigin(-offset), W_SpikeDir(v_forward, cvar("scarlet_spr_sng")) * cvar("scarlet_spd_sng"));
+
+		// weaken the SNG at long distance while keeping the spread under control
+		spike1.think = spike_unfatten;
+		spike2.think = spike_unfatten;
+		spike1.nextthink = time + 0.25;
+		spike2.nextthink = time + 0.3;
+
+		if (has_quad(self))
+		{
+			// here's a silly thing:
+			// one vanilla SNG nail does 18 dmg, 72 with quad, enough to gib zombies and grunts.
+			// two copper nails do 9 each, 36 each with quad, for the same total damage, but that
+			//   only kills grunts and knocks zombies down because the second nail doesn't hit.
+
+			// the dumb solution is to make one nail do 0 dmg and the other do 18 in quad mode
+			//   so the math works out like the old math and the quad SNG still feels right
+			spike2.dmg = cvar("scarlet_dmg_nails")*2; // SCARLET - custom dmg integration.
+			spike1.dmg = cvar("scarlet_dmg_nails")*2; // SCARLET - custom dmg integration.
+			spike2.buddy = spike1;
+			spike1.buddy = spike2;
+			// first one to hit does its damage and then nerfs its 'buddy'
+		}
+	}
+
+	self.attack_finished = time + cvar("scarlet_rof_sng");
 }
 
 void() W_FireSpikes =
@@ -112,12 +130,13 @@ void() W_FireSpikes =
 	if (self.ammo_nails >= 2 && self.weapon == IT_SUPER_NAILGUN)
 	{
 		W_FirePerforator();
+		self.punchangle_x = -1 * cvar("scarlet_kick_sng");
 	}
 	else
 	{
 		W_FireNailgun();
+		self.punchangle_x = -1 * cvar("scarlet_kick_ng");
 	}
-	self.punchangle_x = -2;
 	
 	self.cnt = cycle(self.cnt,8);
 }

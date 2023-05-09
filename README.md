@@ -21,13 +21,14 @@ Every feature in this mod is optional and configurable.
 - **Visible Weapons** - force weapons to drop visibly outside the backpack
 - **Perfect Balance** - find the perfect balance w/ configurable weapons
 - **Limited Arsenal** - remove Shotgun/Nailgun from the game for better balance
+- **Hitscan FTW** - make Nailgun/Perforator use hitscan instead of projectiles
 
 ### Experimental Features
 
 - **Killing Spree** - game announces when you're on a killstreak and when it ends
 - **Stimpacks & Powerups** - build momentum between fights w/ stimpacks and powerups rewards
 - **Highlander Games** - higher the killstreak, the more rewards for the one who takes your head!
-- **Custom Loadouts** - play rockets only, shotguns only, nailguns only, railguns only
+- **Custom Loadouts** - play rockets only, Shotguns only, Nailguns only, railguns only
 
 ## Changelog
 
@@ -39,6 +40,8 @@ Every feature in this mod is optional and configurable.
     - Weapons will switch to best on empty ammo
     - Weapons now visibly drop outside the backpack
     - Added custom weapon loadouts feature
+    - Weapons kick can be customized
+    - Nail speed over 2000 becomes hitscan
 - April 2023 - ``v1.2.x``
     - Gore system overhauled and is now scalable
     - Added option to disable weapon autoswitch
@@ -121,8 +124,8 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 ### Weapon Settings
 
 - ``scarlet_dmg_axe`` - set the damage done by axes (default is ``24``)
-- ``scarlet_bullets_in_shell_sg`` - set # bullets in a shell from a shotgun (default is ``6``)
-- ``scarlet_bullets_in_shell_ssg`` - set # bullets in 2 shells from a super shotgun (default is ``14``)
+- ``scarlet_bullets_in_shell_sg`` - set # bullets in a shell from a Shotgun (default is ``6``)
+- ``scarlet_bullets_in_shell_ssg`` - set # bullets in 2 shells from a Super Shotgun (default is ``14``)
 - ``scarlet_dmg_bullets`` - set the damage done by bullets (default is ``4``)
 - ``scarlet_dmg_nails`` - set the damage done by nails (default is ``9``)
 - ``scarlet_dmg_rockets`` - set the damage done by rockets (default is ``120``)
@@ -136,19 +139,26 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_max_rockets`` - set the max amount of rockets (default is ``100``)
 - ``scarlet_max_cells`` - set the max amount of cells (default is ``100``)
 - ``scarlet_rof_axe`` - set axe rate of fire delay in seconds (default is ``.49``)
-- ``scarlet_rof_sg`` - set shotgun rate of fire delay in seconds (default is ``.5``)
-- ``scarlet_rof_ssg`` - set super shotgun rate of fire delay in seconds (default is ``.7``)
-- ``scarlet_rof_ng`` - set nailgun rate of fire delay in seconds (default is ``.095``)
-- ``scarlet_rof_sng`` - set perforator rate of fire delay in seconds (default is ``.095``)
-- ``scarlet_rof_rl`` - set rocket launcher rate of fire delay in seconds (default is ``.8``)
-- ``scarlet_rof_gl`` - set grenade launcher rate of fire delay in seconds (default is ``.6``)
-- ``scarlet_rof_tb`` - set thunderbolt rate of fire delayd in seconds (default is ``0``)
-- ``scarlet_spr_sg`` - set spread of bullets from shotgun (default is ``4``)
-- ``scarlet_spr_ssg`` - set spread of bullets from super shotgun (default is ``14``)
-- ``scarlet_spr_ng`` - set spread of bullets from nailgun (default is ``0``)
-- ``scarlet_spr_sng`` - set spread of nail from perferator (default is ``2``)
-- ``scarlet_spd_ng`` - set speed of nails from nailgun (default is ``1996``)
-- ``scarlet_spd_sng`` - set speed of nails from perferator (default is ``1020``)
+- ``scarlet_rof_sg`` - set Shotgun rate of fire delay in seconds (default is ``.5``)
+- ``scarlet_rof_ssg`` - set Super Shotgun rate of fire delay in seconds (default is ``.7``)
+- ``scarlet_rof_ng`` - set Nailgun rate of fire delay in seconds (default is ``.095``)
+- ``scarlet_rof_sng`` - set Perforator rate of fire delay in seconds (default is ``.095``)
+- ``scarlet_rof_rl`` - set Rocket Launcher rate of fire delay in seconds (default is ``.8``)
+- ``scarlet_rof_gl`` - set Grenade Launcher rate of fire delay in seconds (default is ``.6``)
+- ``scarlet_rof_tb`` - set Thunderbolt rate of fire delayd in seconds (default is ``0``)
+- ``scarlet_spr_sg`` - set spread of bullets from Shotgun (default is ``4``)
+- ``scarlet_spr_ssg`` - set spread of bullets from Super Shotgun (default is ``14``)
+- ``scarlet_spr_ng`` - set spread of bullets from Nailgun (default is ``0``)
+- ``scarlet_spr_sng`` - set spread of nail from Perforator (default is ``2``)
+- ``scarlet_spd_ng`` - set speed of nails from Nailgun (default is ``1996``, ``2000+`` becomes hitscan)
+- ``scarlet_spd_sng`` - set speed of nails from Perforator (default is ``1020``, ``2000+`` becomes hitscan)
+- ``scarlet_kick_sg`` - set weapon kick for Shotgun (default is ``2``)
+- ``scarlet_kick_ssg`` - set weapon kick for Super Shotgun (default is ``4``)
+- ``scarlet_kick_ng`` - set weapon kick for Nailgun (default is ``2``)
+- ``scarlet_kick_sng`` - set weapon kick for Perforator (default is ``2``)
+- ``scarlet_kick_gl`` - set weapon kick for Grenade Launcher (default is ``2``)
+- ``scarlet_kick_rl`` - set weapon kick for Rocket Launcher (default is ``2``)
+- ``scarlet_kick_tb`` - set weapon kick for Thunderbolt (default is ``2``)
 
 ### Loadout Settings
 

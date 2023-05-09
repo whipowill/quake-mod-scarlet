@@ -198,7 +198,7 @@ void() army_fire =
 
 	// lunaran: moved multidamage here
 	ClearMultiDamage ();
-	FireBullets (4, dir, '0.1 0.1 0');
+	FireBullets (4, cvar("scarlet_dmg_bullets"), dir, '0.1 0.1 0');
 	ApplyMultiDamage ();
 }
 

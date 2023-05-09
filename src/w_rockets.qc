@@ -92,7 +92,7 @@ void() W_FireRocket =
 	
 	sound (self, CHAN_WEAPON, "weapons/sgun1.wav", 1, ATTN_NORM);
 
-	self.punchangle_x = -2;
+	self.punchangle_x = -1 * cvar("scarlet_kick_rl");
 	
 	makevectors (self.v_angle);
 	loc = self.origin + v_forward * 8 + '0 0 16';
@@ -150,7 +150,7 @@ void() W_FireGrenade =
 	
 	self.currentammo = self.ammo_rockets = self.ammo_rockets - cvar("scarlet_dec_rockets"); // was 1, SCARLET - custom ammo integration.
 	sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
-	self.punchangle_x = -2;
+	self.punchangle_x = -1 * cvar("scarlet_kick_gl");
 
 	// set grenade speed	
 	makevectors (self.v_angle);

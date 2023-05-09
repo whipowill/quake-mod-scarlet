@@ -315,7 +315,7 @@ void() W_FireLightning =
 		sound (self, CHAN_WEAPON, "weapons/lhit.wav", 1, ATTN_NORM);
 		self.width = time + 0.6;
 	}
-	self.punchangle_x = -2;
+	self.punchangle_x = -1 * cvar("scarlet_kick_tb");
 
 	self.currentammo = self.ammo_cells = self.ammo_cells - cvar("scarlet_dec_cells"); // was 1, SCARLET - custom ammo integration.
 	org = self.origin + '0 0 16'+ v_forward * 8;
