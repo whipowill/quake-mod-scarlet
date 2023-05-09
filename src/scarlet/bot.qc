@@ -1310,9 +1310,13 @@ void() BotImpulses =
 	{
 		TeleBotsToMe();
 	}
-	else if (self.impulse == 114) // list all the scorekeeper entities -whipowill
+	else if (self.impulse == 120) // do a melee attack -whipowill
 	{
-		ScoreKeeperList();
+		AxeAttack();
+	}
+	else if (self.impulse == 121) // do a grenade attack -whipowill
+	{
+		GrenadeAttack();
 	}
 	else
 		return;

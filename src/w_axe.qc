@@ -35,6 +35,7 @@ void(float foff) W_AxeCycle =
 		// stop the player anim cycle and restore normal thinking
 		W_SetIdleWeaponFrame();
 		player_run();
+		if (self.weapon != IT_AXE) W_ResetWeaponState(); // SCARLET - melee integration
 		return;
 	}
 	
