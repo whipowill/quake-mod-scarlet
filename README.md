@@ -25,6 +25,7 @@ Every feature in this mod is optional and configurable.
 
 ### Experimental Features
 
+- **Melee & Grenades** - pull out your Axe as a melee attack or toss a grenade down the hall
 - **Killing Spree** - game announces when you're on a killstreak and when it ends
 - **Stimpacks & Powerups** - build momentum between fights w/ stimpacks and powerups rewards
 - **Highlander Games** - higher the killstreak, the more rewards for the one who takes your head!
@@ -42,6 +43,7 @@ Every feature in this mod is optional and configurable.
     - Added custom weapon loadouts feature
     - Weapons kick can be customized
     - Nail speed over 2000 becomes hitscan
+    - Add melee attack and grenade toss
 - April 2023 - ``v1.2.x``
     - Gore system overhauled and is now scalable
     - Added option to disable weapon autoswitch
@@ -165,6 +167,11 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``weapons`` - replace all weapons and ammo in the game (``1`` thru ``8`` for each weapon, default is ``0``)
 
 ## Usage
+
+Utilize melee and grenade abilities by binding keys:
+
+- ``impulse 120`` - melee attack
+- ``impulse 121`` - grenade toss
 
 Control bots via these console commands:
 
