@@ -20,17 +20,20 @@ Every feature in this mod is optional and configurable.
 - **No Autoswitch** - nobody will take the gun out of your hand anymore
 - **Visible Weapons** - force weapons to drop visibly outside the backpack
 - **Perfect Balance** - find the perfect balance w/ configurable weapons
-- **Limited Arsenal** - remove Shotgun/Nailgun from the game for better balance
-- **Hitscan FTW** - make Nailgun/Perforator use hitscan instead of projectiles
+- **Limited Arsenal** - remove inferior weapons from the game for better balance
+- **Hitscan FTW** - make chainguns use hitscan Quake2-style instead of projectiles
 - **Melee Attack** - bind a key for an Axe melee attack w/out switching weapons
 - **Grenade Brigade** - bind a key to throw a grenade w/out switching weapons
 - **Custom Loadouts** - play Rockets only, Shotguns only, Chaingun only, Railgun only
 
 ### Experimental Features
 
+All of these features kind of work together, and I'm continuing to make refinements.
+
+- **Glory Kills** - melee attacks and killstreaks grant health and armor rewards
 - **Killing Spree** - game announces when you're on a killstreak and when it ends
-- **Stimpacks & Powerups** - build momentum between fights w/ stimpacks and powerups rewards
 - **Highlander Games** - higher the killstreak, the more rewards for the one who takes your head!
+- **Random Powerups** - every kill has a chance to drop a random powerup
 
 ## Changelog
 
@@ -82,7 +85,7 @@ Every feature in this mod is optional and configurable.
 - Make sure your ``C:/path/to/quake/id1/maps/`` folder has all your [waypoint](https://github.com/whipowill/quake-mod-frikbot-waypoints) files
 - Run the game w/ ``-game scarlet -particles 99999 -listen 16 -condebug``
 
-See my other [repository](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory, which includes all the best multiplayer maps and waypoint files to use w/ Scarlet.  The reason I created this mod is so I can change the game to my tastes, and this [directory](https://github.com/whipowill/quake-dir/tree/master/scarlet/settings) is where I experiment w/ custom settings.
+See my other [repository](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory, which includes all the best multiplayer maps and waypoint files to use w/ Scarlet.  The reason I created this mod is so I can customize the game to my tastes, and this [file](https://github.com/whipowill/quake-dir/tree/master/scarlet/custom.cfg) is where I make it happen.
 
 ## Options
 
@@ -93,7 +96,7 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_dialogue``- enable random comments from bots in the game (``0`` or ``1``, default is ``1``)
 - ``scarlet_footsteps``- enable footstep sounds for players (``0`` or ``1``, default is ``1``)
 - ``scarlet_nametags`` - display player names on screen when aiming at them (``0`` or ``1``, default is ``0``)
-- ``scarlet_respawn`` - seconds to wait before bots respawn (anything >= ``0``, default is ``5``)
+- ``scarlet_respawn`` - seconds to wait before bots respawn (default is ``5``)
 - ``scarlet_resupply`` - force items to respawn on singleplayer and coop (``0`` or ``1``, default is ``1``)
 - ``scarlet_teamscores`` - combine players' scores (if ``teamplay 1``) to achieve fraglimit (``0`` or ``1``, default is ``1``)
 - ``scarlet_autoswitch`` - set if the game will autoswitch weapons (``0`` or ``1``, default is ``1``)
@@ -112,7 +115,7 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 
 ### Gore Settings
 
-- ``scarlet_gore`` - multiplier for bleed effects (anything >= ``0``, default is ``3``)
+- ``scarlet_gore`` - multiplier for bleed effects (default is ``3``)
 - ``scarlet_gore_chance_bullets`` - how likely will a bullet cause bleeding (default is ``.3``)
 - ``scarlet_gore_multiplier_bullets`` - how many drops of blood per bullet (default is ``1``)
 - ``scarlet_gore_chance_nails`` - how likely will a nail cause bleeding (default is ``.6``)
@@ -180,9 +183,9 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 
 - ``scarlet_melee`` - allow melee attack (``0`` or ``1``, default is ``0``)
 - ``scarlet_grenades`` - allow grenade toss (``0`` or ``1``, default is ``0``)
-- ``scarlet_grenades_max`` - number of grenades that can be thrown (anything >= ``0``, default is ``4``)
-- ``scarlet_grenades_cooldown`` - seconds to wait before throwing again (anything >= ``0``, default is ``10``)
-- ``scarlet_grenades_fuse`` - seconds before grenade will explode (anything >= ``0``, default is ``1``)
+- ``scarlet_grenades_max`` - number of grenades that can be thrown (default is ``4``)
+- ``scarlet_grenades_cooldown`` - seconds to wait before throwing again (default is ``10``)
+- ``scarlet_grenades_fuse`` - seconds before grenade will explode (default is ``1``)
 
 ## Usage
 
@@ -218,6 +221,7 @@ Reference the included ``instructions.html`` file from FrikaC for detailed infor
 - Original head kicking code by [Ivana](http://www.insideqc.com/qctut/lesson-52.shtml)
 - Original enemy bleeding code by [Maniac](https://www.insideqc.com/qctut/qctut-47.shtml)
 - Original footsteps code by [Seven](https://www.quakewiki.net/quake-1/mods/footsteps-pack/)
+- Original models provided by [Quoth](https://www.quaddicted.com/webarchive/kell.quaddicted.com/quoth/quoth2.html)
 
 ## External Links
 

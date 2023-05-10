@@ -10,6 +10,8 @@ void() AxeAttack =
 {
     if (!cvar("scarlet_melee")) return;
 
+    if (self.health <= 0) return;
+
     if (self.attack_finished <= time)
     {
         player_run();
@@ -22,33 +24,34 @@ void() GrenadeAttack =
 {
     if (!cvar("scarlet_grenades")) return;
 
+    if (self.health <= 0) return;
+
     if (self.grenades_time <= time) self.grenades_used = 0;
 
-    if (self.attack_finished <= time && self.ammo_rockets >= 1 && self.grenades_used < cvar("scarlet_grenades_max"))
+    if (self.attack_finished <= time && self.grenades_used < cvar("scarlet_grenades_max")) //self.ammo_rockets >= 1
     {
-        player_run();
         self.weaponmodel = string_null;
-        W_FireGrenadeCustom();
-
         self.grenades_used = self.grenades_used + 1;
         self.grenades_time = time + cvar("scarlet_grenades_cooldown");
+
+        HandGrenadeThrow();
     }
 };
 
-void() W_FireGrenadeCustom =
+void() HandGrenadeThrow =
 {
     entity g;
     float base;
     vector gvel;
 
-    self.ammo_rockets = self.ammo_rockets - cvar("scarlet_dec_rockets");
-    W_SetCurrentAmmo();
+    //self.ammo_rockets = self.ammo_rockets - cvar("scarlet_dec_rockets");
+    //W_SetCurrentAmmo();
 
-    sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
+    sound(self, CHAN_WEAPON, "halo3/weapons/frag_throw.wav", 1, ATTN_NORM);
     self.punchangle_x = -1 * cvar("scarlet_kick_gl");
 
     // set grenade speed
-    makevectors (self.v_angle);
+    makevectors(self.v_angle);
     base = 200;
     if (self.v_angle_x)
         gvel = v_forward * base * 3 + v_up * base + crandom() * v_right * 10 + crandom() * v_up * 10;
@@ -59,20 +62,36 @@ void() W_FireGrenadeCustom =
         gvel_z = base;
     }
 
-    g = launch_grenade(self.origin, gvel);
+    g = toss_projectile(self.origin, gvel, "grenade");
+    g.avelocity = '300 300 300';
     g.lifetime_finished = time + cvar("scarlet_grenades_fuse"); // make grenade explode quickly
-    g.touch = GrenadeTouch;
+    g.touch = HandGrenadeTouch;
     g.th_die = GrenadeExplode;
+    SUB_ChangeModel(g, "progs/items/hipnotic/proxbomb_edited.mdl");
 
     self.attack_finished = time + cvar("scarlet_rof_gl");
+}
+
+void() HandGrenadeTouch =
+{
+    if (other == self.owner) return;
+    if (CheckProjectilePassthru()) return;
+    if (other.takedamage == DAMAGE_AIM)
+    {
+        self.velocity = '0 0 0';
+        T_MissileExplode();
+        T_ExplosiveTouch();
+        return;
+    }
+    sound (self, CHAN_WEAPON, "halo3/weapons/frag_bnc_stone1.wav", 1, ATTN_NORM);
+    if (self.velocity == '0 0 0')
+        self.avelocity = '0 0 0';
 }
 
 void() FixWeaponState =
 {
     if (self.weaponmodel != string_null && self.weaponmodel != "progs/v_axe2.mdl")
         return;
-
-    player_run();
 
     if (self.weapon == IT_AXE)
         self.weaponmodel = "progs/v_axe2.mdl";

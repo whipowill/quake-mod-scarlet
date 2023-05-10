@@ -11,6 +11,7 @@ void() ShardThink =
         return;
     }
 
+    self.touch = ShardTouch;
     self.nextthink = time + .2;
 };
 
@@ -75,63 +76,80 @@ void(vector org, entity own) SpawnShards =
     local float i;
     local float m = cvar("scarlet_shards_multiplier") * (own.killstreak + 1);
 
+    local float pass;
     for (i=1; i<=m; i++)
     {
         if (random() <= cvar("scarlet_shards_chance"))
         {
-            shard = spawn();
-            shard.owner = own;
-            shard.movetype = MOVETYPE_TOSS;
-            shard.solid = SOLID_TRIGGER;
-
-            shard.velocity = Vector(random(), random(), random()) * (50 + 300);
-            shard.touch = ShardTouch;
-            shard.think = ShardThink;
-            shard.nextthink = time + (random()/2);
-
-            shard.attack_finished = time + (cvar("scarlet_shards_expire")/2) + ((cvar("scarlet_shards_expire")/2)*random());
-
             rand = random();
-            if (rand >= 0 && rand < rune_nochance)
+
+            pass = 1;
+            if (cvar("scarlet_shards_powerups") == 2 && rand < rune_nochance)
             {
-                shard.angles = '0 180 0'; // for stimpack
-                setmodel (shard, "progs/items/rogue/mervup_75.mdl");
-                shard.type = "shard_health";
-                shard.noise = "items/r_item1.wav";
-                setsize (shard, '-24 -24 -16', '24 24 16');
-            }
-            if (!is_rune && cvar("scarlet_shards_powerups"))
-            {
-                if (rand >= rune_nochance && rand < (rune_nochance + (rune_chance*1)))
-                {
-                    is_rune = 1;
+                pass = 0;
 
-                    setmodel (shard, "progs/items/quoth/cross.mdl");
-                    shard.type = "shard_mega";
-                    shard.noise = "items/r_item2.wav";
-                    setsize (self, '-16 -16 -24', '16 16 32');
-                }
-                else if (rand >= (rune_nochance + (rune_chance*1)) && rand < (rune_nochance + (rune_chance*2)))
-                {
-                    is_rune = 1;
+                // if this is a glory kill
+                if (own.enemy.weaponmodel == "progs/v_axe2.mdl") pass = 1;
 
-                    setmodel (shard, "progs/quaddama.mdl");
-                    shard.type = "shard_quad";
-                    shard.noise = "items/damage.wav";
-                    setsize (shard, '-16 -16 -24', '16 16 32');
-                }
-                else if (rand >= (rune_nochance + (rune_chance*2)))
-                {
-                    is_rune = 1;
-
-                    setmodel (shard, "progs/invul.mdl");
-                    shard.type = "shard_pent";
-                    shard.noise = "items/protect.wav";
-                    setsize (shard, '-16 -16 -24', '16 16 32');
-                }
+                // if this is a killstreak kill
+                if (own.enemy.killstreak/5 == floor(own.enemy.killstreak/5)) pass = 1;
             }
 
-            setorigin (shard, org); //start shard at point of damage
+            if (pass)
+            {
+                shard = spawn();
+                shard.owner = own;
+                shard.movetype = MOVETYPE_TOSS;
+                shard.solid = SOLID_TRIGGER;
+
+                shard.velocity = Vector(random(), random(), random()) * (50 + 300);
+                //shard.touch = ShardTouch;
+                shard.think = ShardThink;
+                shard.nextthink = time + 0.5 + random();
+
+                shard.attack_finished = time + (cvar("scarlet_shards_expire")/2) + ((cvar("scarlet_shards_expire")/2)*random());
+
+                if (rand >= 0 && rand < rune_nochance)
+                {
+                    shard.angles = '0 180 0'; // for stimpack
+                    setmodel (shard, "progs/items/rogue/mervup_edited.mdl");
+                    shard.type = "shard_health";
+                    shard.noise = "items/r_item1.wav";
+                    setsize (shard, '-24 -24 -16', '24 24 16');
+                }
+                if (!is_rune && cvar("scarlet_shards_powerups"))
+                {
+                    if (rand >= rune_nochance && rand < (rune_nochance + (rune_chance*1)))
+                    {
+                        is_rune = 1;
+
+                        setmodel (shard, "progs/items/quoth/cross.mdl");
+                        shard.type = "shard_mega";
+                        shard.noise = "items/r_item2.wav";
+                        setsize (self, '-16 -16 -24', '16 16 32');
+                    }
+                    else if (rand >= (rune_nochance + (rune_chance*1)) && rand < (rune_nochance + (rune_chance*2)))
+                    {
+                        is_rune = 1;
+
+                        setmodel (shard, "progs/quaddama.mdl");
+                        shard.type = "shard_quad";
+                        shard.noise = "items/damage.wav";
+                        setsize (shard, '-16 -16 -24', '16 16 32');
+                    }
+                    else if (rand >= (rune_nochance + (rune_chance*2)))
+                    {
+                        is_rune = 1;
+
+                        setmodel (shard, "progs/invul.mdl");
+                        shard.type = "shard_pent";
+                        shard.noise = "items/protect.wav";
+                        setsize (shard, '-16 -16 -24', '16 16 32');
+                    }
+                }
+
+                setorigin (shard, org); //start shard at point of damage
+            }
         }
     }
 }
@@ -161,9 +179,9 @@ void(entity item) SpawnWeapons =
     {
         return;
 
-        setmodel (weap, "progs/g_shotgn.mdl");
-        weap.items = IT_SHOTGUN;
-        weap.netname = "Shotgun";
+        //setmodel (weap, "progs/g_shotgn.mdl");
+        //weap.items = IT_SHOTGUN;
+        //weap.netname = "Shotgun";
     }
     else if (item.netname == "Super Shotgun")
     {

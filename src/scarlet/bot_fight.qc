@@ -351,7 +351,6 @@ void() bot_fight_style =
 	local vector v, v1, v2, org;
 	local float foedist, mysz, foesz;
 
-
 	if (self.enemy.health <= 0)
 	{
 		self.enemy = world;

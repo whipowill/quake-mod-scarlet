@@ -1054,7 +1054,7 @@ void() BotAI =
 		
 	// stagger the bot's AI out so they all don't think at the same time, causing game
 	// 'spikes'
-	if (self.target1_ent.classname != "player") // disable staggered thinking for now, bots play smoother. -whipowill
+	if (self.target1_ent.classname != "player")
 	{
 		if (self.ai_time > time)
 			return;
