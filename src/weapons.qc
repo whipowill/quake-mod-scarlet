@@ -446,6 +446,8 @@ void() W_WeaponFrame =
 	if (time < self.attack_finished)
 		return;
 
+	FixWeaponState(); // SCARLET - melee integration (restore weapon model)
+
 	// check for attack
 	if (self.button0)
 	{

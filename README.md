@@ -22,14 +22,15 @@ Every feature in this mod is optional and configurable.
 - **Perfect Balance** - find the perfect balance w/ configurable weapons
 - **Limited Arsenal** - remove Shotgun/Nailgun from the game for better balance
 - **Hitscan FTW** - make Nailgun/Perforator use hitscan instead of projectiles
+- **Melee Attack** - bind a key for an Axe melee attack w/out switching weapons
+- **Grenade Brigade** - bind a key to throw a grenade w/out switching weapons
+- **Custom Loadouts** - play Rockets only, Shotguns only, Chaingun only, Railgun only
 
 ### Experimental Features
 
-- **Melee & Grenades** - pull out your Axe as a melee attack or toss a grenade down the hall
 - **Killing Spree** - game announces when you're on a killstreak and when it ends
 - **Stimpacks & Powerups** - build momentum between fights w/ stimpacks and powerups rewards
 - **Highlander Games** - higher the killstreak, the more rewards for the one who takes your head!
-- **Custom Loadouts** - play rockets only, Shotguns only, Nailguns only, railguns only
 
 ## Changelog
 
@@ -165,6 +166,11 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 ### Loadout Settings
 
 - ``weapons`` - replace all weapons and ammo in the game (``1`` thru ``8`` for each weapon, default is ``0``)
+
+### Melee & Grenades Settings
+
+- ``scarlet_grenades`` - allow melee attack and grenade attack (``0`` or ``1``, default is ``0``)
+- ``scarlet_grenades_fuse`` - seconds before grenade will explode (anything >= ``0``, default is ``1``)
 
 ## Usage
 

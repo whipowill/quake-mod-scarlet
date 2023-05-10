@@ -5,6 +5,8 @@
 
 void() AxeAttack =
 {
+    if (!cvar("scarlet_grenades")) return;
+
     if (self.attack_finished <= time)
     {
         player_run();
@@ -15,8 +17,12 @@ void() AxeAttack =
 
 void() GrenadeAttack =
 {
+    if (!cvar("scarlet_grenades")) return;
+
     if (self.attack_finished <= time && self.ammo_rockets >= 1)
     {
+        player_run();
+        self.weaponmodel = string_null;
         W_FireGrenadeCustom();
     }
 };
@@ -46,7 +52,34 @@ void() W_FireGrenadeCustom =
     }
 
     g = launch_grenade(self.origin, gvel);
-    self.attack_finished = time + cvar("scarlet_rof_gl");
+    g.lifetime_finished = time + cvar("scarlet_grenades_fuse"); // make grenade explode quickly
     g.touch = GrenadeTouch;
     g.th_die = GrenadeExplode;
+
+    self.attack_finished = time + cvar("scarlet_rof_gl");
+}
+
+void() FixWeaponState =
+{
+    if (self.weaponmodel != string_null && self.weaponmodel != "progs/v_axe2.mdl")
+        return;
+
+    if (self.weapon == IT_AXE)
+        self.weaponmodel = "progs/v_axe2.mdl";
+    else if (self.weapon == IT_SHOTGUN)
+        self.weaponmodel = "progs/v_shot.mdl";
+    else if (self.weapon == IT_SUPER_SHOTGUN)
+        self.weaponmodel = "progs/v_shot2.mdl";
+    else if (self.weapon == IT_NAILGUN)
+        self.weaponmodel = "progs/v_nail.mdl";
+    else if (self.weapon == IT_SUPER_NAILGUN)
+        self.weaponmodel = "progs/v_nail2.mdl";
+    else if (self.weapon == IT_GRENADE_LAUNCHER)
+        self.weaponmodel = "progs/v_rock.mdl";
+    else if (self.weapon == IT_ROCKET_LAUNCHER)
+        self.weaponmodel = "progs/v_rock2.mdl";
+    else if (self.weapon == IT_LIGHTNING)
+        self.weaponmodel = "progs/v_light.mdl";
+    else
+        self.weaponmodel = string_null;
 }
