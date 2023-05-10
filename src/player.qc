@@ -106,7 +106,6 @@ void()	player_run =[	$rockrun1,	player_run	]
 				WalkSound (self);
 	// SCARLET - end.
 
-
 	self.walkframe = self.walkframe + 1;
 }
 

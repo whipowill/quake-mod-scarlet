@@ -512,7 +512,7 @@ void() item_spikes =
 	if (!SUB_ShouldSpawn()) return;
 	if (self.spawnflags & ITEM_AMMO_BIG)
 	{
-		self.ammo_nails = cvar("scarlet_nails_big");;
+		self.ammo_nails = cvar("scarlet_nails_big");
 		precache_model_safe ("progs/m_nails2.mdl");
 		setmodel (self, "progs/m_nails2.mdl");
 	}

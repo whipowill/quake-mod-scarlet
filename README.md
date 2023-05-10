@@ -178,7 +178,10 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 
 ### Melee & Grenades Settings
 
-- ``scarlet_grenades`` - allow melee attack and grenade attack (``0`` or ``1``, default is ``0``)
+- ``scarlet_melee`` - allow melee attack (``0`` or ``1``, default is ``0``)
+- ``scarlet_grenades`` - allow grenade toss (``0`` or ``1``, default is ``0``)
+- ``scarlet_grenades_max`` - number of grenades that can be thrown in cooldown (anything >= ``0``, default is ``4``)
+- ``scarlet_grenades_cooldown`` - seconds before grenades restock (anything >= ``0``, default is ``10``)
 - ``scarlet_grenades_fuse`` - seconds before grenade will explode (anything >= ``0``, default is ``1``)
 
 ## Usage

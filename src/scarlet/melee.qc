@@ -3,9 +3,12 @@
 // by whipowill
 //-------------------------------------------------
 
+.float grenades_used;
+.float grenades_time;
+
 void() AxeAttack =
 {
-    if (!cvar("scarlet_grenades")) return;
+    if (!cvar("scarlet_melee")) return;
 
     if (self.attack_finished <= time)
     {
@@ -19,11 +22,16 @@ void() GrenadeAttack =
 {
     if (!cvar("scarlet_grenades")) return;
 
-    if (self.attack_finished <= time && self.ammo_rockets >= 1)
+    if (self.grenades_time <= time) self.grenades_used = 0;
+
+    if (self.attack_finished <= time && self.ammo_rockets >= 1 && self.grenades_used < cvar("scarlet_grenades_max"))
     {
         player_run();
         self.weaponmodel = string_null;
         W_FireGrenadeCustom();
+
+        self.grenades_used = self.grenades_used + 1;
+        self.grenades_time = time + cvar("scarlet_grenades_cooldown");
     }
 };
 
@@ -63,6 +71,8 @@ void() FixWeaponState =
 {
     if (self.weaponmodel != string_null && self.weaponmodel != "progs/v_axe2.mdl")
         return;
+
+    player_run();
 
     if (self.weapon == IT_AXE)
         self.weaponmodel = "progs/v_axe2.mdl";

@@ -1803,67 +1803,78 @@ void() ClientObituary =
 				KillstreakAdd(attacker); // SCARLET - killstreak integration
 			}
 
-			rnum = attacker.weapon;
-			if (rnum == IT_AXE)
+			if (!cvar("scarlet_nospam"))
 			{
-				if (random() < 0.5)
-					deathstring = " was axe-murdered by ";
-				else
-					deathstring = " got the chop from ";
-				deathstring2 = "\n";
-			}
-			if (rnum == IT_SHOTGUN)
-			{
-				deathstring = " chewed on ";
-				deathstring2 = "'s boomstick\n";
-			}
-			if (rnum == IT_SUPER_SHOTGUN)
-			{
-				deathstring = " ate 2 loads of ";
-				deathstring2 = "'s buckshot\n";
-			}
-			if (rnum == IT_NAILGUN)
-			{
-				deathstring = " was nailed by ";
-				deathstring2 = "\n";
-			}
-			if (rnum == IT_SUPER_NAILGUN)
-			{
-				deathstring = " was punctured by ";
-				deathstring2 = "\n";
-			}
-			if (rnum == IT_GRENADE_LAUNCHER)
-			{
-				deathstring = " eats ";
-				deathstring2 = "'s pineapple\n";
-				if (self.health < -40)
+				rnum = attacker.weapon;
+				if (rnum == IT_AXE)
 				{
-					deathstring = " was gibbed by ";
-					deathstring2 = "'s grenade\n";
+					if (random() < 0.5)
+						deathstring = " was axe-murdered by ";
+					else
+						deathstring = " got the chop from ";
+					deathstring2 = "\n";
 				}
-			}
-			if (rnum == IT_ROCKET_LAUNCHER)
-			{
-				deathstring = " rides ";
-				deathstring2 = "'s rocket\n";
-				if (self.health < -40)
+				if (rnum == IT_SHOTGUN)
 				{
-					deathstring = " was gibbed by ";
-					deathstring2 = "'s rocket\n" ;
+					deathstring = " chewed on ";
+					deathstring2 = "'s boomstick\n";
 				}
+				if (rnum == IT_SUPER_SHOTGUN)
+				{
+					deathstring = " ate 2 loads of ";
+					deathstring2 = "'s buckshot\n";
+				}
+				if (rnum == IT_NAILGUN)
+				{
+					deathstring = " was nailed by ";
+					deathstring2 = "\n";
+				}
+				if (rnum == IT_SUPER_NAILGUN)
+				{
+					deathstring = " was punctured by ";
+					deathstring2 = "\n";
+				}
+				if (rnum == IT_GRENADE_LAUNCHER)
+				{
+					deathstring = " eats ";
+					deathstring2 = "'s pineapple\n";
+					if (self.health < -40)
+					{
+						deathstring = " was gibbed by ";
+						deathstring2 = "'s grenade\n";
+					}
+				}
+				if (rnum == IT_ROCKET_LAUNCHER)
+				{
+					deathstring = " rides ";
+					deathstring2 = "'s rocket\n";
+					if (self.health < -40)
+					{
+						deathstring = " was gibbed by ";
+						deathstring2 = "'s rocket\n" ;
+					}
+				}
+				if (rnum == IT_LIGHTNING)
+				{
+					deathstring = " accepts ";
+					if (attacker.waterlevel >= WL_WAIST)
+						deathstring2 = "'s discharge\n";
+					else
+						deathstring2 = "'s shaft\n";
+				}
+
+				bprint (self.netname);
+				bprint (deathstring);
+				bprint (attacker.netname);
+				bprint (deathstring2);
 			}
-			if (rnum == IT_LIGHTNING)
+			else
 			{
-				deathstring = " accepts ";
-				if (attacker.waterlevel >= WL_WAIST)
-					deathstring2 = "'s discharge\n";
-				else
-					deathstring2 = "'s shaft\n";
+				bprint (attacker.netname);
+				bprint (" killed ");
+				bprint (self.netname);
+				bprint ("\n");
 			}
-			bprint (self.netname);
-			bprint (deathstring);
-			bprint (attacker.netname);
-			bprint (deathstring2);
 		}
 		return;
 	}
