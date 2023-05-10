@@ -45,6 +45,7 @@ Every feature in this mod is optional and configurable.
     - Weapons kick can be customized
     - Nail speed over 2000 becomes hitscan
     - Add melee attack and grenade toss
+    - Weapons crates now customizable
 - April 2023 - ``v1.2.x``
     - Gore system overhauled and is now scalable
     - Added option to disable weapon autoswitch
@@ -141,6 +142,14 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_max_nails`` - set the max amount of nails (default is ``200``)
 - ``scarlet_max_rockets`` - set the max amount of rockets (default is ``100``)
 - ``scarlet_max_cells`` - set the max amount of cells (default is ``100``)
+- ``scarlet_shells_big`` - set the amount of shells in a big crate(default is ``40``)
+- ``scarlet_shells_small`` - set the max amount of shell in a small crate(default is ``20``)
+- ``scarlet_nails_big`` - set the max amount of nails in a big crate(default is ``50``)
+- ``scarlet_nails_small`` - set the max amount of nails in a small crate(default is ``25``)
+- ``scarlet_rockets_big`` - set the max amount of rockets in a big crate(default is ``8``)
+- ``scarlet_rockets_small`` - set the max amount of rockets in a small crate(default is ``4``)
+- ``scarlet_cells_big`` - set the max amount of cells in a big crate(default is ``12``)
+- ``scarlet_cells_small`` - set the max amount of cells in a small crate(default is ``6``)
 - ``scarlet_rof_axe`` - set axe rate of fire delay in seconds (default is ``.49``)
 - ``scarlet_rof_sg`` - set Shotgun rate of fire delay in seconds (default is ``.5``)
 - ``scarlet_rof_ssg`` - set Super Shotgun rate of fire delay in seconds (default is ``.7``)

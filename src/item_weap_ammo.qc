@@ -164,7 +164,7 @@ void() weapon_shotgun =
 	precache_model3 ("progs/g_shotgn.mdl");
 	setmodel (self, "progs/g_shotgn.mdl");
 	self.items = IT_SHOTGUN;
-	self.ammo_shells = 5;
+	self.ammo_shells = cvar("scarlet_shells_small");
 	self.netname = "Shotgun";
 	StartWeapon();
 }
@@ -195,7 +195,7 @@ void() weapon_supershotgun =
 	precache_model_safe ("progs/g_shot.mdl");
 	setmodel (self, "progs/g_shot.mdl");
 	self.items = IT_SUPER_SHOTGUN;
-	self.ammo_shells = 10;
+	self.ammo_shells = cvar("scarlet_shells_small");
 	self.netname = "Super Shotgun";
 	StartWeapon();
 }
@@ -231,7 +231,7 @@ void() weapon_nailgun =
 	precache_model_safe ("progs/g_nail.mdl");
 	setmodel (self, "progs/g_nail.mdl");
 	self.items = IT_NAILGUN;
-	self.ammo_nails = 30;
+	self.ammo_nails = cvar("scarlet_nails_small");
 	self.netname = "Nailgun";
 	StartWeapon();
 }
@@ -261,7 +261,7 @@ void() weapon_supernailgun =
 	precache_model_safe ("progs/g_nail2.mdl");
 	setmodel (self, "progs/g_nail2.mdl");
 	self.items = IT_SUPER_NAILGUN;
-	self.ammo_nails = 30;
+	self.ammo_nails = cvar("scarlet_nails_small");
 	self.netname = "Perforator";
 	StartWeapon();
 }
@@ -291,7 +291,7 @@ void() weapon_grenadelauncher =
 	precache_model_safe ("progs/g_rock.mdl");
 	setmodel (self, "progs/g_rock.mdl");
 	self.items = IT_GRENADE_LAUNCHER;
-	self.ammo_rockets = 5;
+	self.ammo_rockets = cvar("scarlet_rockets_small");
 	self.netname = "Grenade Launcher";
 	StartWeapon();
 }
@@ -321,7 +321,7 @@ void() weapon_rocketlauncher =
 	precache_model_safe ("progs/g_rock2.mdl");
 	setmodel (self, "progs/g_rock2.mdl");
 	self.items = IT_ROCKET_LAUNCHER;
-	self.ammo_rockets = 5;
+	self.ammo_rockets = cvar("scarlet_rockets_small");
 	self.netname = "Rocket Launcher";
 	StartWeapon();
 }
@@ -352,7 +352,7 @@ void() weapon_lightning =
 	precache_model_safe ("progs/g_light.mdl");
 	setmodel (self, "progs/g_light.mdl");
 	self.items = IT_LIGHTNING;
-	self.ammo_cells = 12;
+	self.ammo_cells = cvar("scarlet_cells_small");
 	self.netname = "Thunderbolt";
 	StartWeapon();
 }
@@ -465,13 +465,13 @@ void() item_shells =
 	if (!SUB_ShouldSpawn()) return;
 	if (self.spawnflags & ITEM_AMMO_BIG)
 	{
-		self.ammo_shells = 40;
+		self.ammo_shells = cvar("scarlet_shells_big");
 		precache_model_safe ("progs/m_shell2.mdl");
 		setmodel (self, "progs/m_shell2.mdl");
 	}
 	else
 	{
-		self.ammo_shells = 20;
+		self.ammo_shells = cvar("scarlet_shells_small");
 		precache_model_safe ("progs/m_shell1.mdl");
 		setmodel (self, "progs/m_shell1.mdl");
 	}
@@ -512,13 +512,13 @@ void() item_spikes =
 	if (!SUB_ShouldSpawn()) return;
 	if (self.spawnflags & ITEM_AMMO_BIG)
 	{
-		self.ammo_nails = 50;
+		self.ammo_nails = cvar("scarlet_nails_big");;
 		precache_model_safe ("progs/m_nails2.mdl");
 		setmodel (self, "progs/m_nails2.mdl");
 	}
 	else
 	{
-		self.ammo_nails = 25;
+		self.ammo_nails = cvar("scarlet_nails_small");
 		precache_model_safe ("progs/m_nails1.mdl");
 		setmodel (self, "progs/m_nails1.mdl");
 	}
@@ -560,13 +560,13 @@ void() item_rockets =
 	if (!SUB_ShouldSpawn()) return;
 	if (self.spawnflags & ITEM_AMMO_BIG)
 	{
-		self.ammo_rockets = 8;
+		self.ammo_rockets = cvar("scarlet_rockets_big");
 		precache_model_safe ("progs/m_rock2.mdl");
 		setmodel (self, "progs/m_rock2.mdl");
 	}
 	else
 	{
-		self.ammo_rockets = 4;
+		self.ammo_rockets = cvar("scarlet_rockets_small");
 		precache_model_safe ("progs/m_rock1.mdl");
 		setmodel (self, "progs/m_rock1.mdl");
 	}
@@ -608,13 +608,13 @@ void() item_cells =
 	if (!SUB_ShouldSpawn()) return;
 	if (self.spawnflags & ITEM_AMMO_BIG)
 	{
-		self.ammo_cells = 12;
+		self.ammo_cells = cvar("scarlet_cells_big");
 		precache_model_safe ("progs/m_cells2.mdl");
 		setmodel (self, "progs/m_cells2.mdl");
 	}
 	else
 	{
-		self.ammo_cells = 6;
+		self.ammo_cells = cvar("scarlet_cells_small");
 		precache_model_safe ("progs/m_cells1.mdl");
 		setmodel (self, "progs/m_cells1.mdl");
 	}

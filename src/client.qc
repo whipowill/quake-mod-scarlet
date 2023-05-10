@@ -1803,7 +1803,6 @@ void() ClientObituary =
 				KillstreakAdd(attacker); // SCARLET - killstreak integration
 			}
 
-			/*
 			rnum = attacker.weapon;
 			if (rnum == IT_AXE)
 			{
@@ -1865,7 +1864,6 @@ void() ClientObituary =
 			bprint (deathstring);
 			bprint (attacker.netname);
 			bprint (deathstring2);
-			*/
 		}
 		return;
 	}
