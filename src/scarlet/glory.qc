@@ -76,6 +76,8 @@ void(vector org, entity own) SpawnShards =
     local float i;
     local float m = cvar("scarlet_shards_multiplier") * (own.killstreak + 1);
 
+    if (own.enemy.weaponmodel == "progs/v_axe2.mdl") m = m*4;
+
     local float pass;
     for (i=1; i<=m; i++)
     {

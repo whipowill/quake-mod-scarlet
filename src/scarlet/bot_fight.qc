@@ -43,6 +43,7 @@ this notice in its entirety.
 */
 
 .entity avoid;
+.float last_melee_attempt, last_grenade_attempt;
 
 float(entity e) bot_size_player =
 {
@@ -221,15 +222,9 @@ vector(float wep) weapon_range =
 	if (wep == 4096) // IT_AXE
 		return '48 0 64';
 	else if (wep == 1) // IT_SHOTGUN
-		//~ ai fix start
-		//~ return '128 0 99999';
 		return '128 8 3000';
-		//~ ai fix end
 	else if (wep == 2) // IT_SUPER_SHOTGUN
-		//~ ai fix start
-		//~ return '128 0 99999';
 		return '128 0 3000';
-		//~ ai fix end
 	else if (wep == 4) // IT_NAILGUN
 		return '180 0 3000';
 	else if (wep == 8) // IT_SUPER_NAILGUN
@@ -239,7 +234,8 @@ vector(float wep) weapon_range =
 	else if (wep == 32) // IT_ROCKET_LAUNCHER
 		return '180 48 3000';
 	else if (wep == 64) // IT_LIGHTNING
-		return '350 0 512';
+		//return '350 0 512';
+		return '350 0 3000';
 	else
 		return '180 0 3000';
 };
@@ -328,10 +324,14 @@ void() bot_shoot =
 	local float g;
 	g = angcomp(self.v_angle_x, self.b_angle_x);
 	if (fabs(g) > 30)
+	{
 		return; // argh, too far away
+	}
 	g = angcomp(self.v_angle_y, self.b_angle_y);
 	if (fabs(g) > 30)
+	{
 		return; // not again!
+	}
 	self.button0 = TRUE;
 };
 
@@ -348,7 +348,7 @@ attacking an enemy.
 
 void() bot_fight_style =
 {
-	local vector v, v1, v2, org;
+	local vector a, g, v, v1, v2, org;
 	local float foedist, mysz, foesz;
 
 	if (self.enemy.health <= 0)
@@ -375,20 +375,65 @@ void() bot_fight_style =
 	foedist = vlen(org - self.origin);
 	v = weapon_range(self.weapon);
 
+	// if possible, perform axe attack first! -whipowill
+	a = weapon_range(IT_AXE);
+	if (foedist > a_y && foedist < a_z)
+	{
+		traceline(self.origin + self.view_ofs, self.origin + self.view_ofs + v_forward * v_z, FALSE, self);
+		if (vlen(trace_endpos - (self.origin + self.view_ofs)) >= v_y)
+		{
+			if (trace_ent.classname == "player")
+			{
+				if ((trace_ent.team == self.team && teamplay) || (coop)) return;
+
+				if (self.last_melee_attempt <= time)
+				{
+					if (random() <= 0.5) AxeAttack();
+					self.last_melee_attempt = time + 1;
+				}
+			}
+		}
+	}
+
+	// if possible, perform grenade attack first! -whipowill
+	g = weapon_range(IT_GRENADE_LAUNCHER); // finding the perfect range to use a grenade
+	if (foedist > g_y && foedist < g_z)
+	{
+		traceline(self.origin + self.view_ofs, self.origin + self.view_ofs + v_forward * v_z, FALSE, self);
+		if (vlen(trace_endpos - (self.origin + self.view_ofs)) >= v_y)
+		{
+			if (trace_ent.classname == "player")
+			{
+				if ((trace_ent.team == self.team && teamplay) || (coop)) return;
+
+				if (self.last_grenade_attempt <= time)
+				{
+					if (random() <= 0.5) GrenadeAttack();
+					self.last_grenade_attempt = time + 2 + (random() * 6);
+				}
+			}
+		}
+	}
+
 	if (foedist > v_y && foedist < v_z)
 	{
 		traceline(self.origin + self.view_ofs, self.origin + self.view_ofs + v_forward * v_z, FALSE, self);
 		if (vlen(trace_endpos - (self.origin + self.view_ofs)) >= v_y)
 		{
-			// try to avoid shooting teammates
 			if (trace_ent.classname == "player")
+			{
+				// try to avoid shooting teammates
 				if ((trace_ent.team == self.team && teamplay) || (coop))
 					return;
-			bot_shoot();
+
+				bot_shoot();
+			}
 		}
 	}
 	else
+	{
 		bot_weapon_switch(foedist);
+	}
 
 	if (!(self.b_aiflags & (AI_PRECISION | AI_BLIND | AI_OBSTRUCTED)))
 	{
@@ -446,5 +491,3 @@ void() bot_fight_style =
 		self.keys = self.keys & 960;
 	}
 };
-
-
