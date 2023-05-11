@@ -37,8 +37,6 @@ All of these features kind of work together, and I'm continuing to make refineme
 
 ## Changelog
 
-<img src="https://i.imgur.com/FabFtS1.gif" width="100%">
-
 - May 2023 - ``v1.3.x``
     - Added new shards feature on kills
     - Added new killstreak feature
@@ -87,9 +85,7 @@ All of these features kind of work together, and I'm continuing to make refineme
 - Make sure your ``C:/path/to/quake/id1/maps/`` folder has all your [waypoint](https://github.com/whipowill/quake-mod-frikbot-waypoints) files
 - Run the game w/ ``-game scarlet -particles 99999 -listen 16 -condebug``
 
-See my other [repository](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory, which includes all the best multiplayer maps and waypoint files to use w/ Scarlet.
-
-The reason I created this mod is so I can customize the game to my tastes, and this [file](https://github.com/whipowill/quake-dir/blob/master/scarlet/settings/custom.cfg) is where I make it happen.
+See my other [repository](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory, which includes all the best multiplayer maps and waypoint files to use w/ Scarlet.  The reason I created this mod is so I can customize the game to my tastes, and this [file](https://github.com/whipowill/quake-dir/blob/master/scarlet/settings/custom.cfg) is where I make it happen.
 
 ## Options
 
