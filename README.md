@@ -85,7 +85,7 @@ All of these features kind of work together, and I'm continuing to make refineme
 - Make sure your ``C:/path/to/quake/id1/maps/`` folder has all your [waypoint](https://github.com/whipowill/quake-mod-frikbot-waypoints) files
 - Run the game w/ ``-game scarlet -particles 99999 -listen 16 -condebug``
 
-See my other [repository](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory, which includes all the best multiplayer maps and waypoint files to use w/ Scarlet.  The reason I created this mod is so I can customize the game to my tastes, and this [file](https://github.com/whipowill/quake-dir/tree/master/scarlet/custom.cfg) is where I make it happen.
+See my other [repository](https://github.com/whipowill/quake-dir) where I've uploaded my Quake directory, which includes all the best multiplayer maps and waypoint files to use w/ Scarlet.  The reason I created this mod is so I can customize the game to my tastes, and this [file](https://github.com/whipowill/quake-dir/blob/master/scarlet/settings/custom.cfg) is where I make it happen.
 
 ## Options
 
@@ -145,14 +145,14 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_max_nails`` - set the max amount of nails (default is ``200``)
 - ``scarlet_max_rockets`` - set the max amount of rockets (default is ``100``)
 - ``scarlet_max_cells`` - set the max amount of cells (default is ``100``)
-- ``scarlet_shells_big`` - set the amount of shells in a big crate(default is ``40``)
-- ``scarlet_shells_small`` - set the max amount of shell in a small crate(default is ``20``)
-- ``scarlet_nails_big`` - set the max amount of nails in a big crate(default is ``50``)
-- ``scarlet_nails_small`` - set the max amount of nails in a small crate(default is ``25``)
-- ``scarlet_rockets_big`` - set the max amount of rockets in a big crate(default is ``8``)
-- ``scarlet_rockets_small`` - set the max amount of rockets in a small crate(default is ``4``)
-- ``scarlet_cells_big`` - set the max amount of cells in a big crate(default is ``12``)
-- ``scarlet_cells_small`` - set the max amount of cells in a small crate(default is ``6``)
+- ``scarlet_shells_big`` - set the amount of shells in a big crate (default is ``40``)
+- ``scarlet_shells_small`` - set the max amount of shell in a small crate (default is ``20``)
+- ``scarlet_nails_big`` - set the max amount of nails in a big crate (default is ``50``)
+- ``scarlet_nails_small`` - set the max amount of nails in a small crate (default is ``25``)
+- ``scarlet_rockets_big`` - set the max amount of rockets in a big crate (default is ``8``)
+- ``scarlet_rockets_small`` - set the max amount of rockets in a small crate (default is ``4``)
+- ``scarlet_cells_big`` - set the max amount of cells in a big crate (default is ``12``)
+- ``scarlet_cells_small`` - set the max amount of cells in a small crate (default is ``6``)
 - ``scarlet_rof_axe`` - set axe rate of fire delay in seconds (default is ``.49``)
 - ``scarlet_rof_sg`` - set Shotgun rate of fire delay in seconds (default is ``.5``)
 - ``scarlet_rof_ssg`` - set Super Shotgun rate of fire delay in seconds (default is ``.7``)
