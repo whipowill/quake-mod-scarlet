@@ -1724,10 +1724,13 @@ void() ClientObituary =
 	}
 	if (attacker.classname == "teledeath")
 	{
-		bprint (self.netname);
-		bprint (" was telefragged by ");
-		bprint (attacker.owner.netname);
-		bprint ("\n");
+		if (!cvar("scarlet_nospam"))
+		{
+			bprint (self.netname);
+			bprint (" was telefragged by ");
+			bprint (attacker.owner.netname);
+			bprint ("\n");
+		}
 
 		if (deathmatch)
 			attacker.owner.frags = attacker.owner.frags + 1;
@@ -1735,17 +1738,24 @@ void() ClientObituary =
 	}
 	if (attacker.classname == "trigger_void" || attacker.classname == "func_void")
 	{
-		bprint (self.netname);
-		bprint (" was lost to the void\n");
+		if (!cvar("scarlet_nospam"))
+		{
+			bprint (self.netname);
+			bprint (" was lost to the void\n");
+		}
+
 		if (deathmatch)
 			self.frags = self.frags - 1;
 		return;
 	}
 	if (attacker.classname == "teledeath2")
 	{
-		bprint ("Satan's power deflects ");
-		bprint (self.netname);
-		bprint ("'s telefrag\n");
+		if (!cvar("scarlet_nospam"))
+		{
+			bprint ("Satan's power deflects ");
+			bprint (self.netname);
+			bprint ("'s telefrag\n");
+		}
 
 		if (deathmatch)
 			self.frags = self.frags - 1;
@@ -1757,42 +1767,50 @@ void() ClientObituary =
 		if (self == attacker)
 		{
 			// killed self
-			attacker.frags = attacker.frags - 1;
-			bprint (self.netname);
-			
-			if (self.weapon == IT_LIGHTNING && self.waterlevel >= WL_WAIST)
+			if (deathmatch)
+				attacker.frags = attacker.frags - 1;
+
+			if (!cvar("scarlet_nospam"))
 			{
-				bprint (" discharges into the water\n");
-				return;
-			}
-			if (self.weapon == IT_GRENADE_LAUNCHER)
-				bprint (" tries to put the pin back in\n");
-			else if (self.weapon == IT_ROCKET_LAUNCHER)
-			{
-				if (random() < 0.5)
-					bprint (" rocket-jumps into the next world\n");
+				bprint (self.netname);
+
+				if (self.weapon == IT_LIGHTNING && self.waterlevel >= WL_WAIST)
+				{
+					bprint (" discharges into the water\n");
+					return;
+				}
+				if (self.weapon == IT_GRENADE_LAUNCHER)
+					bprint (" tries to put the pin back in\n");
+				else if (self.weapon == IT_ROCKET_LAUNCHER)
+				{
+					if (random() < 0.5)
+						bprint (" rocket-jumps into the next world\n");
+					else
+						bprint (" is no rocket surgeon\n");
+				}
 				else
-					bprint (" is no rocket surgeon\n");
+					bprint (" becomes bored with life\n");
 			}
-			else
-				bprint (" becomes bored with life\n");
 			return;
 		}
 		
 		if ( (teamplay == 2) && (self.team > 0) && (self.team == attacker.team) )
 		{
-			if (rnum < 0.25)
-				deathstring = " mows down a teammate\n";
-			else if (rnum < 0.50)
-				deathstring = " checks their glasses\n";
-			else if (rnum < 0.75)
-				deathstring = " gets a frag for the other team\n";
-			else
-				deathstring = " loses another friend\n";
-			bprint (attacker.netname);
-			bprint (deathstring);
-			if (deathmatch)
-				attacker.frags = attacker.frags - 1;
+			if (!cvar("scarlet_nospam"))
+			{
+				if (rnum < 0.25)
+					deathstring = " mows down a teammate\n";
+				else if (rnum < 0.50)
+					deathstring = " checks their glasses\n";
+				else if (rnum < 0.75)
+					deathstring = " gets a frag for the other team\n";
+				else
+					deathstring = " loses another friend\n";
+				bprint (attacker.netname);
+				bprint (deathstring);
+				if (deathmatch)
+					attacker.frags = attacker.frags - 1;
+			}
 			return;
 		}
 		else
@@ -1868,100 +1886,99 @@ void() ClientObituary =
 				bprint (attacker.netname);
 				bprint (deathstring2);
 			}
-			else
-			{
-				bprint (attacker.netname);
-				bprint (" killed ");
-				bprint (self.netname);
-				bprint ("\n");
-			}
 		}
+
 		return;
 	}
 	else
 	{
-		//self.frags = self.frags - 1;
-		bprint (self.netname);
+		if (!cvar("scarlet_nospam"))
+		{
+			//if (deathmatch)
+				//self.frags = self.frags - 1;
 
-		// killed by a monster?
-		if (attacker.flags & FL_MONSTER)
-		{
-			// moved monster obits to their individual *.qc files
-			bprint (" was uninsured\n");
-			return;
-		}
+			bprint (self.netname);
 
-		// tricks and traps
-		if (attacker.classname == "explo_box")
-		{
-			bprint (" blew up\n");
-			return;
-		}
-		if (attacker.solid == SOLID_BSP && attacker != world)
-		{	
-			bprint (" was squished\n");
-			return;
-		}
-		if (attacker.classname == "trap_shooter" || attacker.classname == "trap_spikeshooter")
-		{
-			bprint (" was spiked\n");
-			return;
-		}
-		if (attacker.classname == "fireball")
-		{
-			bprint (" ate a lavaball\n");
-			return;
-		}
-		if (attacker.classname == "trigger_changelevel")
-		{
-			bprint (" tried to leave\n");
-			return;
-		}
-
-		// liquid deaths
-		if (self.deathtype == "drowning")
-		{
-			if (random() < 0.5)
-				bprint (" sleeps with the fishes\n");
-			else
-				bprint (" sucks it down\n");
-			return;
-		}
-		else if (self.deathtype == "slime")
-		{
-			if (random() < 0.5)
-				bprint (" gulped a load of slime\n");
-			else
-				bprint (" can't exist on slime alone\n");
-			return;
-		}
-		else if (self.deathtype == "lava")
-		{
-			if (self.waterlevel < WL_EYES)
+			// killed by a monster?
+			if (attacker.flags & FL_MONSTER)
 			{
-				bprint (" burst into flames\n");
+				// moved monster obits to their individual *.qc files
+				bprint (" was uninsured\n");
 				return;
 			}
-			if (random() < 0.5)
-				bprint (" turned into hot slag\n");
-			else
-				bprint (" visits the Volcano God\n");
-			return;
-		}
 
-		// fell to their death?
-		if (self.deathtype == "falling")
-		{
-			self.deathtype = string_null;
-			if (random() < 0.5)
-				bprint (" cratered\n");
-			else
-				bprint (" fell to their death\n");
-			return;
-		}
+			// tricks and traps
+			if (attacker.classname == "explo_box")
+			{
+				bprint (" blew up\n");
+				return;
+			}
+			if (attacker.solid == SOLID_BSP && attacker != world)
+			{
+				bprint (" was squished\n");
+				return;
+			}
+			if (attacker.classname == "trap_shooter" || attacker.classname == "trap_spikeshooter")
+			{
+				bprint (" was spiked\n");
+				return;
+			}
+			if (attacker.classname == "fireball")
+			{
+				bprint (" ate a lavaball\n");
+				return;
+			}
+			if (attacker.classname == "trigger_changelevel")
+			{
+				bprint (" tried to leave\n");
+				return;
+			}
 
-		// ELEPHINO
-		bprint (" died\n");
+			// liquid deaths
+			if (self.deathtype == "drowning")
+			{
+				if (random() < 0.5)
+					bprint (" sleeps with the fishes\n");
+				else
+					bprint (" sucks it down\n");
+				return;
+			}
+			else if (self.deathtype == "slime")
+			{
+				if (random() < 0.5)
+					bprint (" gulped a load of slime\n");
+				else
+					bprint (" can't exist on slime alone\n");
+				return;
+			}
+			else if (self.deathtype == "lava")
+			{
+				if (self.waterlevel < WL_EYES)
+				{
+					bprint (" burst into flames\n");
+					return;
+				}
+				if (random() < 0.5)
+					bprint (" turned into hot slag\n");
+				else
+					bprint (" visits the Volcano God\n");
+				return;
+			}
+
+			// fell to their death?
+			if (self.deathtype == "falling")
+			{
+				self.deathtype = string_null;
+				if (random() < 0.5)
+					bprint (" cratered\n");
+				else
+					bprint (" fell to their death\n");
+				return;
+			}
+
+			// ELEPHINO
+			bprint (" died\n");
+		}
 	}
 }
 
