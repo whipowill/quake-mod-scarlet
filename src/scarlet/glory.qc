@@ -12,7 +12,7 @@ void() ShardThink =
     }
 
     self.touch = ShardTouch;
-    self.nextthink = time + .2;
+    self.nextthink = time + .5;
 };
 
 void() ShardTouch =
@@ -105,9 +105,10 @@ void(vector org, entity own) SpawnShards =
                 shard.solid = SOLID_TRIGGER;
 
                 shard.velocity = Vector(random(), random(), random()) * (50 + 300);
-                //shard.touch = ShardTouch;
+                if (own.enemy.weaponmodel != "progs/v_axe2.mdl")
+                    shard.touch = ShardTouch; // if not glory kill, allow immediate absorb of shards
                 shard.think = ShardThink;
-                shard.nextthink = time + 0.5 + random();
+                shard.nextthink = time + 0.5;
 
                 shard.attack_finished = time + (cvar("scarlet_shards_expire")/2) + ((cvar("scarlet_shards_expire")/2)*random());
 
