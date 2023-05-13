@@ -907,18 +907,22 @@ void() PlayerDeathThink =
 		return;
 	}
 	
+	if (self.respawn_time > 0 && self.respawn_time < time) respawn(); // SCARLET - respawn timer
+
 	if (time < self.lifetime_finished) return;
-	
+
+	/*
 	// wait for all buttons released
 	if (!self.button0 && !self.button1 && !self.button2) {
-		if (self.wait)
-			respawn();
+		//if (self.wait)
+			//respawn();
 		
 		self.wait = 0;
 		return;
 	}
 	
 	self.wait = 1;
+	*/
 }
 
 

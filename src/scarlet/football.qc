@@ -9,11 +9,11 @@ void() KickGibs =
 {
     if (!cvar("scarlet_football")) return;
 
-    local vector v;
-
     // only a player can kick it
     if (other.classname != "player")
         return;
+
+    local vector v;
 
     //randomize sound
     /*

@@ -484,25 +484,25 @@ void() GibPlayer =
 
 void() PlayerDie =
 {
-	local	float	i;
+	local float i;
 	
 	self.items = self.items - (self.items & IT_INVISIBILITY);
-	self.invisible_finished = 0;	// don't die as eyes
+	self.invisible_finished = 0; // don't die as eyes
 	self.invincible_finished = 0;
 	self.super_damage_finished = 0;
 	self.radsuit_finished = 0;
-	self.modelindex = modelindex_player;	// don't use eyes
+	self.modelindex = modelindex_player; // don't use eyes
 
 	self.items = not(self.items, IT_INVISIBILITY | IT_INVULNERABILITY | IT_SUIT | IT_QUAD);
 	self.effects = 0;
 
 	clientsAlive -= 1;
 
-	ClientObituary();	// moved from Killed() so it doesn't get called when non-players die
+	ClientObituary(); // moved from Killed() so it doesn't get called when non-players die
 
 	if (ScoreKeeperEndgame()) execute_changelevel(); // SCARLET - team score integration.
 
-	set_respawn_delay();	// coop 1 respawn lockout
+	set_respawn_delay(); // coop 1 respawn lockout
 	
 	if ((deathmatch || coop) && mapname != "start")
 		DropBackpack();
@@ -511,7 +511,7 @@ void() PlayerDie =
 	
 	self.weaponmodel = string_null;
 	self.view_ofs = '0 0 0';
-//	self.deadflag = DEAD_DYING;	// moved to Killed() so I can use this flag on monsters
+	//self.deadflag = DEAD_DYING;	// moved to Killed() so I can use this flag on monsters
 	//self.solid = SOLID_NOT;
 	BecomeCorpse(); // SCARLET - corpse integration
 	self.flags = self.flags - (self.flags & FL_ONGROUND);
@@ -574,8 +574,8 @@ void()	player_diea6	=	[	$deatha6,	player_diea7	] {}
 void()	player_diea7	=	[	$deatha7,	player_diea8	] {}
 void()	player_diea8	=	[	$deatha8,	player_diea9	] {}
 void()	player_diea9	=	[	$deatha9,	player_diea10	] {}
-void()	player_diea10	=	[	$deatha10,	player_diea11	] {}
-void()	player_diea11	=	[	$deatha11,	player_diea11 ] {PlayerDead();}
+void()	player_diea10	=	[	$deatha10,	player_diea11	] {PlayerDead();}
+void()	player_diea11	=	[	$deatha11,	player_diea11 ] {PlayerDead();CorpseRemove();}
 
 void()	player_dieb1	=	[	$deathb1,	player_dieb2	] {}
 void()	player_dieb2	=	[	$deathb2,	player_dieb3	] {}
@@ -584,8 +584,8 @@ void()	player_dieb4	=	[	$deathb4,	player_dieb5	] {}
 void()	player_dieb5	=	[	$deathb5,	player_dieb6	] {}
 void()	player_dieb6	=	[	$deathb6,	player_dieb7	] {}
 void()	player_dieb7	=	[	$deathb7,	player_dieb8	] {}
-void()	player_dieb8	=	[	$deathb8,	player_dieb9	] {}
-void()	player_dieb9	=	[	$deathb9,	player_dieb9	] {PlayerDead();}
+void()	player_dieb8	=	[	$deathb8,	player_dieb9	] {PlayerDead();}
+void()	player_dieb9	=	[	$deathb9,	player_dieb9	] {PlayerDead();CorpseRemove();}
 
 void()	player_diec1	=	[	$deathc1,	player_diec2	] {}
 void()	player_diec2	=	[	$deathc2,	player_diec3	] {}
@@ -600,8 +600,8 @@ void()	player_diec10	=	[	$deathc10,	player_diec11	] {}
 void()	player_diec11	=	[	$deathc11,	player_diec12	] {}
 void()	player_diec12	=	[	$deathc12,	player_diec13	] {}
 void()	player_diec13	=	[	$deathc13,	player_diec14	] {}
-void()	player_diec14	=	[	$deathc14,	player_diec15	] {}
-void()	player_diec15	=	[	$deathc15,	player_diec15 ] {PlayerDead();}
+void()	player_diec14	=	[	$deathc14,	player_diec15	] {PlayerDead();}
+void()	player_diec15	=	[	$deathc15,	player_diec15 ] {PlayerDead();CorpseRemove();}
 
 void()	player_died1	=	[	$deathd1,	player_died2	] {}
 void()	player_died2	=	[	$deathd2,	player_died3	] {}
@@ -610,8 +610,8 @@ void()	player_died4	=	[	$deathd4,	player_died5	] {}
 void()	player_died5	=	[	$deathd5,	player_died6	] {}
 void()	player_died6	=	[	$deathd6,	player_died7	] {}
 void()	player_died7	=	[	$deathd7,	player_died8	] {}
-void()	player_died8	=	[	$deathd8,	player_died9	] {}
-void()	player_died9	=	[	$deathd9,	player_died9	] {PlayerDead();}
+void()	player_died8	=	[	$deathd8,	player_died9	] {PlayerDead();}
+void()	player_died9	=	[	$deathd9,	player_died9	] {PlayerDead();CorpseRemove();}
 
 void()	player_diee1	=	[	$deathe1,	player_diee2	] {}
 void()	player_diee2	=	[	$deathe2,	player_diee3	] {}
@@ -620,8 +620,8 @@ void()	player_diee4	=	[	$deathe4,	player_diee5	] {}
 void()	player_diee5	=	[	$deathe5,	player_diee6	] {}
 void()	player_diee6	=	[	$deathe6,	player_diee7	] {}
 void()	player_diee7	=	[	$deathe7,	player_diee8	] {}
-void()	player_diee8	=	[	$deathe8,	player_diee9	] {}
-void()	player_diee9	=	[	$deathe9,	player_diee9	] {PlayerDead();}
+void()	player_diee8	=	[	$deathe8,	player_diee9	] {PlayerDead();}
+void()	player_diee9	=	[	$deathe9,	player_diee9	] {PlayerDead();CorpseRemove();}
 
 void()	player_die_ax1	=	[	$axdeth1,	player_die_ax2	] {}
 void()	player_die_ax2	=	[	$axdeth2,	player_die_ax3	] {}
@@ -630,5 +630,5 @@ void()	player_die_ax4	=	[	$axdeth4,	player_die_ax5	] {}
 void()	player_die_ax5	=	[	$axdeth5,	player_die_ax6	] {}
 void()	player_die_ax6	=	[	$axdeth6,	player_die_ax7	] {}
 void()	player_die_ax7	=	[	$axdeth7,	player_die_ax8	] {}
-void()	player_die_ax8	=	[	$axdeth8,	player_die_ax9	] {}
-void()	player_die_ax9	=	[	$axdeth9,	player_die_ax9	] {PlayerDead();}
+void()	player_die_ax8	=	[	$axdeth8,	player_die_ax9	] {PlayerDead();} // the last frame makes corpse disappear, moving this up one frame prevents it
+void()	player_die_ax9	=	[	$axdeth9,	player_die_ax9	] {PlayerDead();CorpseRemove();}

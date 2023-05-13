@@ -108,7 +108,7 @@ void(vector org, entity own) SpawnShards =
                 if (own.enemy.weaponmodel != "progs/v_axe2.mdl")
                     shard.touch = ShardTouch; // if not glory kill, allow immediate absorb of shards
                 shard.think = ShardThink;
-                shard.nextthink = time + 0.5;
+                shard.nextthink = time + 1;
 
                 shard.attack_finished = time + (cvar("scarlet_shards_expire")/2) + ((cvar("scarlet_shards_expire")/2)*random());
 

@@ -426,7 +426,8 @@ void() InitBodyQueue =
 	bodyqueue_head.owner.owner.classname = "bodyqueue";
 	bodyqueue_head.owner.owner.owner = spawn();
 	bodyqueue_head.owner.owner.owner.classname = "bodyqueue";
-	bodyqueue_head.owner.owner.owner.owner = bodyqueue_head;*/
+	bodyqueue_head.owner.owner.owner.owner = bodyqueue_head;
+	*/
 }
 
 
@@ -434,6 +435,8 @@ void() InitBodyQueue =
 // respawned elsewhere
 void(entity ent) CopyToBodyQueue =
 {
+	CorpseClear(ent); // SCARLET - persistent bodies
+
 	bodyqueue_head.touch = ent.touch; // SCARLET - football integration.
 	bodyqueue_head.solid = ent.solid; // SCARLET - football integration.
 	bodyqueue_head.angles = ent.angles;

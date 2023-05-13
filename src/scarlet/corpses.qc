@@ -5,6 +5,19 @@
 // original code by Kryten, modified by whipowill
 // -------------------------------------------------
 
+void(entity corpse) CorpseClear =
+{
+        if (corpse.classname == "player")
+        {
+                player_diea11();
+        }
+}
+
+void() CorpseRemove =
+{
+
+}
+
 void() CorpseTouch =
 {
         self.velocity = '0 0 0';
@@ -31,6 +44,8 @@ void() BecomeCorpse =
 {
         SpawnShards(self.origin, self); // SCARLET - shards integration
         KillstreakReset(self); // SCARLET - killstreak integration
+
+        self.respawn_time = time + cvar("scarlet_respawn"); // SCARLET - respawn delay
 
         // if gore is turned off, or this is copper...
         if (!cvar("scarlet_corpses"))
