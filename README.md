@@ -13,22 +13,22 @@ Every feature in this mod is optional and configurable.
 - **Multiplayer Bots** - add robot players to deathmatch, teamplay, and coop games
 - **Blood & Gore** - bathe in the blood of your enemies w/ scalable gore setting
 - **Copper Tweaks** - all the vanilla improvements from [Copper](http://lunaran.com/copper/) mod (v1.20)
+- **Perfect Balance** - find the perfect balance w/ configurable weapons
 - **Item Resupply** - force items to respawn in singleplayer and coop games
 - **Name Tags** - see other player names Halo-style when aiming at them
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
 - **Score Keeper** - make teamplay games combine scores to achieve fraglimit
-- **No Autoswitch** - nobody will take the gun out of your hand anymore
+- **Death Timeout** - when you die you have to sit out until timeout is over
+- **Persistent Corpses** - player corpses stick around for a bit before disappearing
+- **No Autoswitch** - picking up new weapons won't autoswitch anymore
 - **Visible Weapons** - force weapons to drop visibly outside the backpack
-- **Perfect Balance** - find the perfect balance w/ configurable weapons
 - **Limited Arsenal** - remove inferior weapons from the game for better balance
-- **Hitscan FTW** - make chainguns use hitscan Quake2-style instead of projectiles
-- **Melee Attack** - bind a key for an Axe melee attack w/out switching weapons
-- **Grenade Brigade** - bind a key to throw a grenade w/out switching weapons
+- **Hitscan Nailguns** - make nailguns use hitscan Q2-style instead of projectiles
+- **Melee Attacks** - perform a melee attack w/out switching weapons
+- **Hand Grenades** - toss a hand grenade w/out switching weapons
 - **Custom Loadouts** - play Rockets only, Shotguns only, Chaingun only, Railgun only
 
 ### Experimental Features
-
-All of these features kind of work together, and I'm continuing to make refinements.
 
 - **Glory Kills** - melee attacks and killstreaks grant health and armor rewards
 - **Killing Spree** - game announces when you're on a killstreak and when it ends
@@ -49,6 +49,8 @@ All of these features kind of work together, and I'm continuing to make refineme
     - Weapons crates now customizable
     - Fixed old bug where bots shoot ground
     - Taught bots how to use grenades
+    - Respawn timer forces timeout
+    - Player corpses stick around for a bit
 - April 2023 - ``v1.2.x``
     - Gore system overhauled and is now scalable
     - Added option to disable weapon autoswitch
