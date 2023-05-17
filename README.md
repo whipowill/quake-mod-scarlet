@@ -1,6 +1,8 @@
 # Scarlet
 
-A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for the multiplayer enthusiast, sate your bloodlust w/ heart-pumping multiplayer games on demand.  Checkout my [channel](https://www.youtube.com/@wscarlet) showcasing videos from the development of this mod.
+A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for the multiplayer enthusiast, sate your bloodlust w/ heart-pumping multiplayer games on demand.
+
+[Website](https://whipowill.github.io/quake/) | [YouTube](https://www.youtube.com/@wscarlet)
 
 [![](https://i.imgur.com/4o2EPCa.png)](https://rumble.com/user/whipowill24)
 
@@ -236,3 +238,4 @@ Reference the included ``instructions.html`` file from FrikaC for detailed infor
 - [Level Book Design](https://book.leveldesignbook.com/appendix/resources/quake) - some modding instructions from a slick website
 - [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history
 - [FrikBot Waypoint Files](https://github.com/whipowill/quake-mod-frikbot-waypoints) - an archive of all the bot waypoints files
+- [Tome of Preach](https://tomeofpreach.wordpress.com/about/) - not using anything from here but might someday
