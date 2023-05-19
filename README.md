@@ -24,7 +24,6 @@ Every feature in this mod is optional and configurable.
 - **Persistent Corpses** - player corpses stick around for a bit before disappearing
 - **No Autoswitch** - picking up new weapons won't autoswitch anymore
 - **Visible Weapons** - force weapons to drop visibly outside the backpack
-- **Limited Arsenal** - remove inferior weapons from the game for better balance
 - **Hitscan Nailguns** - make nailguns use hitscan Q2-style instead of projectiles
 - **Melee Attacks** - perform a melee attack w/out switching weapons
 - **Hand Grenades** - toss a hand grenade w/out switching weapons
