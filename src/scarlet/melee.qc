@@ -5,6 +5,7 @@
 
 .float grenades_used;
 .float grenades_time;
+.float attack_finished_melee;
 
 void() AxeAttack =
 {
@@ -12,11 +13,18 @@ void() AxeAttack =
 
     if (self.health <= 0) return;
 
-    if (self.attack_finished <= time)
+    local float old_attack_finished = self.attack_finished;
+    if (self.attack_finished_melee <= time)
     {
         player_run();
         self.weaponmodel = "progs/v_axe2.mdl";
         W_AxeSwing();
+
+        self.attack_finished_melee = time + cvar("scarlet_rof_axe");
+
+        self.attack_finished = old_attack_finished;
+        if (self.attack_finished < self.attack_finished_melee)
+            self.attack_finished = self.attack_finished_melee;
     }
 };
 
@@ -28,13 +36,20 @@ void() GrenadeAttack =
 
     if (self.grenades_time <= time) self.grenades_used = 0;
 
-    if (self.attack_finished <= time && self.grenades_used < cvar("scarlet_grenades_max")) //self.ammo_rockets >= 1
+    local float old_attack_finished = self.attack_finished;
+    if (self.attack_finished_melee <= time && self.grenades_used < cvar("scarlet_grenades_max")) //self.ammo_rockets >= 1
     {
         self.weaponmodel = string_null;
         self.grenades_used = self.grenades_used + 1;
         self.grenades_time = time + cvar("scarlet_grenades_cooldown");
 
         HandGrenadeThrow();
+
+        self.attack_finished_melee = time + cvar("scarlet_rof_hg");
+
+        self.attack_finished = old_attack_finished;
+        if (self.attack_finished < self.attack_finished_melee)
+            self.attack_finished = self.attack_finished_melee;
     }
 };
 
@@ -68,8 +83,6 @@ void() HandGrenadeThrow =
     g.touch = HandGrenadeTouch;
     g.th_die = GrenadeExplode;
     SUB_ChangeModel(g, "progs/items/hipnotic/proxbomb_edited.mdl");
-
-    self.attack_finished = time + cvar("scarlet_rof_hg");
 }
 
 void() HandGrenadeTouch =
@@ -92,6 +105,8 @@ void() FixWeaponState =
 {
     if (self.weaponmodel != string_null && self.weaponmodel != "progs/v_axe2.mdl")
         return;
+
+    if (self.attack_finished_melee > time) return; // don't reset model until it's time
 
     if (self.weapon == IT_AXE)
         self.weaponmodel = "progs/v_axe2.mdl";
