@@ -128,6 +128,7 @@ void(vector org, entity own) SpawnShards =
 
                         setmodel (shard, "progs/items/quoth/cross.mdl");
                         shard.type = "shard_mega";
+                        shard.classname = "item_health";
                         shard.noise = "items/r_item2.wav";
                         setsize (self, '-16 -16 -24', '16 16 32');
                     }
@@ -137,6 +138,7 @@ void(vector org, entity own) SpawnShards =
 
                         setmodel (shard, "progs/quaddama.mdl");
                         shard.type = "shard_quad";
+                        shard.classname = "item_artifact_super_damage";
                         shard.noise = "items/damage.wav";
                         setsize (shard, '-16 -16 -24', '16 16 32');
                     }
@@ -146,11 +148,13 @@ void(vector org, entity own) SpawnShards =
 
                         setmodel (shard, "progs/invul.mdl");
                         shard.type = "shard_pent";
+                        shard.classname = "item_artifact_invulnerability";
                         shard.noise = "items/protect.wav";
                         setsize (shard, '-16 -16 -24', '16 16 32');
                     }
                 }
 
+                shard.flags |= FL_ITEM; // so AI will know it's an item worth picking up
                 setorigin (shard, org); //start shard at point of damage
             }
         }

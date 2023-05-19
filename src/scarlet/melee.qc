@@ -69,7 +69,7 @@ void() HandGrenadeThrow =
     g.th_die = GrenadeExplode;
     SUB_ChangeModel(g, "progs/items/hipnotic/proxbomb_edited.mdl");
 
-    self.attack_finished = time + cvar("scarlet_rof_gl");
+    self.attack_finished = time + cvar("scarlet_rof_hg");
 }
 
 void() HandGrenadeTouch =

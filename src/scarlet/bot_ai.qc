@@ -665,10 +665,6 @@ float(entity thing) priority_for_thing =
 		{
 			thisp = 30;
 		}
-		else if (thing.model == "progs/items/cross.mdl") // adding shards/stims -whipowill
-		{
-			thisp = 60;
-		}
 		else if (thing.model == "progs/armor.mdl")
 		{
 			if (self.armorvalue < 200)
