@@ -388,8 +388,8 @@ void() bot_fight_style =
 
 				if (self.last_melee_attempt <= time)
 				{
-					if (random() <= 0.5) AxeAttack();
-					self.last_melee_attempt = time + 1;
+					if (random() <= cvar("scarlet_grenades_chance")) AxeAttack();
+					self.last_melee_attempt = time + (cvar("scarlet_grenades_cooldown") * random());
 				}
 			}
 		}
@@ -408,8 +408,8 @@ void() bot_fight_style =
 
 				if (self.last_grenade_attempt <= time)
 				{
-					if (random() <= 0.5) GrenadeAttack();
-					self.last_grenade_attempt = time + 2 + (random() * 6);
+					if (random() <= cvar("scarlet_grenades_chance")) GrenadeAttack();
+					self.last_grenade_attempt = time + (cvar("scarlet_grenades_cooldown") * random());
 				}
 			}
 		}
