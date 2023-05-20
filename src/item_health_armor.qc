@@ -205,6 +205,10 @@ float(entity e, float amt, float absorb, float replace) armor_give =
 	{
 		if (absorb < e.armortype)
 		{
+			// SCARLET - shield recharge integration.
+			if (cvar("scarlet_recharge") && cvar("scarlet_recharge_armor"))
+				return FALSE;
+
 			// strength downgrade, quantity upgrade
 			// quake's original armor comparison test weighted both amounts by their protection
 			// strength with a straight multiply (a.type * a.amt > e.type * e.amt) to determine 

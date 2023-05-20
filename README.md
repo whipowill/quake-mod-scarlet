@@ -31,10 +31,12 @@ Every feature in this mod is optional and configurable.
 
 ### Experimental Features
 
-- **Glory Kills** - melee attacks and killstreaks grant health and armor rewards
 - **Killing Spree** - game announces when you're on a killstreak and when it ends
+- **Stimpacks** - ease your wounds w/ stimpacks that drop from the dead
+- **Glory Kills** - melee attacks and killstreaks grant extra stimpack rewards
 - **Highlander Games** - higher their killstreak, greater the reward for taking their head
 - **Random Powerups** - every kill has a chance to drop a random powerup
+- **Shield Recharge** - survive the battle and your shield begins to recharge
 
 ## Changelog
 
@@ -46,13 +48,14 @@ Every feature in this mod is optional and configurable.
     - Added custom weapon loadouts feature
     - Weapons kick can be customized
     - Nail speed over 2000 becomes hitscan
-    - Add melee attack and grenade toss
+    - Added melee attack and grenade toss
     - Weapons crates now customizable
     - Fixed old bug where bots shoot ground
     - Taught bots how to use grenades
     - Respawn timer forces timeout
     - Player corpses stick around for a bit
     - Made buttons shootable (for ``ultrav``)
+    - Added shield recharge feature
 - April 2023 - ``v1.2.x``
     - Gore system overhauled and is now scalable
     - Added option to disable weapon autoswitch
@@ -113,7 +116,7 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_shards_powerups`` - include powerups in shards dice rolls (``0`` or ``1``, default is ``1``)
 - ``scarlet_shards_multiplier`` - how many shards to drop per killstreak (default is ``20``)
 - ``scarlet_shards_chance`` - chances that each shard will actually drop (default is ``0.4``)
-- ``scarlet_shards_armor`` - amount of armor gained per shard (default is ``2``)
+- ``scarlet_shards_armor`` - amount of armor gained per shard (default is ``0``)
 - ``scarlet_shards_health`` - amount of health gained per shard (default is ``2``)
 - ``scarlet_shards_expire`` - seconds until all shards have disappeared (default is ``15``)
 
@@ -192,6 +195,13 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_grenades_fuse`` - seconds before grenade will explode (default is ``1``)
 - ``scarlet_grenades_chance`` - chance a bot will throw a grenade (default is ``0.33``)
 - ``scarlet_rof_hg`` - set Hand Grenade rate of fire delay in seconds (default is ``0.6``)
+
+### Recharge Settings
+
+- ``scarlet_recharge`` - enable recharge feature (``0`` or ``1``, default is ``0``)
+- ``scarlet_recharge_cooldown`` - seconds to wait after being attacked (default is ``5``)
+- ``scarlet_recharge_health`` - amount of health recharged per second (default is ``0``)
+- ``scarlet_recharge_armor`` - amount of armor recharged per second (default is ``10``)
 
 ## Usage
 

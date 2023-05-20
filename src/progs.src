@@ -34,6 +34,7 @@ scarlet/scorekeeper.qc // SCARLET - teamscore
 scarlet/killstreak.qc // SCARLET - teamscore
 scarlet/spawn.qc // SCARLET - random spawn locations
 scarlet/glory.qc // SCARLET - glory kill rewards
+scarlet/shields.qc // SCARLET - health/shields
 // SCARLET - end.
 
 maths.qc

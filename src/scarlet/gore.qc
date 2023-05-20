@@ -64,6 +64,9 @@ void() SplatTouch =
 
 void(vector dir, vector org, entity own, float damage, float weap = 1) ThrowBloodSplat =
 {
+        // flag player as having been attacked (for shield recharge)
+        own.last_attacked_time = time;
+
         // weap is a made up var, 1=bullet,2=nail,3=rock,4=cell,5=axe
 
         if (!cvar("scarlet_gore")) return;

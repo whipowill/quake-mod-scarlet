@@ -1448,6 +1448,7 @@ void() PlayerPreThink =
 {
 	if (BotPreFrame()) return; // SCARLET - bots integration.
 	NameTag(); // SCARLET - nametags integration.
+	RechargeShields(); // SCARLET - shields integration.
 
 	if (cleanUpClientShit)
 	{
