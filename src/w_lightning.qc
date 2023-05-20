@@ -326,7 +326,8 @@ void() W_FireLightning =
 	LightningBeam(org, trace_endpos + v_forward * 800, self, cvar("scarlet_dmg_cells")); // was 30, SCARLET - custom dmg integration.
 	ApplyMultiDamage();
 
-	self.attack_finished = time + cvar("scarlet_rof_tb");
+	if (cvar("scarlet_rof_tb"))
+		self.attack_finished = time + cvar("scarlet_rof_tb");
 	
 /*	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 	WriteByte (MSG_BROADCAST, TE_LIGHTNING2);	// kabewm

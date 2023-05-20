@@ -291,7 +291,7 @@ void() W_Attack =
 	else if (self.weapon == IT_LIGHTNING)
 	{
 		player_light1();
-		//self.attack_finished = time + 0.1;
+		//self.attack_finished = time + 0.1; // this was in original Copper code and not sure why -whipowill
 		sound (self, CHAN_AUTO, "weapons/lstart.wav", 1, ATTN_NORM);
 	}
 

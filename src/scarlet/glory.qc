@@ -154,7 +154,7 @@ void(vector org, entity own) SpawnShards =
                     }
                 }
 
-                shard.flags |= FL_ITEM; // so AI will know it's an item worth picking up
+                shard.flags = FL_ITEM; // so AI will know it's an item worth picking up
                 setorigin (shard, org); //start shard at point of damage
             }
         }
