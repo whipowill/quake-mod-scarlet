@@ -68,8 +68,9 @@ void() button_use =
 void() button_touch =
 {
 	if (self.customflags & CFL_LOCKED) return;
-	if (other.classname != "player" || other.health <= 0)
-		return;
+	if (other.classname != "spike" && other.classname != "grenade" && other.classname != "rocket") // SCARLET - make buttons shootable!
+		if (other.classname != "player" || other.health <= 0)
+			return;
 		
 	self.enemy = other;
 	button_fire ();

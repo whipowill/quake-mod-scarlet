@@ -24,7 +24,7 @@ Every feature in this mod is optional and configurable.
 - **Persistent Corpses** - player corpses stick around for a bit before disappearing
 - **No Autoswitch** - picking up new weapons won't autoswitch anymore
 - **Visible Weapons** - force weapons to drop visibly outside the backpack
-- **Hitscan Nailguns** - make nailguns use hitscan Q2-style instead of projectiles
+- **Nail Speed** - make nails travel instantly, like a gun instead of a water hose
 - **Melee Attacks** - perform a melee attack w/out switching weapons
 - **Hand Grenades** - toss a hand grenade w/out switching weapons
 - **Custom Loadouts** - play Rockets only, Shotguns only, Chaingun only, Railgun only
@@ -33,7 +33,7 @@ Every feature in this mod is optional and configurable.
 
 - **Glory Kills** - melee attacks and killstreaks grant health and armor rewards
 - **Killing Spree** - game announces when you're on a killstreak and when it ends
-- **Highlander Games** - higher the killstreak, the more rewards for the one who takes your head!
+- **Highlander Games** - higher their killstreak, greater the reward for taking their head
 - **Random Powerups** - every kill has a chance to drop a random powerup
 
 ## Changelog
@@ -52,6 +52,7 @@ Every feature in this mod is optional and configurable.
     - Taught bots how to use grenades
     - Respawn timer forces timeout
     - Player corpses stick around for a bit
+    - Made buttons shootable (for ``ultrav``)
 - April 2023 - ``v1.2.x``
     - Gore system overhauled and is now scalable
     - Added option to disable weapon autoswitch
