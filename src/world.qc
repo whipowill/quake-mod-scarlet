@@ -209,6 +209,7 @@ void() worldspawn =
 	startingserverflags = serverflags;
 
 	BotInit(); // SCARLET - bots integration.
+	StatsInit(); // SCARLET - custom stats for sending to client
 	
 	InitBodyQueue ();
 	InitLightStyles();	// moved to lights.qc

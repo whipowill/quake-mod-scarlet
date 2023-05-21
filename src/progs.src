@@ -22,6 +22,7 @@ scarlet/bot_misc.qc
 scarlet/bot_phys.qc
 scarlet/bot_move.qc
 scarlet/bot_ed.qc
+scarlet/stats.qc // SCARLET - custom stats
 scarlet/precache.qc // SCARLET - models used
 scarlet/loadout.qc // SCARLET - custom loadouts
 scarlet/melee.qc // SCARLET - melee attacks

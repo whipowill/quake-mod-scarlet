@@ -3,6 +3,7 @@
 // by whipowill
 //-------------------------------------------------
 
+.float ammo_grenades;
 .float grenades_used;
 .float grenades_time;
 .float attack_finished_melee;
@@ -34,13 +35,15 @@ void() GrenadeAttack =
 
     if (self.health <= 0) return;
 
-    if (self.grenades_time <= time) self.grenades_used = 0;
-
     local float old_attack_finished = self.attack_finished;
-    if (self.attack_finished_melee <= time && self.grenades_used < cvar("scarlet_grenades_max")) //self.ammo_rockets >= 1
+    if (self.attack_finished_melee <= time && self.ammo_grenades > 0)
     {
         self.weaponmodel = string_null;
-        self.grenades_used = self.grenades_used + 1;
+
+        // take away a grenade from our ammo
+        self.ammo_grenades = self.ammo_grenades - 1;
+
+        // log time at which grenades count will reset (if using time mechanism)
         self.grenades_time = time + cvar("scarlet_grenades_cooldown");
 
         HandGrenadeThrow();

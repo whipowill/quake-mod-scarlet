@@ -349,6 +349,8 @@ void() restart =
 // called by ClientKill and DeadThink
 void() respawn =
 {
+	StatsReset(); // SCARLET - stats integration.
+
 	if (deathmatch)
 	{
 		// make a copy of the dead body for appearances sake
@@ -1449,6 +1451,7 @@ void() PlayerPreThink =
 	if (BotPreFrame()) return; // SCARLET - bots integration.
 	NameTag(); // SCARLET - nametags integration.
 	RechargeShields(); // SCARLET - shields integration.
+	StatsUpdate(); // SCARLET - stats integration.
 
 	if (cleanUpClientShit)
 	{

@@ -15,6 +15,7 @@ void(entity e) bound_ammo =
 	e.ammo_nails = min(e.ammo_nails, cvar("scarlet_max_nails"));
 	e.ammo_rockets = min(e.ammo_rockets, cvar("scarlet_max_rockets"));
 	e.ammo_cells = min(e.ammo_cells, cvar("scarlet_max_cells"));
+	e.ammo_grenades = min(e.ammo_grenades, cvar("scarlet_grenades_max"));
 }
 
 /*

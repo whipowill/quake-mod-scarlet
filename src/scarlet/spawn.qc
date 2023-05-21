@@ -1,9 +1,9 @@
 // -------------------------------------------------
-// Make players respawn in a random location (avoid telefrags).
-// #
-// by FrikaC, adapted by whipowill
+// Function regarding spawning players.
+// by whipowill
 // -------------------------------------------------
 
+// this function was written by Ryan Smith
 entity() RandomSpawnLocation =
 {
         local entity spot;

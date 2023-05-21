@@ -56,6 +56,8 @@ Every feature in this mod is optional and configurable.
     - Player corpses stick around for a bit
     - Made buttons shootable (for ``ultrav``)
     - Added shield recharge feature
+    - Made hand grenades only come from backpacks
+    - Added server/client communcation to use w/ [HUD](https://github.com/whipowill/quake-mod-hud)
 - April 2023 - ``v1.2.x``
     - Gore system overhauled and is now scalable
     - Added option to disable weapon autoswitch
@@ -190,8 +192,8 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 
 - ``scarlet_melee`` - allow melee attack (``0`` or ``1``, default is ``0``)
 - ``scarlet_grenades`` - allow grenade toss (``0`` or ``1``, default is ``0``)
+- ``scarlet_grenades_min`` - number of grenades that you spawn with (default is ``2``)
 - ``scarlet_grenades_max`` - number of grenades that can be thrown (default is ``4``)
-- ``scarlet_grenades_cooldown`` - seconds to wait before throwing again (default is ``10``)
 - ``scarlet_grenades_fuse`` - seconds before grenade will explode (default is ``1``)
 - ``scarlet_grenades_chance`` - chance a bot will throw a grenade (default is ``0.33``)
 - ``scarlet_rof_hg`` - set Hand Grenade rate of fire delay in seconds (default is ``0.6``)

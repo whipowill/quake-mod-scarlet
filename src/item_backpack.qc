@@ -54,6 +54,7 @@ void() BackpackTouch =
 	other.ammo_nails = other.ammo_nails + self.ammo_nails;
 	other.ammo_rockets = other.ammo_rockets + self.ammo_rockets;
 	other.ammo_cells = other.ammo_cells + self.ammo_cells;
+	other.ammo_grenades = other.ammo_grenades + self.ammo_grenades; // SCARLET - grenades integration.
 	bound_ammo(other);
 	armor_give(other, self.armorvalue, 0, FALSE);	
 	
@@ -104,6 +105,12 @@ void() BackpackTouch =
 		if (acount) sprint(other, ", ");
 		acount = 2;
 		print_quant(self.ammo_cells, "cell", other);
+	}
+	if (self.ammo_grenades)
+	{
+		if (acount) sprint(other, ", ");
+		acount = 2;
+		print_quant(self.ammo_grenades, "grenade", other);
 	}
 	
 	sprint (other, "\n");
@@ -301,6 +308,10 @@ void() DropBackpack =
 	item.ammo_nails = floor(fabs(self.ammo_nails));
 	item.ammo_rockets = floor(fabs(self.ammo_rockets));
 	item.ammo_cells = floor(fabs(self.ammo_cells));
+
+	// SCARLET - grenades integration
+	if (cvar("scarlet_grenades") && !cvar("scarlet_grenades_cooldown"))
+		item.ammo_grenades = ceil(random() * cvar("scarlet_grenades_max"));
 
 	item.velocity_z = 300;
 	item.velocity_x = -100 + (random() * 200);
