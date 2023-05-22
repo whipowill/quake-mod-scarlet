@@ -3,6 +3,8 @@
 // by whipowill
 // -------------------------------------------------
 
+.float respawn_time;
+
 // this function was written by Ryan Smith
 entity() RandomSpawnLocation =
 {

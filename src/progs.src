@@ -5,38 +5,39 @@
 defs.qc
 constants.qc
 
+// FRIKBOT
+frikbot/waypoints/map_dm1.qc
+frikbot/waypoints/map_dm2.qc
+frikbot/waypoints/map_dm3.qc
+frikbot/waypoints/map_dm4.qc
+frikbot/waypoints/map_dm5.qc
+frikbot/waypoints/map_dm6.qc
+frikbot/bot.qc
+frikbot/bot_way.qc
+frikbot/bot_fight.qc
+frikbot/bot_ai.qc
+frikbot/bot_misc_names.qc
+frikbot/bot_misc_quotes.qc
+frikbot/bot_misc.qc
+frikbot/bot_phys.qc
+frikbot/bot_move.qc
+frikbot/bot_ed.qc
+
 // SCARLET
-scarlet/waypoints/map_dm1.qc
-scarlet/waypoints/map_dm2.qc
-scarlet/waypoints/map_dm3.qc
-scarlet/waypoints/map_dm4.qc
-scarlet/waypoints/map_dm5.qc
-scarlet/waypoints/map_dm6.qc
-scarlet/bot.qc
-scarlet/bot_way.qc
-scarlet/bot_fight.qc
-scarlet/bot_ai.qc
-scarlet/bot_misc_names.qc
-scarlet/bot_misc_quotes.qc
-scarlet/bot_misc.qc
-scarlet/bot_phys.qc
-scarlet/bot_move.qc
-scarlet/bot_ed.qc
-scarlet/stats.qc // SCARLET - custom stats
-scarlet/precache.qc // SCARLET - models used
-scarlet/loadout.qc // SCARLET - custom loadouts
-scarlet/melee.qc // SCARLET - melee attacks
-scarlet/corpses.qc // SCARLET - corpses
-scarlet/football.qc // SCARLET - football
-scarlet/footsteps.qc // SCARLET - footsteps
-scarlet/gore.qc // SCARLET - gore
-scarlet/nametags.qc // SCARLET - nametags
-scarlet/scorekeeper.qc // SCARLET - teamscore
-scarlet/killstreak.qc // SCARLET - teamscore
-scarlet/spawn.qc // SCARLET - random spawn locations
-scarlet/glory.qc // SCARLET - glory kill rewards
-scarlet/shields.qc // SCARLET - health/shields
-// SCARLET - end.
+scarlet/stats.qc
+scarlet/precache.qc
+scarlet/loadout.qc
+scarlet/melee.qc
+scarlet/corpses.qc
+scarlet/football.qc
+scarlet/footsteps.qc
+scarlet/gore.qc
+scarlet/nametags.qc
+scarlet/scorekeeper.qc
+scarlet/killstreak.qc
+scarlet/spawn.qc
+scarlet/glory.qc
+scarlet/shields.qc
 
 maths.qc
 utility.qc

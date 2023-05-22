@@ -132,7 +132,6 @@ for all variables in the bot...
 */
 
 // ----- entity fields ---
-.float respawn_time;
 .float wallhug, keys, oldkeys, ishuman;
 .float b_frags, b_clientno, b_shirt, b_pants;
 .float priority, ai_time, b_sound, missile_speed;

@@ -349,8 +349,6 @@ void() restart =
 // called by ClientKill and DeadThink
 void() respawn =
 {
-	StatsReset(); // SCARLET - stats integration.
-
 	if (deathmatch)
 	{
 		// make a copy of the dead body for appearances sake
@@ -571,6 +569,8 @@ void() PutClientInServer =
 	self.invincible_time = 0;
 	self.effects = 0;
 	self.enemy = world;
+
+	StatsReset(); // SCARLET - stats integration.
 
 	DecodeLevelParms();
 	SetChangeParms();

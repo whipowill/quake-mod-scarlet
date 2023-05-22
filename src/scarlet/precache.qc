@@ -1,6 +1,15 @@
 void() S_Precache =
 {
     // sounds
+    precache_sound ("walk/generic1.wav");
+    precache_sound ("walk/generic2.wav");
+    precache_sound ("walk/generic3.wav");
+    precache_sound ("walk/generic4.wav");
+    precache_sound ("walk/generic5.wav");
+    precache_sound ("walk/metal1.wav");
+    precache_sound ("walk/metal2.wav");
+    precache_sound ("walk/metal3.wav");
+    precache_sound ("walk/metal4.wav");
     precache_sound("items/r_item1.wav");
     precache_sound("items/r_item2.wav");
     precache_sound("items/protect.wav");

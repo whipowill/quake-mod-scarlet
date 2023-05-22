@@ -994,21 +994,7 @@ void() BotAI =
 	// status bars, and the mod probably already compensated for that
 
 	if (self.health < 1)
-	{ 
-		// wait 5 seconds before respawn! -whipowill
-		if (!self.respawn_time || self.respawn_time == 0)
-		{
-			self.respawn_time = time + cvar("scarlet_respawn");
-			return;
-		}
-		else
-		{
-			if (self.respawn_time > time)
-			{
-				return;
-			}
-		}
-
+	{
 		self.ai_time = time + 0.05;
 
 		self.button0 = floor(random() * 2);
