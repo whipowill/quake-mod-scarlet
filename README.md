@@ -194,9 +194,9 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_grenades`` - allow grenade toss (``0`` or ``1``, default is ``0``)
 - ``scarlet_grenades_min`` - number of grenades that you spawn with (default is ``2``)
 - ``scarlet_grenades_max`` - number of grenades that can be thrown (default is ``4``)
-- ``scarlet_grenades_fuse`` - seconds before grenade will explode (default is ``1``)
+- ``scarlet_grenades_fuse`` - seconds before grenade will explode (default is ``1.5``)
 - ``scarlet_rof_hg`` - set Hand Grenade rate of fire delay in seconds (default is ``0.6``)
-- ``scarlet_grenades_chance`` - chance a bot will throw a grenade (default is ``0.33``)
+- ``scarlet_grenades_chance`` - chance a bot will throw a grenade (default is ``0.5``)
 - ``scarlet_grenades_cooldown`` - seconds a bot will wait before throwing again (default is ``8``)
 - ``scarlet_grenades_restock`` - seconds until game will restock all your grenades (default is ``0``)
 
