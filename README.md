@@ -197,13 +197,9 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_grenades_fuse`` - seconds before grenade will explode (default is ``1``)
 - ``scarlet_grenades_chance`` - chance a bot will throw a grenade (default is ``0.33``)
 - ``scarlet_rof_hg`` - set Hand Grenade rate of fire delay in seconds (default is ``0.6``)
-- ``scarlet_grenades_cooldown`` - seconds to wait before restocking all grenades (default is ``0``)
+- ``scarlet_grenades_cooldown`` - seconds to wait before restocking grenades (default is ``0``)
 
-There is a question of how to introduce a new item into a game with maps that are 25 years old and cannot be edited.
-
-The original method I used was just to give grenades to you and force a cooldown where you had to wait X seconds before you got more.  The newer way I'm doing this is by making them spawn in backpacks, regardless of how many grenades that player actually had.
-
-So a cooldown of ``0`` makes the game only spawn grenades in backpacks, and a cooldown greater than or equal to ``1`` will disable backpack grenades and make the grenades restock based on time.
+The issue w/ grenades is how to add a new item to a game when you can't edit maps.  A cooldown of ``0`` makes the game spawn grenades in backpacks, a cooldown greater than or equal to ``1`` will give you grenades based on time.
 
 ### Recharge Settings
 
