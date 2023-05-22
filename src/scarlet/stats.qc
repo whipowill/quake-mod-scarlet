@@ -43,6 +43,6 @@ void() StatsUpdate =
     self.grenadestracker = cvar("scarlet_grenades");
 
     // if using time mechanism of restocking
-    if (cvar("scarlet_grenades_cooldown"))
+    if (cvar("scarlet_grenades_restock"))
         if (self.grenades_time <= time) self.ammo_grenades = cvar("scarlet_grenades_max");
 }

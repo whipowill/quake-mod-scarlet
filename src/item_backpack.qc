@@ -310,7 +310,7 @@ void() DropBackpack =
 	item.ammo_cells = floor(fabs(self.ammo_cells));
 
 	// SCARLET - grenades integration
-	if (cvar("scarlet_grenades") && !cvar("scarlet_grenades_cooldown"))
+	if (cvar("scarlet_grenades") && !cvar("scarlet_grenades_restock"))
 		item.ammo_grenades = ceil(random() * cvar("scarlet_grenades_max"));
 
 	item.velocity_z = 300;

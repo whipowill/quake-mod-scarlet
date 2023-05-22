@@ -56,7 +56,7 @@ Every feature in this mod is optional and configurable.
     - Player corpses stick around for a bit
     - Made buttons shootable (for ``ultrav``)
     - Added shield recharge feature
-    - Made hand grenades only come from backpacks
+    - Made hand grenades come from backpacks
     - Added server/client communcation to use w/ [HUD](https://github.com/whipowill/quake-mod-hud)
 - April 2023 - ``v1.2.x``
     - Gore system overhauled and is now scalable
@@ -115,7 +115,7 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 ### Shard Settings
 
 - ``scarlet_shards`` - enable health/armor shards on kills (``0`` or ``1``, default is ``0``)
-- ``scarlet_shards_powerups`` - include powerups in shards dice rolls (``0`` or ``1``, default is ``1``)
+- ``scarlet_shards_powerups`` - include powerups in shards dice rolls (``0-3``, default is ``1``)
 - ``scarlet_shards_multiplier`` - how many shards to drop per killstreak (default is ``20``)
 - ``scarlet_shards_chance`` - chances that each shard will actually drop (default is ``0.4``)
 - ``scarlet_shards_armor`` - amount of armor gained per shard (default is ``0``)
@@ -195,11 +195,12 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_grenades_min`` - number of grenades that you spawn with (default is ``2``)
 - ``scarlet_grenades_max`` - number of grenades that can be thrown (default is ``4``)
 - ``scarlet_grenades_fuse`` - seconds before grenade will explode (default is ``1``)
-- ``scarlet_grenades_chance`` - chance a bot will throw a grenade (default is ``0.33``)
 - ``scarlet_rof_hg`` - set Hand Grenade rate of fire delay in seconds (default is ``0.6``)
-- ``scarlet_grenades_cooldown`` - seconds to wait before restocking grenades (default is ``0``)
+- ``scarlet_grenades_chance`` - chance a bot will throw a grenade (default is ``0.33``)
+- ``scarlet_grenades_cooldown`` - seconds a bot will wait before throwing again (default is ``8``)
+- ``scarlet_grenades_restock`` - seconds until game will restock all your grenades (default is ``0``)
 
-The issue w/ grenades is how to add a new item to a game when you can't edit maps.  A cooldown of ``0`` makes the game spawn grenades in backpacks, a cooldown greater than or equal to ``1`` will give you grenades based on time.
+The issue is how to add a new item to a game when you can't edit old maps.  A restock time of ``0`` will spawn grenades in backpacks, a restock time greater than or equal to ``1`` will restock your grenades based on time.
 
 ### Recharge Settings
 

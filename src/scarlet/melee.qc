@@ -44,7 +44,7 @@ void() GrenadeAttack =
         self.ammo_grenades = self.ammo_grenades - 1;
 
         // log time at which grenades count will reset (if using time mechanism)
-        self.grenades_time = time + cvar("scarlet_grenades_cooldown");
+        self.grenades_time = time + cvar("scarlet_grenades_restock");
 
         HandGrenadeThrow();
 
