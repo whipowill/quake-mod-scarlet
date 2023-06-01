@@ -105,8 +105,7 @@ void(vector org, entity own) SpawnShards =
                 shard.solid = SOLID_TRIGGER;
 
                 shard.velocity = Vector(random(), random(), random()) * (50 + 300);
-                if (own.enemy.weaponmodel != "progs/v_axe2.mdl")
-                    shard.touch = ShardTouch; // if not glory kill, allow immediate absorb of shards
+                shard.touch = ShardTouch;
                 shard.think = ShardThink;
                 shard.nextthink = time + 1;
 
