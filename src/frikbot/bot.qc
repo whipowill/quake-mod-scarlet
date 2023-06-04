@@ -587,7 +587,7 @@ void() ClientFixRankings =
 void() ClientInRankings =
 {
 	// add to scorekeeper
-	ScoreKeeper(self); // whipowill
+	ScoreKeeperAddPlayer(); // -whipowill
 
 	local float cno;
 
@@ -624,7 +624,7 @@ void() ClientInRankings =
 void() ClientDisconnected =
 {
 	// remove from scorekeeper
-	ScoreKeeperRemovePlayer(self.netname); // whipowill
+	ScoreKeeperRemovePlayer(); // whipowill
 
 	if (player_head == self)
 		player_head = self._next;

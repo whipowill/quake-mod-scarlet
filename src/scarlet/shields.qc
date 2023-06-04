@@ -3,7 +3,7 @@
 // by whipowill
 //-------------------------------------------------
 
-.float last_attacked_time; // keep track of the last time we got attacked
+.float last_damaged_time; // keep track of the last time we got damaged
 .float next_recharge_time;
 
 void() RechargeShields =
@@ -11,8 +11,8 @@ void() RechargeShields =
     // if disabled
     if (!cvar("scarlet_recharge") || !deathmatch) return;
 
-    // if not enough time has passed since last attacked
-    if (time < (self.last_attacked_time + cvar("scarlet_recharge_cooldown")))
+    // if not enough time has passed since last damaged
+    if (time < (self.last_damaged_time + cvar("scarlet_recharge_cooldown")))
     {
         // reset
         self.next_recharge_time = 0;

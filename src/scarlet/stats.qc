@@ -3,46 +3,131 @@
 // by whipowill
 // -------------------------------------------------
 
-void(float index, float type, .float field) addstatf = #232;
+// functions needed
+void(float index, float type, .float field) clientstat = #232;
+void(float num, float type, string name) globalstat = #233;
 
-// for game vars I'm using 33-63
-const float VAR_TEAMPLAY = 33;
-const float VAR_GRENADES = 34;
+// my client vars (33-63) -whipowill
+const float IT_GRENADES = 33;
 
-// for player stats I'm using 128-255
-const float IT_GRENADES = 128;
+// my global vars (128-255) -whipowill
+const float GAME_SCARLET = 128;
+const float GAME_TEAMPLAY = 129;
+const float GAME_GRENADES = 130;
+const float SCORE_DEATHS = 131; // 32 slots
 
-.float teamplaytracker;
-.float grenadestracker;
+float gametracker_scarlet, gametracker_teamplay, gametracker_grenades;
 
+float score_player01_deaths;
+float score_player02_deaths;
+float score_player03_deaths;
+float score_player04_deaths;
+float score_player05_deaths;
+float score_player06_deaths;
+float score_player07_deaths;
+float score_player08_deaths;
+
+.float deaths;
+
+// this runs when client loads
 void() StatsInit =
 {
-    // for AddStat 2nd argument
     // 1: string (4 stats carrying a total of 16 charactures)
     // 2: float (one stat, float converted to an integer for transportation)
     // 8: integer (one stat, not converted to an int, so this can be used to transport floats as floats - what a unique idea!)
 
-    addstatf (VAR_TEAMPLAY, 2, teamplaytracker);
-    addstatf (VAR_GRENADES, 2, grenadestracker);
-    addstatf (IT_GRENADES, 2, ammo_grenades);
+    // client vars
+    clientstat (IT_GRENADES, 2, ammo_grenades);
+
+    // global vars
+    globalstat (GAME_SCARLET, 2, "gametracker_scarlet");
+    globalstat (GAME_TEAMPLAY, 2, "gametracker_teamplay");
+    globalstat (GAME_GRENADES, 2, "gametracker_grenades");
+
+    string str, num;
+    for (float i = 1; i<=32; i++)
+    {
+        num = (i < 10) ? strcat("0", ftos(i)) : ftos(i);
+
+        str = strcat("score_player", num);
+        str = strcat(str, "_deaths");
+        globalstat (SCORE_DEATHS+i-1, 2, str);
+    }
 }
 
-void() StatsReset =
+// this runs when player gets hurt
+void(entity player, entity attacker) StatsDamage =
 {
-    self.ammo_grenades = cvar("scarlet_grenades_min");
+    // flag player as having been attacked (for shield recharge)
+    player.last_damaged_time = time;
+
+    if (attacker.classname != "player") return;
 }
 
-void() StatsUpdate =
+// this runs when player dies
+void(entity player, entity attacker) StatsDeath =
 {
+    ScoreKeeper(); // make sure scores are up to date
+    KillstreakAdd(player.enemy); // SCARLET - killstreak integration
+
+    player.deaths = player.deaths + 1;
+}
+
+// this runs when player respawns
+void(entity player) StatsRespawn =
+{
+    player.ammo_grenades = cvar("scarlet_grenades_min");
+}
+
+// this runs every frame
+void(entity player) StatsUpdate =
+{
+    NameTag(); // SCARLET - nametags integration.
+    RechargeShields(); // SCARLET - shields integration.
+
     // HACK: the only way to pass these vars to CSQC is as player stat!
 
-    // tell client this is a team game
-    self.teamplaytracker = teamplay;
-
-    // tell client this is grenades game
-    self.grenadestracker = cvar("scarlet_grenades");
+    // tell client some game settings
+    gametracker_scarlet = 1;
+    gametracker_teamplay = teamplay;
+    gametracker_grenades = cvar("scarlet_grenades");
 
     // if using time mechanism of restocking
     if (cvar("scarlet_grenades_restock"))
-        if (self.grenades_time <= time) self.ammo_grenades = cvar("scarlet_grenades_max");
+        if (player.grenades_time <= time) player.ammo_grenades = cvar("scarlet_grenades_max");
+
+    // assign stats
+    AlphaKeeper(); // re-alphabize list of players
+    if (player.alphapos == 1)
+    {
+            score_player01_deaths = player.deaths;
+    }
+    else if (player.alphapos == 2)
+    {
+            score_player02_deaths = player.deaths;
+    }
+    else if (player.alphapos == 3)
+    {
+            score_player03_deaths = player.deaths;
+    }
+    else if (player.alphapos == 4)
+    {
+            score_player04_deaths = player.deaths;
+    }
+    else if (player.alphapos == 5)
+    {
+            score_player05_deaths = player.deaths;
+    }
+    else if (player.alphapos == 6)
+    {
+            score_player06_deaths = player.deaths;
+    }
+    else if (player.alphapos == 7)
+    {
+            score_player07_deaths = player.deaths;
+    }
+    else if (player.alphapos == 8)
+    {
+            score_player08_deaths = player.deaths;
+    }
 }

@@ -257,3 +257,4 @@ Reference the included ``instructions.html`` file from FrikaC for detailed infor
 - [Quake Bot Archive](https://github.com/Jason2Brownlee/QuakeBotArchive) - an archive of all Quake bot versions w/ a little history
 - [FrikBot Waypoint Files](https://github.com/whipowill/quake-mod-frikbot-waypoints) - an archive of all the bot waypoints files
 - [Tome of Preach](https://tomeofpreach.wordpress.com/about/) - not using anything from here but might someday
+- [PointerStat Explanation](https://www.attackersgored.com/?p=2909) - useful tips on sending ``globalstat()`` to the client

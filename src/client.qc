@@ -570,7 +570,7 @@ void() PutClientInServer =
 	self.effects = 0;
 	self.enemy = world;
 
-	StatsReset(); // SCARLET - stats integration.
+	StatsRespawn(self); // SCARLET - stats integration.
 
 	DecodeLevelParms();
 	SetChangeParms();
@@ -1449,9 +1449,7 @@ Called every frame before physics are run
 void() PlayerPreThink =
 {
 	if (BotPreFrame()) return; // SCARLET - bots integration.
-	NameTag(); // SCARLET - nametags integration.
-	RechargeShields(); // SCARLET - shields integration.
-	StatsUpdate(); // SCARLET - stats integration.
+	StatsUpdate(self); // SCARLET - stats integration.
 
 	if (cleanUpClientShit)
 	{
@@ -1698,6 +1696,8 @@ void() ClientObituary =
 	
 	entity attacker = self.enemy;
 
+	StatsDeath(self, attacker);
+
 	if (coop == 1)
 	{
 		// centerprint before bprint if you want players to see both
@@ -1826,7 +1826,6 @@ void() ClientObituary =
 			if (deathmatch)
 			{
 				attacker.frags = attacker.frags + 1;
-				KillstreakAdd(attacker); // SCARLET - killstreak integration
 			}
 
 			if (!cvar("scarlet_nospam"))

@@ -4,6 +4,12 @@
 // by whipowill
 // -------------------------------------------------
 
+// functions needed
+float(string s1, string s2) strcasecmp = #229;
+
+.float ranking;
+.float alphapos; // the rank by alphabetical order of name
+
 typedef struct
 {
         string name;
@@ -12,7 +18,8 @@ typedef struct
         entity player;
 } playerkeep;
 playerkeep score_player_roster[16]; // index of player names and scores
-float score_player_rank[8]; // player ranks where key is rank and value is roster index key (only tracking up to 8 players)
+float score_player_rank[16]; // player ranks where key is rank and value is roster index key (only tracking up to 8 players)
+float score_player_alpha[16]; // player names in alphabetical order (for tracking stats and sending to client)
 
 typedef struct
 {
@@ -21,6 +28,39 @@ typedef struct
 } teamkeep;
 teamkeep score_team_roster[16]; // index of teams and scores
 float score_team_rank[4]; // team ranks where key is the rank and value is the team num (only tracking up to 4 teams)
+
+float(string name1, string name2) StringCompare =
+{
+        return strcasecmp(name1, name2);
+}
+
+string(string name) NameFilter =
+{
+        return (!name || name == "") ? "ZZZZZZZ" : name;
+}
+
+string(float id) GetPlayerNameFromAlphaIndex =
+{
+        if (id <= 0) return NameFilter("");
+
+        return NameFilter(score_player_roster[id].name);
+}
+
+void(float id, float rank) AssignAlpha =
+{
+        if (!score_player_roster[id].name || score_player_roster[id].name == "") return;
+
+        entity player = score_player_roster[id].player;
+
+        player.alphapos = rank;
+}
+
+void(float id, float rank) AssignRank =
+{
+        if (!score_player_roster[id].name || score_player_roster[id].name == "") return;
+
+        score_player_roster[id].player.ranking = rank;
+}
 
 float() ScoreKeeperEndgame =
 {
@@ -32,10 +72,13 @@ float() ScoreKeeperEndgame =
                         bot_start_topic(9.5); // ridicule chat
 
         // update stats on attacker
-        ScoreKeeper(self.enemy);
+        entity temp = self;
+        self = self.enemy;
+        ScoreKeeperAddPlayer(); // make sure player frags is updated (recalc the player)
+        self = temp;
 
         // update stats on self and capture max score
-        local float maxscore = ScoreKeeper(self);
+        local float maxscore = teamplay ? ScoreKeeperFragsForRank(0, "score_team_rank") : ScoreKeeperFragsForRank(0, "score_player_rank");
 
         // capture fraglimit
         local float fraglimit = cvar("fraglimit");
@@ -48,12 +91,33 @@ float() ScoreKeeperEndgame =
         return FALSE;
 };
 
-void(string name) ScoreKeeperRemovePlayer =
+void() ScoreKeeperAddPlayer =
+{
+        local float i;
+        local float playerkey;
+
+        for (i=0; i<16; i++)
+        {
+                if (score_player_roster[i].name == self.netname)
+                        playerkey = i;
+                else if (score_player_roster[i].name == "")
+                        playerkey = i;
+        }
+        if (playerkey)
+        {
+                score_player_roster[playerkey].name = self.netname;
+                score_player_roster[playerkey].frags = self.frags;
+                score_player_roster[playerkey].team = self.team;
+                score_player_roster[playerkey].player = self; // should be store by reference
+        }
+};
+
+void() ScoreKeeperRemovePlayer =
 {
         local float i;
         for (i=0; i<16; i++)
         {
-                if (score_player_roster[i].name == name)
+                if (score_player_roster[i].name == self.netname)
                 {
                         score_player_roster[i].name = "",
                         score_player_roster[i].frags = 0;
@@ -81,33 +145,102 @@ float(float rankkey, string roster_type) ScoreKeeperFragsForRank =
         return 0;
 };
 
-float(entity player) ScoreKeeper =
+void() AlphaKeeper =
 {
-        //if (self.enemy.classname != "player") return 0;
+        // reset player ranks
+        score_player_alpha[7] = -1;
+        score_player_alpha[6] = -1;
+        score_player_alpha[5] = -1;
+        score_player_alpha[4] = -1;
+        score_player_alpha[3] = -1;
+        score_player_alpha[2] = -1;
+        score_player_alpha[1] = -1;
+        score_player_alpha[0] = -1;
 
+        // alphabetize the players (for use in stats.qc)
+
+        float i;
+        string name;
+
+        for (i=0; i<16; i++)
+        {
+                name = NameFilter(score_player_roster[i].name);
+
+                if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[0])) < 0)
+                {
+                        score_player_alpha[7] = score_player_alpha[6];
+                        score_player_alpha[6] = score_player_alpha[5];
+                        score_player_alpha[5] = score_player_alpha[4];
+                        score_player_alpha[4] = score_player_alpha[3];
+                        score_player_alpha[3] = score_player_alpha[2];
+                        score_player_alpha[2] = score_player_alpha[1];
+                        score_player_alpha[1] = score_player_alpha[0];
+                        score_player_alpha[0] = i;
+                }
+                else if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[1])) < 0)
+                {
+                        score_player_alpha[7] = score_player_alpha[6];
+                        score_player_alpha[6] = score_player_alpha[5];
+                        score_player_alpha[5] = score_player_alpha[4];
+                        score_player_alpha[4] = score_player_alpha[3];
+                        score_player_alpha[3] = score_player_alpha[2];
+                        score_player_alpha[2] = score_player_alpha[1];
+                        score_player_alpha[1] = i;
+                }
+                else if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[2])) < 0)
+                {
+                        score_player_alpha[7] = score_player_alpha[6];
+                        score_player_alpha[6] = score_player_alpha[5];
+                        score_player_alpha[5] = score_player_alpha[4];
+                        score_player_alpha[4] = score_player_alpha[3];
+                        score_player_alpha[3] = score_player_alpha[2];
+                        score_player_alpha[2] = i;
+                }
+                else if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[3])) < 0)
+                {
+                        score_player_alpha[7] = score_player_alpha[6];
+                        score_player_alpha[6] = score_player_alpha[5];
+                        score_player_alpha[5] = score_player_alpha[4];
+                        score_player_alpha[4] = score_player_alpha[3];
+                        score_player_alpha[3] = i;
+                }
+                else if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[4])) < 0)
+                {
+                        score_player_alpha[7] = score_player_alpha[6];
+                        score_player_alpha[6] = score_player_alpha[5];
+                        score_player_alpha[5] = score_player_alpha[4];
+                        score_player_alpha[4] = i;
+                }
+                else if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[5])) < 0)
+                {
+                        score_player_alpha[7] = score_player_alpha[6];
+                        score_player_alpha[6] = score_player_alpha[5];
+                        score_player_alpha[5] = i;
+                }
+                else if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[6])) < 0)
+                {
+                        score_player_alpha[7] = score_player_alpha[6];
+                        score_player_alpha[6] = i;
+                }
+                else if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[7])) < 0)
+                {
+                        score_player_alpha[7] = i;
+                }
+        }
+
+        for (i=0; i<8; i++)
+                if (score_player_alpha[i] >= 0) // if a real player
+                        AssignAlpha(score_player_alpha[i], i+1);
+}
+
+void() ScoreKeeper =
+{
         // We're always going to track team ranks and player ranks
         // bc the server may swap settings on midgame and we don't
         // want to lose the stats.
 
         // for loops
         local float i;
-
-        // update player info in roster sheet -- what breaks this is if the player changes his name mid-game but I don't know what else to do
-        local float playerkey;
-        for (i=0; i<16; i++)
-        {
-                if (score_player_roster[i].name == player.netname)
-                        playerkey = i;
-                else if (score_player_roster[i].name == "")
-                        playerkey = i;
-        }
-        if (playerkey)
-        {
-                score_player_roster[playerkey].name = player.netname;
-                score_player_roster[playerkey].frags = player.frags;
-                score_player_roster[playerkey].team = player.team;
-                score_player_roster[playerkey].player = player; // should be store by reference
-        }
 
         // reset player ranks
         score_player_rank[7] = -1;
@@ -184,6 +317,10 @@ float(entity player) ScoreKeeper =
                 }
         }
 
+        for (i=0; i<8; i++)
+                if (score_player_rank[i] >= 0) // if a real player
+                        AssignRank(score_player_rank[i], i+1);
+
         // if tracking teams
         if (teamplay > 0)
         {
@@ -238,13 +375,7 @@ float(entity player) ScoreKeeper =
                                 }
                         }
                 }
-
-                // return highest team score
-                return ScoreKeeperFragsForRank(0, "score_team_rank");
         }
-
-        // return highest player score
-        return ScoreKeeperFragsForRank(0, "score_player_rank");
 };
 
 float(entity player) AmIWinning =
@@ -255,8 +386,6 @@ float(entity player) AmIWinning =
 
         local float i;
         local float is_winning = FALSE;
-
-        local float is_testing = cvar("scarlet_testing");
 
         // if teams
         if (teamplay > 0)

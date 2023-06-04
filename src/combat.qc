@@ -369,6 +369,8 @@ even if the target resisted the damage
 */
 void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 {
+	StatsDamage(targ, attacker); // SCARLET - stats integration.
+
 	T_DamageApply(targ,inflictor,attacker,damage);
 	targ.customflags = not(targ.customflags, CFL_AXEHITME | CFL_ZAPPED);
 }

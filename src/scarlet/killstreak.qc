@@ -20,6 +20,8 @@ void(entity player) KillstreakReset =
 
 void(entity player) KillstreakAdd =
 {
+    if (player.classname != "player") return;
+
     player.killstreak = player.killstreak + 1;
 
     if (cvar("scarlet_killstreaks"))
