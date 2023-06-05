@@ -1696,7 +1696,7 @@ void() ClientObituary =
 	
 	entity attacker = self.enemy;
 
-	StatsDeath(self, attacker);
+	StatsDeath(self, attacker); // SCARLET - stats integration
 
 	if (coop == 1)
 	{

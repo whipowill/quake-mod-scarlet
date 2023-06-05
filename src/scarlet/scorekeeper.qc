@@ -62,22 +62,15 @@ void(float id, float rank) AssignRank =
         score_player_roster[id].player.ranking = rank;
 }
 
-float() ScoreKeeperEndgame =
+float(entity player) ScoreKeeperEndgame =
 {
-        if (self.enemy.classname == "player")
-                if (self != self.enemy && !self.ishuman)
-                        bot_start_topic(5); // death chat
-        if (self.enemy.classname == "teledeath")
-                if (!self.ishuman)
-                        bot_start_topic(9.5); // ridicule chat
-
         // update stats on attacker
-        entity temp = self;
-        self = self.enemy;
-        ScoreKeeperAddPlayer(); // make sure player frags is updated (recalc the player)
-        self = temp;
+        ScoreKeeperAddPlayer(player); // make sure player frags is updated (recalc the player)
 
-        // update stats on self and capture max score
+        // recalc scoreboard
+        ScoreKeeper();
+
+        // update stats on player and capture max score
         local float maxscore = teamplay ? ScoreKeeperFragsForRank(0, "score_team_rank") : ScoreKeeperFragsForRank(0, "score_player_rank");
 
         // capture fraglimit
@@ -91,33 +84,35 @@ float() ScoreKeeperEndgame =
         return FALSE;
 };
 
-void() ScoreKeeperAddPlayer =
+void(entity player) ScoreKeeperAddPlayer =
 {
         local float i;
         local float playerkey;
 
         for (i=0; i<16; i++)
         {
-                if (score_player_roster[i].name == self.netname)
+                if (score_player_roster[i].name == player.netname)
                         playerkey = i;
                 else if (score_player_roster[i].name == "")
                         playerkey = i;
         }
         if (playerkey)
         {
-                score_player_roster[playerkey].name = self.netname;
-                score_player_roster[playerkey].frags = self.frags;
-                score_player_roster[playerkey].team = self.team;
-                score_player_roster[playerkey].player = self; // should be store by reference
+                score_player_roster[playerkey].name = player.netname;
+                score_player_roster[playerkey].frags = player.frags;
+                score_player_roster[playerkey].team = player.team;
+                score_player_roster[playerkey].player = player; // should be store by reference
         }
+
+        ScoreKeeper();
 };
 
-void() ScoreKeeperRemovePlayer =
+void(entity player) ScoreKeeperRemovePlayer =
 {
         local float i;
         for (i=0; i<16; i++)
         {
-                if (score_player_roster[i].name == self.netname)
+                if (score_player_roster[i].name == player.netname)
                 {
                         score_player_roster[i].name = "",
                         score_player_roster[i].frags = 0;

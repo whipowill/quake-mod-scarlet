@@ -83,14 +83,5 @@ void(entity player) KillstreakAdd =
             bprint(player.netname);
             bprint(" is a Demon!\n");
         }
-        /*
-        else if (player.killstreak == 6)
-        {
-            bprint(player.netname);
-            bprint("'s kill streak is ");
-            bprint(ftos(player.killstreak));
-            bprint("!\n");
-        }
-        */
     }
 }

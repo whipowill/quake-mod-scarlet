@@ -500,8 +500,6 @@ void() PlayerDie =
 
 	ClientObituary(); // moved from Killed() so it doesn't get called when non-players die
 
-	if (ScoreKeeperEndgame()) execute_changelevel(); // SCARLET - team score integration.
-
 	set_respawn_delay(); // coop 1 respawn lockout
 	
 	if ((deathmatch || coop) && mapname != "start")

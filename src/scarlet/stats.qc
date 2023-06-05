@@ -58,30 +58,44 @@ void() StatsInit =
 // this runs when player gets hurt
 void(entity player, entity attacker) StatsDamage =
 {
+    if (player.classname != "player") return;
+
     // flag player as having been attacked (for shield recharge)
     player.last_damaged_time = time;
-
-    if (attacker.classname != "player") return;
 }
 
 // this runs when player dies
 void(entity player, entity attacker) StatsDeath =
 {
-    ScoreKeeper(); // make sure scores are up to date
-    KillstreakAdd(player.enemy); // SCARLET - killstreak integration
+    if (player.classname != "player") return;
+
+    KillstreakAdd(attacker); // SCARLET - killstreak integration
+    if (ScoreKeeperEndgame(attacker)) execute_changelevel(); // SCARLET - team score integration.
 
     player.deaths = player.deaths + 1;
+
+    // some bot chat diologue
+    if (attacker.classname == "player")
+        if (player != attacker && !player.ishuman)
+            bot_start_topic(5); // death chat
+    if (attacker.classname == "teledeath")
+        if (!player.ishuman)
+            bot_start_topic(9.5); // ridicule chat
 }
 
 // this runs when player respawns
 void(entity player) StatsRespawn =
 {
+    if (player.classname != "player") return;
+
     player.ammo_grenades = cvar("scarlet_grenades_min");
 }
 
 // this runs every frame
 void(entity player) StatsUpdate =
 {
+    if (player.classname != "player") return;
+
     NameTag(); // SCARLET - nametags integration.
     RechargeShields(); // SCARLET - shields integration.
 
@@ -97,7 +111,7 @@ void(entity player) StatsUpdate =
         if (player.grenades_time <= time) player.ammo_grenades = cvar("scarlet_grenades_max");
 
     // assign stats
-    AlphaKeeper(); // re-alphabize list of players
+    AlphaKeeper(); // re-alphabetize list of players
     if (player.alphapos == 1)
     {
             score_player01_deaths = player.deaths;
