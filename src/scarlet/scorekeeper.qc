@@ -64,6 +64,8 @@ void(float id, float rank) AssignRank =
 
 float(entity player) ScoreKeeperEndgame =
 {
+        if (player.classname != "player") return FALSE;
+
         // update stats on attacker
         ScoreKeeperAddPlayer(player); // make sure player frags is updated (recalc the player)
 
@@ -103,8 +105,6 @@ void(entity player) ScoreKeeperAddPlayer =
                 score_player_roster[playerkey].team = player.team;
                 score_player_roster[playerkey].player = player; // should be store by reference
         }
-
-        ScoreKeeper();
 };
 
 void(entity player) ScoreKeeperRemovePlayer =
@@ -396,23 +396,6 @@ float(entity player) AmIWinning =
                 if ((team_rank+1) <= (num_of_teams/4))
                         is_winning = TRUE;
 
-                // for testing
-                if (cvar("scarlet_testing"))
-                {
-                        bprint("TESTING -- ");
-                        bprint(player.netname);
-                        bprint(" team (#");
-                        bprint(ftos(player.team));
-                        bprint(") is rank ");
-                        bprint(ftos(team_rank+1));
-                        bprint("/");
-                        bprint(ftos(num_of_teams));
-                        bprint(" (");
-                        bprint(ftos(is_winning));
-                        bprint(")");
-                        bprint("\n");
-                }
-
                 // are you in the top half?
                 return is_winning;
         }
@@ -446,21 +429,6 @@ float(entity player) AmIWinning =
 
         if ((player_rank+1) <= (num_of_players/2))
                 is_winning = TRUE;
-
-        // for testing
-        if (cvar("scarlet_testing"))
-        {
-                bprint("TESTING -- ");
-                bprint(player.netname);
-                bprint(" is rank ");
-                bprint(ftos(player_rank+1));
-                bprint("/");
-                bprint(ftos(num_of_players));
-                bprint(" (");
-                bprint(ftos(is_winning));
-                bprint(")");
-                bprint("\n");
-        }
 
         // return
         return is_winning;

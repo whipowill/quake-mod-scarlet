@@ -67,11 +67,6 @@ void(entity player, entity attacker) StatsDamage =
 // this runs when player dies
 void(entity player, entity attacker) StatsDeath =
 {
-    if (player.classname != "player") return;
-
-    KillstreakAdd(attacker); // SCARLET - killstreak integration
-    if (ScoreKeeperEndgame(attacker)) execute_changelevel(); // SCARLET - team score integration.
-
     player.deaths = player.deaths + 1;
 
     // some bot chat diologue
@@ -81,6 +76,11 @@ void(entity player, entity attacker) StatsDeath =
     if (attacker.classname == "teledeath")
         if (!player.ishuman)
             bot_start_topic(9.5); // ridicule chat
+
+    if (attacker.classname != "player") return;
+
+    KillstreakAdd(attacker); // SCARLET - killstreak integration
+    if (ScoreKeeperEndgame(attacker)) execute_changelevel(); // SCARLET - team score integration.
 }
 
 // this runs when player respawns

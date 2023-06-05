@@ -1317,6 +1317,10 @@ void() BotImpulses =
 	{
 		GrenadeAttack();
 	}
+	else if (self.impulse == 130) // testing scorekeeper -whipowill
+	{
+		ScoreKeeperList();
+	}
 	else
 		return;
 
