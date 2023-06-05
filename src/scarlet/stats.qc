@@ -29,6 +29,8 @@ float score_player08_deaths;
 
 .float deaths;
 
+.float update_time;
+
 // this runs when client loads
 void() StatsInit =
 {
@@ -80,7 +82,6 @@ void(entity player, entity attacker) StatsDeath =
     if (attacker.classname != "player") return;
 
     KillstreakAdd(attacker); // SCARLET - killstreak integration
-    if (ScoreKeeperEndgame(attacker)) execute_changelevel(); // SCARLET - team score integration.
 }
 
 // this runs when player respawns
@@ -99,8 +100,6 @@ void(entity player) StatsUpdate =
     NameTag(); // SCARLET - nametags integration.
     RechargeShields(); // SCARLET - shields integration.
 
-    // HACK: the only way to pass these vars to CSQC is as player stat!
-
     // tell client some game settings
     gametracker_scarlet = 1;
     gametracker_teamplay = teamplay;
@@ -110,38 +109,44 @@ void(entity player) StatsUpdate =
     if (cvar("scarlet_grenades_restock"))
         if (player.grenades_time <= time) player.ammo_grenades = cvar("scarlet_grenades_max");
 
-    // assign stats
-    AlphaKeeper(); // re-alphabetize list of players
-    if (player.alphapos == 1)
+    if (time >= self.update_time)
     {
-            score_player01_deaths = player.deaths;
-    }
-    else if (player.alphapos == 2)
-    {
-            score_player02_deaths = player.deaths;
-    }
-    else if (player.alphapos == 3)
-    {
-            score_player03_deaths = player.deaths;
-    }
-    else if (player.alphapos == 4)
-    {
-            score_player04_deaths = player.deaths;
-    }
-    else if (player.alphapos == 5)
-    {
-            score_player05_deaths = player.deaths;
-    }
-    else if (player.alphapos == 6)
-    {
-            score_player06_deaths = player.deaths;
-    }
-    else if (player.alphapos == 7)
-    {
-            score_player07_deaths = player.deaths;
-    }
-    else if (player.alphapos == 8)
-    {
-            score_player08_deaths = player.deaths;
+        // assign stats
+        AlphaKeeper(); // re-alphabetize list of players
+        if (player.alphapos == 1)
+        {
+                score_player01_deaths = player.deaths;
+        }
+        else if (player.alphapos == 2)
+        {
+                score_player02_deaths = player.deaths;
+        }
+        else if (player.alphapos == 3)
+        {
+                score_player03_deaths = player.deaths;
+        }
+        else if (player.alphapos == 4)
+        {
+                score_player04_deaths = player.deaths;
+        }
+        else if (player.alphapos == 5)
+        {
+                score_player05_deaths = player.deaths;
+        }
+        else if (player.alphapos == 6)
+        {
+                score_player06_deaths = player.deaths;
+        }
+        else if (player.alphapos == 7)
+        {
+                score_player07_deaths = player.deaths;
+        }
+        else if (player.alphapos == 8)
+        {
+                score_player08_deaths = player.deaths;
+        }
+        if (ScoreKeeperEndgame(self)) execute_changelevel(); // SCARLET - team score integration.
+
+        self.update_time = time + 1;
     }
 }

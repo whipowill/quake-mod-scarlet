@@ -69,9 +69,6 @@ float(entity player) ScoreKeeperEndgame =
         // update stats on attacker
         ScoreKeeperAddPlayer(player); // make sure player frags is updated (recalc the player)
 
-        // recalc scoreboard
-        ScoreKeeper();
-
         // update stats on player and capture max score
         local float maxscore = teamplay ? ScoreKeeperFragsForRank(0, "score_team_rank") : ScoreKeeperFragsForRank(0, "score_player_rank");
 
@@ -105,6 +102,8 @@ void(entity player) ScoreKeeperAddPlayer =
                 score_player_roster[playerkey].team = player.team;
                 score_player_roster[playerkey].player = player; // should be store by reference
         }
+
+        ScoreKeeper();
 };
 
 void(entity player) ScoreKeeperRemovePlayer =
@@ -120,6 +119,8 @@ void(entity player) ScoreKeeperRemovePlayer =
                         score_player_roster[i].player = world;
                 }
         }
+
+        ScoreKeeper();
 };
 
 float(float rankkey, string roster_type) ScoreKeeperFragsForRank =
