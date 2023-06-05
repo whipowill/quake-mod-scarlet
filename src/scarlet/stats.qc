@@ -69,7 +69,14 @@ void(entity player, entity attacker) StatsDamage =
 // this runs when player dies
 void(entity player, entity attacker) StatsDeath =
 {
+    // Don't put any player or attacker classname checks in
+    // here bc it gets too complicated.  All these functions will
+    // check it on their own as needed.
+
     player.deaths = player.deaths + 1;
+
+    // killstreak integration
+    KillstreakAdd(attacker);
 
     // some bot chat diologue
     if (attacker.classname == "player")
@@ -78,10 +85,6 @@ void(entity player, entity attacker) StatsDeath =
     if (attacker.classname == "teledeath")
         if (!player.ishuman)
             bot_start_topic(9.5); // ridicule chat
-
-    if (attacker.classname != "player") return;
-
-    KillstreakAdd(attacker); // SCARLET - killstreak integration
 }
 
 // this runs when player respawns
@@ -89,7 +92,11 @@ void(entity player) StatsRespawn =
 {
     if (player.classname != "player") return;
 
+    // reset stats
     player.ammo_grenades = cvar("scarlet_grenades_min");
+
+    // make sure player is in scorekeeper index
+    ScoreKeeperAddPlayer(player);
 }
 
 // this runs every frame
@@ -145,7 +152,14 @@ void(entity player) StatsUpdate =
         {
                 score_player08_deaths = player.deaths;
         }
-        if (ScoreKeeperEndgame(self)) execute_changelevel(); // SCARLET - team score integration.
+
+        // I never could figure out why the ScoreKeeperAddPlayer() being sent
+        // from StatsDeath() didn't work right.  It was always off for
+        // some reason.
+
+        // team score integration
+        ScoreKeeperAddPlayer(self);
+        ScoreKeeperEndgame();
 
         self.update_time = time + 1;
     }

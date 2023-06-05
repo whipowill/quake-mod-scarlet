@@ -586,9 +586,6 @@ void() ClientFixRankings =
 
 void() ClientInRankings =
 {
-	// add to scorekeeper
-	ScoreKeeperAddPlayer(self); // -whipowill
-
 	local float cno;
 
    	cno = self.colormap - 1;

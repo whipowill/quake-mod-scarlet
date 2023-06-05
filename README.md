@@ -42,6 +42,7 @@ Every feature in this mod is optional and configurable.
 
 - June 2023 - ``v1.4.x``
     - Added deaths count to scoreboard (assuming you have [HUD](https://github.com/whipowill/quake-mod-hud))
+    - Bots no longer triggering next game from intermission
 - May 2023 - ``v1.3.x``
     - Added new shards feature on kills
     - Added new killstreak feature

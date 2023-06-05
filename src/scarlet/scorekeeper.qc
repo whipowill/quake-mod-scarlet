@@ -62,12 +62,10 @@ void(float id, float rank) AssignRank =
         score_player_roster[id].player.ranking = rank;
 }
 
-float(entity player) ScoreKeeperEndgame =
+void() ScoreKeeperEndgame =
 {
-        if (player.classname != "player") return FALSE;
-
-        // update stats on attacker
-        ScoreKeeperAddPlayer(player); // make sure player frags is updated (recalc the player)
+        // don't do it if you already did it
+        if (intermission_running) return;
 
         // update stats on player and capture max score
         local float maxscore = teamplay ? ScoreKeeperFragsForRank(0, "score_team_rank") : ScoreKeeperFragsForRank(0, "score_player_rank");
@@ -77,14 +75,13 @@ float(entity player) ScoreKeeperEndgame =
 
         // if conditions
         if (cvar("scarlet_teamscores") && coop < 1 && deathmatch > 0 && teamplay > 0 && fraglimit > 0 && maxscore >= fraglimit)
-                return TRUE;
-
-        // return
-        return FALSE;
+                 execute_changelevel();
 };
 
 void(entity player) ScoreKeeperAddPlayer =
 {
+        if (player.classname != "player") return;
+
         local float i;
         local float playerkey;
 

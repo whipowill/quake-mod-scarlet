@@ -993,7 +993,7 @@ void() BotAI =
 	// health < 1 is used because fractional healths show up as 0 on normal player
 	// status bars, and the mod probably already compensated for that
 
-	if (self.health < 1)
+	if (self.health < 1 && !intermission_running)
 	{
 		self.ai_time = time + 0.05;
 
