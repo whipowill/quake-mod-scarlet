@@ -7,6 +7,7 @@
 .float grenades_used;
 .float grenades_time;
 .float attack_finished_melee;
+.float attack_counter_melee;
 
 void() AxeAttack =
 {
@@ -26,6 +27,8 @@ void() AxeAttack =
         self.attack_finished = old_attack_finished;
         if (self.attack_finished < self.attack_finished_melee)
             self.attack_finished = self.attack_finished_melee;
+
+        self.attack_counter_melee++;
     }
 };
 

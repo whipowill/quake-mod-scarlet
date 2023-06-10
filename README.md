@@ -43,6 +43,8 @@ Every feature in this mod is optional and configurable.
 - June 2023 - ``v1.4.x``
     - Added deaths count to scoreboard (assuming you have [HUD](https://github.com/whipowill/quake-mod-hud))
     - Bots no longer trigger next game from intermission
+    - Melee attack will now spam multiple times when pressed
+    - Number of grenades in a backpack now limited
 - May 2023 - ``v1.3.x``
     - Added new shards feature on kills
     - Added new killstreak feature
@@ -194,6 +196,7 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 ### Melee & Grenades Settings
 
 - ``scarlet_melee`` - allow melee attack (``0`` or ``1``, default is ``0``)
+- ``scarlet_melee_spam`` - number of times to melee when pressed (default is ``3``)
 - ``scarlet_grenades`` - allow grenade toss (``0`` or ``1``, default is ``0``)
 - ``scarlet_grenades_min`` - number of grenades that you spawn with (default is ``2``)
 - ``scarlet_grenades_max`` - number of grenades that can be thrown (default is ``4``)
@@ -201,6 +204,7 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_rof_hg`` - set Hand Grenade rate of fire delay in seconds (default is ``0.6``)
 - ``scarlet_grenades_chance`` - chance a bot will throw a grenade (default is ``0.5``)
 - ``scarlet_grenades_cooldown`` - seconds a bot will wait before throwing again (default is ``8``)
+- ``scarlet_grenades_maxpack`` - max number of grenades potentially found in backpack (default is ``2``)
 - ``scarlet_grenades_restock`` - seconds until game will restock all your grenades (default is ``0``)
 
 The issue is how to add a new item to a game when you can't edit old maps.  A restock time of ``0`` will spawn grenades in backpacks, a restock time greater than or equal to ``1`` will restock your grenades based on time.

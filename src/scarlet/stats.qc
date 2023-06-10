@@ -73,7 +73,11 @@ void(entity player, entity attacker) StatsDeath =
     // here bc it gets too complicated.  All these functions will
     // check it on their own as needed.
 
+    // add to player deaths
     player.deaths = player.deaths + 1;
+
+    // discontinue melee spam (if applicable)
+    self.attack_counter_melee = 0;
 
     // killstreak integration
     KillstreakAdd(attacker);
@@ -115,6 +119,19 @@ void(entity player) StatsUpdate =
     // if using time mechanism of restocking
     if (cvar("scarlet_grenades_restock"))
         if (player.grenades_time <= time) player.ammo_grenades = cvar("scarlet_grenades_max");
+
+    // if pulsing melee attack
+    if (self.attack_counter_melee > 0)
+    {
+        if (self.attack_counter_melee < cvar("scarlet_melee_spam"))
+            AxeAttack();
+        else
+            self.attack_counter_melee = 0;
+    }
+
+    // reset weapon state
+    if (!self.attack_counter_melee)
+        FixWeaponState();
 
     if (time >= self.update_time)
     {
