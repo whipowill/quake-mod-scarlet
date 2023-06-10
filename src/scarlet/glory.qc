@@ -104,7 +104,7 @@ void(vector org, entity own) SpawnShards =
                 shard.movetype = MOVETYPE_TOSS;
                 shard.solid = SOLID_TRIGGER;
 
-                shard.velocity = Vector(random(), random(), random()) * (50 + 300);
+                shard.velocity = Vector(random(), random(), random()) * 500;
                 shard.touch = ShardTouch;
                 shard.think = ShardThink;
                 shard.nextthink = time + 1;

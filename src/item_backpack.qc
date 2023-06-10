@@ -311,7 +311,7 @@ void() DropBackpack =
 
 	// SCARLET - grenades integration
 	if (cvar("scarlet_grenades") && !cvar("scarlet_grenades_restock"))
-		item.ammo_grenades = ceil(random() * cvar("scarlet_grenades_max"));
+		item.ammo_grenades = floor(random() * (cvar("scarlet_grenades_maxpack") + 1));
 
 	item.velocity_z = 300;
 	item.velocity_x = -100 + (random() * 200);
