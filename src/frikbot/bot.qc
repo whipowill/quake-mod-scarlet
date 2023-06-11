@@ -913,7 +913,7 @@ float(float tcolor) FindAnotherColor =
 		bestbet = tcolor;
 		while (bestbet == tcolor)
 		{
-			bestbet = floor(random() * 13);
+			bestbet = floor(random() * 14);
 		}
 	}
 	return bestbet;
@@ -989,35 +989,53 @@ void(float whichteam, float whatbot, float whatskill) BotConnect =
 			self.b_pants = FindAnotherColor(uself.team - 1);
 		else
 			self.b_pants = uself.team - 1;
+
 		self.b_shirt = self.b_pants;
 
-		// code for unique colors on teams
+		// code for unique top color on teams
+
 		/*
-	    if (whichteam == 0)
-	    {
-	    	self.b_pants = 3;
-	        if (bot_team0_count == 1) self.b_shirt = 4;
-	        if (bot_team0_count == 2) self.b_shirt = 13;
-	        if (bot_team0_count == 3) self.b_shirt = 11;
-	        if (bot_team0_count == 4)
-	        {
-	        	self.b_shirt = 3;
-	        	bot_team0_count = 0;
-	        }
-	    }
-	    if (whichteam == 1)
-	    {
-	    	self.b_pants = 0;
-	        if (bot_team1_count == 1) self.b_shirt = 7;
-	        if (bot_team1_count == 2) self.b_shirt = 6;
-	        if (bot_team1_count == 3) self.b_shirt = 10;
-	        if (bot_team1_count == 4)
-	        {
-	        	self.b_shirt = 12;
-	        	bot_team1_count = 0;
-	        }
-	    }
-	    */
+		float is_bright, top_color;
+	    if (self.b_pants == 0
+	    	|| self.b_pants == 2
+	    	|| self.b_pants == 6
+	    	|| self.b_pants == 7
+	    	|| self.b_pants == 8
+	    	|| self.b_pants == 9
+	    	|| self.b_pants == 10
+	    	|| self.b_pants == 12) is_bright = 1;
+
+    	while (!top_color)
+    	{
+    		for (float i = 0; i < 14; i++)
+    		{
+    			if (is_bright && ((i == 0
+			    	|| i == 2
+			    	|| i == 6
+			    	|| i == 7
+			    	|| i == 8
+			    	|| i == 9
+			    	|| i == 10
+			    	|| i == 12)))
+			    {
+			    	if (random() <= .25) top_color = i;
+			    }
+			    if (!is_bright && !((i == 0
+			    	|| i == 2
+			    	|| i == 6
+			    	|| i == 7
+			    	|| i == 8
+			    	|| i == 9
+			    	|| i == 10
+			    	|| i == 12)))
+			    {
+			    	if (random() <= .25) top_color = i;
+			    }
+    		}
+    	}
+
+    	self.b_shirt = top_color;
+    	*/
 	}
 
 	self.team = self.b_pants + 1;
