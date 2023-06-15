@@ -85,7 +85,7 @@ void() W_FirePerforator =
 	if (cvar("scarlet_spd_sng") >= 1999)
 	{
 		ClearMultiDamage();
-		FireBullets(4, cvar("scarlet_dmg_nails")/4, aim(self, AUTOAIM_DIST), Vector(cvar("scarlet_spr_sng")/100, cvar("scarlet_spr_sng")/100/2, 0));
+		FireBullets(4, cvar("scarlet_dmg_nails")/2, aim(self, AUTOAIM_DIST), Vector(cvar("scarlet_spr_sng")/100, cvar("scarlet_spr_sng")/100/2, 0));
 		ApplyMultiDamage();
 	}
 	else

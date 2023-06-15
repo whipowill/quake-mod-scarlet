@@ -45,6 +45,7 @@ Every feature in this mod is optional and configurable.
     - Bots no longer trigger next game from intermission
     - Melee attack will now spam multiple times when pressed
     - Number of grenades in a backpack now limited
+    - Fix bug in Perforator damage (my fault)
 - May 2023 - ``v1.3.x``
     - Added new shards feature on kills
     - Added new killstreak feature
