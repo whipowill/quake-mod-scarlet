@@ -89,6 +89,96 @@ void(entity player, entity attacker) StatsDeath =
     if (attacker.classname == "teledeath")
         if (!player.ishuman)
             bot_start_topic(9.5); // ridicule chat
+
+    // if nospam is on, make custom death announcements
+    if (cvar("scarlet_nospam"))
+    {
+        if (attacker.deathtype != string_null && attacker.classname != "player" )
+        {
+            bprint(player.netname);
+            bprint(" died");
+            bprint("\n");
+
+            if (deathmatch && (attacker.classname == "trigger_void" || attacker.classname == "func_void"))
+                player.frags = player.frags - 1;
+
+            return;
+        }
+        if (attacker.classname == "teledeath")
+        {
+            bprint(player.netname);
+            bprint(" was telefragged by ");
+            bprint(attacker.owner.netname);
+            bprint("\n");
+
+            if (deathmatch)
+                attacker.owner.frags = attacker.owner.frags + 1;
+
+            return;
+        }
+        if (attacker.classname == "trigger_void" || attacker.classname == "func_void")
+        {
+            bprint(player.netname);
+            bprint(" died");
+            bprint("\n");
+
+            if (deathmatch)
+                player.frags = player.frags - 1;
+
+            return;
+        }
+        if (attacker.classname == "teledeath2")
+        {
+            bprint(player.netname);
+            bprint(" died");
+            bprint("\n");
+
+            if (deathmatch)
+                player.frags = player.frags - 1;
+
+            return;
+        }
+
+        if (attacker.classname == "player")
+        {
+            if (player == attacker)
+            {
+                bprint(player.netname);
+                bprint(" committed suicide");
+                bprint("\n");
+
+                if (deathmatch)
+                    attacker.frags = attacker.frags - 1;
+
+                return;
+            }
+
+            if ( (teamplay == 2) && (player.team > 0) && (player.team == attacker.team) )
+            {
+                bprint(player.netname);
+                bprint(" was killed by teammate ");
+                bprint(attacker.netname);
+                bprint("\n");
+
+                if (deathmatch)
+                    attacker.frags = attacker.frags - 1;
+
+                return;
+            }
+            else
+            {
+                bprint(player.netname);
+                bprint(" was killed by ");
+                bprint(attacker.netname);
+                bprint("\n");
+
+                if (deathmatch)
+                    attacker.frags = attacker.frags + 1;
+
+                return;
+            }
+        }
+    }
 }
 
 // this runs when player respawns
