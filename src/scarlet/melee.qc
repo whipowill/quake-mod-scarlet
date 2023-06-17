@@ -6,8 +6,9 @@
 .float ammo_grenades;
 .float grenades_used;
 .float grenades_time;
-.float attack_finished_melee;
-.float attack_counter_melee;
+.float attack_finished_melee; // timer for swings
+.float attack_counter_melee; // counter for swings
+.float attack_lunged_melee; // timer for lunges
 
 void() AxeAttack =
 {
@@ -18,8 +19,29 @@ void() AxeAttack =
     local float old_attack_finished = self.attack_finished;
     if (self.attack_finished_melee <= time)
     {
+        // reset stance
         player_run();
+
+        // change model
         self.weaponmodel = "progs/v_axe2.mdl";
+
+        // determine if we can lunge
+        if (cvar("scarlet_melee_dst_lunge") > 0)
+        {
+            makevectors (self.v_angle);
+            vector source = self.origin + '0 0 16';
+            traceline (source, source + v_forward * cvar("scarlet_melee_dst_lunge"), FALSE, self);
+            float is_player = ((self != trace_ent) && (trace_ent.classname == "player" || trace_ent.classname == "monster_soldier" || trace_ent.classname == "monster_dog" || trace_ent.classname == "monster_ogre" || trace_ent.classname == "monster_knight"));
+            if (is_player)
+            {
+                vector forward = v_forward * cvar("scarlet_melee_spd_lunge");  // Adjust the value as needed for the lunge distance
+                self.velocity = forward;
+
+                //self.attack_lunged_melee = time + cvar("scarlet_melee_rof_lunge");
+            }
+        }
+
+        // swing axe
         W_AxeSwing();
 
         self.attack_finished_melee = time + cvar("scarlet_rof_axe");

@@ -46,6 +46,7 @@ Every feature in this mod is optional and configurable.
     - Melee attack will now spam multiple times when pressed
     - Number of grenades in a backpack now limited
     - Fix bug in Perforator damage (my fault)
+    - Add lunge ability to axe mleee attack
 - May 2023 - ``v1.3.x``
     - Added new shards feature on kills
     - Added new killstreak feature

@@ -377,7 +377,7 @@ void() bot_fight_style =
 
 	// if possible, perform axe attack first! -whipowill
 	a = weapon_range(IT_AXE);
-	if (foedist > a_y && foedist < a_z)
+	if (foedist > a_y && foedist < (a_z + cvar("scarlet_melee_dst_lunge"))) // add space for lunge
 	{
 		traceline(self.origin + self.view_ofs, self.origin + self.view_ofs + v_forward * v_z, FALSE, self);
 		if (vlen(trace_endpos - (self.origin + self.view_ofs)) >= v_y)
