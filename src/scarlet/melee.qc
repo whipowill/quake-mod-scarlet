@@ -26,6 +26,7 @@ void() AxeAttack =
         self.weaponmodel = "progs/v_axe2.mdl";
 
         // determine if we can lunge
+        /*
         if (cvar("scarlet_melee_dst_lunge") > 0)
         {
             makevectors (self.v_angle);
@@ -40,6 +41,7 @@ void() AxeAttack =
                 //self.attack_lunged_melee = time + cvar("scarlet_melee_rof_lunge");
             }
         }
+        */
 
         // swing axe
         W_AxeSwing();

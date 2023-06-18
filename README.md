@@ -46,7 +46,7 @@ Every feature in this mod is optional and configurable.
     - Melee attack will now spam multiple times when pressed
     - Number of grenades in a backpack now limited
     - Fix bug in Perforator damage (my fault)
-    - Add lunge ability to axe mleee attack
+    - Add lunge to melee attack (disabled due to engine [bug](https://github.com/timbergeron/QSS-M/issues/20))
 - May 2023 - ``v1.3.x``
     - Added new shards feature on kills
     - Added new killstreak feature
