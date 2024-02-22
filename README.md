@@ -42,6 +42,7 @@ Every feature in this mod is optional and configurable.
 
 - February 2024
     - Add option to make grenades not detonate on touch
+    - Fix death alerts in chat to match axe melee or hand grenade
 - June 2023 - ``v1.4.x``
     - Added deaths count to scoreboard (assuming you have [HUD](https://github.com/whipowill/quake-mod-hud))
     - Bots no longer trigger next game from intermission

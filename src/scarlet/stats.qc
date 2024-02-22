@@ -28,7 +28,7 @@ float score_player07_deaths;
 float score_player08_deaths;
 
 .float deaths;
-
+.float old_weapon;
 .float update_time;
 
 // this runs when client loads

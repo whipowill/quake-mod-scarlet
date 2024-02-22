@@ -22,6 +22,10 @@ void() AxeAttack =
         // reset stance
         player_run();
 
+        // change weapons
+        if (self.weapon != IT_AXE) self.old_weapon = self.weapon;
+        self.weapon = IT_AXE;
+
         // change model
         self.weaponmodel = "progs/v_axe2.mdl";
 
@@ -65,6 +69,10 @@ void() GrenadeAttack =
     local float old_attack_finished = self.attack_finished;
     if (self.attack_finished_melee <= time && self.ammo_grenades > 0)
     {
+        // change weapons
+        self.old_weapon = self.weapon;
+        self.weapon = IT_GRENADE_LAUNCHER;
+
         self.weaponmodel = string_null;
 
         // take away a grenade from our ammo
@@ -138,6 +146,9 @@ void() FixWeaponState =
         return;
 
     if (self.attack_finished_melee > time) return; // don't reset model until it's time
+
+    // change weapons back
+    if (self.old_weapon) self.weapon = self.old_weapon;
 
     if (self.weapon == IT_AXE)
         self.weaponmodel = "progs/v_axe2.mdl";
