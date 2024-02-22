@@ -110,7 +110,8 @@ void() HandGrenadeThrow =
     g = toss_projectile(self.origin, gvel, "grenade");
     g.avelocity = '300 300 300';
     g.lifetime_finished = time + cvar("scarlet_grenades_fuse"); // make grenade explode quickly
-    g.touch = HandGrenadeTouch;
+    if (cvar("scarlet_grenades_touch"))
+        g.touch = HandGrenadeTouch;
     g.th_die = GrenadeExplode;
     SUB_ChangeModel(g, "progs/items/hipnotic/proxbomb_edited.mdl");
 }

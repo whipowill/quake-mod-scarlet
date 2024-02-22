@@ -40,6 +40,8 @@ Every feature in this mod is optional and configurable.
 
 ## Changelog
 
+- February 2024
+    - Add option to make grenades not detonate on touch
 - June 2023 - ``v1.4.x``
     - Added deaths count to scoreboard (assuming you have [HUD](https://github.com/whipowill/quake-mod-hud))
     - Bots no longer trigger next game from intermission
@@ -203,6 +205,7 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_grenades_min`` - number of grenades that you spawn with (default is ``2``)
 - ``scarlet_grenades_max`` - number of grenades that can be thrown (default is ``4``)
 - ``scarlet_grenades_fuse`` - seconds before grenade will explode (default is ``1.5``)
+- ``scarlet_grenades_touch`` - do grenades detonate when touched (default is ``0``)
 - ``scarlet_rof_hg`` - set Hand Grenade rate of fire delay in seconds (default is ``0.6``)
 - ``scarlet_grenades_chance`` - chance a bot will throw a grenade (default is ``0.5``)
 - ``scarlet_grenades_cooldown`` - seconds a bot will wait before throwing again (default is ``8``)
