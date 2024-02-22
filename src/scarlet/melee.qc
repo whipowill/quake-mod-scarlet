@@ -148,7 +148,11 @@ void() FixWeaponState =
     if (self.attack_finished_melee > time) return; // don't reset model until it's time
 
     // change weapons back
-    if (self.old_weapon) self.weapon = self.old_weapon;
+    if (self.old_weapon)
+    {
+        self.weapon = self.old_weapon;
+        self.old_weapon = 0;
+    }
 
     if (self.weapon == IT_AXE)
         self.weaponmodel = "progs/v_axe2.mdl";
