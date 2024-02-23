@@ -648,7 +648,7 @@ float(entity thing) priority_for_thing =
 		// ugly hack
                 if (thing._last != self)
                         thisp = 20;
-		//~ ai fix start
+		//~ ai fix start -- ryan commented this out? - whipowill
 		/* 					 
 		if (thing.classname == "item_artifact_super_damage")
 			thisp = 65;
@@ -660,10 +660,6 @@ float(entity thing) priority_for_thing =
 				thisp = 55;
 			if (self.health < 40)
 				thisp = thisp + 50;
-		}
-		else if (thing.model == "progs/items/mervup_75.mdl") // adding shards/stims -whipowill
-		{
-			thisp = 30;
 		}
 		else if (thing.model == "progs/armor.mdl")
 		{
@@ -707,17 +703,23 @@ float(entity thing) priority_for_thing =
 		}
 		*/
 		if (thing.classname == "item_artifact_super_damage")
-			thisp = 10*(random()) + 55;
+			thisp = 10*(random()) + cvar("scarlet_priority_quad"); // was 55 -whipowill
 		else if (thing.classname == "item_artifact_invulnerability")
-			thisp = 10*(random()) + 55;
+			thisp = 10*(random()) + cvar("scarlet_priority_pent"); // was 55 -whipowill
 		else if (thing.classname == "item_artifact_invisibility")
-			thisp = 10*(random()) + 55;
+			thisp = 10*(random()) + cvar("scarlet_priority_ring"); // was 55 -whipowill
+		else if (thing.model == "progs/m_h100.mdl" || thing.model == "progs/items/quoth/cross.mdl")
+			thisp = 10*(random()) + cvar("scarlet_priority_mega"); // megahealth wasn't even in here as being special -whipowill
 		else if (thing.classname == "item_health")
 		{
 			if (thing.spawnflags & 2)
 				thisp = 10*(random()) + 50;
 			if (self.health <= 50)
 				thisp = 70;
+		}
+		else if (thing.model == "progs/items/mervup_75.mdl") // adding shards/stims/pots -whipowill
+		{
+			thisp = cvar("scarlet_priority_pots");
 		}
 		else if (thing.classname == "weapon_rocketlauncher")
 		{

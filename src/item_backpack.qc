@@ -58,62 +58,65 @@ void() BackpackTouch =
 	bound_ammo(other);
 	armor_give(other, self.armorvalue, 0, FALSE);	
 	
-	sprint (other, "You got ");
+	if (cvar("scarlet_nospam") == 0)
+	{
+		sprint (other, "You got ");
 
-	if (self.items && (other.items & self.items) == 0)
-	{
-		entity oself;
-		acount = TRUE;
-		other.items |= self.items;
-		sprint (other, "the ");
-		sprint (other, self.netname);
-	
-		oself = self;
-		self = other;
-		// change to the weapon
-		W_BetterWeapon(oself.items);
-		self = oself;
-	}
+		if (self.items && (other.items & self.items) == 0)
+		{
+			entity oself;
+			acount = TRUE;
+			other.items |= self.items;
+			sprint (other, "the ");
+			sprint (other, self.netname);
 
-	if (self.armorvalue)
-	{
-		if (acount) sprint(other, ", ");
-		acount = 1;
-		sprint(other, ftos(self.armorvalue));
-		sprint(other, " armor");
+			oself = self;
+			self = other;
+			// change to the weapon
+			W_BetterWeapon(oself.items);
+			self = oself;
+		}
+
+		if (self.armorvalue)
+		{
+			if (acount) sprint(other, ", ");
+			acount = 1;
+			sprint(other, ftos(self.armorvalue));
+			sprint(other, " armor");
+		}
+		if (self.ammo_shells)
+		{
+			if (acount) sprint(other, ", ");
+			acount = 2;
+			print_quant(self.ammo_shells, "shell", other);
+		}
+		if (self.ammo_nails)
+		{
+			if (acount) sprint(other, ", ");
+			acount = 2;
+			print_quant(self.ammo_nails, "nail", other);
+		}
+		if (self.ammo_rockets)
+		{
+			if (acount) sprint(other, ", ");
+			acount = 2;
+			print_quant(self.ammo_rockets, "rocket", other);
+		}
+		if (self.ammo_cells)
+		{
+			if (acount) sprint(other, ", ");
+			acount = 2;
+			print_quant(self.ammo_cells, "cell", other);
+		}
+		if (self.ammo_grenades)
+		{
+			if (acount) sprint(other, ", ");
+			acount = 2;
+			print_quant(self.ammo_grenades, "grenade", other);
+		}
+
+		sprint (other, "\n");
 	}
-	if (self.ammo_shells)
-	{
-		if (acount) sprint(other, ", ");
-		acount = 2;
-		print_quant(self.ammo_shells, "shell", other);
-	}
-	if (self.ammo_nails)
-	{
-		if (acount) sprint(other, ", ");
-		acount = 2;
-		print_quant(self.ammo_nails, "nail", other);
-	}
-	if (self.ammo_rockets)
-	{
-		if (acount) sprint(other, ", ");
-		acount = 2;
-		print_quant(self.ammo_rockets, "rocket", other);
-	}
-	if (self.ammo_cells)
-	{
-		if (acount) sprint(other, ", ");
-		acount = 2;
-		print_quant(self.ammo_cells, "cell", other);
-	}
-	if (self.ammo_grenades)
-	{
-		if (acount) sprint(other, ", ");
-		acount = 2;
-		print_quant(self.ammo_grenades, "grenade", other);
-	}
-	
-	sprint (other, "\n");
 	
 	// do this after because t_heal prints its own message
 	if (self.healamount)

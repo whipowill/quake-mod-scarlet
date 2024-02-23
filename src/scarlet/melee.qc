@@ -30,7 +30,6 @@ void() AxeAttack =
         self.weaponmodel = "progs/v_axe2.mdl";
 
         // determine if we can lunge
-        /*
         if (cvar("scarlet_melee_dst_lunge") > 0)
         {
             makevectors (self.v_angle);
@@ -41,11 +40,8 @@ void() AxeAttack =
             {
                 vector forward = v_forward * cvar("scarlet_melee_spd_lunge");  // Adjust the value as needed for the lunge distance
                 self.velocity = forward;
-
-                //self.attack_lunged_melee = time + cvar("scarlet_melee_rof_lunge");
             }
         }
-        */
 
         // swing axe
         W_AxeSwing();
@@ -142,6 +138,8 @@ void() HandGrenadeTouch =
 
 void() FixWeaponState =
 {
+    if (self.health < 1) return; // don't run this if you're dead
+
     if (self.weaponmodel != string_null && self.weaponmodel != "progs/v_axe2.mdl")
         return;
 
@@ -172,4 +170,6 @@ void() FixWeaponState =
         self.weaponmodel = "progs/v_light.mdl";
     else
         self.weaponmodel = string_null;
+
+    W_ResetWeaponState();
 }

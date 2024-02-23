@@ -316,7 +316,7 @@ void() W_ChangeWeapon =
 	
 	if (self.impulse == 1)
 	{
-			fl = IT_AXE;
+		fl = IT_AXE;
 	}
 	else if (self.impulse == 2)
 	{

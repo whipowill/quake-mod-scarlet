@@ -91,7 +91,7 @@ void(entity player, entity attacker) StatsDeath =
             bot_start_topic(9.5); // ridicule chat
 
     // if nospam is on, make custom death announcements
-    if (cvar("scarlet_nospam"))
+    if (cvar("scarlet_nospam") == 2)
     {
         if (attacker.deathtype != string_null && attacker.classname != "player" )
         {

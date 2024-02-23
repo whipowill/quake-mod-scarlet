@@ -43,6 +43,9 @@ Every feature in this mod is optional and configurable.
 - February 2024
     - Add option to make grenades not detonate on touch
     - Fix death alerts in chat to match axe melee or hand grenade
+    - Make bot priority ranking for powerups customizable in settings
+    - Re-enable melee lunge feature
+    - Add no spam feature to limit chat text
 - June 2023 - ``v1.4.x``
     - Added deaths count to scoreboard (assuming you have [HUD](https://github.com/whipowill/quake-mod-hud))
     - Bots no longer trigger next game from intermission
@@ -121,6 +124,7 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 - ``scarlet_autoswitch`` - set if the game will autoswitch weapons (``0`` or ``1``, default is ``1``)
 - ``scarlet_visible`` - enable weapons drop outside of backpack (``0`` or ``1``, default is ``0``)
 - ``scarlet_limited`` - remove Shotgun and Nailgun from the game (``0`` or ``1``, default is ``0``)
+- ``scarlet_nospam`` - limit the chat spam in the game (``0`` off ``1`` no backpacks ``2`` custom deaths ``3`` chat only)
 
 ### Shard Settings
 
@@ -202,6 +206,8 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 
 - ``scarlet_melee`` - allow melee attack (``0`` or ``1``, default is ``0``)
 - ``scarlet_melee_spam`` - number of times to melee when pressed (default is ``3``)
+- ``scarlet_melee_dst_lunge`` - melee lunge feature how far you lunge (recommended ``500``, default is ``0``, [buggy](https://github.com/timbergeron/QSS-M/issues/20))
+- ``scarlet_melee_spd_lunge`` - melee lunge feature how fast you lunge (recommended ``500``, default is ``0``, [buggy](https://github.com/timbergeron/QSS-M/issues/20))
 - ``scarlet_grenades`` - allow grenade toss (``0`` or ``1``, default is ``0``)
 - ``scarlet_grenades_min`` - number of grenades that you spawn with (default is ``2``)
 - ``scarlet_grenades_max`` - number of grenades that can be thrown (default is ``4``)
