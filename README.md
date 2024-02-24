@@ -209,9 +209,9 @@ Control the following features using cvars in your ``autoexec.cfg`` file or via 
 
 - ``scarlet_melee`` - allow melee attack (``0`` or ``1``, default is ``0``)
 - ``scarlet_melee_spam`` - number of times to melee when pressed (default is ``3``)
-- ``scarlet_melee_lunge_dst`` - how close must target be to lunge at him (recommended ``250``, default is ``0``, [buggy](https://github.com/timbergeron/QSS-M/issues/20))
-- ``scarlet_melee_lunge_hor`` -how fast do you lunge horizontally at target (recommended ``250``, default is ``0``, [buggy](https://github.com/timbergeron/QSS-M/issues/20))
-- ``scarlet_melee_lunge_ver`` - how far off the ground do you leap when you lunge (recommended ``0.25``, default is ``0``, [buggy](https://github.com/timbergeron/QSS-M/issues/20))
+- ``scarlet_melee_lunge_dst`` - how close must target be to lunge at him (rec ``250``, default is ``0``)
+- ``scarlet_melee_lunge_hor`` -how fast do you lunge horizontally at target (rec ``250``, default is ``0``)
+- ``scarlet_melee_lunge_ver`` - how far off the ground do you leap when you lunge (rec ``0.25``, default is ``0``)
 - ``scarlet_grenades`` - allow grenade toss (``0`` or ``1``, default is ``0``)
 - ``scarlet_grenades_min`` - number of grenades that you spawn with (default is ``2``)
 - ``scarlet_grenades_max`` - number of grenades that can be thrown (default is ``4``)
