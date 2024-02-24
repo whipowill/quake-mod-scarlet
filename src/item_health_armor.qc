@@ -223,9 +223,12 @@ float(entity e, float amt, float absorb, float replace) armor_give =
 				return FALSE;
 		}
 		else if (absorb == e.armortype)
-		{	// strength match or strict downgrade
-			if (amt <= e.armorvalue)
+		{
+			/*
+			// strength match or strict downgrade
+			if (amt <= e.armorvalue) // commented out to always allow replace of same armor type even at full -whipowill
 				return FALSE;
+			*/
 		}
 		else
 		{	// strength upgrade
