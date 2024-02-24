@@ -7,7 +7,7 @@
 
 void(entity player) KillstreakReset =
 {
-    if (cvar("scarlet_killstreaks") && player.killstreak >= 5 && cvar("scarlet_nospam") < 3)
+    if (cvar("scarlet_killstreaks") && player.killstreak >= 5 && cvar("scarlet_chat_killstreaks"))
     {
         bprint(player.netname);
         bprint("'s kill streak has ended (");
@@ -24,7 +24,7 @@ void(entity player) KillstreakAdd =
 
     player.killstreak = player.killstreak + 1;
 
-    if (cvar("scarlet_killstreaks") && cvar("scarlet_nospam") < 3)
+    if (cvar("scarlet_killstreaks") && cvar("scarlet_chat_killstreaks"))
     {
         if (player.killstreak == 5)
         {

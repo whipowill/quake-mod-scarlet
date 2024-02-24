@@ -6,11 +6,15 @@
 .float ammo_grenades;
 .float grenades_used;
 .float grenades_time;
+
+.float is_swing; // keep track of if player is in swing
+
 .float attack_finished_melee; // timer for swings
 .float attack_counter_melee; // counter for swings
+
 .float attack_lunged_melee; // timer for lunges
 
-void() AxeAttack =
+void(float is_lunge = 1) AxeAttack =
 {
     if (!cvar("scarlet_melee")) return;
 
@@ -22,6 +26,9 @@ void() AxeAttack =
         // reset stance
         player_run();
 
+        // mark as in melee swing
+        self.is_swing = 1;
+
         // change weapons
         if (self.weapon != IT_AXE) self.old_weapon = self.weapon;
         self.weapon = IT_AXE;
@@ -30,16 +37,28 @@ void() AxeAttack =
         self.weaponmodel = "progs/v_axe2.mdl";
 
         // determine if we can lunge
-        if (cvar("scarlet_melee_dst_lunge") > 0)
+        if (cvar("scarlet_melee_lunge_dst") > 0 && is_lunge)
         {
             makevectors (self.v_angle);
             vector source = self.origin + '0 0 16';
-            traceline (source, source + v_forward * cvar("scarlet_melee_dst_lunge"), FALSE, self);
+            traceline (source, source + v_forward * cvar("scarlet_melee_lunge_dst"), FALSE, self);
             float is_player = ((self != trace_ent) && (trace_ent.classname == "player" || trace_ent.classname == "monster_soldier" || trace_ent.classname == "monster_dog" || trace_ent.classname == "monster_ogre" || trace_ent.classname == "monster_knight"));
             if (is_player)
             {
-                vector forward = v_forward * cvar("scarlet_melee_spd_lunge");  // Adjust the value as needed for the lunge distance
+                // Normalize the v_forward vector
+                vector forward = normalize(v_forward);
+
+                // Project the v_forward vector onto the horizontal plane
+                forward_z = (self.flags & FL_ONGROUND) ? cvar("scarlet_melee_lunge_ver") : 0; // this would be zero but we want a forced jump
+
+                // Scale the projected vector by the desired lunge distance
+                forward = forward * cvar("scarlet_melee_lunge_hor");
+
+                // Assign the resulting vector to self.velocity
                 self.velocity = forward;
+
+                // make jump sound
+                //PlayerJump();
             }
         }
 
@@ -65,6 +84,9 @@ void() GrenadeAttack =
     local float old_attack_finished = self.attack_finished;
     if (self.attack_finished_melee <= time && self.ammo_grenades > 0)
     {
+        // mark as in melee swing
+        self.is_swing = 1;
+
         // change weapons
         self.old_weapon = self.weapon;
         self.weapon = IT_GRENADE_LAUNCHER;
@@ -138,12 +160,17 @@ void() HandGrenadeTouch =
 
 void() FixWeaponState =
 {
-    if (self.health < 1) return; // don't run this if you're dead
+    // if not in melee swing
+    if (!self.is_swing) return;
 
-    if (self.weaponmodel != string_null && self.weaponmodel != "progs/v_axe2.mdl")
-        return;
+    // if dead, bail
+    if (self.health < 1) return;
 
-    if (self.attack_finished_melee > time) return; // don't reset model until it's time
+    // if not weaponless or using an axe, bail
+    if (self.weaponmodel != string_null && self.weaponmodel != "progs/v_axe2.mdl") return;
+
+    // if not ready for reset, bail
+    if (self.attack_finished_melee > time) return;
 
     // change weapons back
     if (self.old_weapon)
@@ -151,6 +178,9 @@ void() FixWeaponState =
         self.weapon = self.old_weapon;
         self.old_weapon = 0;
     }
+
+    // mark as NOT in melee swing
+    self.is_swing = 0;
 
     if (self.weapon == IT_AXE)
         self.weaponmodel = "progs/v_axe2.mdl";

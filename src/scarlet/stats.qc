@@ -90,8 +90,8 @@ void(entity player, entity attacker) StatsDeath =
         if (!player.ishuman)
             bot_start_topic(9.5); // ridicule chat
 
-    // if nospam is on, make custom death announcements
-    if (cvar("scarlet_nospam") == 2)
+    // if using alternate death notices...
+    if (cvar("scarlet_chat_deaths") == 2)
     {
         if (attacker.deathtype != string_null && attacker.classname != "player" )
         {
@@ -106,9 +106,9 @@ void(entity player, entity attacker) StatsDeath =
         }
         if (attacker.classname == "teledeath")
         {
-            bprint(player.netname);
-            bprint(" was telefragged by ");
             bprint(attacker.owner.netname);
+            bprint(" telefragged ");
+            bprint(player.netname);
             bprint("\n");
 
             if (deathmatch)
@@ -155,9 +155,9 @@ void(entity player, entity attacker) StatsDeath =
 
             if ( (teamplay == 2) && (player.team > 0) && (player.team == attacker.team) )
             {
-                bprint(player.netname);
-                bprint(" was killed by teammate ");
                 bprint(attacker.netname);
+                bprint(" killed teammate ");
+                bprint(player.netname);
                 bprint("\n");
 
                 if (deathmatch)
@@ -167,9 +167,9 @@ void(entity player, entity attacker) StatsDeath =
             }
             else
             {
-                bprint(player.netname);
-                bprint(" was killed by ");
                 bprint(attacker.netname);
+                bprint(" killed ");
+                bprint(player.netname);
                 bprint("\n");
 
                 if (deathmatch)
@@ -214,13 +214,13 @@ void(entity player) StatsUpdate =
     if (self.attack_counter_melee > 0)
     {
         if (self.attack_counter_melee < cvar("scarlet_melee_spam"))
-            AxeAttack();
+            AxeAttack(0); // flag false for no lunge
         else
             self.attack_counter_melee = 0;
     }
 
-    // reset weapon state
-    if (!self.attack_counter_melee)
+    // if in melee/grenade swing, reset weapon state
+    if (self.is_swing)
         FixWeaponState();
 
     if (time >= self.update_time)

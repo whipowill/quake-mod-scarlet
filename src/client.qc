@@ -1721,7 +1721,7 @@ void() ClientObituary =
 	
 	if (attacker.deathtype != string_null && attacker.classname != "player" )
 	{
-		if (cvar("scarlet_nospam") <= 1)
+		if (cvar("scarlet_chat_deaths") == 1)
 		{
 			bprint(self.netname);
 			bprint(" ");
@@ -1735,7 +1735,7 @@ void() ClientObituary =
 	}
 	if (attacker.classname == "teledeath")
 	{
-		if (cvar("scarlet_nospam") <= 1)
+		if (cvar("scarlet_chat_deaths") == 1)
 		{
 			bprint (self.netname);
 			bprint (" was telefragged by ");
@@ -1749,7 +1749,7 @@ void() ClientObituary =
 	}
 	if (attacker.classname == "trigger_void" || attacker.classname == "func_void")
 	{
-		if (cvar("scarlet_nospam") <= 1)
+		if (cvar("scarlet_chat_deaths") == 1)
 		{
 			bprint (self.netname);
 			bprint (" was lost to the void\n");
@@ -1761,7 +1761,7 @@ void() ClientObituary =
 	}
 	if (attacker.classname == "teledeath2")
 	{
-		if (cvar("scarlet_nospam") <= 1)
+		if (cvar("scarlet_chat_deaths") == 1)
 		{
 			bprint ("Satan's power deflects ");
 			bprint (self.netname);
@@ -1781,7 +1781,7 @@ void() ClientObituary =
 			if (deathmatch)
 				attacker.frags = attacker.frags - 1;
 
-			if (cvar("scarlet_nospam") <= 1)
+			if (cvar("scarlet_chat_deaths") == 1)
 			{
 				bprint (self.netname);
 
@@ -1817,7 +1817,7 @@ void() ClientObituary =
 			else
 				deathstring = " loses another friend\n";
 
-			if (cvar("scarlet_nospam") <= 1)
+			if (cvar("scarlet_chat_deaths") == 1)
 			{
 				bprint (attacker.netname);
 				bprint (deathstring);
@@ -1891,7 +1891,7 @@ void() ClientObituary =
 					deathstring2 = "'s shaft\n";
 			}
 
-			if (cvar("scarlet_nospam") <= 1)
+			if (cvar("scarlet_chat_deaths") == 1)
 			{
 				bprint (self.netname);
 				bprint (deathstring);
@@ -1907,7 +1907,7 @@ void() ClientObituary =
 		//if (deathmatch)
 			//self.frags = self.frags - 1;
 
-		if (cvar("scarlet_nospam") <= 1)
+		if (cvar("scarlet_chat_deaths") == 1)
 		{
 			bprint (self.netname);
 

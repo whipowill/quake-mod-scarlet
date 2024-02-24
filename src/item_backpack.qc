@@ -58,7 +58,7 @@ void() BackpackTouch =
 	bound_ammo(other);
 	armor_give(other, self.armorvalue, 0, FALSE);	
 	
-	if (cvar("scarlet_nospam") == 0)
+	if (cvar("scarlet_chat_backpacks"))
 	{
 		sprint (other, "You got ");
 
