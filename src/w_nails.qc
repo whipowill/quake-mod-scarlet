@@ -59,7 +59,7 @@ void() W_FireNailgun =
 	if (cvar("scarlet_spd_ng") >= 1999)
 	{
 		ClearMultiDamage();
-		FireBullets(2, cvar("scarlet_dmg_nails")/2, aim(self, AUTOAIM_DIST), Vector(cvar("scarlet_spr_ng")/100, cvar("scarlet_spr_ng")/100/2, 0));
+		FireBullets(2, cvar("scarlet_dmg_nails")/2, aim(self, AUTOAIM_DIST), Vector(cvar("scarlet_spr_ng")/100, cvar("scarlet_spr_ng")/100/2, 0), 1); // flag true so it knows this was a nail not a bullet -whipowill
 		ApplyMultiDamage();
 	}
 	else
@@ -85,7 +85,7 @@ void() W_FirePerforator =
 	if (cvar("scarlet_spd_sng") >= 1999)
 	{
 		ClearMultiDamage();
-		FireBullets(4, cvar("scarlet_dmg_nails")/2, aim(self, AUTOAIM_DIST), Vector(cvar("scarlet_spr_sng")/100, cvar("scarlet_spr_sng")/100/2, 0));
+		FireBullets(4, cvar("scarlet_dmg_nails")/2, aim(self, AUTOAIM_DIST), Vector(cvar("scarlet_spr_sng")/100, cvar("scarlet_spr_sng")/100/2, 0), 1); // flag true so it knows this was a nail not a bullet -whipowill
 		ApplyMultiDamage();
 	}
 	else

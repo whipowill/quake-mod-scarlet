@@ -24,7 +24,7 @@ BulletImpact
 Go to the trouble of combining multiple pellets into a single damage call.
 ================
 */
-vector(float damage, vector dir) BulletImpact =
+vector(float damage, vector dir, float is_nail_converted_to_hitscan = 0) BulletImpact =
 {
 	vector vel, org;
 	
@@ -38,7 +38,7 @@ vector(float damage, vector dir) BulletImpact =
 		SpawnBlood (org, vel*40, damage);
 		AddMultiDamage (trace_ent, damage);
 
-		ThrowBloodSplat(dir, trace_endpos, trace_ent, damage, 1); // SCARLET - gore integration.
+		ThrowBloodSplat(dir, trace_endpos, trace_ent, damage, is_nail_converted_to_hitscan ? 2 : 1); // SCARLET - gore integration.
 	}
 	else gunshot(org);
 
@@ -59,7 +59,7 @@ FireBullets
 Used by shotgun, super shotgun, and enemy soldier firing
 ================
 */
-void(float shotcount, float dmg, vector dir, vector spread) FireBullets =
+void(float shotcount, float dmg, vector dir, vector spread, float is_nail_converted_to_hitscan = 0) FireBullets =
 {
 	vector src, direction;
 	entity ig;
@@ -95,7 +95,7 @@ void(float shotcount, float dmg, vector dir, vector spread) FireBullets =
 				//( trace_ent.solid == SOLID_BBOX || trace_ent.solid == SOLID_SLIDEBOX ) &&	
 				HasBeenShotToDeath(trace_ent) )
 			{
-				BulletImpact (dmg, direction); // was 2+2*random(), SCARLET - custom dmg integration.
+				BulletImpact (dmg, direction, is_nail_converted_to_hitscan); // was 2+2*random(), SCARLET - custom dmg integration.
 
 				// start 0.1 unit forward, or else when shooting an adjacent enemy we'll
 				// just hit ourselves again
@@ -117,7 +117,7 @@ void(float shotcount, float dmg, vector dir, vector spread) FireBullets =
 		
 		if (trace_fraction != 1.0)
 		{
-			BulletImpact (dmg, direction); // was 4, SCARLET - custom dmg integration.
+			BulletImpact (dmg, direction, is_nail_converted_to_hitscan); // was 4, SCARLET - custom dmg integration.
 		}
 		
 		if (trace_debug) dprint("bullet is over\n\n");

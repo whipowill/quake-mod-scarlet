@@ -46,6 +46,7 @@ Every feature in this mod is optional and configurable.
     - Make bot priority ranking for powerups customizable in settings
     - Re-enable melee lunge feature
     - Add no spam feature to limit chat text
+    - Fix bug w/ nails causing bullet blood gore
 - June 2023 - ``v1.4.x``
     - Added deaths count to scoreboard (assuming you have [HUD](https://github.com/whipowill/quake-mod-hud))
     - Bots no longer trigger next game from intermission
