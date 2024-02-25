@@ -99,8 +99,8 @@ void(entity player, entity attacker) StatsDeath =
             bprint(" died");
             bprint("\n");
 
-            if (deathmatch && (attacker.classname == "trigger_void" || attacker.classname == "func_void"))
-                player.frags = player.frags - 1;
+            //if (deathmatch && (attacker.classname == "trigger_void" || attacker.classname == "func_void"))
+                //player.frags = player.frags - 1;
 
             return;
         }
@@ -111,8 +111,8 @@ void(entity player, entity attacker) StatsDeath =
             bprint(player.netname);
             bprint("\n");
 
-            if (deathmatch)
-                attacker.owner.frags = attacker.owner.frags + 1;
+            //if (deathmatch)
+                //attacker.owner.frags = attacker.owner.frags + 1;
 
             return;
         }
@@ -122,8 +122,8 @@ void(entity player, entity attacker) StatsDeath =
             bprint(" died");
             bprint("\n");
 
-            if (deathmatch)
-                player.frags = player.frags - 1;
+            //if (deathmatch)
+                //player.frags = player.frags - 1;
 
             return;
         }
@@ -133,8 +133,8 @@ void(entity player, entity attacker) StatsDeath =
             bprint(" died");
             bprint("\n");
 
-            if (deathmatch)
-                player.frags = player.frags - 1;
+            //if (deathmatch)
+                //player.frags = player.frags - 1;
 
             return;
         }
@@ -147,8 +147,8 @@ void(entity player, entity attacker) StatsDeath =
                 bprint(" committed suicide");
                 bprint("\n");
 
-                if (deathmatch)
-                    attacker.frags = attacker.frags - 1;
+                //if (deathmatch)
+                    //attacker.frags = attacker.frags - 1;
 
                 return;
             }
@@ -160,8 +160,8 @@ void(entity player, entity attacker) StatsDeath =
                 bprint(player.netname);
                 bprint("\n");
 
-                if (deathmatch)
-                    attacker.frags = attacker.frags - 1;
+                //if (deathmatch)
+                    //attacker.frags = attacker.frags - 1;
 
                 return;
             }
@@ -172,8 +172,8 @@ void(entity player, entity attacker) StatsDeath =
                 bprint(player.netname);
                 bprint("\n");
 
-                if (deathmatch)
-                    attacker.frags = attacker.frags + 1;
+                //if (deathmatch)
+                    //attacker.frags = attacker.frags + 1;
 
                 return;
             }
