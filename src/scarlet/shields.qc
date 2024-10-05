@@ -9,7 +9,7 @@
 void() RechargeShields =
 {
     // if disabled
-    if (!cvar("scarlet_recharge") || !deathmatch) return;
+    if (!cvar("scarlet_recharge")) return;
 
     // if not enough time has passed since last damaged
     if (time < (self.last_damaged_time + cvar("scarlet_recharge_cooldown")))

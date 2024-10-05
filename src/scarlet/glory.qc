@@ -111,7 +111,7 @@ void(vector org, entity own) SpawnShards =
 
                 shard.attack_finished = time + (cvar("scarlet_shards_expire")/2) + ((cvar("scarlet_shards_expire")/2)*random());
 
-                if (rand >= 0 && rand < rune_nochance)
+                if (rand >= 0 && rand < rune_nochance && cvar("scarlet_shards_powerups") < 2)
                 {
                     shard.angles = '0 180 0'; // for stimpack
                     setmodel (shard, "progs/items/rogue/mervup_edited.mdl");
