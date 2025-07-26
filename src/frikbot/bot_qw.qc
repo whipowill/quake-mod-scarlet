@@ -118,8 +118,8 @@ void() bot_map_load =
 		map_dm4();
 	else if (mapname == "dm5")
 		map_dm5();
-	else if (mapname == "dm6")
-		map_dm6();
+	//else if (mapname == "dm6")
+		//map_dm6(); // use wayfile instead
 };
 
 /*

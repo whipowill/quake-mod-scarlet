@@ -273,7 +273,8 @@ void() armor_touch =
 		return;
 
 	sound(other, CHAN_ITEM, "items/armor1.wav", 1, ATTN_NORM);
-	sprint(other, "You got armor\n");
+	if (cvar("scarlet_chat_armor"))
+		sprint(other, "You got armor\n");
 
 	stuffcmd (other, "bf\n");
 	ItemTouched();

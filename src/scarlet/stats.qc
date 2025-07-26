@@ -5,7 +5,13 @@
 
 // functions needed
 void(float index, float type, .float field) clientstat = #232;
-void(float num, float type, string name) globalstat = #233;
+//void(float num, float type, string name) globalstat = #233;
+
+// globalstat was used for tracking players deaths and other info,
+// like if the game is teamplay, etc for sending to the client
+// to display on the HUD.  But this only worked in QSS-M and
+// not vkQuake, so I had to turn it off.  Bc OpenGL got nerfed
+// on Linux machines and vkQuake is now the best way to play.
 
 // my client vars (33-63) -whipowill
 const float IT_GRENADES = 33;
@@ -42,9 +48,9 @@ void() StatsInit =
     clientstat (IT_GRENADES, 2, ammo_grenades);
 
     // global vars
-    globalstat (GAME_SCARLET, 2, "gametracker_scarlet");
-    globalstat (GAME_TEAMPLAY, 2, "gametracker_teamplay");
-    globalstat (GAME_GRENADES, 2, "gametracker_grenades");
+    //globalstat (GAME_SCARLET, 2, "gametracker_scarlet");
+    //globalstat (GAME_TEAMPLAY, 2, "gametracker_teamplay");
+    //globalstat (GAME_GRENADES, 2, "gametracker_grenades");
 
     string str, num;
     for (float i = 1; i<=32; i++)
@@ -53,7 +59,7 @@ void() StatsInit =
 
         str = strcat("score_player", num);
         str = strcat(str, "_deaths");
-        globalstat (SCORE_DEATHS+i-1, 2, str);
+        //globalstat (SCORE_DEATHS+i-1, 2, str);
     }
 }
 

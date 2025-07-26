@@ -116,8 +116,8 @@ void() bot_map_load =
 		map_dm4();
 	else if (mapname == "dm5")
 		map_dm5();
-	else if (mapname == "dm6")
-		map_dm6();
+	//else if (mapname == "dm6")
+		//map_dm6(); // use wayfile instead
 };
 
 /*
@@ -990,52 +990,106 @@ void(float whichteam, float whatbot, float whatskill) BotConnect =
 		else
 			self.b_pants = uself.team - 1;
 
+		// default team shirt to match pants
 		self.b_shirt = self.b_pants;
 
-		// code for unique top color on teams
+		// if let bots pick unique tops...
+		if (!cvar("scarlet_bots_team_jersey"))
+		{
+			// 0 = Titanium White - neutral
+			// 1 = Van Dyke Brown - neutral
+			// 2 = Mountain Mixture - pastel
+			// 3 = Sap Green - neutral
+			// 4 = Alizarin Crimson - red
+			// 5 = Yellow Ochre - neutral
+			// 6 = Cadmium Orange - pastel
+			// 7 = Flower Pink - pastel
+			// 8 = Magenta Mauve - pastel
+			// 9 = Dusty Rose - pastel
+			// 10 = Dark Sienna - neutral
+			// 11 = Phthalo Green - blue
+			// 12 = Indian Yellow - red
+			// 13 = Prussian Blue - blue
 
-		/*
-		float is_bright, top_color;
-	    if (self.b_pants == 0
-	    	|| self.b_pants == 2
-	    	|| self.b_pants == 6
-	    	|| self.b_pants == 7
-	    	|| self.b_pants == 8
-	    	|| self.b_pants == 9
-	    	|| self.b_pants == 10
-	    	|| self.b_pants == 12) is_bright = 1;
+			// code for unique top color on teams
 
-    	while (!top_color)
-    	{
-    		for (float i = 0; i < 14; i++)
-    		{
-    			if (is_bright && ((i == 0
-			    	|| i == 2
-			    	|| i == 6
-			    	|| i == 7
-			    	|| i == 8
-			    	|| i == 9
-			    	|| i == 10
-			    	|| i == 12)))
-			    {
-			    	if (random() <= .25) top_color = i;
-			    }
-			    if (!is_bright && !((i == 0
-			    	|| i == 2
-			    	|| i == 6
-			    	|| i == 7
-			    	|| i == 8
-			    	|| i == 9
-			    	|| i == 10
-			    	|| i == 12)))
-			    {
-			    	if (random() <= .25) top_color = i;
-			    }
-    		}
-    	}
+			float is_pastel, is_neutral, is_other;
 
-    	self.b_shirt = top_color;
-    	*/
+			float top_color;
+
+			// determine category for pants
+		    if (self.b_pants == 2
+		    	|| self.b_pants == 6
+		    	|| self.b_pants == 7
+		    	|| self.b_pants == 8
+		    	|| self.b_pants == 9
+		    )
+		    {
+		    	is_pastel = 1;
+		    }
+
+		    if (self.b_pants == 0
+		    	|| self.b_pants == 1
+		    	|| self.b_pants == 3
+		    	|| self.b_pants == 5
+		    	|| self.b_pants == 10
+		    )
+		    {
+		    	is_neutral = 1;
+		    }
+
+		    if (!is_pastel && !is_neutral) is_other = 1;
+
+	    	while (!top_color)
+	    	{
+	    		for (float i = 0; i < 14; i++)
+	    		{
+	    			// if pants are bright and top is also pastel
+	    			if (is_pastel && ((i == 0
+				    	|| i == 2
+				    	|| i == 6
+				    	|| i == 7
+				    	|| i == 8
+				    	|| i == 9
+				    )))
+				    {
+				    	if (!top_color && random() <= .05) top_color = i;
+				    }
+
+				    // if pants are neutral and top is neutral or other
+	    			if (is_neutral && ((i == 0
+	    				// neutral
+				    	|| i == 1
+				    	|| i == 3
+				    	|| i == 5
+				    	|| i == 10
+				    	// other
+				    	|| i == 4
+				    	|| i == 11
+				    	|| i == 12
+				    	|| i == 13
+				    )))
+				    {
+				    	if (!top_color && random() <= .05) top_color = i;
+				    }
+
+				    // if pants are other and top is neutral
+	    			if (is_other && ((i == 0
+	    				// neutral
+				    	|| i == 1
+				    	|| i == 3
+				    	|| i == 5
+				    	|| i == 10
+				    )))
+				    {
+				    	if (!top_color && random() <= .05) top_color = i;
+				    }
+
+	    		}
+	    	}
+
+	    	self.b_shirt = top_color;
+	    }
 	}
 
 	self.team = self.b_pants + 1;

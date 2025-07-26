@@ -644,10 +644,10 @@ float(entity thing) priority_for_thing =
 
 	if ((thing.flags & FL_ITEM) && thing.model != string_null && thing.search_time < time)
 	{
-
 		// ugly hack
                 if (thing._last != self)
                         thisp = 20;
+
 		//~ ai fix start -- ryan commented this out? - whipowill
 		/* 					 
 		if (thing.classname == "item_artifact_super_damage")
@@ -702,14 +702,18 @@ float(entity thing) priority_for_thing =
 				thisp = 50;
 		}
 		*/
+
+		// these don't work so i repeat these further down...?? maybe these aren't "ITEMS"?
 		if (thing.classname == "item_artifact_super_damage")
-			thisp = 10*(random()) + cvar("scarlet_priority_quad"); // was 55 -whipowill
+			thisp = cvar("scarlet_priority_quad"); // was 55 -whipowill
 		else if (thing.classname == "item_artifact_invulnerability")
-			thisp = 10*(random()) + cvar("scarlet_priority_pent"); // was 55 -whipowill
+			thisp = cvar("scarlet_priority_pent"); // was 55 -whipowill
 		else if (thing.classname == "item_artifact_invisibility")
-			thisp = 10*(random()) + cvar("scarlet_priority_ring"); // was 55 -whipowill
+			thisp = cvar("scarlet_priority_ring"); // was 55 -whipowill
 		else if (thing.model == "progs/m_h100.mdl" || thing.model == "progs/items/quoth/cross.mdl")
-			thisp = 10*(random()) + cvar("scarlet_priority_mega"); // megahealth wasn't even in here as being special -whipowill
+			thisp = cvar("scarlet_priority_mega"); // megahealth wasn't even in here as being special -whipowill
+
+
 		else if (thing.classname == "item_health")
 		{
 			if (thing.spawnflags & 2)

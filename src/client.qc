@@ -352,7 +352,7 @@ void() respawn =
 	if (deathmatch)
 	{
 		// make a copy of the dead body for appearances sake
-		CopyToBodyQueue (self);
+		//CopyToBodyQueue (self); // TURN THIS OFF FOR CORPSE REMOVAL -whipowill
 		// set default spawn parms
 		SetNewParms ();
 		// respawn		
@@ -909,7 +909,10 @@ void() PlayerDeathThink =
 		return;
 	}
 	
-	if (self.respawn_time > 0 && self.respawn_time < time) respawn(); // SCARLET - respawn timer
+	if (self.respawn_time > 0 && self.respawn_time < time)
+	{
+		respawn(); // SCARLET - respawn timer
+	}
 
 	if (time < self.lifetime_finished) return;
 

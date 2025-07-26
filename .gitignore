@@ -1,4 +1,4 @@
-reset.sh
+*.sh
 *.lno
 */*.lno
 *.log

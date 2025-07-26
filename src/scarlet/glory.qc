@@ -100,9 +100,10 @@ void(vector org, entity own) SpawnShards =
             if (pass)
             {
                 shard = spawn();
-                shard.owner = own;
+                //shard.owner = own;
                 shard.movetype = MOVETYPE_TOSS;
                 shard.solid = SOLID_TRIGGER;
+                shard.flags = FL_ITEM; // so AI will know it's an item worth picking up
 
                 shard.velocity = Vector(random(), random(), random()) * 500;
                 shard.touch = ShardTouch;
@@ -153,7 +154,6 @@ void(vector org, entity own) SpawnShards =
                     }
                 }
 
-                shard.flags = FL_ITEM; // so AI will know it's an item worth picking up
                 setorigin (shard, org); //start shard at point of damage
             }
         }

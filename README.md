@@ -1,6 +1,6 @@
 # Scarlet
 
-A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for the multiplayer enthusiast, sate your bloodlust w/ heart-pumping multiplayer games on demand.
+A Quake mod for the multiplayer enthusiast.  Sate your bloodlust w/ heart-pumping multiplayer games on demand.
 
 [Website](https://whipowill.github.io/quake/) | [YouTube](https://www.youtube.com/@wscarlet)
 
@@ -8,7 +8,7 @@ A Quake mod for adding bots, blood, guts, and gore to the game.  Designed for th
 
 ## Features
 
-Every feature in this mod is optional and configurable.
+This mod basically adds a bunch of gore, a few new mechanics, and makes everything configurable.  You can use this mod to make the game how you want it to be.
 
 ### Base Features
 
@@ -19,7 +19,7 @@ Every feature in this mod is optional and configurable.
 - **Item Resupply** - force items to respawn in singleplayer and coop games
 - **Name Tags** - see other player names Halo-style when aiming at them
 - **Foot Steps** - hear your boots touch the ground as you stalk your prey
-- **Score Keeper** - make teamplay games combine scores to achieve fraglimit
+- **Score Keeper** - fixes team games to combine scores to achieve fraglimit
 - **Death Timeout** - when you die you have to sit out until timeout is over
 - **Persistent Corpses** - player corpses stick around for a bit before disappearing
 - **No Autoswitch** - picking up new weapons won't autoswitch anymore
@@ -32,14 +32,17 @@ Every feature in this mod is optional and configurable.
 ### Experimental Features
 
 - **Killing Spree** - game announces when you're on a killstreak and when it ends
-- **Stimpacks** - ease your wounds w/ stimpacks that drop from the dead
-- **Glory Kills** - melee attacks and killstreaks grant extra stimpack rewards
-- **Highlander Games** - higher their killstreak, greater the reward for taking their head
 - **Random Powerups** - every kill has a chance to drop a random powerup
+- **Glory Kills** - melee attacks and killstreaks grant extra rewards
+- **Highlander Games** - higher their killstreak, greater the reward for taking their head
 - **Shield Recharge** - survive the battle and your shield begins to recharge
 
 ## Changelog
 
+- July 2025
+    - Remove death counts to make compatible w/ vkQuake
+- June 2025
+    - Fixed bot priorities to actually pickup dropped powerups
 - February 2024
     - Add option to make grenades not detonate on touch
     - Fix death alerts in chat to match axe melee or hand grenade
@@ -54,7 +57,7 @@ Every feature in this mod is optional and configurable.
     - Melee attack will now spam multiple times when pressed
     - Number of grenades in a backpack now limited
     - Fix bug in Perforator damage (my fault)
-    - Add lunge to melee attack (disabled due to engine [bug](https://github.com/timbergeron/QSS-M/issues/20))
+    - Add lunge to melee attack (but disabled due to engine [bug](https://github.com/timbergeron/QSS-M/issues/20))
 - May 2023 - ``v1.3.x``
     - Added new shards feature on kills
     - Added new killstreak feature
@@ -102,6 +105,8 @@ Every feature in this mod is optional and configurable.
     - Added item respawn for singleplayer and coop
 
 ## Install
+
+**This mod is designed for and tested on QSS-M and vkQuake engines.**
 
 - Find your Quake install directory
 - Download this [zipfile](https://github.com/whipowill/quake-mod-scarlet/archive/master.zip) and unzip to ``C:/path/to/quake/scarlet/``

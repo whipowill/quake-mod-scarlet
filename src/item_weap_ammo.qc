@@ -45,9 +45,12 @@ void(entity to) weapon_give =
 		
 	bound_ammo(to);
 
-	sprint (to, "You got the ");
-	sprint (to, self.netname);
-	sprint (to, "\n");
+	if (cvar("scarlet_chat_guns"))
+	{
+		sprint (to, "You got the ");
+		sprint (to, self.netname);
+		sprint (to, "\n");
+	}
 
 	sound (to, CHAN_ITEM, "weapons/pkup.wav", 1, ATTN_NORM);
 	stuffcmd (to, "bf\n");
@@ -399,9 +402,12 @@ void() ammo_touch =
 
 	bound_ammo(other);
 	
-	sprint (other, "You got the ");
-	sprint (other, self.netname);
-	sprint (other, "\n");
+	if (cvar("scarlet_chat_ammo"))
+	{
+		sprint (other, "You got the ");
+		sprint (other, self.netname);
+		sprint (other, "\n");
+	}
 
 	sound (other, CHAN_ITEM, "weapons/lock4.wav", 1, ATTN_NORM);
 	stuffcmd (other, "bf\n");
