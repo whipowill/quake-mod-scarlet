@@ -1,0 +1,6 @@
+*.sh
+*.lno
+*/*.lno
+*.log
+*/*.log
+*.zip
