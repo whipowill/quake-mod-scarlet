@@ -1,40 +1,33 @@
 # Changelog
 
 - November 2026
-    - Rebuilt on id Software's original Quake source (v1.01) instead of Copper.  Every Scarlet feature was carried over; Copper's own gameplay changes (its HUD, new monsters and spawners, triggered monsters, extra impulses) are gone
-    - The mod no longer needs Copper's `pak0.pak`; it ships one pak of its own
+    - Rebuilt on id Software's original Quake source instead of Copper
+    - Dropped Copper's own gameplay changes and HUD
+    - The mod ships its own pak and no longer needs Copper's
+    - Bots follow trails made by the ``trailgen`` tool and give up on stuck goals
+    - ``trailgen`` writes its files into the mod folder and clears old ones
+    - Weapon switching, axe animation and respawn timer fixes
+    - Overheal rots, drowning and fall damage fixes
+    - Option for zombies to die from normal damage in single player
+    - Monster kills and assists count on the single player scoreboard
+    - Pickup message options for health, plus the other ``scarlet_chat_*`` ones
+    - Impulses for best rocket, nail, shot and overall weapon
 - October 2026
     - Started using Claude to assist with maintaining this mod
-    - Merge Copper v1.30 (crazy hard to do without AI assistance)
-    - Add feature to randomize music and to switch track on demand
-    - Brought back death counts and added assists to be displayed on scoreboard
-    - Teammate markers above players' heads, visible through walls, drawn by the HUD mod
-    - Improved bot following code on singleplayer games
-    - Option to keep your progress when you die in co-op and single player
-    - Monster count scales with difficulty in single player and co-op
-    - Monsters killed by a player can drop a random powerup in single player and co-op
-    - Monsters chase faster and hit harder in single player and co-op, with a multiplier for each difficulty
-    - Option to make the enemy bot team always wear a color you pick
-    - Option to lunge on every melee axe attack (dash feature), with or without a target
-    - Float a miniature spinning quad or pentagram above players carrying one
-    - ``trailgen`` also builds trails for maps inside pak files (dm1-6, the single player levels)
-    - Cooldown on the melee lunge (``scarlet_melee_lunge_cooldown``, 10 seconds by default)
-    - Bots below skill 3 are weaker in more ways than aim: slower to react, slower turning, aim wobble, less leading and less dodging (``scarlet_bot_handicap``)
-    - Bots get longer to reach a far waypoint (two seconds plus walking time), so they no longer give up just short of the end of a long hall and run back
-    - ``trailgen`` merges waypoints that land on the same spot
-    - ``trailgen`` thins its waypoints to a skeleton like a person would draw, a third to a half as many, with one line down a hall
-    - Waypoints are centered in halls instead of pressed against the walls
-    - Bots take a clearly better item right beside them (like yellow armor over green) instead of walking past it to an earlier goal
-    - ``trailgen`` finds the way out of spawns in low window recesses
-    - Bots stay out of kill floors (hurt triggers of 50 or more damage, voids): ``trailgen`` routes around them and bots avoid walking off ledges into them
-    - ``impulse 105`` shows the waypoint links around you as beams
-    - Bots run from a player holding the pentagram instead of wasting ammo on them
-    - Bots step around teammates that block their way
-    - Bots no longer walk back through a teleporter they just used
-    - Bots take their waypoints from a ``maps/<map>.ent`` file made by the trailgen tool; the console and your screen say whether a map has a trail
-    - The ``trailgen`` tool comes with the mod; point it at a folder to build every map's trail (just run ``./trailgen``)
-    - Developer option to float each bot's goal over its head
-    - Add ``singleplayer`` and ``multiplayer`` console aliases to quick issue the various settings
+    - Merged Copper v1.30
+    - Random music, with a command to change track
+    - Death counts and assists on the scoreboard
+    - Teammate markers above players (drawn by the HUD mod)
+    - Better bot following in single player
+    - Single player and co-op options: keep progress on death, monster count, speed, damage and powerup drops
+    - Bot team color and skill handicap options
+    - Axe lunge option
+    - Floating powerup icons above players
+    - Bots use a new trail system built by the ``trailgen`` tool
+    - ``trailgen`` comes with the mod and reads maps inside pak files
+    - Bots avoid kill floors, dodge teammates and flee the pentagram
+    - Developer options for bot goals and waypoint links
+    - ``singleplayer`` and ``multiplayer`` console aliases
 - July 2025
     - Remove death counts to make compatible w/ vkQuake
 - June 2025

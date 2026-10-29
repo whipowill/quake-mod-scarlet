@@ -70,7 +70,7 @@ void(entity missile, float mspeed, float accuracy) LaunchMissile =
 	makevectors (self.angles);
 		
 // set missile speed
-	vec = self.enemy.origin + self.enemy.mins + self.enemy.size * 0.7 - missile.origin;
+	vec = enemy_vispos() + self.enemy.mins + self.enemy.size * 0.7 - missile.origin;	// SCARLET - ring of shadows confusion
 
 // calc aproximate time for missile to reach vec
 	fly = vlen (vec) / mspeed;

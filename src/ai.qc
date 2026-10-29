@@ -186,6 +186,40 @@ visible
 returns 1 if the entity is visible to self, even if not infront ()
 =============
 */
+.float reveal_until;	// SCARLET - until when a monster hit by the player sees through the Ring of Shadows
+
+/*
+=============
+enemy_vispos
+
+SCARLET - where a monster thinks its enemy is.  Against a player wearing the Ring of Shadows it is somewhere
+else, further off the further away the monster is, so its shots go wide.  A monster the player has just hurt
+sees properly for a moment, and dogs follow the smell.  Everything a monster aims at its enemy goes through here.
+=============
+*/
+vector() enemy_vispos =
+{
+	local vector dir, off;
+	local float a, m;
+
+	if (!(self.enemy.items & IT_INVISIBILITY) || self.classname == "monster_dog")
+		return self.enemy.origin;
+	if (time < self.reveal_until)
+		return self.enemy.origin;
+
+	dir = self.enemy.origin - self.origin;
+	m = vlen(dir) * 0.8 - 64;
+	if (m <= 0)
+		return self.enemy.origin;	// close up, there is nowhere to hide
+
+	// a spot that wanders around the player with the time, different for every monster
+	a = time * 121 - self.origin_x - self.origin_y;
+	off_x = cos(a) * m;
+	off_y = sin(a) * m;
+	off_z = 0;
+	return self.enemy.origin + off;
+};
+
 float (entity targ) visible =
 {
 	local vector	spot1, spot2;
@@ -745,7 +779,7 @@ void(float dist) ai_run =
 
 	enemy_infront = infront(self.enemy);
 	enemy_range = range(self.enemy);
-	enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
+	enemy_yaw = vectoyaw(enemy_vispos() - self.origin);	// SCARLET - ring of shadows confusion
 	
 	if (self.attack_state == AS_MISSILE)
 	{

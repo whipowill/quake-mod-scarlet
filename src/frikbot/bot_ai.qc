@@ -748,13 +748,13 @@ float(entity thing) priority_for_thing =
 
 		// these don't work so i repeat these further down...?? maybe these aren't "ITEMS"?
 		if (thing.classname == "item_artifact_super_damage")
-			thisp = cv_scarlet_priority_quad; // was 55 -whipowill
+			thisp = cv_scarlet_bot_priority_quad; // was 55 -whipowill
 		else if (thing.classname == "item_artifact_invulnerability")
-			thisp = cv_scarlet_priority_pent; // was 55 -whipowill
+			thisp = cv_scarlet_bot_priority_pent; // was 55 -whipowill
 		else if (thing.classname == "item_artifact_invisibility")
-			thisp = cv_scarlet_priority_ring; // was 55 -whipowill
+			thisp = cv_scarlet_bot_priority_ring; // was 55 -whipowill
 		else if (thing.model == "maps/b_bh100.bsp" || thing.model == "progs/items/quoth/cross.mdl")
-			thisp = cv_scarlet_priority_mega; // megahealth wasn't even in here as being special -whipowill
+			thisp = cv_scarlet_bot_priority_mega; // megahealth wasn't even in here as being special -whipowill
 
 
 		else if (thing.classname == "item_health")
@@ -942,15 +942,15 @@ float(entity thing) bot_spot_value =
 		return 0;
 	if (thing.classname == "item_artifact_super_damage")
 	{
-		if (!(self.items & IT_QUAD)) v = cv_scarlet_priority_quad;
+		if (!(self.items & IT_QUAD)) v = cv_scarlet_bot_priority_quad;
 	}
 	else if (thing.classname == "item_artifact_invulnerability")
 	{
-		if (!(self.items & IT_INVULNERABILITY)) v = cv_scarlet_priority_pent;
+		if (!(self.items & IT_INVULNERABILITY)) v = cv_scarlet_bot_priority_pent;
 	}
 	else if (thing.classname == "item_artifact_invisibility")
 	{
-		if (!(self.items & IT_INVISIBILITY)) v = cv_scarlet_priority_ring;
+		if (!(self.items & IT_INVISIBILITY)) v = cv_scarlet_bot_priority_ring;
 	}
 	else if (thing.classname == "item_artifact_envirosuit")
 	{
@@ -959,7 +959,7 @@ float(entity thing) bot_spot_value =
 	else if (thing.classname == "item_health")
 	{
 		if (thing.spawnflags & 2)
-			v = cv_scarlet_priority_mega;
+			v = cv_scarlet_bot_priority_mega;
 		else if (self.health <= 50)
 			v = 70;
 		else if (self.health < 100)
@@ -1084,6 +1084,8 @@ void() bot_patrol =
 			}
 			if (t.b_aiflags & AI_IGNORE_TYPES)
 				continue;
+			if (t.search_time >= time)
+				continue;	// SCARLET - a waypoint goal that just got a bot stuck is banned for a while
 			d = vlen(t.origin - self.origin);
 			if (d > bestd)
 			{
@@ -1632,6 +1634,7 @@ void() bot_devlog =
 
 void() BotAI =
 {
+	local entity stuck_goal;
 	// am I dead? Fire randomly until I respawn
 	// health < 1 is used because fractional healths show up as 0 on normal player
 	// status bars, and the mod probably already compensated for that
@@ -1714,8 +1717,9 @@ void() BotAI =
 	stagger_think = time;
 
 	// failsafe: if the bot is chasing a goal but hasn't gone anywhere in 2 seconds,
-	// give up on it and pick a new one. bot_lost() also blacklists the goal for a
-	// few seconds so the bot doesn't immediately choose the same one again.
+	// give up on it and pick a new one.  SCARLET - the goal itself (the last thing on its plan, the item
+	// or the far waypoint, not just the next step) is banned for a minute for every bot, so nobody walks
+	// into the same door again as soon as the short ban on a single waypoint runs out.
 	if (self.target1_ent && self.target1_ent.classname != "player" && !(self.b_aiflags & AI_WAIT) && !intermission_running)
 	{
 		if (vlen(self.origin - self.stuck_org) > 16 || self.stuck_time == 0)
@@ -1731,9 +1735,39 @@ void() BotAI =
 				dprint(self.netname);
 				dprint(" ");
 				dprint(self.target1_ent.classname);
+				dprint(" goal ");
+				dprint(self.target4_ent.classname);
+				dprint(self.target3_ent.classname);
+				dprint(self.target2_ent.classname);
 				dprint("\n");
 			}
+			stuck_goal = self.target4_ent;
+			if (!stuck_goal)
+				stuck_goal = self.target3_ent;
+			if (!stuck_goal)
+				stuck_goal = self.target2_ent;
+			if (!stuck_goal)
+				stuck_goal = self.target1_ent;
 			bot_lost(self.target1_ent, FALSE);
+			// following a human in single player and co-op is not a goal to be banned: the bot gets pulled back
+			// to its player when it falls behind
+			if (stuck_goal != self.target1_ent && !(stuck_goal.classname == "player" && (coop || !deathmatch)))
+			{
+				bot_lost(stuck_goal, FALSE);
+				ClearMyRoute();
+				self.target1_ent = self.target2_ent = self.target3_ent = self.target4_ent = world;
+				self.last_way = world;
+			}
+			if (stuck_goal.classname == "player")
+			{
+				if (!(coop || !deathmatch))
+				{
+					self.avoid_ent = stuck_goal;
+					self.avoid_until = time + 60;
+				}
+			}
+			else if (stuck_goal.search_time < time + 60)
+				stuck_goal.search_time = time + 60;
 			self.stuck_time = 0;
 		}
 	}

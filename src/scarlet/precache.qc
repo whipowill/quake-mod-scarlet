@@ -13,6 +13,17 @@ void() S_Precache =
     precache_sound("items/r_item1.wav");
     precache_sound("items/r_item2.wav");
     precache_sound("items/protect.wav");
+    // rewards and drops can hand out any powerup on any map, so their sounds can't wait for the item to be on the map
+    precache_sound("items/protect2.wav");
+    precache_sound("items/protect3.wav");
+    precache_sound("items/damage2.wav");
+    precache_sound("items/damage3.wav");
+    precache_sound("items/suit.wav");
+    precache_sound("items/suit2.wav");
+    precache_sound("items/inv1.wav");
+    precache_sound("items/inv2.wav");
+    precache_sound("items/inv3.wav");
+    precache_sound("items/health1.wav");
     precache_sound("items/damage.wav");
     precache_sound("halo3/weapons/frag_throw.wav");
     precache_sound("halo3/weapons/frag_bnc_stone1.wav");

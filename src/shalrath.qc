@@ -147,7 +147,7 @@ void() ShalMissile =
 	local	vector	dir;
 	local	float	dist, flytime;
 
-	dir = normalize((self.enemy.origin + '0 0 10') - self.origin);
+	dir = normalize((enemy_vispos() + '0 0 10') - self.origin);	// SCARLET - ring of shadows confusion
 	dist = vlen (self.enemy.origin - self.origin);
 	flytime = dist * 0.002;
 	if (flytime < 0.1)

@@ -39,7 +39,7 @@ Then add bots with the impulses below, or let the game do it with `scarlet_dev_a
 - `scarlet_dev_botgoal 1`: a model floats over every bot showing its goal.  The item's own model for an item, a fireball for a waypoint, a head for a player, a rocket when it is fighting, a gib when it is running from a pentagram, a spike when it has no goal.  Look straight at a bot and its name and goal print on screen.
 - `impulse 103` to ride along with a bot, `impulse 105` to see the trail as you go.  Spectate a teammate bot in a quiet part of the map: a fighting bot ignores the waypoints, one that is just walking shows how good the trail is.
 
-On map load the console and a chat line say whether the map has a trail (`Trailgen file found (N waypoints)`) or not (`no Trailgen file found, so the bots will not move`).
+On map load a chat line says whether the map has a trail (`Trailgen file found (N waypoints)`) or not (`no Trailgen file found, so the bots will not move`).
 
 ## Settings that change how bots behave
 
@@ -49,8 +49,8 @@ On map load the console and a chat line say whether the map has a trail (`Trailg
 | `scarlet_bot_handicap` | `1` | How much weaker skills 0-2 are.  `0` makes every bot play like skill 3, so it is the quick way to separate a skill effect from a pathing problem. |
 | `scarlet_bot_goal_distance` | `1500` | Distance at which an item is worth half as much.  `0` is the old behavior: the best item anywhere. |
 | `scarlet_bot_edgefriction` | `1.5` | Extra friction at a drop-off.  `1` lets bots walk off ledges. |
-| `scarlet_priority_quad`, `_pent`, `_mega`, `_ring` | `1000`, `1000`, `1000`, `0` | How much bots want the powerup.  The ring is `0`, so bots ignore it; raise it to test a ring route. |
-| `scarlet_dialogue` | `1` | Bot chatter. |
+| `scarlet_bot_priority_quad`, `_pent`, `_mega`, `_ring` | `1000`, `1000`, `1000`, `0` | How much bots want the powerup.  The ring is `0`, so bots ignore it; raise it to test a ring route. |
+| `scarlet_bot_dialogue` | `1` | Bot chatter. |
 | `scarlet_testing` | `0` | Bots say the topic name instead of a quote. |
 | `scarlet_bots_enemy_color` | `-1` | Color of the other team. |
 
@@ -66,7 +66,7 @@ Turn it on with `developer 1` and `scarlet_dev_botlog 1`.  Everything goes to th
 | `BOTSCAN` | A whole-map goal scan: the best pick (its class, score, model, position and name), the bot's health, armor and ammo, and why items were skipped.  A blank class with `progs/backpack.mdl` is a backpack a dead player dropped. |
 | `BOTNOPATH` | A bot picked a target it had no route to, and why: no waypoint can see it, or its waypoint can't be reached from where the bot is.  A bot that repeats these with nothing else to do is looping. |
 | `BOTGRAB` | A bot detoured for a clearly better item right beside it. |
-| `BOTTIMEOUT`, `BOTSTUCK` | The bot gave up on a target that took over two seconds, or hadn't moved in two seconds. |
+| `BOTTIMEOUT`, `BOTSTUCK` | The bot gave up on a target that took over two seconds (`BOTTIMEOUT`), or hadn't moved in two seconds (`BOTSTUCK`).  After a `BOTSTUCK` the bot's whole goal, the item or far waypoint at the end of its plan, is off limits to every bot for a minute, so nobody keeps walking into the same door. |
 | `BOTWALL`, `BOTSQUEEZE` | A bot pushing into a wall for over a second, and a sideways step it took to get around. |
 | `BOTTELE` | A bot went through a teleporter. |
 | `BOTFALL` | A drop of more than 80 units.  `tdz` is how far above the bot its next waypoint was; near 0 means an accident. |

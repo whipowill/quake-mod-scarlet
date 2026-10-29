@@ -434,7 +434,9 @@ void(entity attacker, float take) zombie_pain =
 {
 	local float r;
 
-	self.health = 60;		// allways reset health
+	// SCARLET - with zombies_killable in single player and co-op, damage adds up and the zombie dies for good
+	if (deathmatch || !cv_scarlet_singleplayer_zombies_killable)
+		self.health = 60;		// allways reset health
 
 	if (take < 9)
 		return;				// totally ignore

@@ -17,21 +17,24 @@ Everything in Scarlet is controlled by console variables (cvars) and a few impul
 
 | Cvar | Default | What it does |
 |---|---|---|
-| ``scarlet_singleplayer_resupply`` | ``1`` | **(SP/co-op only)** Forces items (powerups, etc.) to respawn in singleplayer and coop, where vanilla Quake never respawns them.  Deathmatch always respawns items. |
+| ``scarlet_armor_always_take`` | ``0`` | ``1`` makes you pick up an armor box of the same color as the armor you wear even if yours is already as good or better.  The box is used up and respawns as usual, and your own armor stays as it was.  A box of a different color that is no better than yours is still left alone.  ``0`` is Quake's rule, where the box is left alone. |
 | ``scarlet_autoswitch`` | ``1`` | ``1`` switches to a weapon when you pick it up.  ``0`` keeps your current weapon (you still auto-switch if you run out of ammo). |
 | ``scarlet_visible_weapons`` | ``0`` | ``1`` makes a dead player's weapon drop as a visible pickup on the floor instead of inside the backpack. |
 | ``scarlet_remove_weaker_weapons`` | ``0`` | ``1`` removes the Shotgun and Nailgun from the game.  Players spawn with the Super Shotgun instead. |
 | ``scarlet_corpses`` | ``0`` | ``1`` leaves player corpses on the map for a while (they can be gibbed) instead of vanishing immediately.  |
-| ``scarlet_football`` | ``1`` | ``1`` lets you kick severed heads around like a football. |
+| ``scarlet_football`` | ``0`` | ``1`` lets you kick severed heads around like a football. |
 | ``scarlet_item_ghosts`` | ``0`` | ``1`` leaves a faint see-through ghost of an item where it was picked up and flickers it back in before it respawns, so you can see what is coming back and when.  Without it the item just vanishes and reappears.  Also makes dropped items blink out. |
-| ``scarlet_respawn`` | ``5`` | Seconds a dead player must wait before they are allowed to respawn (the "death timeout"). |
+| ``scarlet_respawn`` | ``0`` | Seconds a dead player must wait before they are allowed to respawn (the "death timeout"). |
+| ``scarlet_powerup_icons`` | ``0`` | Float a small spinning quad or pentagram above anyone carrying one.  Needs an engine that supports the ``scale`` field (QSS, FTE, DarkPlaces); on others the icons show full size, so turn this off. |
+| ``scarlet_powerup_icon_scale`` | ``0.4`` | Size of the floating icon. |
+| ``scarlet_powerup_icon_height`` | ``42`` | How far above the player's origin the icon floats.  The top of the head is about ``32``. |
 
 ## Stats
 
 | Cvar | Default | What it does |
 |---|---|---|
-| ``scarlet_assist_window`` | ``10`` | Seconds before a kill during which damaging the victim earns you an assist.  Teammate damage and the killer don't count.  ``0`` turns assists off. |
-| ``scarlet_team_markers`` | ``1`` | In teamplay, the HUD mod draws a colored marker and name over each teammate's head, visible through walls.  Needs the HUD mod (``csprogs.dat``); does nothing without it. |
+| ``scarlet_assist_window`` | ``0`` | Seconds before a kill during which damaging the victim earns you an assist.  Teammate damage and the killer don't count.  ``0`` turns assists off. |
+| ``scarlet_team_markers`` | ``0`` | In teamplay, the HUD mod draws a colored marker and name over each teammate's head, visible through walls.  Needs the HUD mod (``csprogs.dat``); does nothing without it. |
 | ``scarlet_team_marker_scale`` | ``1`` | Size of the teammate marker and its name.  ``1`` is normal, ``2`` is double, ``0.5`` is half.  Needs ``scarlet_team_markers 1``. |
 | ``scarlet_team_marker_names`` | ``1`` | ``1`` shows the teammate's name over their marker.  ``0`` shows just the marker.  Needs ``scarlet_team_markers 1``. |
 
@@ -39,10 +42,10 @@ Everything in Scarlet is controlled by console variables (cvars) and a few impul
 
 | Cvar | Default | What it does |
 |---|---|---|
-| ``scarlet_footsteps`` | ``1`` | Players make footstep sounds as they walk and run. |
+| ``scarlet_footsteps`` | ``0`` | Players make footstep sounds as they walk and run. |
 | ``scarlet_music`` | ``0`` | ``1`` picks a random music track every time a map loads, replacing the map's own track.  ``0`` plays the map's normal music. |
 | ``scarlet_music_min`` | ``2`` | Lowest track number the shuffle may pick. |
-| ``scarlet_music_max`` | ``21`` | Highest track number the shuffle may pick. |
+| ``scarlet_music_max`` | ``11`` | Highest track number the shuffle may pick. |
 
 **Music setup:** QuakeC can't browse folders, so the shuffle picks a *track number* and the engine plays the matching file from ``music/``, e.g. track 7 plays ``music/track07.ogg`` (or ``.mp3``, if your engine supports it).  Name your files ``track02`` through ``trackNN``, then set ``scarlet_music_max`` to your highest number.  Quake's track 1 is the data track, so numbering starts at ``02``.  A missing number means silence on that map.  Bind a key to ``impulse 122`` to skip to another track whenever you like.  The shuffle is picked once per map load, not mid-level.
 
@@ -54,6 +57,7 @@ Everything in Scarlet is controlled by console variables (cvars) and a few impul
 | ``scarlet_chat_guns`` | ``1`` | Chat/print notices about weapons (e.g. "no weapon", pickups).  ``0`` silences them. |
 | ``scarlet_chat_ammo`` | ``1`` | Notices about ammo pickups.  ``0`` silences them. |
 | ``scarlet_chat_armor`` | ``1`` | Notices about armor pickups.  ``0`` silences them. |
+| ``scarlet_chat_health`` | ``1`` | Notices about health pickups.  ``0`` silences them. |
 | ``scarlet_chat_backpacks`` | ``1`` | Notices about backpacks.  ``0`` silences them. |
 | ``scarlet_chat_deaths`` | ``1`` | Death messages.  ``0`` off, ``1`` classic Quake messages, ``2`` generic alternate messages. |
 | ``scarlet_chat_killstreaks`` | ``1`` | Killstreak announcements ("Killing Spree!").  ``0`` silences them (only matters if ``scarlet_killstreaks`` is on). |
@@ -64,7 +68,22 @@ Set all the ``scarlet_chat_*`` cvars to ``0`` for a quiet console in busy bot ma
 
 | Cvar | Default | What it does |
 |---|---|---|
-| ``scarlet_dialogue`` | ``1`` | Bots occasionally say things (greetings, taunts, complaints when losing). |
+| ``scarlet_bot_dialogue`` | ``1`` | Bots occasionally say things (greetings, taunts, complaints when losing). |
+| ``scarlet_bots_enemy_color`` | ``-1`` | In teamplay, the opposing team of bots (added with ``impulse 101`` or ``111``) always wears this color, so enemies are easy to spot.  Use the same numbers as the ``color`` command: ``0`` white, ``1`` brown, ``2`` light blue, ``3`` green, ``4`` red, ``5`` tan, ``6`` orange, ``7`` pink, ``8`` purple, ``9`` dusty rose, ``10`` dark sienna, ``11`` blue-green, ``12`` yellow, ``13`` blue.  ``-1`` turns it off.  If your own team already wears that color, the bots pick another.  Only affects bots added afterward. |
+| ``scarlet_bots_team_jersey`` | ``1`` | In teamplay, bots wear their team color.  ``0`` lets each bot keep a unique shirt color while the pants still show the team. |
+| ``scarlet_bot_priority_quad`` | ``1000`` | How badly bots want a Quad Damage.  Higher means they route to it sooner. |
+| ``scarlet_bot_priority_pent`` | ``1000`` | Same, for Pentagram of Protection. |
+| ``scarlet_bot_priority_ring`` | ``0`` | Same, for Ring of Shadows. |
+| ``scarlet_bot_priority_mega`` | ``1000`` | Same, for Megahealth. |
+| ``scarlet_bot_edgefriction`` | ``1.5`` | Friction multiplier bots feel when their leading edge is over a dropoff.  ``2`` is stock Quake (bots brake hard at ledges and rarely fall); ``1`` removes the extra braking so they can fall off bridges like players do. |
+| ``scarlet_bot_handicap`` | ``1`` | How much weaker a bot below skill 3 is.  A low skill bot reacts late to a new enemy, turns slower, aims with a wobble, leads its shots less and dodges fewer rockets.  ``1`` is the full effect, ``0`` makes every bot play like skill 3, and values between scale it.  Skill 3 is never held back.  See ``TRAILGEN.md`` for the numbers. |
+| ``scarlet_bot_goal_distance`` | ``1500`` | How far away an item is worth half as much to a bot, in units.  A bot scores every item by how much it wants it, divided by one plus its distance over this number, so it goes for a good item close by before a slightly better one across the map.  ``0`` ignores distance (the bot goes for the best item anywhere).  Powerups worth 100 or more are always worth the trip. |
+
+## Singleplayer
+
+| Cvar | Default | What it does |
+|---|---|---|
+| ``scarlet_singleplayer_resupply`` | ``0`` | **(SP/co-op only)** Forces items (powerups, etc.) to respawn in singleplayer and coop, where vanilla Quake never respawns them.  Deathmatch always respawns items. |
 | ``scarlet_singleplayer_monsters_density_easy`` | ``1`` | **(SP/co-op only)** How many monsters there are on Easy skill.  ``1`` is the map as built, ``0.75`` removes a quarter of them at random, ``1.5`` adds an extra monster next to half of them.  Monsters that trigger something when they die, triggered or teleported-in monsters, fish and bosses are never touched.  Extras can't be added past about 250 per map, and very big maps may hit the engine's entity limit.  Set it before the map loads. |
 | ``scarlet_singleplayer_monsters_density_normal`` | ``1`` | **(SP/co-op only)** How many monsters there are on Normal skill.  ``1`` is the map as built, ``0.75`` removes a quarter of them at random, ``1.5`` adds an extra monster next to half of them.  Monsters that trigger something when they die, triggered or teleported-in monsters, fish and bosses are never touched.  Extras can't be added past about 250 per map, and very big maps may hit the engine's entity limit.  Set it before the map loads. |
 | ``scarlet_singleplayer_monsters_density_hard`` | ``1`` | **(SP/co-op only)** How many monsters there are on Hard skill.  ``1`` is the map as built, ``0.75`` removes a quarter of them at random, ``1.5`` adds an extra monster next to half of them.  Monsters that trigger something when they die, triggered or teleported-in monsters, fish and bosses are never touched.  Extras can't be added past about 250 per map, and very big maps may hit the engine's entity limit.  Set it before the map loads. |
@@ -78,27 +97,11 @@ Set all the ``scarlet_chat_*`` cvars to ``0`` for a quiet console in busy bot ma
 | ``scarlet_singleplayer_monsters_damage_normal`` | ``1`` | **(SP/co-op only)** On normal skill, monsters hit players this many times harder.  ``1.5`` is 50% more damage.  Applies to every monster attack on a player (bots too), including projectiles and explosions.  Monsters hurting each other is unchanged. |
 | ``scarlet_singleplayer_monsters_damage_hard`` | ``1`` | **(SP/co-op only)** On hard skill, monsters hit players this many times harder.  ``1.5`` is 50% more damage.  Applies to every monster attack on a player (bots too), including projectiles and explosions.  Monsters hurting each other is unchanged. |
 | ``scarlet_singleplayer_monsters_damage_nightmare`` | ``1`` | **(SP/co-op only)** On nightmare skill, monsters hit players this many times harder.  ``1.5`` is 50% more damage.  Applies to every monster attack on a player (bots too), including projectiles and explosions.  Monsters hurting each other is unchanged. |
-| ``scarlet_singleplayer_keep_progress`` | ``0`` | **(SP/co-op only)** In co-op, when every player is dead the level normally restarts from scratch.  ``1`` stops that: you respawn at the start of the map after a short wait, the monsters you killed stay dead, and doors and items stay as you left them.  Needs ``coop 1`` (the ``singleplayer`` alias sets that). |
+| ``scarlet_singleplayer_zombies_killable`` | ``0`` | **(SP/co-op only)** ``1`` lets ordinary damage of any kind kill a zombie: its health (60) is no longer topped back up after every hit, so damage adds up and the zombie gibs for good. ``0`` is Quake's rule, where only a single big blast (60 damage at once) can gib one. |
+| ``scarlet_singleplayer_keep_progress`` | ``0`` | **(SP/co-op only)** In single player (``coop 0``), dying normally restarts the level from scratch.  ``1`` stops that: you respawn at the start of the map after the ``scarlet_respawn`` wait, the monsters you killed stay dead, and doors and items stay as you left them.  Co-op (``coop 1``, which the ``singleplayer`` alias sets) already works this way, whatever this is set to. |
 | ``scarlet_singleplayer_bots_range`` | ``1000`` | **(SP/co-op only)** Bots only go after monsters and items within this many units of a player, so they stay near you instead of running across the map to a far away Megahealth or monster.  ``0`` removes the limit. |
 | ``scarlet_singleplayer_bots_follow_distance`` | ``128`` | **(SP/co-op only)** How far from the player (in units) a following bot stops.  Bigger means they hang back more.  A bot closer than 3/8 of this walks away to make room.  ``128`` is the original FrikBot value. |
 | ``scarlet_singleplayer_bots_regroup_distance`` | ``1500`` | **(SP/co-op only)** Bots follow the nearest player and never shoot players.  A bot that falls this many units behind every player, and can't see any of them, teleports to the nearest one.  ``0`` turns the teleporting off.  Players can also bring everyone back with ``impulse 113``. |
-| ``scarlet_bots_enemy_color`` | ``-1`` | In teamplay, the opposing team of bots (added with ``impulse 101`` or ``111``) always wears this color, so enemies are easy to spot.  Use the same numbers as the ``color`` command: ``0`` white, ``1`` brown, ``2`` light blue, ``3`` green, ``4`` red, ``5`` tan, ``6`` orange, ``7`` pink, ``8`` purple, ``9`` dusty rose, ``10`` dark sienna, ``11`` blue-green, ``12`` yellow, ``13`` blue.  ``-1`` turns it off.  If your own team already wears that color, the bots pick another.  Only affects bots added afterward. |
-| ``scarlet_bots_team_jersey`` | ``1`` | In teamplay, bots wear their team color.  ``0`` lets each bot keep a unique shirt color while the pants still show the team. |
-| ``scarlet_testing`` | ``0`` | Developer aid: bots say the topic name ("connect", "welcome") instead of a random quote so dialogue can be tested. |
-| ``scarlet_priority_quad`` | ``1000`` | How badly bots want a Quad Damage.  Higher means they route to it sooner. |
-| ``scarlet_priority_pent`` | ``1000`` | Same, for Pentagram of Protection. |
-| ``scarlet_priority_ring`` | ``0`` | Same, for Ring of Shadows. |
-| ``scarlet_priority_mega`` | ``1000`` | Same, for Megahealth. |
-| ``scarlet_bot_edgefriction`` | ``1`` | Friction multiplier bots feel when their leading edge is over a dropoff.  ``2`` is stock Quake (bots brake hard at ledges and rarely fall); ``1`` removes the extra braking so they can fall off bridges like players do. |
-| ``scarlet_bot_handicap`` | ``1`` | How much weaker a bot below skill 3 is.  A low skill bot reacts late to a new enemy, turns slower, aims with a wobble, leads its shots less and dodges fewer rockets.  ``1`` is the full effect, ``0`` makes every bot play like skill 3, and values between scale it.  Skill 3 is never held back.  See ``TRAILGEN.md`` for the numbers. |
-| ``scarlet_bot_goal_distance`` | ``1500`` | How far away an item is worth half as much to a bot, in units.  A bot scores every item by how much it wants it, divided by one plus its distance over this number, so it goes for a good item close by before a slightly better one across the map.  ``0`` ignores distance (the bot goes for the best item anywhere).  Powerups worth 100 or more are always worth the trip. |
-| ``scarlet_dev_autobots`` | ``0`` | Developer test: adds this many bots by itself a moment after the map starts, so a dedicated server can run a bot test with nobody connected. |
-| ``scarlet_dev_botlog`` | ``0`` | Developer test: ``1`` prints each bot's position and goal once a second, every goal it reaches or gives up on, and the waypoint mode every 10 seconds (``mode 3`` is a loaded trail, ``mode 0`` is a map with no trail, where the bots stand still).  Also prints ``BOTSQUEEZE`` when a bot jammed against a wall steps sideways, ``BOTSTUCK`` and ``BOTTIMEOUT`` when a bot gives up on a target, ``BOTTELE`` for each teleport and ``BOTFALL`` for each drop of more than 80 units (``tdz`` is how far above the bot its next waypoint was, so a drop with ``tdz`` near 0 was an accident).  Needs ``developer 1``. |
-| ``scarlet_dev_botgoal`` | ``0`` | Developer test: ``1`` floats a model over every bot showing its goal (the item's own model when it is after an item, a fireball for a waypoint, a head for a player, a rocket when it is fighting, a gib when it is running from a pentagram, a spike for no goal), and prints a bot's name and goal in the middle of your screen while you look straight at it. |
-| ``scarlet_dev_wayfile`` | ``0`` | Developer test: ``1`` also loads the old ``maps/<map>.way`` waypoint file, only to compare it against a trail. |
-| ``scarlet_powerup_icons`` | ``1`` | Float a small spinning quad or pentagram above anyone carrying one.  Needs an engine that supports the ``scale`` field (QSS, FTE, DarkPlaces); on others the icons show full size, so turn this off. |
-| ``scarlet_powerup_icon_scale`` | ``0.4`` | Size of the floating icon. |
-| ``scarlet_powerup_icon_height`` | ``42`` | How far above the player's origin the icon floats.  The top of the head is about ``32``. |
 
 ## Killstreaks & Rewards
 
@@ -127,7 +130,7 @@ Bleeding is rolled per hit: a **chance** decides if the hit bleeds at all, and a
 
 | Cvar | Default | What it does |
 |---|---|---|
-| ``scarlet_gore`` | ``3`` | Master multiplier for all blood.  ``0`` turns gore off. |
+| ``scarlet_gore`` | ``0`` | Master multiplier for all blood.  ``0`` turns gore off. |
 | ``scarlet_gore_chance_bullets`` | ``0.3`` | Chance a bullet makes the target bleed. |
 | ``scarlet_gore_multiplier_bullets`` | ``1`` | Blood drops per bullet. |
 | ``scarlet_gore_chance_nails`` | ``0.6`` | Chance a nail makes the target bleed. |
@@ -153,7 +156,7 @@ Tune any weapon.  Names: ``sg`` Shotgun, ``ssg`` Super Shotgun, ``ng`` Nailgun, 
 
 | Cvar | Default | Notes |
 |---|---|---|
-| ``scarlet_dmg_axe`` | ``24`` | |
+| ``scarlet_dmg_axe`` | ``20`` | |
 | ``scarlet_dmg_bullets`` | ``4`` | Per bullet. |
 | ``scarlet_dmg_nails`` | ``9`` | Per nail. |
 | ``scarlet_dmg_rockets`` | ``120`` | Direct and splash. |
@@ -182,7 +185,7 @@ Tune any weapon.  Names: ``sg`` Shotgun, ``ssg`` Super Shotgun, ``ng`` Nailgun, 
 |---|---|---|
 | shells | ``40`` | ``20`` |
 | nails | ``50`` | ``25`` |
-| rockets | ``8`` | ``4`` |
+| rockets | ``10`` | ``5`` |
 | cells | ``12`` | ``6`` |
 
 ### Rate of fire
@@ -191,24 +194,28 @@ Seconds between shots.  Lower is faster.
 
 | Cvar | Default |
 |---|---|
-| ``scarlet_rof_axe`` | ``0.49`` |
+| ``scarlet_rof_axe`` | ``0.5`` |
 | ``scarlet_rof_sg`` | ``0.5`` |
 | ``scarlet_rof_ssg`` | ``0.7`` |
-| ``scarlet_rof_ng`` | ``0.095`` |
-| ``scarlet_rof_sng`` | ``0.095`` |
+| ``scarlet_rof_ng`` | ``0.2`` |
+| ``scarlet_rof_sng`` | ``0.2`` |
 | ``scarlet_rof_gl`` | ``0.6`` |
 | ``scarlet_rof_rl`` | ``0.8`` |
 | ``scarlet_rof_tb`` | ``0`` |
 | ``scarlet_rof_hg`` | ``0.6`` |
 
+``scarlet_axe_frametime`` is how long each of the four frames of the axe swing lasts, in seconds: ``0.1`` is id's, ``0.05`` is a faster swing that gets the damage frame out sooner.  A ``scarlet_rof_axe`` shorter than four frames squeezes the swing to fit.
+
+``scarlet_rof_tb`` is the railgun switch.  At ``0`` the Thunderbolt is the normal beam that runs while you hold fire.  Above ``0`` it fires a single bolt per press and then is down for that many seconds (``1.6`` is a good start); the bolt still discharges in water.
+
 ### Spread, kick & speed
 
 | Cvar | Default | What it does |
 |---|---|---|
-| ``scarlet_spr_sg`` / ``_ssg`` / ``_ng`` / ``_sng`` | ``4`` / ``14`` / ``0`` / ``2`` | Spread of shots.  ``0`` is perfectly accurate. |
+| ``scarlet_spr_sg`` / ``_ssg`` / ``_ng`` / ``_sng`` | ``4`` / ``14`` / ``0`` / ``0`` | Spread of shots.  ``0`` is perfectly accurate. |
 | ``scarlet_kick_sg`` / ``_ssg`` / ``_ng`` / ``_sng`` / ``_gl`` / ``_rl`` / ``_tb`` | ``2`` / ``4`` / ``2`` / ``2`` / ``2`` / ``2`` / ``2`` | How far your view jolts when firing.  ``0`` for none. |
-| ``scarlet_spd_ng`` | ``1996`` | Nailgun nail speed.  ``2000`` or more becomes instant hitscan. |
-| ``scarlet_spd_sng`` | ``1020`` | Perforator nail speed.  ``2000`` or more becomes instant hitscan. |
+| ``scarlet_spd_ng`` | ``1000`` | Nailgun nail speed.  ``2000`` or more becomes instant hitscan. |
+| ``scarlet_spd_sng`` | ``1000`` | Perforator nail speed.  ``2000`` or more becomes instant hitscan. |
 
 ## Melee
 
@@ -227,11 +234,13 @@ Attack with the axe without switching weapons.  Bind a key: ``bind f "impulse 12
 
 The lunge needs ``scarlet_melee_lunge 1``, ``scarlet_melee_lunge_speed`` above ``0`` and either a range or ``scarlet_melee_lunge_always 1``.
 
-Lunging is buggy because of engine collision handling, which is why it's off by default.
+Lunging is off by default.
 
 ## Hand Grenades
 
 Toss a grenade without switching weapons.  Bind a key: ``bind g "impulse 121"``.
+
+Grenades are a new item, and the maps are 30 years old and have no place for one.  The only way to bring them into those maps was to make them appear at random in backpacks.
 
 | Cvar | Default | What it does |
 |---|---|---|
@@ -247,6 +256,18 @@ Toss a grenade without switching weapons.  Bind a key: ``bind g "impulse 121"``.
 
 ---
 
+## Testing
+
+Developer aids for debugging bots and trails.  Leave them at ``0`` for normal play.
+
+| Cvar | Default | What it does |
+|---|---|---|
+| ``scarlet_testing`` | ``0`` | Developer aid: bots say the topic name ("connect", "welcome") instead of a random quote so dialogue can be tested. |
+| ``scarlet_dev_autobots`` | ``0`` | Developer test: adds this many bots by itself a moment after the map starts, so a dedicated server can run a bot test with nobody connected. |
+| ``scarlet_dev_botlog`` | ``0`` | Developer test: ``1`` prints each bot's position and goal once a second, every goal it reaches or gives up on, and the waypoint mode every 10 seconds (``mode 3`` is a loaded trail, ``mode 0`` is a map with no trail, where the bots stand still).  Also prints ``BOTSQUEEZE`` when a bot jammed against a wall steps sideways, ``BOTSTUCK`` and ``BOTTIMEOUT`` when a bot gives up on a target, ``BOTTELE`` for each teleport and ``BOTFALL`` for each drop of more than 80 units (``tdz`` is how far above the bot its next waypoint was, so a drop with ``tdz`` near 0 was an accident).  Needs ``developer 1``. |
+| ``scarlet_dev_botgoal`` | ``0`` | Developer test: ``1`` floats a model over every bot showing its goal (the item's own model when it is after an item, a fireball for a waypoint, a head for a player, a rocket when it is fighting, a gib when it is running from a pentagram, a spike for no goal), and prints a bot's name and goal in the middle of your screen while you look straight at it. |
+| ``scarlet_dev_wayfile`` | ``0`` | Developer test: ``1`` also loads the old ``maps/<map>.way`` waypoint file, only to compare it against a trail. |
+
 ## Commands
 
 ### Player impulses
@@ -257,6 +278,7 @@ Toss a grenade without switching weapons.  Bind a key: ``bind g "impulse 121"``.
 | ``impulse 160`` | Best rocket weapon: the rocket launcher, or the grenade launcher if that is missing or out of rockets. |
 | ``impulse 161`` | Best nail gun: the super nailgun, or the nailgun. |
 | ``impulse 162`` | Best shotgun: the super shotgun, or the shotgun. |
+| ``impulse 163`` | Best weapon you have ammo for: lightning gun (not in water), rocket launcher, super nailgun, super shotgun, nailgun, shotgun, grenade launcher, then the axe. |
 | ``impulse 121`` | Toss a hand grenade (needs ``scarlet_grenades 1``). |
 | ``impulse 123`` | Print every player's frags, deaths and assists to your console. |
 | ``impulse 122`` | Swap to a different random music track right now, picked from ``scarlet_music_min`` to ``scarlet_music_max`` and never the same track twice in a row.  Switches for every player and announces the track number in chat.  Works even if ``scarlet_music`` is ``0``. |

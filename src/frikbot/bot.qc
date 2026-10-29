@@ -1375,22 +1375,6 @@ void() WaypointWatch =
 	if (max_clients < 2)
 		return;
 
-	// once per map, after every entity has spawned: say where the bots' waypoints came from
-	if (!way_mode_said)
-	{
-		way_mode_said = TRUE;
-		if (waypoint_mode == WM_LOADED)
-		{
-			localcmd("echo Bot pathing: Trailgen file found (");
-			localcmd(ftos(waypoints));
-			localcmd(" waypoints loaded from maps/");
-			localcmd(mapname);
-			localcmd(".ent)\n");
-		}
-		else
-			localcmd("echo Bot pathing: no Trailgen file found, so the bots will not move\n");
-	}
-
 	// dev: once the waypoints have linked up, list them as the game sees them, to compare with the
 	// .ent file (BOTWAY number, position, then the numbers of the waypoints it links to)
 	if (cv_scarlet_dev_botlog && !way_dumped && time > 12 && way_head)
@@ -1444,7 +1428,40 @@ void() WaypointWatch =
 		n = n + 1;
 	}
 
-	if (waypoint_mode != WM_UNINIT)
+	// the first time through: bring back the bots from the last map.  this used to wait for a map with no
+	// waypoints, which was the only kind there was before trailgen, so a map with a trail never restored them
+	if (!way_decided)
+	{
+		way_decided = TRUE;
+
+		b_options = cvar("saved1");
+		// bots always stick around in coop and single player; in deathmatch it depends on saved1
+		if (coop || !deathmatch || (b_options & OPT_SAVEBOTS))
+		{
+			saved_bots = cvar("scratch1");
+			saved_skills1 = cvar("scratch2");
+			saved_skills2 = cvar("scratch3");
+		}
+		cvar_set ("saved4", "0");
+		if (waypoint_mode == WM_UNINIT)
+		{
+			if (max_clients > 1)
+			{
+				// .way files are retired: a map's waypoints now come from its .ent file (made by
+				// tools/trailgen), which spawns them as entities.  without one the mode stays
+				// uninitialized and the bots don't move
+				if (cv_scarlet_dev_wayfile)
+				{
+					localcmd("exec maps/");
+					localcmd(mapname);
+					localcmd(".way\n");
+				}
+			}
+			else
+				waypoint_mode = WM_LOADED;
+		}
+	}
+	else if (waypoint_mode != WM_UNINIT)
 	{
 		bigboobs = cvar("saved4");
 		if (bigboobs != 0)
@@ -1465,37 +1482,6 @@ void() WaypointWatch =
 			waypoint_mode = WM_LOADING;
 			cvar_set("saved4", "0");
 		}
-	}
-	else if (!way_decided)
-	{
-		// the first time through, with no waypoints in the map
-		way_decided = TRUE;
-
-		// the bots return!
-		b_options = cvar("saved1");
-		//if (coop || (b_options & OPT_SAVEBOTS))
-		// bots always stick around in coop and single player; in deathmatch it depends on saved1
-		if (coop || !deathmatch || (b_options & OPT_SAVEBOTS))
-		{
-			saved_bots = cvar("scratch1");
-			saved_skills1 = cvar("scratch2");
-			saved_skills2 = cvar("scratch3");
-		}
-		cvar_set ("saved4", "0");
-		if (max_clients > 1)
-		{
-			// .way files are retired: a map's waypoints now come from its .ent file (made by
-			// tools/trailgen), which spawns them as entities.  without one the mode stays
-			// uninitialized and the bots don't move
-			if (cv_scarlet_dev_wayfile)
-			{
-				localcmd("exec maps/");
-				localcmd(mapname);
-				localcmd(".way\n");
-			}
-		}
-		else
-			waypoint_mode = WM_LOADED;
 	}
 };
 float dev_autobot_time, dev_mode_time;

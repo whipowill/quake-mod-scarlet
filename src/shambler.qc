@@ -218,7 +218,7 @@ void() CastLightning =
 
 	org = self.origin + '0 0 40';
 
-	dir = self.enemy.origin + '0 0 16' - org;
+	dir = enemy_vispos() + '0 0 16' - org;	// SCARLET - ring of shadows confusion
 	dir = normalize (dir);
 
 	traceline (org, self.origin + dir*600, TRUE, self);

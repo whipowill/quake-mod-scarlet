@@ -310,10 +310,51 @@ void() StatsShare =
     }
 }
 
+.float hit_mask; // monsters: which player slots (as bits) hurt it lately
+.float hit_last; // monsters: when it was last hurt by a player
+
+// a player hurt a monster: remember who, for assists, once the monster dies
+void(entity monster, entity attacker, float damage) StatsMonsterHit =
+{
+    if (!(monster.flags & FL_MONSTER) || attacker.classname != "player" || damage <= 0) return;
+    if (StatsSlot(attacker) < 0) return;
+
+    // only the people who hurt it within the assist window count, so start over if it has been a while
+    if (time - monster.hit_last > cv_scarlet_assist_window)
+        monster.hit_mask = 0;
+    monster.hit_mask = monster.hit_mask | attacker.slot_bit;
+    monster.hit_last = time;
+}
+
+// a player killed a monster (single player and co-op): it is a kill, and everyone else who hurt it gets an assist
+void(entity monster, entity killer) StatsMonsterKill =
+{
+    local entity p;
+
+    if (killer.classname != "player") return;
+
+    if (!deathmatch)
+        killer.frags = killer.frags + 1;
+
+    if (cv_scarlet_assist_window <= 0 || time - monster.hit_last > cv_scarlet_assist_window) return;
+    p = find(world, classname, "player");
+    while (p)
+    {
+        if (p != killer && StatsSlot(p) >= 0 && (monster.hit_mask & p.slot_bit))
+            p.assists = p.assists + 1;
+        p = find(p, classname, "player");
+    }
+    monster.hit_mask = 0;
+}
+
 // this runs when player gets hurt
 void(entity player, entity attacker, float damage) StatsDamage =
 {
-    if (player.classname != "player") return;
+    if (player.classname != "player")
+    {
+        StatsMonsterHit(player, attacker, damage);
+        return;
+    }
 
     // flag player as having been attacked (for shield recharge)
     player.last_damaged_time = time;

@@ -47,6 +47,8 @@ void() BecomeCorpse =
 
         if (cv_scarlet_respawn > 0)
                 self.respawn_time = time + cv_scarlet_respawn; // SCARLET - respawn delay (0 waits for a button, as in Quake)
+        else
+                self.respawn_time = 0;
 
         // if gore is turned off, or this is copper...
         if (!cv_scarlet_corpses)

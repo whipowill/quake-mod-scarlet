@@ -2,23 +2,23 @@
 
 Scarlet is a Quake enhancement mod primarily intended for the multiplayer enthusiast. It adds a menu of modern features w/out losing the original soul of the game.
 
-**This mod uses a totally new, completely redesigned botting program called Trailgen.  It includes an executable that automatically generates all the necessary waypoint files for every map in your game directory.**  This means you can have instant bot-compatible maps without any work at all, just run the program and it creates what it needs.
-
 [![Scarlet for Quake](https://i.imgur.com/4o2EPCa.png)](https://rumble.com/user/whipowill24)
+
+**This mod features a totally new, completely redesigned botting program called Trailgen.  It includes an executable that automatically generates all the necessary waypoint files for every map in your game directory.**  This means you can have instant bot-compatible maps without any work at all, just run the program and it creates what it needs.
 
 ## Features
 
-Adding a mix of modern conveniences to a classic game from 1996:
+Adding a mix of modern conveniences to a classic game from 1996.
 
 ### Core Features
 
 - **Multiplayer Bots** - new **Trailgen** bot players for all your games
-- **Blood & Gore** - bathe in the blood of your enemies w/ native engine generated gore
+- **Blood & Gore** - bathe in the blood of your enemies w/ native engine-generated gore
 - **Perfect Balance** - weapons have been tuned to perfection w/ configurable settings
 - **Powerup Icons** - players who pick up powerups have that icon over their heads
-- **Item Resupply** - items can respawn in singleplayer coop games
+- **Singleplayer Tweaks** - items respawn, keep your progress when you die
 - **Music Shuffle** - maps play music at random, instead of a preset track
-- **Plain Quake Underneath** - built on id Software's original Quake source, so the base game plays as it always did
+- **Classic Fixes** - no auto switch, no armor loss from drowning, no armor loss w/ pent
 
 ### Combat Features
 
@@ -34,7 +34,7 @@ Every single feature in this mod is optional and controlled via console variable
 
 ## Install
 
-The full vision and experience of this mod is represented by my uploaded Quake [directory](https://github.com/whipowill/quake-dir), which is preloaded w/ other paks and configuration files tuned to my desired settings.
+The full vision and experience of this mod is represented by my uploaded Quake [directory](https://github.com/whipowill/quake-dir), which is preloaded w/ maps, paks, and configuration files tuned to my desired settings.
 
 ### Configuration
 
@@ -50,7 +50,7 @@ These instructions are so extensive, playing from my uploaded Quake [directory](
 
 The bots need waypoint files to function properly.  Historically, players had to create these files on their own and circulate them.  But now with Trailgen this process is entirely automated.
 
-Put the right ``bin`` program in your Quake directory (the folder that holds ``id1``) and run it from there with nothing after it.  It finds every map under that folder and makes the trail files the bots need:
+Put the right ``bin`` program in your root Quake directory (the folder that holds ``id1``) and run it from there with nothing after it.  It finds every map under that folder and makes the trail files the bots need:
 
 | Your computer | Program | Run it |
 | --- | --- | --- |

@@ -14,18 +14,22 @@ const usage = `trailgen - builds bot trail files (.ent) for Quake maps
 
 usage:
   trailgen                                  build every map under the current folder
-  trailgen [-force] [-v] [-o dir] [folder or map.bsp ...]
+  trailgen [-force] [-keep] [-v] [-mod name] [-o dir] [folder or map.bsp ...]
   trailgen dump <map.bsp>
 
 With nothing to say, trailgen builds a trail for every map under the folder you run it
-in, loose or inside a pak, and skips the ones that are already up to date.  "gen" in front
-of the options does the same thing.
+in, loose or inside a pak.  "gen" in front of the options does the same thing.
 
-gen writes <map>.ent next to each map (or into -o dir).  A folder is searched
+First it deletes the .ent files trailgen made earlier in the folders it is going to write to,
+so maps you tried once and dropped don't leave files behind.  A .ent written by hand is never
+deleted.  With -keep it leaves them and skips the maps whose .ent is already up to date.
+
+gen writes <map>.ent into the mod folder's maps folder (scarlet/maps, or the folder named with -mod),
+whatever folder or pak the map is in, or into -o dir.  trailgen stops with an error if there is no
+mod folder.  A folder is searched
 for .bsp files and .pak files all the way down, so pointing it at the Quake folder
-builds every map there, including the ones inside paks (dm1-6, the single player
-levels): those go in a maps folder next to the pak, where the game looks for them.
-A map you give as a loose file beats the same map in a pak, like it does in the game.  An up to date .ent is skipped unless -force is given.
+builds every map there, including the ones inside paks (dm1-6, the single player levels).
+A map you give as a loose file beats the same map in a pak, like it does in the game.  With -keep, an up to date .ent is skipped unless -force is given.
 `
 
 func main() {
@@ -62,14 +66,28 @@ var verbose *bool
 func genCmd(args []string) error {
 	fs := flag.NewFlagSet("gen", flag.ExitOnError)
 	step := fs.Float64("step", 256, "distance between waypoints, in units")
-	outDir := fs.String("o", "", "write the .ent files here instead of next to each map")
+	outDir := fs.String("o", "", "write the .ent files here instead of into the mod folder")
+	mod := fs.String("mod", "scarlet", "name of the mod folder the .ent files go into (maps/ inside it)")
 	lift := fs.Float64("lift", 12, "how far above the player's origin waypoints sit (the old editor used 22)")
 	force := fs.Bool("force", false, "rebuild even if the .ent is up to date")
+	keep := fs.Bool("keep", false, "keep the .ent files trailgen made earlier and skip the maps they are up to date for (by default they are deleted first)")
 	verbose = fs.Bool("v", false, "list what could not be reached")
 	fs.Parse(args)
 	paths := fs.Args()
 	if len(paths) == 0 {
 		paths = []string{"."}
+	}
+
+	// every trail goes into the mod folder, whatever folder or pak its map came from: the game looks
+	// there first, and no engine's own entity files can override it.  Without the folder there is nowhere
+	// safe to put them, so stop before anything is touched.  -o picks another place.
+	if *outDir == "" {
+		dir, err := findModFolder(*mod, paths)
+		if err != nil {
+			return err
+		}
+		*outDir = filepath.Join(dir, "maps")
+		fmt.Printf("trails go into %s\n", *outDir)
 	}
 
 	// loose maps beat the same map in a pak, and a later pak beats an earlier one, like the game
@@ -135,6 +153,22 @@ func genCmd(args []string) error {
 		return fmt.Errorf("no .bsp files found")
 	}
 
+	if !*keep {
+		dirs := map[string]bool{}
+		for _, m := range maps {
+			if *outDir != "" {
+				dirs[*outDir] = true
+			} else {
+				dirs[m.dir] = true
+			}
+		}
+		removed := 0
+		for d := range dirs {
+			removed += removeGenerated(d, func(string) bool { return true })
+		}
+		fmt.Printf("removed %d .ent files trailgen made earlier (hand made ones are left alone)\n", removed)
+	}
+
 	built, current, failed := 0, 0, 0
 	for i, m := range maps {
 		progress = fmt.Sprintf("[%d/%d %3d%%] ", i+1, len(maps), (i+1)*100/len(maps))
@@ -173,7 +207,8 @@ func genMap(src mapSrc, outDir string, step, lift float32, force bool) (built bo
 		return false, err
 	}
 	hash := hashBytes(raw)
-	if !force && upToDate(outPath, hash, step, lift) {
+	atPath := checksumEntPath(outPath, name, raw)
+	if _, statErr := os.Stat(atPath); !force && statErr == nil && upToDate(outPath, hash, step, lift) {
 		fmt.Printf("%s%-16s up to date\n", progress, name)
 		return false, nil
 	}
@@ -189,6 +224,10 @@ func genMap(src mapSrc, outDir string, step, lift float32, force bool) (built bo
 	// entities the map already has: a hand made .ent beside the map wins over the BSP's own
 	// list.  one of our own outputs never counts, the original is kept as .ent.orig
 	baseText := b.Entities
+	// an engine that ships a fixed entity list for this map (vkQuake, Quakespasm) gets its fixes kept
+	if t, ok := engineEnts[filepath.Base(atPath)]; ok {
+		baseText = t
+	}
 	orig := filepath.Join(filepath.Dir(outPath), name+".ent.orig")
 	for _, cand := range []string{orig, filepath.Join(dir, name+".ent")} {
 		data, err := os.ReadFile(cand)
@@ -228,7 +267,14 @@ func genMap(src mapSrc, outDir string, step, lift float32, force bool) (built bo
 	if err := os.MkdirAll(filepath.Dir(outPath), 0o755); err != nil {
 		return false, err
 	}
+	// this map's old files go first, so nothing stale is left under a checksum name the map no longer has
+	removeGenerated(filepath.Dir(outPath), func(n string) bool {
+		return n == name+".ent" || strings.HasPrefix(n, name+"@")
+	})
 	if err := writeEnt(outPath, hash, step, lift, base, g.waypointEntities(), stats); err != nil {
+		return false, err
+	}
+	if err := writeEnt(atPath, hash, step, lift, base, g.waypointEntities(), stats); err != nil {
 		return false, err
 	}
 	fmt.Printf("%s%-16s %s\n", progress, name, stats)
@@ -299,4 +345,28 @@ func faceArea(v []Vec3) float64 {
 		sz += float64(a[0])*float64(c[1]) - float64(a[1])*float64(c[0])
 	}
 	return math.Sqrt(sx*sx+sy*sy+sz*sz) / 2
+}
+
+// findModFolder looks for the mod's folder by name inside each folder trailgen was pointed at (the current
+// folder when there are none), and in the current folder itself.  It is an error when there is no such folder.
+func findModFolder(name string, paths []string) (string, error) {
+	var tried []string
+	cands := []string{}
+	for _, p := range paths {
+		if st, err := os.Stat(p); err == nil && st.IsDir() {
+			cands = append(cands, filepath.Join(p, name))
+		}
+	}
+	cands = append(cands, name)
+	seen := map[string]bool{}
+	for _, c := range cands {
+		if st, err := os.Stat(c); err == nil && st.IsDir() {
+			return c, nil
+		}
+		if !seen[c] {
+			seen[c] = true
+			tried = append(tried, c)
+		}
+	}
+	return "", fmt.Errorf("can't find the %q mod folder (looked for %s).  Run trailgen from your Quake folder, the one that holds id1 and %s, or name the folder with -mod, or choose where the files go with -o", name, strings.Join(tried, ", "), name)
 }

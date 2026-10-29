@@ -122,7 +122,7 @@ void() OgreFireGrenade =
 
 	makevectors (self.angles);
 
-	missile.velocity = normalize(self.enemy.origin - self.origin);
+	missile.velocity = normalize(enemy_vispos() - self.origin);	// SCARLET - ring of shadows confusion
 	missile.velocity = missile.velocity * 600;
 	missile.velocity_z = 200;
 

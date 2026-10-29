@@ -1127,7 +1127,8 @@ void() W_Attack =
 	else if (self.weapon == IT_LIGHTNING)
 	{
 		player_light1();
-		self.attack_finished = time + 0.1;
+		if (!cv_scarlet_rof_tb) // SCARLET - with a rate of fire of its own, W_FireLightning has already set it
+			self.attack_finished = time + 0.1;
 		sound (self, CHAN_AUTO, "weapons/lstart.wav", 1, ATTN_NORM);
 	}
 
@@ -1212,6 +1213,7 @@ void() W_ChangeWeapon =
 //
 // set weapon, set ammo
 //
+	MeleeCancel ();	// SCARLET - a melee swing or grenade toss in progress must not swap the old weapon back in
 	self.weapon = fl;		
 	W_SetCurrentAmmo ();
 };
@@ -1386,6 +1388,27 @@ void() ImpulseCommands =
 		W_ChangeWeapon ();
 	}
 
+	if (self.impulse == 163) // best weapon you have ammo for (the lightning gun is skipped in water)
+	{
+		if ((self.items & IT_LIGHTNING) && self.ammo_cells >= 1 && self.waterlevel <= 1)
+			self.impulse = 8;
+		else if ((self.items & IT_ROCKET_LAUNCHER) && self.ammo_rockets >= 1)
+			self.impulse = 7;
+		else if ((self.items & IT_SUPER_NAILGUN) && self.ammo_nails >= 2)
+			self.impulse = 5;
+		else if ((self.items & IT_SUPER_SHOTGUN) && self.ammo_shells >= 2)
+			self.impulse = 3;
+		else if ((self.items & IT_NAILGUN) && self.ammo_nails >= 1)
+			self.impulse = 4;
+		else if ((self.items & IT_SHOTGUN) && self.ammo_shells >= 1)
+			self.impulse = 2;
+		else if ((self.items & IT_GRENADE_LAUNCHER) && self.ammo_rockets >= 1)
+			self.impulse = 6;
+		else
+			self.impulse = 1;
+		W_ChangeWeapon ();
+	}
+
 	if (self.impulse == 9)
 		CheatCommand ();
 	if (self.impulse == 10)
@@ -1408,11 +1431,12 @@ Called every frame so impulse events can be handled as well as possible
 */
 void() W_WeaponFrame =
 {
+	// SCARLET - weapons can be switched while the last shot is still recovering; only firing has to wait
+	ImpulseCommands ();
+
 	if (time < self.attack_finished)
 		return;
 
-	ImpulseCommands ();
-	
 // check for attack
 	if (self.button0)
 	{

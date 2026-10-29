@@ -110,13 +110,13 @@ float (entity e, float healamount, float ignore) T_Heal =
 {
 	if (e.health <= 0)
 		return 0;
-	if ((!ignore) && (e.health >= other.max_health))
+	if ((!ignore) && (e.health >= e.max_health))
 		return 0;
 	healamount = ceil(healamount);
 
 	e.health = e.health + healamount;
-	if ((!ignore) && (e.health >= other.max_health))
-		e.health = other.max_health;
+	if ((!ignore) && (e.health >= e.max_health))
+		e.health = e.max_health;
 		
 	if (e.health > 250)
 		e.health = 250;
@@ -135,7 +135,6 @@ float	H_ROTTEN = 1;
 float	H_MEGA = 2;
 .float	healamount, healtype;
 void() health_touch;
-void() item_megahealth_rot;
 
 void() item_health =
 {	
@@ -196,10 +195,13 @@ void() health_touch =
 			return;
 	}
 	
-	sprint(other, "You receive ");
-	s = ftos(self.healamount);
-	sprint(other, s);
-	sprint(other, " health\n");
+	if (cv_scarlet_chat_health)	// SCARLET - pickup messages can be switched off
+	{
+		sprint(other, "You receive ");
+		s = ftos(self.healamount);
+		sprint(other, s);
+		sprint(other, " health\n");
+	}
 	
 // health touch sound
 	sound(other, CHAN_ITEM, self.noise, 1, ATTN_NORM);
@@ -209,13 +211,17 @@ void() health_touch =
 	ItemHide ();
 	self.solid = SOLID_NOT;
 
-	// Megahealth = rot down the player's super health
+	// Megahealth
 	if (self.healtype == 2)
 	{
+		// SCARLET - the player's own health rots now (see CheckPowerups), so the box only has to come back:
+		// it waits as long as the extra health takes to rot away, plus the usual 20 seconds
 		other.items = other.items | IT_SUPERHEALTH;
-		self.nextthink = time + 5;
-		self.think = item_megahealth_rot;
-		self.owner = other;
+		if (deathmatch == 1 || cv_scarlet_singleplayer_resupply)
+		{
+			self.nextthink = time + 20 + max(other.health - other.max_health, 0);
+			self.think = SUB_regen;
+		}
 	}
 	else
 	{
@@ -230,28 +236,6 @@ void() health_touch =
 	activator = other;
 	SUB_UseTargets();				// fire all targets / killtargets
 };	
-
-void() item_megahealth_rot =
-{
-	other = self.owner;
-	
-	if (other.health > other.max_health)
-	{
-		other.health = other.health - 1;
-		self.nextthink = time + 1;
-		return;
-	}
-
-// it is possible for a player to die and respawn between rots, so don't
-// just blindly subtract the flag off
-	other.items = other.items - (other.items & IT_SUPERHEALTH);
-	
-	if (deathmatch == 1 || cv_scarlet_singleplayer_resupply)	// SCARLET - resupply integration.
-	{
-		self.nextthink = time + 20;
-		self.think = SUB_regen;
-	}
-};
 
 /*
 ===============================================================================
@@ -291,11 +275,19 @@ void() armor_touch =
 		bit = IT_ARMOR3;
 	}
 	if (other.armortype*other.armorvalue >= type*value)
-		return;
-		
-	other.armortype = type;
-	other.armorvalue = value;
-	other.items = other.items - (other.items & (IT_ARMOR1 | IT_ARMOR2 | IT_ARMOR3)) + bit;
+	{
+		// SCARLET - with armor_always_take, a box of the same color as the armor you wear is picked up even
+		// when yours is as good or better: the box is used up and respawns, but your own armor stays as it is.
+		// A box of another color that is no better than yours is still left alone.
+		if (!cv_scarlet_armor_always_take || !(other.items & bit))
+			return;
+	}
+	else
+	{
+		other.armortype = type;
+		other.armorvalue = value;
+		other.items = other.items - (other.items & (IT_ARMOR1 | IT_ARMOR2 | IT_ARMOR3)) + bit;
+	}
 
 	self.solid = SOLID_NOT;
 	ItemHide ();
@@ -420,14 +412,23 @@ SCARLET - switch to a weapon just picked up (self is the player), if the autoswi
 */
 void(float new) W_BetterWeapon =
 {
+	local float was;
+
 	if (!cv_scarlet_autoswitch) return;
 
+	was = self.weapon;
 	if (!deathmatch)
 		self.weapon = new;
 	else
 		Deathmatch_Weapon (self.items, new);
 
-	W_ResetWeaponState ();
+	if (self.weapon != was) // only redraw when it really switched
+	{
+		MeleeCancel ();
+		W_ResetWeaponState ();
+	}
+	else
+		W_SetCurrentAmmo ();
 }
 
 /*
@@ -716,6 +717,19 @@ AMMO
 ===============================================================================
 */
 
+// SCARLET - how much a crate gives is read when it is picked up, not when the map loaded, so changing the
+// amounts (or running vanilla.cfg) applies to the crates already lying on the map
+float(float type, float big) AmmoAmount =
+{
+	if (type == 1)
+		return big ? cv_scarlet_shells_big : cv_scarlet_shells_small;
+	if (type == 2)
+		return big ? cv_scarlet_nails_big : cv_scarlet_nails_small;
+	if (type == 3)
+		return big ? cv_scarlet_rockets_big : cv_scarlet_rockets_small;
+	return big ? cv_scarlet_cells_big : cv_scarlet_cells_small;
+};
+
 void() ammo_touch =
 {
 local entity	stemp;
@@ -725,6 +739,9 @@ local float		best;
 		return;
 	if (other.health <= 0)
 		return;
+
+	if (self.ammo_live)
+		self.aflag = AmmoAmount (self.weapon, self.ammo_live == 2);
 
 // if the player was using his best weapon, change up to the new one if better		
 	stemp = self;
@@ -779,7 +796,7 @@ local float		best;
 
 // change to a better weapon if appropriate
 
-	if ( other.weapon == best )
+	if ( cv_scarlet_autoswitch && other.weapon == best )	// SCARLET - the autoswitch setting covers ammo and backpacks too
 	{
 		stemp = self;
 		self = other;
@@ -823,12 +840,14 @@ void() item_shells =
 		precache_model ("maps/b_shell1.bsp");
 		setmodel (self, "maps/b_shell1.bsp");
 		self.aflag = cv_scarlet_shells_big; // was 40, SCARLET - custom ammo integration.
+		self.ammo_live = 2;
 	}
 	else
 	{
 		precache_model ("maps/b_shell0.bsp");
 		setmodel (self, "maps/b_shell0.bsp");
 		self.aflag = cv_scarlet_shells_small; // was 20, SCARLET - custom ammo integration.
+		self.ammo_live = 1;
 	}
 	self.weapon = 1;
 	self.netname = "shells";
@@ -848,12 +867,14 @@ void() item_spikes =
 		precache_model ("maps/b_nail1.bsp");
 		setmodel (self, "maps/b_nail1.bsp");
 		self.aflag = cv_scarlet_nails_big; // was 50, SCARLET - custom ammo integration.
+		self.ammo_live = 2;
 	}
 	else
 	{
 		precache_model ("maps/b_nail0.bsp");
 		setmodel (self, "maps/b_nail0.bsp");
 		self.aflag = cv_scarlet_nails_small; // was 25, SCARLET - custom ammo integration.
+		self.ammo_live = 1;
 	}
 	self.weapon = 2;
 	self.netname = "nails";
@@ -873,12 +894,14 @@ void() item_rockets =
 		precache_model ("maps/b_rock1.bsp");
 		setmodel (self, "maps/b_rock1.bsp");
 		self.aflag = cv_scarlet_rockets_big; // was 10, SCARLET - custom ammo integration.
+		self.ammo_live = 2;
 	}
 	else
 	{
 		precache_model ("maps/b_rock0.bsp");
 		setmodel (self, "maps/b_rock0.bsp");
 		self.aflag = cv_scarlet_rockets_small; // was 5, SCARLET - custom ammo integration.
+		self.ammo_live = 1;
 	}
 	self.weapon = 3;
 	self.netname = "rockets";
@@ -899,12 +922,14 @@ void() item_cells =
 		precache_model ("maps/b_batt1.bsp");
 		setmodel (self, "maps/b_batt1.bsp");
 		self.aflag = cv_scarlet_cells_big; // was 12, SCARLET - custom ammo integration.
+		self.ammo_live = 2;
 	}
 	else
 	{
 		precache_model ("maps/b_batt0.bsp");
 		setmodel (self, "maps/b_batt0.bsp");
 		self.aflag = cv_scarlet_cells_small; // was 6, SCARLET - custom ammo integration.
+		self.ammo_live = 1;
 	}
 	self.weapon = 4;
 	self.netname = "cells";
@@ -1418,7 +1443,7 @@ void() BackpackTouch =
 	stuffcmd (other, "bf\n");
 
 // change to a better weapon if appropriate
-	if ( other.weapon == best )
+	if ( cv_scarlet_autoswitch && other.weapon == best )	// SCARLET - the autoswitch setting covers ammo and backpacks too
 	{
 		stemp = self;
 		self = other;

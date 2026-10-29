@@ -98,7 +98,10 @@ void(entity targ, entity attacker) Killed =
 	}
 
 	if (self.flags & FL_MONSTER && attacker.classname == "player")
+	{
 		SpawnMonsterReward(self.origin);	// SCARLET - monster drops in single player and coop
+		StatsMonsterKill(self, attacker);	// SCARLET - monster kills count on the scoreboard
+	}
 
 	ClientObituary(self, attacker);
 	
@@ -126,6 +129,7 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
 	local	entity	oldself;
 	local	float	save;
 	local	float	take;
+	local	float	immune;
 
 	if (!targ.takedamage)
 		return;
@@ -133,7 +137,13 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
 // used by buttons and triggers to set activator for target firing
 	damage_attacker = attacker;
 
-	StatsDamage(targ, attacker, damage); // SCARLET - stats integration.
+	// SCARLET - a hit that can't hurt (god mode, pentagram, a teammate under teamplay) doesn't count as damage:
+	// it doesn't wear down armor, delay health recharge or earn assists
+	immune = (targ.flags & FL_GODMODE) || (targ.invincible_finished >= time)
+		|| ((teamplay == 1) && (targ.team > 0) && (targ.team == attacker.team));
+
+	if (!immune)
+		StatsDamage(targ, attacker, damage); // SCARLET - stats integration.
 
 	// SCARLET - single player and coop: monsters hit players harder per difficulty
 	if ((attacker.flags & FL_MONSTER) && targ.classname == "player")
@@ -146,7 +156,9 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
 // save damage based on the target's armor level
 
 	save = ceil(targ.armortype*damage);
-	if (save >= targ.armorvalue)
+	if (immune)
+		save = 0;	// SCARLET - armor is not used up by a hit that does nothing
+	if (save >= targ.armorvalue && !immune)
 	{
 		save = targ.armorvalue;
 		targ.armortype = 0;	// lost all armor
@@ -201,6 +213,9 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
 	}
 
 // react to the damage
+	if ((targ.flags & FL_MONSTER) && attacker.classname == "player")
+		targ.reveal_until = time + 1;	// SCARLET - hurting a monster gives you away to it for a second
+
 	oldself = self;
 	self = targ;
 

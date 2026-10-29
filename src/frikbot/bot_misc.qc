@@ -99,7 +99,7 @@ float b_chattime_system;
 
 void(float topic) bot_start_topic =
 {
-	if (!cv_scarlet_dialogue) return;
+	if (!cv_scarlet_bot_dialogue) return;
 
 	local float odds;
 	odds = 0.3;

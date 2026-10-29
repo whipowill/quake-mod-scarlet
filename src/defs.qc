@@ -723,4 +723,6 @@ float(float angle) cos			= #61;
 .float scarlet_nail;	// set on nails launched by the nailguns, whose damage is in .dmg
 .string type;		// to make find()ing easier, and for classification (gore, rewards)
 .float lifetime_finished;
+.float ammo_live;	// SCARLET - 1 small / 2 big ammo crate whose amount is read at pickup
+.float rot_time;	// SCARLET - when health above the maximum next rots by a point
 .float alpha;		// engine field, 0.2 is a ghost

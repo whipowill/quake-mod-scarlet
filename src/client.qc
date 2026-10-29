@@ -424,7 +424,7 @@ void() set_suicide_frame;
 // called by ClientKill and DeadThink
 void() respawn =
 {
-	if (coop)
+	if (coop || (!deathmatch && cv_scarlet_singleplayer_keep_progress))	// SCARLET - keep_progress respawns in single player instead of restarting the level
 	{
 		// make a copy of the dead body for appearances sake
 		CopyToBodyQue (self);
@@ -435,8 +435,9 @@ void() respawn =
 	}
 	else if (deathmatch)
 	{
-		// make a copy of the dead body for appearances sake
-		CopyToBodyQue (self);
+		// SCARLET - no copy of the dead body in the body queue, as in the Copper-based build: the engine only
+		// colors client entities, so the copy was drawn in the default colors.  The corpse is the player's own
+		// body, which keeps its colors for the respawn wait and is removed when the player respawns.
 		// set default spawn parms
 		SetNewParms ();
 		// respawn		
@@ -557,9 +558,10 @@ void() PutClientInServer =
 
 	DecodeLevelParms ();
 	
+	MeleeCancel ();	// SCARLET - no half-finished swing carries over from the last life
 	W_SetCurrentAmmo ();
 
-	self.attack_finished = time;
+	self.attack_finished = time + 0.1;	// SCARLET - the click that respawns you must not fire a shot
 	self.th_pain = player_pain;
 	self.th_die = PlayerDie;
 	
@@ -836,6 +838,10 @@ void() PlayerDeathThink =
 		return;
 	}
 
+// SCARLET - the death timeout: no respawning by button until it is over
+	if (self.respawn_time > time)
+		return;
+
 // wait for any button down
 	if (!self.button2 && !self.button1 && !self.button0)
 		return;
@@ -903,6 +909,7 @@ WaterMove
 
 void() WaterMove =
 {
+	local float armor_hold, type_hold, items_hold;
 //dprint (ftos(self.waterlevel));
 	if (self.movetype == MOVETYPE_NOCLIP)
 		return;
@@ -925,7 +932,20 @@ void() WaterMove =
 			self.dmg = self.dmg + 2;
 			if (self.dmg > 15)
 				self.dmg = 10;
+			// SCARLET - drowning goes straight to health: armor can't help you breathe, so it isn't used up
+			armor_hold = self.armorvalue;
+			type_hold = self.armortype;
+			items_hold = self.items & (IT_ARMOR1 | IT_ARMOR2 | IT_ARMOR3);
+			self.armorvalue = 0;
+			self.armortype = 0;
 			T_Damage (self, world, world, self.dmg);
+			if (self.health > 0)
+			{
+				// T_Damage with no armor also strips the armor flags, so put those back too
+				self.armorvalue = armor_hold;
+				self.armortype = type_hold;
+				self.items = (self.items - (self.items & (IT_ARMOR1 | IT_ARMOR2 | IT_ARMOR3))) | items_hold;
+			}
 			self.pain_finished = time + 1;
 		}
 	}
@@ -1078,6 +1098,22 @@ void() CheckPowerups =
 		return;
 
 	PowerupIcons(); // SCARLET - miniature quad/pent above the head
+
+	// SCARLET - health above the maximum always rots, one point a second, whatever it came from
+	if (self.health > self.max_health)
+	{
+		self.items = self.items | IT_SUPERHEALTH;
+		if (time >= self.rot_time)
+		{
+			self.health = self.health - 1;
+			self.rot_time = time + 1;
+		}
+	}
+	else
+	{
+		self.items = self.items - (self.items & IT_SUPERHEALTH);
+		self.rot_time = time + 1;
+	}
 
 // invisibility
 	if (self.invisible_finished)
@@ -1251,11 +1287,13 @@ void() PlayerPostThink =
 	{
 		if (self.watertype == CONTENT_WATER)
 			sound (self, CHAN_BODY, "player/h2ojump.wav", 1, ATTN_NORM);
+		else if (self.waterlevel >= 1)	// SCARLET - landing in knee-deep slime or lava is no fall either
+			sound (self, CHAN_VOICE, "player/land.wav", 1, ATTN_NORM);
 		else if (self.jump_flag < -650)
 		{
+			self.deathtype = "falling";	// SCARLET - set before the damage so a fatal fall is named in the obituary
 			T_Damage (self, world, world, 5); 
 			sound (self, CHAN_VOICE, "player/land2.wav", 1, ATTN_NORM);
-			self.deathtype = "falling";
 		}
 		else
 			sound (self, CHAN_VOICE, "player/land.wav", 1, ATTN_NORM);

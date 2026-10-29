@@ -26,12 +26,12 @@ void(float is_lunge = 1) AxeAttack =
         // reset stance
         player_run();
 
+        // change weapons (remember the weapon in hand, but not one that a swing or toss already swapped in)
+        if (!self.is_swing) self.old_weapon = self.weapon;
+        self.weapon = IT_AXE;
+
         // mark as in melee swing
         self.is_swing = 1;
-
-        // change weapons
-        if (self.weapon != IT_AXE) self.old_weapon = self.weapon;
-        self.weapon = IT_AXE;
 
         // change model
         self.weaponmodel = "progs/v_axe.mdl";
@@ -83,12 +83,12 @@ void() GrenadeAttack =
     local float old_attack_finished = self.attack_finished;
     if (self.attack_finished_melee <= time && self.ammo_grenades > 0)
     {
+        // change weapons (remember the weapon in hand, but not one that a swing or toss already swapped in)
+        if (!self.is_swing) self.old_weapon = self.weapon;
+        self.weapon = IT_GRENADE_LAUNCHER;
+
         // mark as in melee swing
         self.is_swing = 1;
-
-        // change weapons
-        self.old_weapon = self.weapon;
-        self.weapon = IT_GRENADE_LAUNCHER;
 
         self.weaponmodel = string_null;
 
@@ -160,6 +160,13 @@ void() HandGrenadeTouch =
     if (self.velocity == '0 0 0')
         self.avelocity = '0 0 0';
 }
+
+// the player picked a weapon on purpose, so a swing or toss in progress must not put the old one back later
+void() MeleeCancel =
+{
+    self.is_swing = 0;
+    self.old_weapon = 0;
+};
 
 void() FixWeaponState =
 {

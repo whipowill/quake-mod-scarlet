@@ -202,7 +202,7 @@ void() army_fire =
 // fire somewhat behind the player, so a dodging player is harder to hit
 	en = self.enemy;
 	
-	dir = en.origin - en.velocity*0.2;
+	dir = enemy_vispos() - en.velocity*0.2;	// SCARLET - ring of shadows confusion
 	dir = normalize (dir - self.origin);
 	
 	FireBullets (4, dir, '0.1 0.1 0', cv_scarlet_dmg_bullets); // SCARLET - custom dmg integration.

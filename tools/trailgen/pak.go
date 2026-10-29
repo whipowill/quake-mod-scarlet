@@ -27,6 +27,10 @@ func looseSrc(path string) mapSrc {
 	}
 }
 
+// engineEnts holds the entity files the engine's own paks ship for particular maps, by file name
+// (e1m1@c49d.ent), so the waypoints can be added to them instead of to the plain entity list.
+var engineEnts = map[string]string{}
+
 // pakSrcs lists the maps in a pak (the PACK format: a header, then a directory of 64 byte
 // entries pointing at each file).  the brush models for items (maps/b_*.bsp) aren't maps.
 func pakSrcs(path string) ([]mapSrc, error) {
@@ -51,6 +55,10 @@ func pakSrcs(path string) ([]mapSrc, error) {
 		pos, size := int(le.Uint32(data[i+56:])), int(le.Uint32(data[i+60:]))
 		low := strings.ToLower(name)
 		base := filepath.Base(low)
+		if strings.HasPrefix(low, "maps/") && strings.HasSuffix(low, ".ent") && strings.Contains(base, "@") && pos >= 0 && size >= 0 && pos+size <= len(data) {
+			engineEnts[base] = string(data[pos : pos+size])
+			continue
+		}
 		if !strings.HasPrefix(low, "maps/") || !strings.HasSuffix(low, ".bsp") || strings.HasPrefix(base, "b_") {
 			continue
 		}
