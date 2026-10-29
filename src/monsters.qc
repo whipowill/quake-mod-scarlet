@@ -100,6 +100,7 @@ local entity	etemp;
 	}
 	
 	self.takedamage = DAMAGE_AIM;
+	monster_health_scale ();	// SCARLET - monsters can be tougher in single player and co-op
 
 	self.ideal_yaw = self.angles * '0 1 0';
 	if (!self.yaw_speed)
@@ -151,6 +152,7 @@ void() walkmonster_start =
 void() flymonster_start_go =
 {
 	self.takedamage = DAMAGE_AIM;
+	monster_health_scale ();	// SCARLET - monsters can be tougher in single player and co-op
 
 	self.ideal_yaw = self.angles * '0 1 0';
 	if (!self.yaw_speed)
@@ -209,6 +211,7 @@ void() swimmonster_start_go =
 	}
 
 	self.takedamage = DAMAGE_AIM;
+	monster_health_scale ();	// SCARLET - monsters can be tougher in single player and co-op
 	total_monsters = total_monsters + 1;
 
 	self.ideal_yaw = self.angles * '0 1 0';

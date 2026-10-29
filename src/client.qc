@@ -426,8 +426,8 @@ void() respawn =
 {
 	if (coop || (!deathmatch && cv_scarlet_singleplayer_keep_progress))	// SCARLET - keep_progress respawns in single player instead of restarting the level
 	{
-		// make a copy of the dead body for appearances sake
-		CopyToBodyQue (self);
+		// SCARLET - no copy of the dead body in the body queue here either (see the deathmatch case below):
+		// the copy was drawn in the default colors and stayed behind after the player respawned.
 		// get the spawn parms as they were at level start
 		setspawnparms (self);
 		// respawn		

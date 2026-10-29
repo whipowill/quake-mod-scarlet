@@ -16,7 +16,7 @@ Adding a mix of modern conveniences to a classic game from 1996.
 - **Blood & Gore** - bathe in the blood of your enemies w/ native engine-generated gore
 - **Perfect Balance** - weapons have been tuned to perfection w/ configurable settings
 - **Powerup Icons** - players who pick up powerups have that icon over their heads
-- **Singleplayer Tweaks** - items respawn, keep your progress when you die
+- **Singleplayer Tweaks** - items respawn, harder more-dense monsters, keep progress on death
 - **Music Shuffle** - maps play music at random, instead of a preset track
 - **Classic Fixes** - no auto switch, no armor loss from drowning, no armor loss w/ pent
 
@@ -71,7 +71,6 @@ Scarlet's own code is free software under the **GNU General Public License, vers
 - Original FrikBot mod by [FrikaC](https://www.moddb.com/mods/frikbot-x), Igor9, and JLaw
 - Original waypoint files by [LightningHunter](https://www.celephais.net/board/view_thread.php?id=60404)
 - Original nametag code by [BenVanCitters](https://gist.github.com/BenVanCitters/a157f58e906bf00adc39a484cbcee12f)
-- Original corpse gibbing code by [Kryten](https://www.insideqc.com/qctut/qctut-33.shtml)
 - Original head kicking code by [Ivana](http://www.insideqc.com/qctut/lesson-52.shtml)
 - Original enemy bleeding code by [Maniac](https://www.insideqc.com/qctut/qctut-47.shtml)
 - Original health cross model provided by [Quoth](https://www.quaddicted.com/webarchive/kell.quaddicted.com/quoth/quoth2.html)

@@ -56,7 +56,8 @@ float() LoadoutParamEight =
 float() LoadoutParamShells =
 {
     local float desired = cvar("weapons");
-    if (desired == 2 || desired == 3 || !desired) return 25;
+    // a player spawns with a full load of shells, whatever the maximum is set to
+    if (desired == 2 || desired == 3 || !desired) return cvar("scarlet_max_shells");
 
     return 0;
 };

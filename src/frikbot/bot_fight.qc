@@ -43,6 +43,7 @@ this notice in its entirety.
 */
 
 .entity avoid;
+.float dodge_next, monster_next;	// SCARLET - when this bot next looks for shots and for monsters
 .float last_melee_attempt, last_grenade_attempt;
 
 float(entity e) bot_size_player =
@@ -144,9 +145,6 @@ void() bot_dodge_stuff =
 	if (waypoint_mode > WM_LOADED)
 		return;
 
-	self.avoid = world;
-
-
 	if (self.enemy)
 	{
 		v = self.origin - realorigin(self.enemy);
@@ -158,6 +156,17 @@ void() bot_dodge_stuff =
 		foesz = 9999999;
 	avdist = 256;
 
+	// SCARLET - looking for shots walks the whole entity list three times, so a bot does it ten
+	// times a second, not every frame.  in between it keeps the shot it saw (or drops it if it is gone)
+	if (time < self.dodge_next)
+	{
+		if (self.avoid && self.avoid.classname == "")
+			self.avoid = world;
+	}
+	else
+	{
+	self.dodge_next = time + 0.1;
+	self.avoid = world;
 	foe = find(world, classname, "grenade");
 	while(foe)
 	{
@@ -214,11 +223,14 @@ void() bot_dodge_stuff =
 		if (self.dodge_skip)
 			self.avoid = world;
 	}
+	}
 
 	if (coop || !deathmatch)
 	{
-		if (!self.enemy)
+		// SCARLET - and monsters are looked for four times a second
+		if (!self.enemy && time >= self.monster_next)
 		{
+			self.monster_next = time + 0.25;
 			foe = findradius(self.origin, 9999);
 			while(foe)
 			{
@@ -229,7 +241,7 @@ void() bot_dodge_stuff =
 						tsz = bot_size_player(foe) + vlen(foe.origin - self.origin) * 0.5;
 						if (tsz < foesz)
 						{
-							if (fisible(foe) && bot_near_human(foe.origin))
+							if (bot_near_human(foe.origin) && fisible(foe))
 							{
 								self.enemy = foe;
 								foesz = tsz;

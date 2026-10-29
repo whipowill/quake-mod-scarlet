@@ -33,6 +33,15 @@ void() S_Precache =
     precache_model("progs/invulner.mdl");
     precache_model("progs/quaddama.mdl");
 
+    // every weapon, on every map: dropped weapons (scarlet_visible_weapons) and weapons that appear later can
+    // be any of them, whether or not the mapper placed one.  the view models (v_*) are already in worldspawn
+    precache_model("progs/g_shot.mdl");
+    precache_model("progs/g_nail.mdl");
+    precache_model("progs/g_nail2.mdl");
+    precache_model("progs/g_rock.mdl");
+    precache_model("progs/g_rock2.mdl");
+    precache_model("progs/g_light.mdl");
+
     // the models that aren't part of Quake are only loaded when the feature that shows them is on
     if (cv_scarlet_rewards || cv_scarlet_singleplayer_monsters_drop_chance > 0)
         precache_model("progs/items/quoth/cross.mdl"); // the Megahealth reward

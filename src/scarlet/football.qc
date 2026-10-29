@@ -32,4 +32,7 @@ void() KickGibs =
 
     self.flags = self.flags - ( self.flags & FL_ONGROUND );
     self.velocity = v;
+
+    // the engine zeroes the spin when a bouncing thing comes to rest, so a kicked head has to be spun again
+    self.avelocity = crandom() * '0 600 0';
 };

@@ -21,7 +21,7 @@ Everything in Scarlet is controlled by console variables (cvars) and a few impul
 | ``scarlet_autoswitch`` | ``1`` | ``1`` switches to a weapon when you pick it up.  ``0`` keeps your current weapon (you still auto-switch if you run out of ammo). |
 | ``scarlet_visible_weapons`` | ``0`` | ``1`` makes a dead player's weapon drop as a visible pickup on the floor instead of inside the backpack. |
 | ``scarlet_remove_weaker_weapons`` | ``0`` | ``1`` removes the Shotgun and Nailgun from the game.  Players spawn with the Super Shotgun instead. |
-| ``scarlet_corpses`` | ``0`` | ``1`` leaves player corpses on the map for a while (they can be gibbed) instead of vanishing immediately.  |
+| ``scarlet_dead_noclip`` | ``0`` | ``1`` makes monsters, players and bots non-solid the moment they die, so you can walk through them at once.  Quake only does that partway through a monster's death animation.  Severed heads (`scarlet_football`) are left alone and can still be kicked. |
 | ``scarlet_football`` | ``0`` | ``1`` lets you kick severed heads around like a football. |
 | ``scarlet_item_ghosts`` | ``0`` | ``1`` leaves a faint see-through ghost of an item where it was picked up and flickers it back in before it respawns, so you can see what is coming back and when.  Without it the item just vanishes and reappears.  Also makes dropped items blink out. |
 | ``scarlet_respawn`` | ``0`` | Seconds a dead player must wait before they are allowed to respawn (the "death timeout"). |
@@ -97,6 +97,10 @@ Set all the ``scarlet_chat_*`` cvars to ``0`` for a quiet console in busy bot ma
 | ``scarlet_singleplayer_monsters_damage_normal`` | ``1`` | **(SP/co-op only)** On normal skill, monsters hit players this many times harder.  ``1.5`` is 50% more damage.  Applies to every monster attack on a player (bots too), including projectiles and explosions.  Monsters hurting each other is unchanged. |
 | ``scarlet_singleplayer_monsters_damage_hard`` | ``1`` | **(SP/co-op only)** On hard skill, monsters hit players this many times harder.  ``1.5`` is 50% more damage.  Applies to every monster attack on a player (bots too), including projectiles and explosions.  Monsters hurting each other is unchanged. |
 | ``scarlet_singleplayer_monsters_damage_nightmare`` | ``1`` | **(SP/co-op only)** On nightmare skill, monsters hit players this many times harder.  ``1.5`` is 50% more damage.  Applies to every monster attack on a player (bots too), including projectiles and explosions.  Monsters hurting each other is unchanged. |
+| ``scarlet_singleplayer_monsters_health_easy`` | ``1`` | **(SP/co-op only)** On easy skill, monsters have this many times their normal health.  ``2`` doubles it, ``0.5`` halves it.  Set it before the map loads.  The bosses (Chthon and Shub-Niggurath) are left alone. |
+| ``scarlet_singleplayer_monsters_health_normal`` | ``1`` | **(SP/co-op only)** On normal skill, monsters have this many times their normal health.  ``2`` doubles it, ``0.5`` halves it.  Set it before the map loads.  The bosses (Chthon and Shub-Niggurath) are left alone. |
+| ``scarlet_singleplayer_monsters_health_hard`` | ``1`` | **(SP/co-op only)** On hard skill, monsters have this many times their normal health.  ``2`` doubles it, ``0.5`` halves it.  Set it before the map loads.  The bosses (Chthon and Shub-Niggurath) are left alone. |
+| ``scarlet_singleplayer_monsters_health_nightmare`` | ``1`` | **(SP/co-op only)** On nightmare skill, monsters have this many times their normal health.  ``2`` doubles it, ``0.5`` halves it.  Set it before the map loads.  The bosses (Chthon and Shub-Niggurath) are left alone. |
 | ``scarlet_singleplayer_zombies_killable`` | ``0`` | **(SP/co-op only)** ``1`` lets ordinary damage of any kind kill a zombie: its health (60) is no longer topped back up after every hit, so damage adds up and the zombie gibs for good. ``0`` is Quake's rule, where only a single big blast (60 damage at once) can gib one. |
 | ``scarlet_singleplayer_keep_progress`` | ``0`` | **(SP/co-op only)** In single player (``coop 0``), dying normally restarts the level from scratch.  ``1`` stops that: you respawn at the start of the map after the ``scarlet_respawn`` wait, the monsters you killed stay dead, and doors and items stay as you left them.  Co-op (``coop 1``, which the ``singleplayer`` alias sets) already works this way, whatever this is set to. |
 | ``scarlet_singleplayer_bots_range`` | ``1000`` | **(SP/co-op only)** Bots only go after monsters and items within this many units of a player, so they stay near you instead of running across the map to a far away Megahealth or monster.  ``0`` removes the limit. |
@@ -172,7 +176,7 @@ Tune any weapon.  Names: ``sg`` Shotgun, ``ssg`` Super Shotgun, ``ng`` Nailgun, 
 | ``scarlet_absorb_green`` | ``0.3`` | Share of each hit that green armor absorbs (0.3 is 30%). |
 | ``scarlet_absorb_yellow`` | ``0.6`` | Share of each hit that yellow armor absorbs.  Keep it between green and red. |
 | ``scarlet_absorb_red`` | ``0.8`` | Share of each hit that red armor absorbs. |
-| ``scarlet_max_shells`` | ``100`` | Maximum carried. |
+| ``scarlet_max_shells`` | ``100`` | Maximum carried.  Players with a shotgun in their loadout also spawn with this many shells. |
 | ``scarlet_max_nails`` | ``200`` | |
 | ``scarlet_max_rockets`` | ``100`` | |
 | ``scarlet_max_cells`` | ``100`` | |

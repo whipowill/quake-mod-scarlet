@@ -110,6 +110,14 @@ void(entity targ, entity attacker) Killed =
 
 	monster_death_use();
 	self.th_die ();
+
+	// SCARLET - the dead can be walked through at once.  A severed head is SOLID_TRIGGER (th_die just made it
+	// one), so it is left alone and can still be kicked
+	if (cv_scarlet_dead_noclip && self.solid != SOLID_NOT && self.solid != SOLID_TRIGGER)
+	{
+		self.solid = SOLID_NOT;
+		setorigin (self, self.origin);
+	}
 	
 	self = oself;
 };

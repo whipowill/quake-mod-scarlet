@@ -33,7 +33,7 @@ Please keep those notices when you copy these files.  Scarlet's later changes to
 ## Other code
 
 - The player name tag under the crosshair (`src/scarlet/nametags.qc`) began as a gist by BenVanCitters (<https://gist.github.com/BenVanCitters/a157f58e906bf00adc39a484cbcee12f>), modified by whipowill.  The gist states no license.
-- Several features began as public QuakeC tutorials, modified by whipowill: corpse gibbing (`src/scarlet/corpses.qc`) from Kryten, head kicking (`src/scarlet/football.qc`) from Ivana, enemy bleeding (`src/scarlet/gore.qc`) from Maniac, and the footsteps pack from Seven.  The links are in the source files and in the README.  The tutorials state no license.
+- Several features began as public QuakeC tutorials, modified by whipowill: head kicking (`src/scarlet/football.qc`) from Ivana, enemy bleeding (`src/scarlet/gore.qc`) from Maniac, and the footsteps pack from Seven.  The links are in the source files and in the README.  The tutorials state no license.
 - The original waypoint files for the stock maps, by LightningHunter, are no longer used or included: Trailgen makes the waypoints now.
 - FTEQCC, by Spike, compiles the QuakeC.  It is a tool and not part of the mod.
 

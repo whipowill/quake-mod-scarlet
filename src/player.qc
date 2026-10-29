@@ -597,7 +597,13 @@ void() PlayerDie =
 	self.view_ofs = '0 0 -8';
 	self.deadflag = DEAD_DYING;
 	self.solid = SOLID_NOT;
-	BecomeCorpse(); // SCARLET - corpse integration
+	// SCARLET - rewards, killstreak and respawn delay integration
+	SpawnRewards(self.origin, self);
+	KillstreakReset(self);
+	if (cv_scarlet_respawn > 0)
+		self.respawn_time = time + cv_scarlet_respawn;	// 0 waits for a button, as in Quake
+	else
+		self.respawn_time = 0;
 	self.flags = self.flags - (self.flags & FL_ONGROUND);
 	self.movetype = MOVETYPE_TOSS;
 	if (self.velocity_z < 10)

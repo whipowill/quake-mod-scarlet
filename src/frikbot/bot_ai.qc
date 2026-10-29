@@ -896,11 +896,11 @@ float(entity thing) priority_for_thing =
 		return 0;
 	// single player and coop: only care about things near a player, otherwise bots run
 	// across the map for a far away megahealth over and over
+	if (thing.trail_skip)
+		return 0;
 	if ((coop || !deathmatch) && thing.classname != "player")
 		if (!bot_near_human(thing.origin))
 			return 0;
-	if (thing.trail_skip)
-		return 0;
 	if (pointcontents(thing.origin) < -3)
 		return 0;
 	if (thisp)
@@ -1482,16 +1482,20 @@ void() bot_grab_vital =
 float(vector org) bot_near_human =
 {
 	local entity head;
+	local float n;
 
 	if (cv_scarlet_singleplayer_bots_range <= 0)
 		return TRUE;
-	head = find(world, classname, "player");
-	while (head)
+	// SCARLET - walk the client slots, not the whole entity list with find()
+	head = nextent(world);
+	n = 0;
+	while (n < max_clients)
 	{
-		if (head.ishuman && head.health > 0)
+		if (head.ishuman && head.classname == "player" && head.health > 0)
 			if (vlen(head.origin - org) < cv_scarlet_singleplayer_bots_range)
 				return TRUE;
-		head = find(head, classname, "player");
+		head = nextent(head);
+		n = n + 1;
 	}
 	return FALSE;
 };

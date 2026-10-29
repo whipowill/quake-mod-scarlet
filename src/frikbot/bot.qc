@@ -207,6 +207,7 @@ entity b_temp1, b_temp2, b_temp3;
 entity player_head, phys_head, way_head;
 float busy_waypoints;
 float saved_bots, saved_skills1, saved_skills2, current_bots;
+float sv_read_next, way_report_next;	// SCARLET - throttles
 float searchtime_giveup = 2; // for tweaking how long it takes to give up -whipowill
 
 // -------ProtoTypes------
@@ -790,38 +791,52 @@ void(entity who) UpdateClient =
 
 float(float clientno) ClientBitFlag =
 {
-	// bigger, but faster
-	if (clientno == 0)
-		return 1;
-	else if (clientno == 1)
-		return 2;
-	else if (clientno == 2)
-		return 4;
-	else if (clientno == 3)
-		return 8;
-	else if (clientno == 4)
-		return 16;
-	else if (clientno == 5)
-		return 32;
-	else if (clientno == 6)
-		return 64;
-	else if (clientno == 7)
+	// SCARLET - a binary search (4 tests) instead of a chain of up to 16
+	if (clientno < 8)
+	{
+		if (clientno < 4)
+		{
+			if (clientno < 2)
+			{
+				if (clientno == 0)
+					return 1;
+				return 2;
+			}
+			if (clientno == 2)
+				return 4;
+			return 8;
+		}
+		if (clientno < 6)
+		{
+			if (clientno == 4)
+				return 16;
+			return 32;
+		}
+		if (clientno == 6)
+			return 64;
 		return 128;
-	else if (clientno == 8)
-		return 256;
-	else if (clientno == 9)
-		return 512;
-	else if (clientno == 10)
-		return 1024;
-	else if (clientno == 11)
+	}
+	if (clientno < 12)
+	{
+		if (clientno < 10)
+		{
+			if (clientno == 8)
+				return 256;
+			return 512;
+		}
+		if (clientno == 10)
+			return 1024;
 		return 2048;
-	else if (clientno == 12)
-		return 4096;
-	else if (clientno == 13)
+	}
+	if (clientno < 14)
+	{
+		if (clientno == 12)
+			return 4096;
 		return 8192;
-	else if (clientno == 14)
+	}
+	if (clientno == 14)
 		return 16384;
-	else if (clientno == 15)
+	if (clientno == 15)
 		return 32768;
 	return 0;
 };
@@ -1206,12 +1221,17 @@ void(float whichteam, float whatbot, float whatskill) BotConnect =
 	f = ClientBitFlag(self.b_num - 1);
 	current_bots = current_bots | f;
 
+	// SCARLET - a bot's skill is two bits, so its slot is 4^(n-1), not the 2^(n-1) of the one-bit flags.
+	// The restore below reads it back that way, so a bot past the first came back as skill 0.
 	if (self.b_num <= 8)
-		saved_skills1 = (saved_skills1 & (65536 - (3 * f)) | (self.b_skill * f));
+	{
+		f = ClientBitFlag((self.b_num - 1) * 2);
+		saved_skills1 = (saved_skills1 & (65535 - (3 * f))) | (self.b_skill * f);
+	}
 	else
 	{
-		f = ClientBitFlag(self.b_num - 9);
-		saved_skills2 = (saved_skills2 & (65536 - (3 * f)) | (self.b_skill * f));
+		f = ClientBitFlag((self.b_num - 9) * 2);
+		saved_skills2 = (saved_skills2 & (65535 - (3 * f))) | (self.b_skill * f);
 	}
 
 	h = ftos(current_bots);
@@ -1403,6 +1423,10 @@ void() WaypointWatch =
 	// and tell each human in chat, a few seconds after they arrive so it comes after the level name
 	p = nextent(world);
 	n = 0;
+	if (time < way_report_next)	// SCARLET - nobody needs the chat line sooner than this
+		n = max_clients;
+	else
+		way_report_next = time + 0.5;
 	while (n < max_clients)
 	{
 		if (p.ishuman && p.classname == "player" && !p.way_reported)
@@ -1490,19 +1514,23 @@ void() BotFrame =
 {
 	local float num;
 
-	// for the sake of speed
-	sv_maxspeed = cvar("sv_maxspeed");
-	sv_gravity = cvar("sv_gravity");
-	sv_friction = cvar("sv_friction");
-	sv_accelerate = cvar("sv_accelerate");
-	sv_stopspeed = cvar("sv_stopspeed");
+	// for the sake of speed (SCARLET - and only looked up once a second, they don't change)
+	if (time >= sv_read_next)
+	{
+		sv_read_next = time + 1;
+		sv_maxspeed = cvar("sv_maxspeed");
+		sv_gravity = cvar("sv_gravity");
+		sv_friction = cvar("sv_friction");
+		sv_accelerate = cvar("sv_accelerate");
+		sv_stopspeed = cvar("sv_stopspeed");
+	}
 	real_frametime = frametime; // in NQ this is alright
 	
 	self = nextent(world);
 	num = 0;
 	while (num < max_clients)
 	{
-		if (self.ishuman == FALSE)
+		if (self.ishuman == FALSE && self.classname == "player")	// SCARLET - empty slots are skipped
 		{
 			if (active_clients & ClientBitFlag(num))
 			{

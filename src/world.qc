@@ -203,6 +203,15 @@ void() worldspawn =
 	else
 		cvar_set ("sv_gravity", "800");
 
+	// SCARLET - music shuffle integration: a random track each map, from music/trackNN.ogg|mp3 (this also
+	// stops the engine complaining about "track 0" on maps that never set one)
+	if (cv_scarlet_music)
+	{
+		music_track = MusicPick();
+		if (music_track)
+			self.sounds = music_track;
+	}
+
 // the area based ambient sounds MUST be the first precache_sounds
 
 // player precaches	
@@ -403,8 +412,6 @@ void() InitBodyQue =
 // respawned elsewhere
 void(entity ent) CopyToBodyQue =
 {
-	CorpseClear(ent); // SCARLET - persistent bodies
-
 	bodyque_head.touch = ent.touch; // SCARLET - football integration.
 	bodyque_head.solid = ent.solid; // SCARLET - football integration.
 	bodyque_head.angles = ent.angles;

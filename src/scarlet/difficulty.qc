@@ -38,6 +38,37 @@ float() monster_damage_mult =
 	return 1;
 }
 
+// how much tougher monsters are, applied once to a monster's health as it spawns
+float() monster_health_mult =
+{
+	local float m;
+
+	if (!sp_or_coop())
+		return 1;
+	if (cvar("skill") < 0.5) m = cv_scarlet_singleplayer_monsters_health_easy;
+	else if (cvar("skill") < 1.5) m = cv_scarlet_singleplayer_monsters_health_normal;
+	else if (cvar("skill") < 2.5) m = cv_scarlet_singleplayer_monsters_health_hard;
+	else m = cv_scarlet_singleplayer_monsters_health_nightmare;
+	if (m > 0)
+		return m;
+	return 1;
+}
+
+void() monster_health_scale =
+{
+	local float m;
+
+	// the bosses have a few lives, not hit points, so they are left alone
+	if (self.classname == "monster_boss" || self.classname == "monster_oldone")
+		return;
+	m = monster_health_mult();
+	if (m == 1)
+		return;
+	self.health = rint(self.health * m);
+	if (self.health < 1)
+		self.health = 1;
+}
+
 // how many monsters there are.  below 1 removes some as they spawn, above 1 adds extra
 // ones next to the mapper's, as they spawn
 float() monster_density_mult =

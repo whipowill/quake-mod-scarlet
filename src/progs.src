@@ -23,7 +23,6 @@ scarlet/stats.qc
 scarlet/precache.qc
 scarlet/loadout.qc
 scarlet/melee.qc
-scarlet/corpses.qc
 scarlet/football.qc
 scarlet/footsteps.qc
 scarlet/gore.qc
