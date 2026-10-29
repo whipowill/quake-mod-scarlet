@@ -21,8 +21,18 @@ void() W_SetCurrentAmmo;
 BE .8 .3 .4 IN COLOR */
 
 
+// SCARLET - a taken item either vanishes, or stays behind as a faint ghost until it respawns
+void() ItemHide =
+{
+	if (cv_scarlet_item_ghosts)
+		self.alpha = 0.2;
+	else
+		self.model = string_null;
+}
+
 void() SUB_regen =
 {
+	self.alpha = 1;
 	self.model = self.mdl;		// restore original model
 	self.solid = SOLID_TRIGGER;	// allow it to be touched again
 	sound (self, CHAN_VOICE, "items/itembk2.wav", 1, ATTN_NORM);	// play respawn sound
@@ -196,7 +206,7 @@ void() health_touch =
 
 	stuffcmd (other, "bf\n");
 	
-	self.model = string_null;
+	ItemHide ();
 	self.solid = SOLID_NOT;
 
 	// Megahealth = rot down the player's super health
@@ -211,7 +221,7 @@ void() health_touch =
 	{
 		if (deathmatch != 2)		// deathmatch 2 is the silly old rules
 		{
-			if (deathmatch)
+			if (deathmatch || cv_scarlet_singleplayer_resupply)	// SCARLET - resupply integration.
 				self.nextthink = time + 20;
 			self.think = SUB_regen;
 		}
@@ -236,7 +246,7 @@ void() item_megahealth_rot =
 // just blindly subtract the flag off
 	other.items = other.items - (other.items & IT_SUPERHEALTH);
 	
-	if (deathmatch == 1)	// deathmatch 2 is silly old rules
+	if (deathmatch == 1 || cv_scarlet_singleplayer_resupply)	// SCARLET - resupply integration.
 	{
 		self.nextthink = time + 20;
 		self.think = SUB_regen;
@@ -264,19 +274,19 @@ void() armor_touch =
 
 	if (self.classname == "item_armor1")
 	{
-		type = 0.3;
+		type = cv_scarlet_absorb_green; // was 0.3, SCARLET - custom armor integration.
 		value = 100;
 		bit = IT_ARMOR1;
 	}
 	if (self.classname == "item_armor2")
 	{
-		type = 0.6;
+		type = cv_scarlet_absorb_yellow; // was 0.6, SCARLET - custom armor integration.
 		value = 150;
 		bit = IT_ARMOR2;
 	}
 	if (self.classname == "item_armorInv")
 	{
-		type = 0.8;
+		type = cv_scarlet_absorb_red; // was 0.8, SCARLET - custom armor integration.
 		value = 200;
 		bit = IT_ARMOR3;
 	}
@@ -288,12 +298,13 @@ void() armor_touch =
 	other.items = other.items - (other.items & (IT_ARMOR1 | IT_ARMOR2 | IT_ARMOR3)) + bit;
 
 	self.solid = SOLID_NOT;
-	self.model = string_null;
-	if (deathmatch == 1)
+	ItemHide ();
+	if (deathmatch == 1 || cv_scarlet_singleplayer_resupply)	// SCARLET - resupply integration.
 		self.nextthink = time + 20;
 	self.think = SUB_regen;
 
-	sprint(other, "You got armor\n");
+	if (cv_scarlet_chat_armor)	// SCARLET - pickup messages can be switched off
+		sprint(other, "You got armor\n");
 // armor touch sound
 	sound(other, CHAN_ITEM, "items/armor1.wav", 1, ATTN_NORM);
 	stuffcmd (other, "bf\n");
@@ -352,14 +363,14 @@ WEAPONS
 
 void() bound_other_ammo =
 {
-	if (other.ammo_shells > 100)
-		other.ammo_shells = 100;
-	if (other.ammo_nails > 200)
-		other.ammo_nails = 200;
-	if (other.ammo_rockets > 100)
-		other.ammo_rockets = 100;		
-	if (other.ammo_cells > 100)
-		other.ammo_cells = 100;		
+	if (other.ammo_shells > cv_scarlet_max_shells)
+		other.ammo_shells = cv_scarlet_max_shells;
+	if (other.ammo_nails > cv_scarlet_max_nails)
+		other.ammo_nails = cv_scarlet_max_nails;
+	if (other.ammo_rockets > cv_scarlet_max_rockets)
+		other.ammo_rockets = cv_scarlet_max_rockets;
+	if (other.ammo_cells > cv_scarlet_max_cells)
+		other.ammo_cells = cv_scarlet_max_cells;
 };
 
 
@@ -402,6 +413,25 @@ void(float old, float new) Deathmatch_Weapon =
 
 /*
 =============
+W_BetterWeapon
+
+SCARLET - switch to a weapon just picked up (self is the player), if the autoswitch setting is on
+=============
+*/
+void(float new) W_BetterWeapon =
+{
+	if (!cv_scarlet_autoswitch) return;
+
+	if (!deathmatch)
+		self.weapon = new;
+	else
+		Deathmatch_Weapon (self.items, new);
+
+	W_ResetWeaponState ();
+}
+
+/*
+=============
 weapon_touch
 =============
 */
@@ -422,7 +452,7 @@ void() weapon_touch =
 	best = W_BestWeapon();
 	self = stemp;
 
-	if (deathmatch == 2 || coop)
+	if (deathmatch == 2 || (coop && !cv_scarlet_singleplayer_resupply))	// SCARLET - resupply integration.
 		leave = 1;
 	else
 		leave = 0;
@@ -442,6 +472,14 @@ void() weapon_touch =
 		hadammo = other.ammo_rockets;			
 		new = IT_SUPER_NAILGUN;
 		other.ammo_nails = other.ammo_nails + 30;
+	}
+	else if (self.classname == "weapon_shotgun")	// SCARLET - the shotgun can be picked up too
+	{
+		if (leave && (other.items & IT_SHOTGUN) )
+			return;
+		hadammo = other.ammo_shells;
+		new = IT_SHOTGUN;
+		other.ammo_shells = other.ammo_shells + cv_scarlet_shells_small;
 	}
 	else if (self.classname == "weapon_supershotgun")
 	{
@@ -478,9 +516,12 @@ void() weapon_touch =
 	else
 		objerror ("weapon_touch: unknown classname");
 
-	sprint (other, "You got the ");
-	sprint (other, self.netname);
-	sprint (other, "\n");
+	if (cv_scarlet_chat_guns)	// SCARLET - pickup messages can be switched off
+	{
+		sprint (other, "You got the ");
+		sprint (other, self.netname);
+		sprint (other, "\n");
+	}
 // weapon touch sound
 	sound (other, CHAN_ITEM, "weapons/pkup.wav", 1, ATTN_NORM);
 	stuffcmd (other, "bf\n");
@@ -494,12 +535,11 @@ void() weapon_touch =
 	stemp = self;
 	self = other;
 
-	if (!deathmatch)
-		self.weapon = new;
+	// SCARLET - autoswitch setting, and no explosives while quad
+	if (cv_scarlet_autoswitch)
+		W_BetterWeapon (new);
 	else
-		Deathmatch_Weapon (old, new);
-
-	W_SetCurrentAmmo();
+		W_SetCurrentAmmo();
 
 	self = stemp;
 
@@ -507,9 +547,9 @@ void() weapon_touch =
 		return;
 
 // remove it in single player, or setup for respawning in deathmatch
-	self.model = string_null;
+	ItemHide ();
 	self.solid = SOLID_NOT;
-	if (deathmatch == 1)
+	if (deathmatch == 1 || cv_scarlet_singleplayer_resupply)	// SCARLET - resupply integration.
 		self.nextthink = time + 30;
 	self.think = SUB_regen;
 	
@@ -518,11 +558,43 @@ void() weapon_touch =
 };
 
 
+/*QUAKED weapon_shotgun (0 .5 .8) (-16 -16 0) (16 16 32)
+SCARLET - the plain shotgun as a pickup, for the loadout setting.
+*/
+
+void() weapon_shotgun =
+{
+	if (!LoadoutWeaponCheck(2))
+	{
+		LoadoutWeaponOverride();
+		return;
+	}
+
+	if (cv_scarlet_remove_weaker_weapons)
+	{
+		weapon_supershotgun();
+		return;
+	}
+
+	precache_model ("progs/g_shot.mdl");
+	setmodel (self, "progs/g_shot.mdl");
+	self.weapon = IT_SHOTGUN;
+	self.netname = "Shotgun";
+	self.touch = weapon_touch;
+	setsize (self, '-16 -16 0', '16 16 56');
+	StartItem ();
+};
+
 /*QUAKED weapon_supershotgun (0 .5 .8) (-16 -16 0) (16 16 32)
 */
 
 void() weapon_supershotgun =
 {
+	if (!LoadoutWeaponCheck(3))	// SCARLET - loadout integration.
+	{
+		LoadoutWeaponOverride();
+		return;
+	}
 	precache_model ("progs/g_shot.mdl");
 	setmodel (self, "progs/g_shot.mdl");
 	self.weapon = IT_SUPER_SHOTGUN;
@@ -537,6 +609,18 @@ void() weapon_supershotgun =
 
 void() weapon_nailgun =
 {
+	if (!LoadoutWeaponCheck(4))	// SCARLET - loadout integration.
+	{
+		LoadoutWeaponOverride();
+		return;
+	}
+
+	if (cv_scarlet_remove_weaker_weapons)	// SCARLET
+	{
+		weapon_supernailgun();
+		return;
+	}
+
 	precache_model ("progs/g_nail.mdl");
 	setmodel (self, "progs/g_nail.mdl");
 	self.weapon = IT_NAILGUN;
@@ -551,6 +635,11 @@ void() weapon_nailgun =
 
 void() weapon_supernailgun =
 {
+	if (!LoadoutWeaponCheck(5))	// SCARLET - loadout integration.
+	{
+		LoadoutWeaponOverride();
+		return;
+	}
 	precache_model ("progs/g_nail2.mdl");
 	setmodel (self, "progs/g_nail2.mdl");
 	self.weapon = IT_SUPER_NAILGUN;
@@ -565,6 +654,11 @@ void() weapon_supernailgun =
 
 void() weapon_grenadelauncher =
 {
+	if (!LoadoutWeaponCheck(6))	// SCARLET - loadout integration.
+	{
+		LoadoutWeaponOverride();
+		return;
+	}
 	precache_model ("progs/g_rock.mdl");
 	setmodel (self, "progs/g_rock.mdl");
 	self.weapon = 3;
@@ -579,6 +673,11 @@ void() weapon_grenadelauncher =
 
 void() weapon_rocketlauncher =
 {
+	if (!LoadoutWeaponCheck(7))	// SCARLET - loadout integration.
+	{
+		LoadoutWeaponOverride();
+		return;
+	}
 	precache_model ("progs/g_rock2.mdl");
 	setmodel (self, "progs/g_rock2.mdl");
 	self.weapon = 3;
@@ -594,6 +693,11 @@ void() weapon_rocketlauncher =
 
 void() weapon_lightning =
 {
+	if (!LoadoutWeaponCheck(8))	// SCARLET - loadout integration.
+	{
+		LoadoutWeaponOverride();
+		return;
+	}
 	precache_model ("progs/g_light.mdl");
 	setmodel (self, "progs/g_light.mdl");
 	self.weapon = 3;
@@ -632,7 +736,7 @@ local float		best;
 // shotgun
 	if (self.weapon == 1)
 	{
-		if (other.ammo_shells >= 100)
+		if (other.ammo_shells >= cv_scarlet_max_shells)
 			return;
 		other.ammo_shells = other.ammo_shells + self.aflag;
 	}
@@ -640,7 +744,7 @@ local float		best;
 // spikes
 	if (self.weapon == 2)
 	{
-		if (other.ammo_nails >= 200)
+		if (other.ammo_nails >= cv_scarlet_max_nails)
 			return;
 		other.ammo_nails = other.ammo_nails + self.aflag;
 	}
@@ -648,7 +752,7 @@ local float		best;
 //	rockets
 	if (self.weapon == 3)
 	{
-		if (other.ammo_rockets >= 100)
+		if (other.ammo_rockets >= cv_scarlet_max_rockets)
 			return;
 		other.ammo_rockets = other.ammo_rockets + self.aflag;
 	}
@@ -656,16 +760,19 @@ local float		best;
 //	cells
 	if (self.weapon == 4)
 	{
-		if (other.ammo_cells >= 200)
+		if (other.ammo_cells >= cv_scarlet_max_cells)
 			return;
 		other.ammo_cells = other.ammo_cells + self.aflag;
 	}
 
 	bound_other_ammo ();
 	
-	sprint (other, "You got the ");
-	sprint (other, self.netname);
-	sprint (other, "\n");
+	if (cv_scarlet_chat_ammo)	// SCARLET - pickup messages can be switched off
+	{
+		sprint (other, "You got the ");
+		sprint (other, self.netname);
+		sprint (other, "\n");
+	}
 // ammo touch sound
 	sound (other, CHAN_ITEM, "weapons/lock4.wav", 1, ATTN_NORM);
 	stuffcmd (other, "bf\n");
@@ -688,9 +795,9 @@ local float		best;
 	self = stemp;
 
 // remove it in single player, or setup for respawning in deathmatch
-	self.model = string_null;
+	ItemHide ();
 	self.solid = SOLID_NOT;
-	if (deathmatch == 1)
+	if (deathmatch == 1 || cv_scarlet_singleplayer_resupply)	// SCARLET - resupply integration.
 		self.nextthink = time + 30;
 	
 	self.think = SUB_regen;
@@ -715,13 +822,13 @@ void() item_shells =
 	{
 		precache_model ("maps/b_shell1.bsp");
 		setmodel (self, "maps/b_shell1.bsp");
-		self.aflag = 40;
+		self.aflag = cv_scarlet_shells_big; // was 40, SCARLET - custom ammo integration.
 	}
 	else
 	{
 		precache_model ("maps/b_shell0.bsp");
 		setmodel (self, "maps/b_shell0.bsp");
-		self.aflag = 20;
+		self.aflag = cv_scarlet_shells_small; // was 20, SCARLET - custom ammo integration.
 	}
 	self.weapon = 1;
 	self.netname = "shells";
@@ -740,13 +847,13 @@ void() item_spikes =
 	{
 		precache_model ("maps/b_nail1.bsp");
 		setmodel (self, "maps/b_nail1.bsp");
-		self.aflag = 50;
+		self.aflag = cv_scarlet_nails_big; // was 50, SCARLET - custom ammo integration.
 	}
 	else
 	{
 		precache_model ("maps/b_nail0.bsp");
 		setmodel (self, "maps/b_nail0.bsp");
-		self.aflag = 25;
+		self.aflag = cv_scarlet_nails_small; // was 25, SCARLET - custom ammo integration.
 	}
 	self.weapon = 2;
 	self.netname = "nails";
@@ -765,13 +872,13 @@ void() item_rockets =
 	{
 		precache_model ("maps/b_rock1.bsp");
 		setmodel (self, "maps/b_rock1.bsp");
-		self.aflag = 10;
+		self.aflag = cv_scarlet_rockets_big; // was 10, SCARLET - custom ammo integration.
 	}
 	else
 	{
 		precache_model ("maps/b_rock0.bsp");
 		setmodel (self, "maps/b_rock0.bsp");
-		self.aflag = 5;
+		self.aflag = cv_scarlet_rockets_small; // was 5, SCARLET - custom ammo integration.
 	}
 	self.weapon = 3;
 	self.netname = "rockets";
@@ -791,13 +898,13 @@ void() item_cells =
 	{
 		precache_model ("maps/b_batt1.bsp");
 		setmodel (self, "maps/b_batt1.bsp");
-		self.aflag = 12;
+		self.aflag = cv_scarlet_cells_big; // was 12, SCARLET - custom ammo integration.
 	}
 	else
 	{
 		precache_model ("maps/b_batt0.bsp");
 		setmodel (self, "maps/b_batt0.bsp");
-		self.aflag = 6;
+		self.aflag = cv_scarlet_cells_small; // was 6, SCARLET - custom ammo integration.
 	}
 	self.weapon = 4;
 	self.netname = "cells";
@@ -1108,7 +1215,7 @@ local float		best;
 	sprint (other, self.netname);
 	sprint (other,"\n");
 
-	if (deathmatch)
+	if (deathmatch || cv_scarlet_singleplayer_resupply)	// SCARLET - resupply integration.
 	{
 		self.mdl = self.model;
 		
@@ -1125,7 +1232,7 @@ local float		best;
 	stuffcmd (other, "bf\n");
 	self.solid = SOLID_NOT;
 	other.items = other.items | self.items;
-	self.model = string_null;
+	ItemHide ();
 
 // do the apropriate action
 	if (self.classname == "item_artifact_envirosuit")
@@ -1269,9 +1376,14 @@ void() BackpackTouch =
 	other.ammo_cells = other.ammo_cells + self.ammo_cells;
 
 	other.items = other.items | self.items;
+
+	// SCARLET - grenades integration
+	other.ammo_grenades = min(other.ammo_grenades + self.ammo_grenades, cv_scarlet_grenades_max);
 	
 	bound_other_ammo ();
 
+	if (cv_scarlet_chat_backpacks)	// SCARLET - pickup messages can be switched off
+	{
 	sprint (other, "You get ");
 
 	if (self.ammo_shells)
@@ -1300,6 +1412,7 @@ void() BackpackTouch =
 	}
 	
 	sprint (other, "\n");
+	}
 // backpack touch sound
 	sound (other, CHAN_ITEM, "weapons/lock4.wav", 1, ATTN_NORM);
 	stuffcmd (other, "bf\n");
@@ -1337,10 +1450,37 @@ void() DropBackpack =
 	
 	item.items = self.weapon;
 
+	// SCARLET - drop weapons integration: the gun lies on the floor by itself
+	if (cv_scarlet_visible_weapons)
+	{
+		if (self.weapon == IT_SUPER_SHOTGUN)
+			item.netname = "Super Shotgun";
+		else if (self.weapon == IT_NAILGUN)
+			item.netname = "Nailgun";
+		else if (self.weapon == IT_SUPER_NAILGUN)
+			item.netname = "Perforator";
+		else if (self.weapon == IT_GRENADE_LAUNCHER)
+			item.netname = "Grenade Launcher";
+		else if (self.weapon == IT_ROCKET_LAUNCHER)
+			item.netname = "Rocket Launcher";
+		else if (self.weapon == IT_LIGHTNING)
+			item.netname = "Thunderbolt";
+		if (item.netname != string_null)
+		{
+			SpawnWeapons (item);
+			item.items = 0;
+		}
+		item.netname = string_null;
+	}
+
 	item.ammo_shells = self.ammo_shells;
 	item.ammo_nails = self.ammo_nails;
 	item.ammo_rockets = self.ammo_rockets;
 	item.ammo_cells = self.ammo_cells;
+
+	// SCARLET - grenades integration
+	if (cv_scarlet_grenades && !cv_scarlet_grenades_restock)
+		item.ammo_grenades = floor(random() * (cv_scarlet_grenades_maxpack + 1));
 
 	item.velocity_z = 300;
 	item.velocity_x = -100 + (random() * 200);

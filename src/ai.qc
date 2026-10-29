@@ -723,6 +723,16 @@ void(float dist) ai_run =
 
 // check knowledge of enemy
 	enemy_vis = visible(self.enemy);
+
+	// SCARLET - chase faster while a player is in sight: shorten the time to the next
+	// frame so the run cycle and the movement speed up together
+	if (enemy_vis && self.enemy.classname == "player" && self.nextthink > time)
+	{
+		local float mult;
+		mult = ai_chase_mult();
+		if (mult > 1)
+			self.nextthink = time + (self.nextthink - time) / mult;
+	}
 	if (enemy_vis)
 		self.search_time = time + 5;
 

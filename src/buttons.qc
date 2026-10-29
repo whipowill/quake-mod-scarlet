@@ -71,7 +71,7 @@ void() button_use =
 
 void() button_touch =
 {
-	if (other.classname != "player")
+	if (other.classname != "player" && other.classname != "spike" && other.classname != "grenade" && other.classname != "rocket") // SCARLET - make buttons shootable!
 		return;
 	self.enemy = other;
 	button_fire ();

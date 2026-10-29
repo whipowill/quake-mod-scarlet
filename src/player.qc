@@ -153,6 +153,14 @@ void()	player_run =[	$rockrun1,	player_run	]
 			self.walkframe = 0;
 		self.frame = self.frame + self.walkframe;
 	}
+
+	// SCARLET - footsteps integration.
+	if (self.walkframe == 1 || self.walkframe == 4 )
+		if (checkbottom(self) == TRUE)
+			if (self.waterlevel == 0)
+				WalkSound (self);
+	// SCARLET - end.
+
 	self.walkframe = self.walkframe + 1;
 };
 
@@ -197,9 +205,7 @@ void() player_nail1   =[$nailatt1, player_nail2  ]
 	self.weaponframe = self.weaponframe + 1;
 	if (self.weaponframe == 9)
 		self.weaponframe = 1;
-	SuperDamageSound();
-	W_FireSpikes (4);
-	self.attack_finished = time + 0.2;
+	self.weaponframe = self.cnt + 1;	// SCARLET - firing is done by W_Attack, this is only the animation
 };
 void() player_nail2   =[$nailatt2, player_nail1  ]
 {
@@ -210,9 +216,7 @@ void() player_nail2   =[$nailatt2, player_nail1  ]
 	self.weaponframe = self.weaponframe + 1;
 	if (self.weaponframe == 9)
 		self.weaponframe = 1;
-	SuperDamageSound();
-	W_FireSpikes (-4);
-	self.attack_finished = time + 0.2;
+	self.weaponframe = self.cnt + 1;	// SCARLET - firing is done by W_Attack, this is only the animation
 };
 
 //============================================================================
@@ -228,6 +232,11 @@ void() player_light1   =[$light1, player_light2  ]
 		self.weaponframe = 1;
 	SuperDamageSound();
 	W_FireLightning();
+	if (cv_scarlet_rof_tb)	// SCARLET - one bolt per press
+	{
+		player_run ();
+		return;
+	}
 	self.attack_finished = time + 0.2;
 };
 void() player_light2   =[$light2, player_light1  ]
@@ -241,6 +250,11 @@ void() player_light2   =[$light2, player_light1  ]
 		self.weaponframe = 1;
 	SuperDamageSound();
 	W_FireLightning();
+	if (cv_scarlet_rof_tb)	// SCARLET - one bolt per press
+	{
+		player_run ();
+		return;
+	}
 	self.attack_finished = time + 0.2;
 };
 
@@ -474,9 +488,12 @@ vector(float dm) VelocityForDamage =
 	return v;
 };
 
+float gib_extra;	// SCARLET - set while the extra gibs of the gore setting are thrown
+
 void(string gibname, float dm) ThrowGib =
 {
 	local	entity new;
+	local	float i;
 
 	new = spawn();
 	new.origin = self.origin;
@@ -493,6 +510,15 @@ void(string gibname, float dm) ThrowGib =
 	new.nextthink = time + 10 + random()*10;
 	new.frame = 0;
 	new.flags = 0;
+
+	// SCARLET - gore integration: more gibs (not more lungs, that makes no sense)
+	if (cv_scarlet_gore > 1 && !gib_extra && gibname != "progs/gib2.mdl")
+	{
+		gib_extra = TRUE;
+		for (i = 1; i < cv_scarlet_gore; i++)
+			ThrowGib (gibname, dm);
+		gib_extra = FALSE;
+	}
 };
 
 void(string gibname, float dm) ThrowHead =
@@ -502,7 +528,9 @@ void(string gibname, float dm) ThrowHead =
 	self.nextthink = -1;
 	self.movetype = MOVETYPE_BOUNCE;
 	self.takedamage = DAMAGE_NO;
-	self.solid = SOLID_NOT;
+	self.solid = SOLID_TRIGGER; // SCARLET - football integration.
+	self.touch = KickGibs; // SCARLET - football integration.
+	self.type = "head";
 	self.view_ofs = '0 0 8';
 	setsize (self, '-16 -16 0', '16 16 56');
 	self.velocity = VelocityForDamage (dm);
@@ -557,6 +585,7 @@ void() PlayerDie =
 	self.view_ofs = '0 0 -8';
 	self.deadflag = DEAD_DYING;
 	self.solid = SOLID_NOT;
+	BecomeCorpse(); // SCARLET - corpse integration
 	self.flags = self.flags - (self.flags & FL_ONGROUND);
 	self.movetype = MOVETYPE_TOSS;
 	if (self.velocity_z < 10)

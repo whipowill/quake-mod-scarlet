@@ -202,6 +202,8 @@ void() monster_demon1 =
 		remove(self);
 		return;
 	}
+	if (MonsterDensity ())	// SCARLET - monster density setting
+		return;
 	precache_model ("progs/demon.mdl");
 	precache_model ("progs/h_demon.mdl");
 

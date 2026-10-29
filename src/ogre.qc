@@ -439,6 +439,8 @@ void() monster_ogre =
 		remove(self);
 		return;
 	}
+	if (MonsterDensity ())	// SCARLET - monster density setting
+		return;
 	precache_model ("progs/ogre.mdl");
 	precache_model ("progs/h_ogre.mdl");
 	precache_model ("progs/grenade.mdl");

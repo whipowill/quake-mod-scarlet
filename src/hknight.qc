@@ -92,6 +92,8 @@ void(float offset) hknight_shot =
 	
 	launch_spike (org, vec);
 	newmis.classname = "knightspike";
+	newmis.scarlet_nail = TRUE;
+	newmis.dmg = cv_scarlet_dmg_nails; // was 9, SCARLET - custom dmg integration.
 	setmodel (newmis, "progs/k_spike.mdl");
 	setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);		
 	newmis.velocity = vec*300;
@@ -421,6 +423,8 @@ void() monster_hell_knight =
 		remove(self);
 		return;
 	}
+	if (MonsterDensity ())	// SCARLET - monster density setting
+		return;
 	precache_model2 ("progs/hknight.mdl");
 	precache_model2 ("progs/k_spike.mdl");
 	precache_model2 ("progs/h_hellkn.mdl");

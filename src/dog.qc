@@ -352,6 +352,8 @@ void() monster_dog =
 		remove(self);
 		return;
 	}
+	if (MonsterDensity ())	// SCARLET - monster density setting
+		return;
 	precache_model ("progs/h_dog.mdl");
 	precache_model ("progs/dog.mdl");
 

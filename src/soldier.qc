@@ -205,7 +205,7 @@ void() army_fire =
 	dir = en.origin - en.velocity*0.2;
 	dir = normalize (dir - self.origin);
 	
-	FireBullets (4, dir, '0.1 0.1 0');
+	FireBullets (4, dir, '0.1 0.1 0', cv_scarlet_dmg_bullets); // SCARLET - custom dmg integration.
 };
 
 
@@ -267,6 +267,8 @@ void() monster_army =
 		remove(self);
 		return;
 	}
+	if (MonsterDensity ())	// SCARLET - monster density setting
+		return;
 	precache_model ("progs/soldier.mdl");
 	precache_model ("progs/h_guard.mdl");
 	precache_model ("progs/gib1.mdl");

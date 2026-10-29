@@ -97,6 +97,9 @@ void(entity targ, entity attacker) Killed =
 		WriteByte (MSG_ALL, SVC_KILLEDMONSTER);
 	}
 
+	if (self.flags & FL_MONSTER && attacker.classname == "player")
+		SpawnMonsterReward(self.origin);	// SCARLET - monster drops in single player and coop
+
 	ClientObituary(self, attacker);
 	
 	self.takedamage = DAMAGE_NO;
@@ -129,6 +132,12 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
 
 // used by buttons and triggers to set activator for target firing
 	damage_attacker = attacker;
+
+	StatsDamage(targ, attacker, damage); // SCARLET - stats integration.
+
+	// SCARLET - single player and coop: monsters hit players harder per difficulty
+	if ((attacker.flags & FL_MONSTER) && targ.classname == "player")
+		damage = damage * monster_damage_mult();
 
 // check for quad damage powerup on the attacker
 	if (attacker.super_damage_finished > time)

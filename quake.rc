@@ -1,0 +1,31 @@
+
+// load the base configuration
+exec default.cfg
+
+// load the last saved configuration
+exec config.cfg
+
+// run a user script file if present
+exec autoexec.cfg
+
+alias fogcycle "fog1"
+alias fog1 "fog 0.03 0.3 0.15 0.2; alias fogcycle fog2;"
+alias fog2 "fog 0.02 0.33 0.33 0.5; alias fogcycle fog3;"
+alias fog3 "fog 0.04 0.3 0.3 0.3; alias fogcycle fog4;"
+alias fog4 "fog 0.03 0.3 0.2 0.1; alias fogcycle fog5;"
+alias fog5 "fog 0.03 0.15 0.22 0.12; alias fogcycle fog6;"
+alias fog6 "fog 0; alias fogcycle fog1;"
+
+scr_printspeed 16
+
+alias idkfa "impulse 9"
+alias quad "impulse 255"
+alias rollmap "impulse 150"
+
+// stuff command line statements
+stuffcmds
+
+// start demos if not already running a server
+startdemos demo1 demo2 demo3
+
+//map start

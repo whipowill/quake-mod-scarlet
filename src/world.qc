@@ -190,6 +190,11 @@ World Types:
 void() worldspawn =
 {
 	lastspawn = world;
+
+	CvarRefresh(); // SCARLET - cached cvars
+	BotInit(); // SCARLET - bots integration.
+	StatsInit(); // SCARLET - custom stats for sending to client
+
 	InitBodyQue ();
 
 // custom map attributes
@@ -355,6 +360,9 @@ void() worldspawn =
 
 void() StartFrame =
 {
+	CvarRefresh(); // SCARLET - cached cvars
+	BotFrame(); // SCARLET - bots integration.
+
 	teamplay = cvar("teamplay");
 	skill = cvar("skill");
 	framecount = framecount + 1;
@@ -395,6 +403,10 @@ void() InitBodyQue =
 // respawned elsewhere
 void(entity ent) CopyToBodyQue =
 {
+	CorpseClear(ent); // SCARLET - persistent bodies
+
+	bodyque_head.touch = ent.touch; // SCARLET - football integration.
+	bodyque_head.solid = ent.solid; // SCARLET - football integration.
 	bodyque_head.angles = ent.angles;
 	bodyque_head.model = ent.model;
 	bodyque_head.modelindex = ent.modelindex;

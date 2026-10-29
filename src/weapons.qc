@@ -40,6 +40,8 @@ void() W_Precache =
 	precache_sound ("weapons/grenade.wav");	// grenade launcher
 	precache_sound ("weapons/bounce.wav");		// grenade bounce
 	precache_sound ("weapons/shotgn2.wav");	// super shotgun
+
+	S_Precache(); // SCARLET - gore integration.
 };
 
 float() crandom =
@@ -67,8 +69,9 @@ void() W_FireAxe =
 	if (trace_ent.takedamage)
 	{
 		trace_ent.axhitme = 1;
-		SpawnBlood (org, '0 0 0', 20);
-		T_Damage (trace_ent, self, self, 20);
+		SpawnBlood (org, '0 0 0', cv_scarlet_dmg_axe); // was 20, SCARLET - custom dmg integration.
+		T_Damage (trace_ent, self, self, cv_scarlet_dmg_axe); // was 20, SCARLET - custom dmg integration.
+		ThrowBloodSplat(org, trace_endpos, trace_ent, cv_scarlet_dmg_axe, 5); // SCARLET - gore integration.
 	}
 	else
 	{	// hit wall
@@ -137,6 +140,19 @@ SpawnBlood
 void(vector org, vector vel, float damage) SpawnBlood =
 {
 	particle (org, vel*0.1, 73, damage*2);
+
+	// SCARLET - gore integration.
+	if (cv_scarlet_gore > 1)
+	{
+		local float i;
+		for (i=1; i<cv_scarlet_gore; i++)
+		{
+			vel = normalize(vel) * -1;
+			vel = normalize(vel + v_up*(random()- 0.5) + v_right*(random()- 0.5));
+			particle (org, vel*i*random(), 64+(random()*12), damage*random());
+		}
+	}
+	// SCARLET - end.
 };
 
 /*
@@ -217,7 +233,7 @@ BULLETS
 TraceAttack
 ================
 */
-void(float damage, vector dir) TraceAttack =
+void(float damage, vector dir, float is_nail_converted_to_hitscan = 0) TraceAttack =
 {
 	local	vector	vel, org;
 	
@@ -231,6 +247,8 @@ void(float damage, vector dir) TraceAttack =
 	{
 		SpawnBlood (org, vel*0.2, damage);
 		AddMultiDamage (trace_ent, damage);
+
+		ThrowBloodSplat(dir, trace_endpos, trace_ent, damage, is_nail_converted_to_hitscan ? 2 : 1); // SCARLET - gore integration.
 	}
 	else
 	{
@@ -250,7 +268,7 @@ Used by shotgun, super shotgun, and enemy soldier firing
 Go to the trouble of combining multiple pellets into a single damage call.
 ================
 */
-void(float shotcount, vector dir, vector spread) FireBullets =
+void(float shotcount, vector dir, vector spread, float dmg = 4, float is_nail_converted_to_hitscan = 0) FireBullets =
 {
 	local	vector direction;
 	local	vector	src;
@@ -267,7 +285,7 @@ void(float shotcount, vector dir, vector spread) FireBullets =
 
 		traceline (src, src + direction*2048, FALSE, self);
 		if (trace_fraction != 1.0)
-			TraceAttack (4, direction);
+			TraceAttack (dmg, direction, is_nail_converted_to_hitscan); // was 4, SCARLET - custom dmg integration.
 
 		shotcount = shotcount - 1;
 	}
@@ -285,11 +303,11 @@ void() W_FireShotgun =
 
 	sound (self, CHAN_WEAPON, "weapons/guncock.wav", 1, ATTN_NORM);	
 
-	self.punchangle_x = -2;
+	self.punchangle_x = -1 * cv_scarlet_kick_sg;
 	
-	self.currentammo = self.ammo_shells = self.ammo_shells - 1;
+	self.currentammo = self.ammo_shells = self.ammo_shells - cv_scarlet_dec_shells; // was 1, SCARLET - custom ammo integration.
 	dir = aim (self, 100000);
-	FireBullets (6, dir, '0.04 0.04 0');
+	FireBullets (cv_scarlet_bullets_in_shell_sg, dir, Vector(cv_scarlet_spr_sg/100, cv_scarlet_spr_sg/100/2, 0), cv_scarlet_dmg_bullets); // was 6, SCARLET - custom ammo integration.
 };
 
 
@@ -310,11 +328,11 @@ void() W_FireSuperShotgun =
 		
 	sound (self ,CHAN_WEAPON, "weapons/shotgn2.wav", 1, ATTN_NORM);	
 
-	self.punchangle_x = -4;
+	self.punchangle_x = -1 * cv_scarlet_kick_ssg;
 	
-	self.currentammo = self.ammo_shells = self.ammo_shells - 2;
+	self.currentammo = self.ammo_shells = self.ammo_shells - (cv_scarlet_dec_shells * 2); // was 2, SCARLET - custom ammo integration.
 	dir = aim (self, 100000);
-	FireBullets (14, dir, '0.14 0.08 0');
+	FireBullets (cv_scarlet_bullets_in_shell_ssg, dir, Vector(cv_scarlet_spr_ssg/100, cv_scarlet_spr_ssg/100/2, 0), cv_scarlet_dmg_bullets); // was 14, SCARLET - custom ammo integration.
 };
 
 
@@ -356,7 +374,9 @@ void() T_MissileTouch =
 		return;
 	}
 
-	damg = 100 + random()*20;
+	// damg = 100 + random()*20; // OG Quake: 100-120 on a direct hit
+	// damg = cv_scarlet_dmg_rockets - ((cv_scarlet_dmg_rockets/5) + random()*(cv_scarlet_dmg_rockets/5)); // SCARLET - a possible way to do it: 72-96 at 120
+	damg = cv_scarlet_dmg_rockets; // SCARLET - custom dmg integration: the exact value, no randomness
 	
 	if (other.health)
 	{
@@ -367,7 +387,9 @@ void() T_MissileTouch =
 
 	// don't do radius damage to the other, because all the damage
 	// was done in the impact
-	T_RadiusDamage (self, self.owner, 120, other);
+	T_RadiusDamage (self, self.owner, cv_scarlet_dmg_rockets, other); // was 120, SCARLET - custom dmg integration.
+
+	ThrowBloodSplatByExplosion(self, cv_scarlet_dmg_rockets); // SCARLET - gore integration.
 
 //	sound (self, CHAN_WEAPON, "weapons/r_exp3.wav", 1, ATTN_NORM);
 	self.origin = self.origin - 8*normalize(self.velocity);
@@ -392,11 +414,11 @@ void() W_FireRocket =
 {
 	local	entity missile, mpuff;
 	
-	self.currentammo = self.ammo_rockets = self.ammo_rockets - 1;
+	self.currentammo = self.ammo_rockets = self.ammo_rockets - cv_scarlet_dec_rockets; // was 1, SCARLET - custom ammo integration.
 	
 	sound (self, CHAN_WEAPON, "weapons/sgun1.wav", 1, ATTN_NORM);
 
-	self.punchangle_x = -2;
+	self.punchangle_x = -1 * cv_scarlet_kick_rl;
 
 	missile = spawn ();
 	missile.owner = self;
@@ -451,8 +473,9 @@ void(vector p1, vector p2, entity from, float damage) LightningDamage =
 	traceline (p1, p2, FALSE, self);
 	if (trace_ent.takedamage)
 	{
-		particle (trace_endpos, '0 0 100', 225, damage*4);
+		//particle (trace_endpos, '0 0 100', 225, damage*4);
 		T_Damage (trace_ent, from, from, damage);
+		ThrowBloodSplatByLightning(p1, trace_endpos, trace_ent, damage); // SCARLET - gore integration.
 		if (self.classname == "player")
 		{
 			if (other.classname == "player")
@@ -464,16 +487,18 @@ void(vector p1, vector p2, entity from, float damage) LightningDamage =
 	traceline (p1 + f, p2 + f, FALSE, self);
 	if (trace_ent != e1 && trace_ent.takedamage)
 	{
-		particle (trace_endpos, '0 0 100', 225, damage*4);
+		//particle (trace_endpos, '0 0 100', 225, damage*4);
 		T_Damage (trace_ent, from, from, damage);
+		ThrowBloodSplatByLightning(p1, trace_endpos, trace_ent, damage); // SCARLET - gore integration.
 	}
 	e2 = trace_ent;
 
 	traceline (p1 - f, p2 - f, FALSE, self);
 	if (trace_ent != e1 && trace_ent != e2 && trace_ent.takedamage)
 	{
-		particle (trace_endpos, '0 0 100', 225, damage*4);
+		//particle (trace_endpos, '0 0 100', 225, damage*4);
 		T_Damage (trace_ent, from, from, damage);
+		ThrowBloodSplatByLightning(p1, trace_endpos, trace_ent, damage); // SCARLET - gore integration.
 	}
 };
 
@@ -503,9 +528,9 @@ void() W_FireLightning =
 		sound (self, CHAN_WEAPON, "weapons/lhit.wav", 1, ATTN_NORM);
 		self.t_width = time + 0.6;
 	}
-	self.punchangle_x = -2;
+	self.punchangle_x = -1 * cv_scarlet_kick_tb;
 
-	self.currentammo = self.ammo_cells = self.ammo_cells - 1;
+	self.currentammo = self.ammo_cells = self.ammo_cells - cv_scarlet_dec_cells; // was 1, SCARLET - custom ammo integration.
 
 	org = self.origin + '0 0 16';
 	
@@ -521,7 +546,10 @@ void() W_FireLightning =
 	WriteCoord (MSG_BROADCAST, trace_endpos_y);
 	WriteCoord (MSG_BROADCAST, trace_endpos_z);
 
-	LightningDamage (self.origin, trace_endpos + v_forward*4, self, 30);
+	LightningDamage (self.origin, trace_endpos + v_forward*4, self, cv_scarlet_dmg_cells); // was 30, SCARLET - custom dmg integration.
+
+	if (cv_scarlet_rof_tb) // SCARLET - the thunderbolt can have a rate of fire of its own
+		self.attack_finished = time + cv_scarlet_rof_tb;
 };
 
 
@@ -530,7 +558,9 @@ void() W_FireLightning =
 
 void() GrenadeExplode =
 {
-	T_RadiusDamage (self, self.owner, 120, world);
+	T_RadiusDamage (self, self.owner, cv_scarlet_dmg_rockets, world); // was 120, SCARLET - custom dmg integration.
+
+	ThrowBloodSplatByExplosion(self, cv_scarlet_dmg_rockets); // SCARLET - gore integration.
 
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 	WriteByte (MSG_BROADCAST, TE_EXPLOSION);
@@ -564,11 +594,11 @@ void() W_FireGrenade =
 {
 	local	entity missile, mpuff;
 	
-	self.currentammo = self.ammo_rockets = self.ammo_rockets - 1;
+	self.currentammo = self.ammo_rockets = self.ammo_rockets - cv_scarlet_dec_rockets; // was 1, SCARLET - custom ammo integration.
 	
 	sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
 
-	self.punchangle_x = -2;
+	self.punchangle_x = -1 * cv_scarlet_kick_gl;
 
 	missile = spawn ();
 	missile.owner = self;
@@ -638,57 +668,146 @@ void(vector org, vector dir) launch_spike =
 	newmis.velocity = dir * 1000;
 };
 
-void() W_FireSuperSpikes =
+// SCARLET - nailguns.  the nailgun fires one nail at a time (or two quick hitscan bullets), the
+// super nailgun two nails at once, both with their own speed, spread and rate of fire.  a speed of
+// 2000 or more is too fast for a missile to carry, so the nail becomes a bullet instead.
+
+vector(vector muzzle) W_SpikeOrigin =
 {
-	local vector	dir;
-	local entity	old;
-	
-	sound (self, CHAN_WEAPON, "weapons/spike2.wav", 1, ATTN_NORM);
-	self.attack_finished = time + 0.2;
-	self.currentammo = self.ammo_nails = self.ammo_nails - 2;
+	return (self.origin + '0 0 16' +
+			11 * v_forward +
+			muzzle_x * v_right +
+			muzzle_z * v_up);
+}
+
+vector(vector fwd, float spread) W_SpikeDir =
+{
+	return normalize(fwd + (2 * v_right * crandom() + v_up * crandom()) * spread / 100);
+}
+
+// a nail with a speed of its own, that does cv_scarlet_dmg_nails
+entity(vector org, vector vel) launch_nail =
+{
+	launch_spike (org, normalize(vel));
+	newmis.velocity = vel;
+	newmis.scarlet_nail = TRUE;
+	newmis.dmg = cv_scarlet_dmg_nails; // was 9, SCARLET - custom dmg integration.
+	return newmis;
+}
+
+void() spike_unfatten = { self.movetype = MOVETYPE_FLY; }
+
+void() W_FireNailgun =
+{
+	local vector offset, v, org, dir;
+
 	dir = aim (self, 1000);
-	launch_spike (self.origin + '0 0 16', dir);
-	newmis.touch = superspike_touch;
-	setmodel (newmis, "progs/s_spike.mdl");
-	setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);		
-	self.punchangle_x = -2;
-};
+	v = vectoangles (dir);
+	v_x = v_x * -1;	// pitch comes back inverted from vectoangles
+	makevectors (v);
+
+	sound (self, CHAN_WEAPON, "weapons/rocket1i.wav", 1, ATTN_NORM);
+	self.currentammo = self.ammo_nails = self.ammo_nails - cv_scarlet_dec_nails; // was 1, SCARLET - custom ammo integration.
+	offset = VEC_ORIGIN;
+	if (mod (self.cnt, 2))
+		offset_x = -2.5;
+	else
+		offset_x = 2.5;
+
+	org = W_SpikeOrigin (offset);
+	dir = W_SpikeDir (v_forward, cv_scarlet_spr_ng);
+
+	// default sv_maxvelocity is 2000, any higher leads to weird
+	// angular offsets caused by clamping the velocity
+	if (cv_scarlet_spd_ng >= 1999)
+	{
+		ClearMultiDamage ();
+		FireBullets (2, aim (self, 1000), Vector(cv_scarlet_spr_ng/100, cv_scarlet_spr_ng/100/2, 0), cv_scarlet_dmg_nails/2, 1); // flag true so it knows this was a nail not a bullet -whipowill
+		ApplyMultiDamage ();
+	}
+	else
+	{
+		launch_nail (org, dir * cv_scarlet_spd_ng);
+	}
+	self.attack_finished = time + cv_scarlet_rof_ng;
+}
+
+void() W_FirePerforator =
+{
+	local vector offset;
+
+	sound (self, CHAN_WEAPON, "weapons/spike2.wav", 1, ATTN_NORM);
+	self.currentammo = self.ammo_nails = self.ammo_nails - (cv_scarlet_dec_nails * 2); // was 2, SCARLET - custom ammo integration.
+
+	if (mod (self.cnt, 4) == 0) offset = '0 0 1.25';
+	else if (mod (self.cnt, 4) == 1) offset = '1 0 1';
+	else if (mod (self.cnt, 4) == 2) offset = '1.25 0 0';
+	else offset = '1 0 -1';
+
+	if (cv_scarlet_spd_sng >= 1999)
+	{
+		ClearMultiDamage ();
+		FireBullets (4, aim (self, 1000), Vector(cv_scarlet_spr_sng/100, cv_scarlet_spr_sng/100/2, 0), cv_scarlet_dmg_nails/2, 1); // flag true so it knows this was a nail not a bullet -whipowill
+		ApplyMultiDamage ();
+	}
+	else
+	{
+		local entity spike1, spike2;
+
+		spike1 = launch_nail (W_SpikeOrigin(offset), W_SpikeDir(v_forward, cv_scarlet_spr_sng) * cv_scarlet_spd_sng);
+		spike2 = launch_nail (W_SpikeOrigin('0 0 0' - offset), W_SpikeDir(v_forward, cv_scarlet_spr_sng) * cv_scarlet_spd_sng);
+
+		// weaken the SNG at long distance while keeping the spread under control
+		spike1.think = spike_unfatten;
+		spike2.think = spike_unfatten;
+		spike1.nextthink = time + 0.25;
+		spike2.nextthink = time + 0.3;
+
+		if (self.super_damage_finished > time)
+		{
+			// two nails do 9 each, 36 each with quad, and the second wouldn't always hit.  the
+			// nails share their damage instead, so the quad super nailgun still gibs
+			spike2.dmg = cv_scarlet_dmg_nails*2; // SCARLET - custom dmg integration.
+			spike1.dmg = cv_scarlet_dmg_nails*2; // SCARLET - custom dmg integration.
+			spike2.buddy = spike1;
+			spike1.buddy = spike2;
+			// first one to hit does its damage and then nerfs its 'buddy'
+		}
+	}
+
+	self.attack_finished = time + cv_scarlet_rof_sng;
+}
 
 void(float ox) W_FireSpikes =
 {
-	local vector	dir;
-	local entity	old;
-	
-	makevectors (self.v_angle);
-	
-	if (self.ammo_nails >= 2 && self.weapon == IT_SUPER_NAILGUN)
-	{
-		W_FireSuperSpikes ();
-		return;
-	}
-
-	if (self.ammo_nails < 1)
+	if (self.ammo_nails < 1 || (self.ammo_nails < 2 && self.weapon == IT_SUPER_NAILGUN))
 	{
 		self.weapon = W_BestWeapon ();
 		W_SetCurrentAmmo ();
 		return;
 	}
 
-	sound (self, CHAN_WEAPON, "weapons/rocket1i.wav", 1, ATTN_NORM);
-	self.attack_finished = time + 0.2;
-	self.currentammo = self.ammo_nails = self.ammo_nails - 1;
-	dir = aim (self, 1000);
-	launch_spike (self.origin + '0 0 16' + v_right*ox, dir);
+	makevectors (self.v_angle);
 
-	self.punchangle_x = -2;
-};
+	if (self.ammo_nails >= 2 && self.weapon == IT_SUPER_NAILGUN)
+	{
+		W_FirePerforator ();
+		self.punchangle_x = -1 * cv_scarlet_kick_sng;
+	}
+	else
+	{
+		W_FireNailgun ();
+		self.punchangle_x = -1 * cv_scarlet_kick_ng;
+	}
+	self.cnt = cycle (self.cnt, 8);
+}
 
 
 
 .float hit_z;
 void() spike_touch =
 {
-local float rand;
+local float rand, d;
 	if (other == self.owner)
 		return;
 
@@ -702,10 +821,23 @@ local float rand;
 	}
 	
 // hit something that bleeds
-	if (other.takedamage)
+	d = 9;
+	if (self.scarlet_nail)
+		d = self.dmg;	// SCARLET - a nail from the nailguns knows its own damage (0 once its buddy has hit)
+	if (!d)
 	{
-		spawn_touchblood (9);
-		T_Damage (other, self, self.owner, 9);
+		// nothing to do: the quad super nailgun's other nail did all the damage
+	}
+	else if (other.takedamage)
+	{
+		spawn_touchblood (d);
+		T_Damage (other, self, self.owner, d);
+
+		// SCARLET - gore integration.
+		self.angles_x = self.angles_x*-1;
+		makevectors(self.angles);
+		ThrowBloodSplat(v_forward, self.origin, other, d, 2);
+		// SCARLET - end.
 	}
 	else
 	{
@@ -721,6 +853,10 @@ local float rand;
 		WriteCoord (MSG_BROADCAST, self.origin_y);
 		WriteCoord (MSG_BROADCAST, self.origin_z);
 	}
+
+	// nonsense for combining quad SNG spike damage
+	if (self.buddy)
+		self.buddy.dmg = 0;
 
 	remove(self);
 
@@ -898,6 +1034,51 @@ void()	player_nail1;
 void()	player_light1;
 void()	player_rocket1;
 
+// SCARLET - a swing of the axe, also used by the melee impulse
+void() W_AxeSwing =
+{
+	local float r;
+
+	sound (self, CHAN_WEAPON, "weapons/ax1.wav", 1, ATTN_NORM);
+	r = random();
+	if (r < 0.25)
+		player_axe1 ();
+	else if (r<0.5)
+		player_axeb1 ();
+	else if (r<0.75)
+		player_axec1 ();
+	else
+		player_axed1 ();
+}
+
+// SCARLET - back to a clean weapon: no animation, the model for the weapon in hand
+void() W_ResetWeaponState =
+{
+	player_run ();
+
+	self.weaponframe = 0;
+
+	if (self.weapon == IT_AXE)
+		self.weaponmodel = "progs/v_axe.mdl";
+	else if (self.weapon == IT_SHOTGUN)
+		self.weaponmodel = "progs/v_shot.mdl";
+	else if (self.weapon == IT_SUPER_SHOTGUN)
+		self.weaponmodel = "progs/v_shot2.mdl";
+	else if (self.weapon == IT_NAILGUN)
+		self.weaponmodel = "progs/v_nail.mdl";
+	else if (self.weapon == IT_SUPER_NAILGUN)
+		self.weaponmodel = "progs/v_nail2.mdl";
+	else if (self.weapon == IT_GRENADE_LAUNCHER)
+		self.weaponmodel = "progs/v_rock.mdl";
+	else if (self.weapon == IT_ROCKET_LAUNCHER)
+		self.weaponmodel = "progs/v_rock2.mdl";
+	else if (self.weapon == IT_LIGHTNING)
+		self.weaponmodel = "progs/v_light.mdl";
+	else
+		self.weaponmodel = string_null;
+	W_SetCurrentAmmo ();
+}
+
 void() W_Attack =
 {
 	local	float	r;
@@ -910,49 +1091,38 @@ void() W_Attack =
 
 	if (self.weapon == IT_AXE)
 	{
-		sound (self, CHAN_WEAPON, "weapons/ax1.wav", 1, ATTN_NORM);
-		r = random();
-		if (r < 0.25)
-			player_axe1 ();
-		else if (r<0.5)
-			player_axeb1 ();
-		else if (r<0.75)
-			player_axec1 ();
-		else
-			player_axed1 ();
-		self.attack_finished = time + 0.5;
+		W_AxeSwing ();
+		self.attack_finished = time + cv_scarlet_rof_axe; // was 0.5, SCARLET - custom rof integration.
 	}
 	else if (self.weapon == IT_SHOTGUN)
 	{
 		player_shot1 ();
 		W_FireShotgun ();
-		self.attack_finished = time + 0.5;
+		self.attack_finished = time + cv_scarlet_rof_sg; // was 0.5, SCARLET - custom rof integration.
 	}
 	else if (self.weapon == IT_SUPER_SHOTGUN)
 	{
 		player_shot1 ();
 		W_FireSuperShotgun ();
-		self.attack_finished = time + 0.7;
+		self.attack_finished = time + cv_scarlet_rof_ssg; // was 0.7, SCARLET - custom rof integration.
 	}
-	else if (self.weapon == IT_NAILGUN)
+	else if (self.weapon == IT_NAILGUN || self.weapon == IT_SUPER_NAILGUN)
 	{
+		// SCARLET - the nailguns set their own rof when they fire
 		player_nail1 ();
-	}
-	else if (self.weapon == IT_SUPER_NAILGUN)
-	{
-		player_nail1 ();
+		W_FireSpikes (0);
 	}
 	else if (self.weapon == IT_GRENADE_LAUNCHER)
 	{
 		player_rocket1();
 		W_FireGrenade();
-		self.attack_finished = time + 0.6;
+		self.attack_finished = time + cv_scarlet_rof_gl; // was 0.6, SCARLET - custom rof integration.
 	}
 	else if (self.weapon == IT_ROCKET_LAUNCHER)
 	{
 		player_rocket1();
 		W_FireRocket();
-		self.attack_finished = time + 0.8;
+		self.attack_finished = time + cv_scarlet_rof_rl; // was 0.8, SCARLET - custom rof integration.
 	}
 	else if (self.weapon == IT_LIGHTNING)
 	{
@@ -960,6 +1130,9 @@ void() W_Attack =
 		self.attack_finished = time + 0.1;
 		sound (self, CHAN_AUTO, "weapons/lstart.wav", 1, ATTN_NORM);
 	}
+
+	if (!W_CheckNoAmmo ())	// SCARLET - switch away at once when the shot used the last ammo
+		return;
 };
 
 /*
@@ -1180,6 +1353,38 @@ void() ImpulseCommands =
 {
 	if (self.impulse >= 1 && self.impulse <= 8)
 		W_ChangeWeapon ();
+
+	// SCARLET - best-of weapon keys: the stronger of the pair if it is owned and has ammo, else the other
+	if (self.impulse == 160) // rocket launcher, else grenade launcher
+	{
+		if ((self.items & IT_ROCKET_LAUNCHER) && self.ammo_rockets >= 1)
+			self.impulse = 7;
+		else if ((self.items & IT_GRENADE_LAUNCHER) && self.ammo_rockets >= 1)
+			self.impulse = 6;
+		else
+			self.impulse = 7;
+		W_ChangeWeapon ();
+	}
+	if (self.impulse == 161) // super nailgun, else nailgun
+	{
+		if ((self.items & IT_SUPER_NAILGUN) && self.ammo_nails >= 2)
+			self.impulse = 5;
+		else if ((self.items & IT_NAILGUN) && self.ammo_nails >= 1)
+			self.impulse = 4;
+		else
+			self.impulse = 5;
+		W_ChangeWeapon ();
+	}
+	if (self.impulse == 162) // super shotgun, else shotgun
+	{
+		if ((self.items & IT_SUPER_SHOTGUN) && self.ammo_shells >= 2)
+			self.impulse = 3;
+		else if ((self.items & IT_SHOTGUN) && self.ammo_shells >= 1)
+			self.impulse = 2;
+		else
+			self.impulse = 3;
+		W_ChangeWeapon ();
+	}
 
 	if (self.impulse == 9)
 		CheatCommand ();

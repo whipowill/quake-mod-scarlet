@@ -1,0 +1,101 @@
+# Changelog
+
+- November 2026
+    - Rebuilt on id Software's original Quake source (v1.01) instead of Copper.  Every Scarlet feature was carried over; Copper's own gameplay changes (its HUD, new monsters and spawners, triggered monsters, extra impulses) are gone
+    - The mod no longer needs Copper's `pak0.pak`; it ships one pak of its own
+- October 2026
+    - Started using Claude to assist with maintaining this mod
+    - Merge Copper v1.30 (crazy hard to do without AI assistance)
+    - Add feature to randomize music and to switch track on demand
+    - Brought back death counts and added assists to be displayed on scoreboard
+    - Teammate markers above players' heads, visible through walls, drawn by the HUD mod
+    - Improved bot following code on singleplayer games
+    - Option to keep your progress when you die in co-op and single player
+    - Monster count scales with difficulty in single player and co-op
+    - Monsters killed by a player can drop a random powerup in single player and co-op
+    - Monsters chase faster and hit harder in single player and co-op, with a multiplier for each difficulty
+    - Option to make the enemy bot team always wear a color you pick
+    - Option to lunge on every melee axe attack (dash feature), with or without a target
+    - Float a miniature spinning quad or pentagram above players carrying one
+    - ``trailgen`` also builds trails for maps inside pak files (dm1-6, the single player levels)
+    - Cooldown on the melee lunge (``scarlet_melee_lunge_cooldown``, 10 seconds by default)
+    - Bots below skill 3 are weaker in more ways than aim: slower to react, slower turning, aim wobble, less leading and less dodging (``scarlet_bot_handicap``)
+    - Bots get longer to reach a far waypoint (two seconds plus walking time), so they no longer give up just short of the end of a long hall and run back
+    - ``trailgen`` merges waypoints that land on the same spot
+    - ``trailgen`` thins its waypoints to a skeleton like a person would draw, a third to a half as many, with one line down a hall
+    - Waypoints are centered in halls instead of pressed against the walls
+    - Bots take a clearly better item right beside them (like yellow armor over green) instead of walking past it to an earlier goal
+    - ``trailgen`` finds the way out of spawns in low window recesses
+    - Bots stay out of kill floors (hurt triggers of 50 or more damage, voids): ``trailgen`` routes around them and bots avoid walking off ledges into them
+    - ``impulse 105`` shows the waypoint links around you as beams
+    - Bots run from a player holding the pentagram instead of wasting ammo on them
+    - Bots step around teammates that block their way
+    - Bots no longer walk back through a teleporter they just used
+    - Bots take their waypoints from a ``maps/<map>.ent`` file made by the trailgen tool; the console and your screen say whether a map has a trail
+    - The ``trailgen`` tool comes with the mod; point it at a folder to build every map's trail (just run ``./trailgen``)
+    - Developer option to float each bot's goal over its head
+    - Add ``singleplayer`` and ``multiplayer`` console aliases to quick issue the various settings
+- July 2025
+    - Remove death counts to make compatible w/ vkQuake
+- June 2025
+    - Fixed bot priorities to actually pickup dropped powerups
+- February 2024
+    - Add option to make grenades not detonate on touch
+    - Fix death alerts in chat to match axe melee or hand grenade
+    - Make bot priority ranking for powerups customizable in settings
+    - Re-enable melee lunge feature
+    - Add no spam feature to limit chat text
+    - Fix bug w/ nails causing bullet blood gore
+    - Allow armor pickup even at full strength
+- June 2023 - ``v1.4.x``
+    - Added deaths count to scoreboard (assuming you have [HUD](https://github.com/whipowill/quake-mod-hud))
+    - Bots no longer trigger next game from intermission
+    - Melee attack will now spam multiple times when pressed
+    - Number of grenades in a backpack now limited
+    - Fix bug in Perforator damage (my fault)
+    - Add lunge to melee attack (but disabled due to engine [bug](https://github.com/timbergeron/QSS-M/issues/20))
+- May 2023 - ``v1.3.x``
+    - Added new rewards feature on kills
+    - Added new killstreak feature
+    - Weapons will switch to best on empty ammo
+    - Weapons now visibly drop outside the backpack
+    - Added custom weapon loadouts feature
+    - Weapons kick can be customized
+    - Nail speed over 2000 becomes hitscan
+    - Added melee attack and grenade toss
+    - Weapons crates now customizable
+    - Fixed old bug where bots shoot ground
+    - Taught bots how to use grenades
+    - Respawn timer forces timeout
+    - Player corpses stick around for a bit
+    - Made buttons shootable (for ``ultrav``)
+    - Added shield recharge feature
+    - Made hand grenades come from backpacks
+    - Added server/client communcation to use w/ [HUD](https://github.com/whipowill/quake-mod-hud)
+- April 2023 - ``v1.2.x``
+    - Gore system overhauled and is now scalable
+    - Added option to disable weapon autoswitch
+    - Weapon damage now configurable
+    - Weapon bullets-per-shell now configurable
+    - Weapon rate of fire now configurable
+    - Weapon spread now configurable
+    - Weapon projectile speed now configurable
+    - Random bots will now be closer to ``skill``
+    - Thunderbolt range now extended to infinite
+    - Thunderbolt can now have a rate of fire
+    - Upgraded to Copper v1.20
+- August 2022 - ``v1.1.x``
+    - Bots now choose from over 500 random names
+    - Bots now know if they are losing and become depressed
+    - Team bots now report when they pickup important items
+    - Bots can now teleport to your location in coop
+    - Added nametags, footsteps, and gore
+- July 2022 - ``v1.0.x``
+    - Merged FrikBot w/ Copper v1.19
+    - Bots ``skill`` now scales linearly from ``0`` to ``3``
+    - Bots can now be spawned w/ random ``skill`` levels
+    - Bots no longer crowd together in team games
+    - Bots no longer spam teleporters repeatedly
+    - Bots now wear proper team color in coop games
+    - Bots now recover from fool's errand more quickly
+    - Added item respawn for singleplayer and coop

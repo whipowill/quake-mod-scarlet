@@ -493,6 +493,8 @@ void() monster_zombie =
 		return;
 	}
 
+	if (MonsterDensity ())	// SCARLET - monster density setting
+		return;
 	precache_model ("progs/zombie.mdl");
 	precache_model ("progs/h_zombie.mdl");
 	precache_model ("progs/zom_gib.mdl");

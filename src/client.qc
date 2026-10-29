@@ -75,14 +75,14 @@ void() SetChangeParms =
 
 void() SetNewParms =
 {
-	parm1 = IT_SHOTGUN | IT_AXE;
+	parm1 = LoadoutParamOne(); // SCARLET - loadout
 	parm2 = 100;
 	parm3 = 0;
-	parm4 = 25;
-	parm5 = 0;
-	parm6 = 0;
-	parm6 = 0;
-	parm8 = 1;
+	parm4 = LoadoutParamShells(); // SCARLET - loadout
+	parm5 = LoadoutParamNails(); // SCARLET - loadout
+	parm6 = LoadoutParamRockets(); // SCARLET - loadout
+	parm7 = LoadoutParamCells(); // SCARLET - loadout
+	parm8 = LoadoutParamEight(); // SCARLET - loadout
 	parm9 = 0;
 };
 
@@ -147,9 +147,55 @@ entity() FindIntermission =
 
 
 string nextmap;
+
+// SCARLET - console command to jump to a random map from maps.cfg.
+void() GotoRandomMap =
+{
+	local float p;
+	p = cvar("samelevel");
+	if (p < 0)
+		p = 0 - p;
+	if (p <= 1)
+		p = 20;	// number of map aliases in maps.cfg
+	p = ceil(random() * p);
+	bprint("Rolling map");
+	bprint(ftos(p));
+	bprint("\n");
+	localcmd("map");
+	localcmd(ftos(p));
+	localcmd("\n");
+}
+
 void() GotoNextMap =
 {
-	if (cvar("samelevel"))	// if samelevel is set, stay on same level
+	// SCARLET - automatic map rotation.
+	if (deathmatch)
+	{
+		local float p;
+		p = cvar("samelevel");
+		if (p > 1)
+		{
+			localcmd("map");
+			localcmd(ftos(ceil(random() * p)));
+			localcmd("\n");
+			return;
+		}
+		else if (p < 0)
+		{
+			localcmd("map");
+			localcmd(ftos(floor(serverflags/16)+1));
+			localcmd("\n");
+			serverflags = serverflags+16;
+			if (floor((serverflags/16)+1) > (0 - p)) {
+				serverflags = serverflags & 16;
+			}
+			return;
+		}
+	}
+	// SCARLET - end.
+
+	// SCARLET - samelevel is for deathmatch rotation, so co-op and single player still advance
+	if (deathmatch && cvar("samelevel"))	// if samelevel is set, stay on same level
 		changelevel (mapname);
 	else
 		changelevel (nextmap);
@@ -175,9 +221,13 @@ void() ExitIntermission =
 	{
 		if (world.model == "maps/e1m7.bsp")
 		{
-			WriteByte (MSG_ALL, SVC_CDTRACK);
-			WriteByte (MSG_ALL, 2);
-			WriteByte (MSG_ALL, 3);
+			// SCARLET - keep the shuffled track playing
+			if (!cv_scarlet_music)
+			{
+				WriteByte (MSG_ALL, SVC_CDTRACK);
+				WriteByte (MSG_ALL, 2);
+				WriteByte (MSG_ALL, 3);
+			}
 			if (!cvar("registered"))
 			{
 				WriteByte (MSG_ALL, SVC_FINALE);
@@ -192,9 +242,13 @@ void() ExitIntermission =
 		}
 		else if (world.model == "maps/e2m6.bsp")
 		{
-			WriteByte (MSG_ALL, SVC_CDTRACK);
-			WriteByte (MSG_ALL, 2);
-			WriteByte (MSG_ALL, 3);
+			// SCARLET - keep the shuffled track playing
+			if (!cv_scarlet_music)
+			{
+				WriteByte (MSG_ALL, SVC_CDTRACK);
+				WriteByte (MSG_ALL, 2);
+				WriteByte (MSG_ALL, 3);
+			}
 
 			WriteByte (MSG_ALL, SVC_FINALE);
 			WriteString (MSG_ALL, "The Rune of Black Magic throbs evilly in\nyour hand and whispers dark thoughts\ninto your brain. You learn the inmost\nlore of the Hell-Mother; Shub-Niggurath!\nYou now know that she is behind all the\nterrible plotting which has led to so\nmuch death and horror. But she is not\ninviolate! Armed with this Rune, you\nrealize that once all four Runes are\ncombined, the gate to Shub-Niggurath's\nPit will open, and you can face the\nWitch-Goddess herself in her frightful\notherworld cathedral.");
@@ -202,9 +256,13 @@ void() ExitIntermission =
 		}
 		else if (world.model == "maps/e3m6.bsp")
 		{
-			WriteByte (MSG_ALL, SVC_CDTRACK);
-			WriteByte (MSG_ALL, 2);
-			WriteByte (MSG_ALL, 3);
+			// SCARLET - keep the shuffled track playing
+			if (!cv_scarlet_music)
+			{
+				WriteByte (MSG_ALL, SVC_CDTRACK);
+				WriteByte (MSG_ALL, 2);
+				WriteByte (MSG_ALL, 3);
+			}
 
 			WriteByte (MSG_ALL, SVC_FINALE);
 			WriteString (MSG_ALL, "The charred viscera of diabolic horrors\nbubble viscously as you seize the Rune\nof Hell Magic. Its heat scorches your\nhand, and its terrible secrets blight\nyour mind. Gathering the shreds of your\ncourage, you shake the devil's shackles\nfrom your soul, and become ever more\nhard and determined to destroy the\nhideous creatures whose mere existence\nthreatens the souls and psyches of all\nthe population of Earth.");
@@ -212,9 +270,13 @@ void() ExitIntermission =
 		}
 		else if (world.model == "maps/e4m7.bsp")
 		{
-			WriteByte (MSG_ALL, SVC_CDTRACK);
-			WriteByte (MSG_ALL, 2);
-			WriteByte (MSG_ALL, 3);
+			// SCARLET - keep the shuffled track playing
+			if (!cv_scarlet_music)
+			{
+				WriteByte (MSG_ALL, SVC_CDTRACK);
+				WriteByte (MSG_ALL, 2);
+				WriteByte (MSG_ALL, 3);
+			}
 
 			WriteByte (MSG_ALL, SVC_FINALE);
 			WriteString (MSG_ALL, "Despite the awful might of the Elder\nWorld, you have achieved the Rune of\nElder Magic, capstone of all types of\narcane wisdom. Beyond good and evil,\nbeyond life and death, the Rune\npulsates, heavy with import. Patient and\npotent, the Elder Being Shub-Niggurath\nweaves her dire plans to clear off all\nlife from the Earth, and bring her own\nfoul offspring to our world! For all the\ndwellers in these nightmare dimensions\nare her descendants! Once all Runes of\nmagic power are united, the energy\nbehind them will blast open the Gateway\nto Shub-Niggurath, and you can travel\nthere to foil the Hell-Mother's plots\nin person.");
@@ -274,9 +336,13 @@ void() execute_changelevel =
 	else
 		intermission_exittime = time + 2;
 
-	WriteByte (MSG_ALL, SVC_CDTRACK);
-	WriteByte (MSG_ALL, 3);
-	WriteByte (MSG_ALL, 3);
+	// SCARLET - keep the shuffled track playing
+	if (!cv_scarlet_music)
+	{
+		WriteByte (MSG_ALL, SVC_CDTRACK);
+		WriteByte (MSG_ALL, 3);
+		WriteByte (MSG_ALL, 3);
+	}
 	
 	pos = FindIntermission ();
 
@@ -432,6 +498,8 @@ entity() SelectSpawnPoint =
 	}
 	else if (deathmatch)
 	{
+		return RandomSpawnLocation(); // SCARLET - bots integration.
+
 		lastspawn = find(lastspawn, classname, "info_player_deathmatch");
 		if (lastspawn == world)
 			lastspawn = find (lastspawn, classname, "info_player_deathmatch");
@@ -484,6 +552,8 @@ void() PutClientInServer =
 	self.invincible_finished = 0;
 	self.effects = 0;
 	self.invincible_time = 0;
+
+	StatsRespawn(self); // SCARLET - stats integration.
 
 	DecodeLevelParms ();
 	
@@ -736,6 +806,17 @@ void() PlayerDeathThink =
 	local entity	old_self;
 	local float		forward;
 
+	// SCARLET - respawn on a timer, whether or not a button is pressed
+	if (self.respawn_time > 0 && self.respawn_time < time)
+	{
+		self.respawn_time = 0;
+		self.button0 = 0;
+		self.button1 = 0;
+		self.button2 = 0;
+		respawn();
+		return;
+	}
+
 	if ((self.flags & FL_ONGROUND))
 	{
 		forward = vlen (self.velocity);
@@ -943,6 +1024,9 @@ void() PlayerPreThink =
 	local	float	mspeed, aspeed;
 	local	float	r;
 
+	if (BotPreFrame()) return; // SCARLET - bots integration.
+	StatsUpdate(self); // SCARLET - stats integration.
+
 	if (intermission_running)
 	{
 		IntermissionThink ();	// otherwise a button could be missed between
@@ -992,6 +1076,8 @@ void() CheckPowerups =
 {
 	if (self.health <= 0)
 		return;
+
+	PowerupIcons(); // SCARLET - miniature quad/pent above the head
 
 // invisibility
 	if (self.invisible_finished)
@@ -1149,6 +1235,8 @@ void() PlayerPostThink =
 	local	float	mspeed, aspeed;
 	local	float	r;
 
+	if (BotPostFrame()) return; // SCARLET - bots integration.
+
 	if (self.view_ofs == '0 0 0')
 		return;		// intermission or finale
 	if (self.deadflag)
@@ -1191,6 +1279,8 @@ called when a player connects to a server
 */
 void() ClientConnect =
 {
+	ClientInRankings(); // SCARLET - bots integration.
+
 	bprint (self.netname);
 	bprint (" entered the game\n");
 	
@@ -1209,6 +1299,8 @@ called when a player disconnects from a server
 */
 void() ClientDisconnect =
 {
+	ClientDisconnected(); // SCARLET - bots integration.
+
 	if (gameover)
 		return;
 	// if the level end trigger has been activated, just return
@@ -1230,6 +1322,13 @@ ClientObituary
 called when a player dies
 ============
 */
+// SCARLET - the death messages can be switched off (scarlet_chat_deaths), the frags still count
+void(string s) obit_print =
+{
+	if (cv_scarlet_chat_deaths == 1)
+		bprint (s);
+}
+
 void(entity targ, entity attacker) ClientObituary =
 {
 	local	float rnum;
@@ -1238,12 +1337,14 @@ void(entity targ, entity attacker) ClientObituary =
 
 	if (targ.classname == "player")
 	{
+		StatsDeath(targ, attacker); // SCARLET - stats integration
+
 		if (attacker.classname == "teledeath")
 		{
-			bprint (targ.netname);
-			bprint (" was telefragged by ");
-			bprint (attacker.owner.netname);
-			bprint ("\n");
+			obit_print (targ.netname);
+			obit_print (" was telefragged by ");
+			obit_print (attacker.owner.netname);
+			obit_print ("\n");
 
 			attacker.owner.frags = attacker.owner.frags + 1;
 			return;
@@ -1251,9 +1352,9 @@ void(entity targ, entity attacker) ClientObituary =
 
 		if (attacker.classname == "teledeath2")
 		{
-			bprint ("Satan's power deflects ");
-			bprint (targ.netname);
-			bprint ("'s telefrag\n");
+			obit_print ("Satan's power deflects ");
+			obit_print (targ.netname);
+			obit_print ("'s telefrag\n");
 
 			targ.frags = targ.frags - 1;
 			return;
@@ -1265,19 +1366,19 @@ void(entity targ, entity attacker) ClientObituary =
 			{
 				// killed self
 				attacker.frags = attacker.frags - 1;
-				bprint (targ.netname);
+				obit_print (targ.netname);
 				
 				if (targ.weapon == 64 && targ.waterlevel > 1)
 				{
-					bprint (" discharges into the water.\n");
+					obit_print (" discharges into the water.\n");
 					return;
 				}
 				if (targ.weapon == 16)
-					bprint (" tries to put the pin back in\n");
+					obit_print (" tries to put the pin back in\n");
 				else if (rnum)
-					bprint (" becomes bored with life\n");
+					obit_print (" becomes bored with life\n");
 				else
-					bprint (" checks if his weapon is loaded\n");
+					obit_print (" checks if his weapon is loaded\n");
 				return;
 			}
 			else
@@ -1338,10 +1439,10 @@ void(entity targ, entity attacker) ClientObituary =
 					else
 						deathstring2 = "'s shaft\n";
 				}
-				bprint (targ.netname);
-				bprint (deathstring);
-				bprint (attacker.netname);
-				bprint (deathstring2);
+				obit_print (targ.netname);
+				obit_print (deathstring);
+				obit_print (attacker.netname);
+				obit_print (deathstring2);
 			}
 			return;
 		}
@@ -1350,107 +1451,107 @@ void(entity targ, entity attacker) ClientObituary =
 			targ.frags = targ.frags - 1;		// killed self
 			rnum = targ.watertype;
 
-			bprint (targ.netname);
+			obit_print (targ.netname);
 			if (rnum == -3)
 			{
 				if (random() < 0.5)
-					bprint (" sleeps with the fishes\n");
+					obit_print (" sleeps with the fishes\n");
 				else
-					bprint (" sucks it down\n");
+					obit_print (" sucks it down\n");
 				return;
 			}
 			else if (rnum == -4)
 			{
 				if (random() < 0.5)
-					bprint (" gulped a load of slime\n");
+					obit_print (" gulped a load of slime\n");
 				else
-					bprint (" can't exist on slime alone\n");
+					obit_print (" can't exist on slime alone\n");
 				return;
 			}
 			else if (rnum == -5)
 			{
 				if (targ.health < -15)
 				{
-					bprint (" burst into flames\n");
+					obit_print (" burst into flames\n");
 					return;
 				}
 				if (random() < 0.5)
-					bprint (" turned into hot slag\n");
+					obit_print (" turned into hot slag\n");
 				else
-					bprint (" visits the Volcano God\n");
+					obit_print (" visits the Volcano God\n");
 				return;
 			}
 
 			if (attacker.flags & FL_MONSTER)
 			{
 				if (attacker.classname == "monster_army")
-					bprint (" was shot by a Grunt\n");
+					obit_print (" was shot by a Grunt\n");
 				if (attacker.classname == "monster_demon1")
-					bprint (" was eviscerated by a Fiend\n");
+					obit_print (" was eviscerated by a Fiend\n");
 				if (attacker.classname == "monster_dog")
-					bprint (" was mauled by a Rottweiler\n");
+					obit_print (" was mauled by a Rottweiler\n");
 				if (attacker.classname == "monster_dragon")
-					bprint (" was fried by a Dragon\n");
+					obit_print (" was fried by a Dragon\n");
 				if (attacker.classname == "monster_enforcer")
-					bprint (" was blasted by an Enforcer\n");
+					obit_print (" was blasted by an Enforcer\n");
 				if (attacker.classname == "monster_fish")
-					bprint (" was fed to the Rotfish\n");
+					obit_print (" was fed to the Rotfish\n");
 				if (attacker.classname == "monster_hell_knight")
-					bprint (" was slain by a Death Knight\n");
+					obit_print (" was slain by a Death Knight\n");
 				if (attacker.classname == "monster_knight")
-					bprint (" was slashed by a Knight\n");
+					obit_print (" was slashed by a Knight\n");
 				if (attacker.classname == "monster_ogre")
-					bprint (" was destroyed by an Ogre\n");
+					obit_print (" was destroyed by an Ogre\n");
 				if (attacker.classname == "monster_oldone")
-					bprint (" became one with Shub-Niggurath\n");
+					obit_print (" became one with Shub-Niggurath\n");
 				if (attacker.classname == "monster_shalrath")
-					bprint (" was exploded by a Vore\n");
+					obit_print (" was exploded by a Vore\n");
 				if (attacker.classname == "monster_shambler")
-					bprint (" was smashed by a Shambler\n");
+					obit_print (" was smashed by a Shambler\n");
 				if (attacker.classname == "monster_tarbaby")
-					bprint (" was slimed by a Spawn\n");
+					obit_print (" was slimed by a Spawn\n");
 				if (attacker.classname == "monster_vomit")
-					bprint (" was vomited on by a Vomitus\n");
+					obit_print (" was vomited on by a Vomitus\n");
 				if (attacker.classname == "monster_wizard")
-					bprint (" was scragged by a Scrag\n");
+					obit_print (" was scragged by a Scrag\n");
 				if (attacker.classname == "monster_zombie")
-					bprint (" joins the Zombies\n");
+					obit_print (" joins the Zombies\n");
 
 				return;
 			}
 			if (attacker.classname == "explo_box")
 			{
-				bprint (" blew up\n");
+				obit_print (" blew up\n");
 				return;
 			}
 			if (attacker.solid == SOLID_BSP && attacker != world)
 			{	
-				bprint (" was squished\n");
+				obit_print (" was squished\n");
 				return;
 			}
 			if (targ.deathtype == "falling")
 			{
 				targ.deathtype = "";
-				bprint (" fell to his death\n");
+				obit_print (" fell to his death\n");
 				return;
 			}
 			if (attacker.classname == "trap_shooter" || attacker.classname == "trap_spikeshooter")
 			{
-				bprint (" was spiked\n");
+				obit_print (" was spiked\n");
 				return;
 			}
 			if (attacker.classname == "fireball")
 			{
-				bprint (" ate a lavaball\n");
+				obit_print (" ate a lavaball\n");
 				return;
 			}
 			if (attacker.classname == "trigger_changelevel")
 			{
-				bprint (" tried to leave\n");
+				obit_print (" tried to leave\n");
 				return;
 			}
 
-			bprint (" died\n");
+			obit_print (" died\n");
 		}
 	}
 };

@@ -178,6 +178,8 @@ void() monster_fish =
 		remove(self);
 		return;
 	}
+	if (MonsterDensity ())	// SCARLET - monster density setting
+		return;
 	precache_model2 ("progs/fish.mdl");
 
 	precache_sound2 ("fish/death.wav");

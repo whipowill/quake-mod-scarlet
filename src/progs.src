@@ -1,6 +1,42 @@
 ../progs.dat
+#pragma autoproto
 
 defs.qc
+scarlet/cvars.qc
+
+// FRIKBOT
+frikbot/bot.qc
+frikbot/bot_way.qc
+frikbot/bot_fight.qc
+frikbot/bot_ai.qc
+frikbot/bot_misc_names.qc
+frikbot/bot_misc_quotes.qc
+frikbot/bot_misc.qc
+frikbot/bot_phys.qc
+frikbot/bot_move.qc
+frikbot/bot_ed.qc
+
+// SCARLET
+scarlet/utility.qc
+scarlet/difficulty.qc
+scarlet/stats.qc
+scarlet/precache.qc
+scarlet/loadout.qc
+scarlet/melee.qc
+scarlet/corpses.qc
+scarlet/football.qc
+scarlet/footsteps.qc
+scarlet/gore.qc
+scarlet/nametags.qc
+scarlet/scorekeeper.qc
+scarlet/killstreak.qc
+scarlet/spawn.qc
+scarlet/glory.qc
+scarlet/shields.qc
+scarlet/music.qc
+scarlet/powerup_icons.qc
+scarlet/bot_goalmark.qc
+
 subs.qc
 fight.qc
 ai.qc
