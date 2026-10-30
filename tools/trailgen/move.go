@@ -24,6 +24,7 @@ type Mover struct {
 	head   int
 	fall   float32 // longest drop for now; 0 means maxFall
 	deadly []Box   // kill zones: hurt triggers and voids, which a bot must not touch
+	shut   []int   // hull roots of the doors that stay closed to a bot, which are walls to it
 }
 
 // deadlyMargin keeps waypoints and links this far clear of a kill zone, since the player's box
@@ -49,9 +50,33 @@ func (m *Mover) limit() float32 {
 	return maxFall
 }
 
-func (m *Mover) trace(a, b Vec3) Trace { return m.b.HullTrace(m.head, a, b) }
+func (m *Mover) trace(a, b Vec3) Trace {
+	t := m.b.HullTrace(m.head, a, b)
+	for _, h := range m.shut {
+		d := m.b.HullTrace(h, a, b)
+		switch {
+		case d.StartSolid:
+			t.StartSolid = true
+			t.AllSolid = t.AllSolid || d.AllSolid
+			t.Fraction, t.End = 0, a
+		case !t.StartSolid && d.Fraction < t.Fraction:
+			t.Fraction, t.End, t.Normal = d.Fraction, d.End, d.Normal
+		}
+	}
+	return t
+}
 
-func (m *Mover) Empty(p Vec3) bool { return m.b.HullContents(m.head, p) == contentsEmpty }
+func (m *Mover) Empty(p Vec3) bool {
+	if m.b.HullContents(m.head, p) != contentsEmpty {
+		return false
+	}
+	for _, h := range m.shut {
+		if m.b.HullContents(h, p) == contentsSolid {
+			return false
+		}
+	}
+	return true
+}
 
 // Drop finds the floor below p, up to maxDown away.
 func (m *Mover) Drop(p Vec3, maxDown float32) (Vec3, bool) {

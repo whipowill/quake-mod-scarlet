@@ -588,6 +588,8 @@ void() PlayerDie =
 	self.invincible_finished = 0;
 	self.super_damage_finished = 0;
 	self.radsuit_finished = 0;
+	self.effects = 0;	// SCARLET - a corpse doesn't keep the quad or pentagram glow
+	self.blessed_until = 0;
 	self.modelindex = modelindex_player;	// don't use eyes
 
 	if (deathmatch || coop)

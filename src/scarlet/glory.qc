@@ -44,6 +44,17 @@ void() RewardTouch =
 
         other.items |= self.items;
 
+        // a weapon dropped by a player or bot comes with a small box of its ammo
+        if (self.items & IT_SUPER_SHOTGUN)
+            other.ammo_shells = other.ammo_shells + AmmoAmount(1, FALSE);
+        if (self.items & (IT_NAILGUN | IT_SUPER_NAILGUN))
+            other.ammo_nails = other.ammo_nails + AmmoAmount(2, FALSE);
+        if (self.items & (IT_GRENADE_LAUNCHER | IT_ROCKET_LAUNCHER))
+            other.ammo_rockets = other.ammo_rockets + AmmoAmount(3, FALSE);
+        if (self.items & IT_LIGHTNING)
+            other.ammo_cells = other.ammo_cells + AmmoAmount(4, FALSE);
+        bound_other_ammo();
+
         local entity oself = self;
         self = other;
         // change to the weapon

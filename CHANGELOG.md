@@ -6,12 +6,18 @@
     - The mod ships its own pak and no longer needs Copper's
     - Bots follow trails made by the ``trailgen`` tool and give up on stuck goals
     - ``trailgen`` writes its files into the mod folder and clears old ones
+    - ``trailgen`` no longer paths through doors that need a button, key or shot
     - Weapon switching, axe animation and respawn timer fixes
     - Overheal rots, drowning and fall damage fixes
     - Option for zombies to die from normal damage in single player
     - Monster kills and assists count on the single player scoreboard
     - Pickup message options for health, plus the other ``scarlet_chat_*`` ones
     - Impulses for best rocket, nail, shot and overall weapon
+    - Rockets, grenades and other flying objects press buttons
+    - Option for damage immunity after a respawn
+    - Option for aim assist on instant-hit guns, for players and monsters
+    - Option for weapons to come with a small ammo box of ammo
+    - Corpses no longer keep the quad glow
 - October 2026
     - Started using Claude to assist with maintaining this mod
     - Merged Copper v1.30

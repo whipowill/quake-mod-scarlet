@@ -71,8 +71,17 @@ void() button_use =
 
 void() button_touch =
 {
-	if (other.classname != "player" && other.classname != "spike" && other.classname != "grenade" && other.classname != "rocket") // SCARLET - make buttons shootable!
-		return;
+	// SCARLET - make buttons shootable! players press them as always, and so does anything that flies, bounces
+	// or tumbles into one: nails, rockets, grenades (launcher and hand), gibs, dropped backpacks.  monsters
+	// don't, or they'd press every button they walk past
+	if (other.classname != "player")
+	{
+		if (other.flags & FL_MONSTER)
+			return;
+		if (other.movetype != MOVETYPE_FLYMISSILE && other.movetype != MOVETYPE_BOUNCE && other.movetype != MOVETYPE_BOUNCEMISSILE
+			&& other.movetype != MOVETYPE_TOSS && other.movetype != MOVETYPE_FLY)
+			return;
+	}
 	self.enemy = other;
 	button_fire ();
 };

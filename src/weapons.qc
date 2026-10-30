@@ -303,10 +303,10 @@ void() W_FireShotgun =
 
 	sound (self, CHAN_WEAPON, "weapons/guncock.wav", 1, ATTN_NORM);	
 
-	self.punchangle_x = -1 * cv_scarlet_kick_sg;
+	self.punchangle_x = -1 * cv_scarlet_weapon_kick_sg;
 	
-	self.currentammo = self.ammo_shells = self.ammo_shells - cv_scarlet_dec_shells; // was 1, SCARLET - custom ammo integration.
-	dir = aim (self, 100000);
+	self.currentammo = self.ammo_shells = self.ammo_shells - cv_scarlet_ammo_dec_shells; // was 1, SCARLET - custom ammo integration.
+	dir = AssistAim (100000, 2048);
 	FireBullets (cv_scarlet_bullets_in_shell_sg, dir, Vector(cv_scarlet_spr_sg/100, cv_scarlet_spr_sg/100/2, 0), cv_scarlet_dmg_bullets); // was 6, SCARLET - custom ammo integration.
 };
 
@@ -328,10 +328,10 @@ void() W_FireSuperShotgun =
 		
 	sound (self ,CHAN_WEAPON, "weapons/shotgn2.wav", 1, ATTN_NORM);	
 
-	self.punchangle_x = -1 * cv_scarlet_kick_ssg;
+	self.punchangle_x = -1 * cv_scarlet_weapon_kick_ssg;
 	
-	self.currentammo = self.ammo_shells = self.ammo_shells - (cv_scarlet_dec_shells * 2); // was 2, SCARLET - custom ammo integration.
-	dir = aim (self, 100000);
+	self.currentammo = self.ammo_shells = self.ammo_shells - (cv_scarlet_ammo_dec_shells * 2); // was 2, SCARLET - custom ammo integration.
+	dir = AssistAim (100000, 2048);
 	FireBullets (cv_scarlet_bullets_in_shell_ssg, dir, Vector(cv_scarlet_spr_ssg/100, cv_scarlet_spr_ssg/100/2, 0), cv_scarlet_dmg_bullets); // was 14, SCARLET - custom ammo integration.
 };
 
@@ -375,8 +375,8 @@ void() T_MissileTouch =
 	}
 
 	// damg = 100 + random()*20; // OG Quake: 100-120 on a direct hit
-	// damg = cv_scarlet_dmg_rockets - ((cv_scarlet_dmg_rockets/5) + random()*(cv_scarlet_dmg_rockets/5)); // SCARLET - a possible way to do it: 72-96 at 120
-	damg = cv_scarlet_dmg_rockets; // SCARLET - custom dmg integration: the exact value, no randomness
+	// damg = cv_scarlet_dmg_rockets - ((cv_scarlet_dmg_rockets/5) + random()*(cv_scarlet_dmg_rockets/5)); // Copper build: 72-96 at 120, which is less than a near miss's splash
+	damg = cv_scarlet_dmg_rockets; // was 100, SCARLET - custom dmg integration: the exact value, so a direct hit is never worse than splash
 	
 	if (other.health)
 	{
@@ -414,21 +414,22 @@ void() W_FireRocket =
 {
 	local	entity missile, mpuff;
 	
-	self.currentammo = self.ammo_rockets = self.ammo_rockets - cv_scarlet_dec_rockets; // was 1, SCARLET - custom ammo integration.
+	self.currentammo = self.ammo_rockets = self.ammo_rockets - cv_scarlet_ammo_dec_rockets; // was 1, SCARLET - custom ammo integration.
 	
 	sound (self, CHAN_WEAPON, "weapons/sgun1.wav", 1, ATTN_NORM);
 
-	self.punchangle_x = -1 * cv_scarlet_kick_rl;
+	self.punchangle_x = -1 * cv_scarlet_weapon_kick_rl;
 
 	missile = spawn ();
 	missile.owner = self;
+	missile.classname = "rocket";	// SCARLET - so a rocket can be told from other projectiles (it presses buttons)
 	missile.movetype = MOVETYPE_FLYMISSILE;
 	missile.solid = SOLID_BBOX;
 		
 // set missile speed	
 
 	makevectors (self.v_angle);
-	missile.velocity = aim(self, 1000);
+	missile.velocity = aim(self, 1000);	// not assisted: rockets are fired ahead of a moving target
 	missile.velocity = missile.velocity * 1000;
 	missile.angles = vectoangles(missile.velocity);
 	
@@ -503,9 +504,64 @@ void(vector p1, vector p2, entity from, float damage) LightningDamage =
 };
 
 
+// SCARLET - aim assist: a shot that passes just beside a target is pulled onto it.  the cone is
+// scarlet_aim_assist degrees either side of the crosshair, plus scarlet_aim_assist_growth more degrees for every
+// 1000 units the target is away, up to scarlet_aim_assist_max degrees (0 is no limit).  the target (a player or a
+// monster) must be in view, and a teammate under teamplay never counts.  only instant-hit shots use it (the
+// shotguns, the Thunderbolt, nails fast enough to be instant): a rocket, grenade or nail that has to be fired
+// ahead of a moving target would be pulled back onto where the target is now
+vector(vector org, vector dir, float range) AimAssistDir =
+{
+	local entity head, best;
+	local float bestdot, cone, d, dist;
+	local vector to, mid;
+
+	bestdot = -1;
+	head = findradius (org, range);
+	while (head)
+	{
+		if (head != self && head.takedamage && head.health > 0 && (head.classname == "player" || (head.flags & FL_MONSTER)))
+		if (!(teamplay == 1 && head.team > 0 && head.team == self.team))
+		{
+			mid = head.origin + (head.mins + head.maxs) * 0.5;
+			dist = vlen (mid - org);
+			cone = cv_scarlet_aim_assist + cv_scarlet_aim_assist_growth * dist / 1000;
+			if (cv_scarlet_aim_assist_max > 0 && cone > cv_scarlet_aim_assist_max)
+				cone = cv_scarlet_aim_assist_max;
+			to = normalize (mid - org);
+			d = to * dir;
+			if (d > bestdot && d > cos (cone * 3.14159265 / 180))
+			{
+				traceline (org, mid, FALSE, self);	// with monsters, so the target itself is what stops the line
+				if (trace_ent == head)
+				{
+					best = head;
+					bestdot = d;
+				}
+			}
+		}
+		head = head.chain;
+	}
+	if (best)
+		return normalize (best.origin + (best.mins + best.maxs) * 0.5 - org);
+	return dir;
+};
+
+// the engine's aim() (which only lifts or lowers a shot) with the aim assist on top
+vector(float speed, float range) AssistAim =
+{
+	local vector d;
+
+	d = aim (self, speed);
+	if (cv_scarlet_aim_assist > 0 && self.ishuman == TRUE)
+		d = AimAssistDir (self.origin + '0 0 16', d, range);
+	return d;
+};
+
 void() W_FireLightning =
 {
 	local	vector		org;
+	local	float		reach;
 
 	if (self.ammo_cells < 1)
 	{
@@ -528,13 +584,21 @@ void() W_FireLightning =
 		sound (self, CHAN_WEAPON, "weapons/lhit.wav", 1, ATTN_NORM);
 		self.t_width = time + 0.6;
 	}
-	self.punchangle_x = -1 * cv_scarlet_kick_tb;
+	self.punchangle_x = -1 * cv_scarlet_weapon_kick_tb;
 
-	self.currentammo = self.ammo_cells = self.ammo_cells - cv_scarlet_dec_cells; // was 1, SCARLET - custom ammo integration.
+	self.currentammo = self.ammo_cells = self.ammo_cells - cv_scarlet_ammo_dec_cells; // was 1, SCARLET - custom ammo integration.
 
 	org = self.origin + '0 0 16';
+
+	// SCARLET - the beam's reach: 600 as in Quake, or (scarlet_weapon_range_tb 0) as far as the map goes, stopped by walls
+	reach = cv_scarlet_weapon_range_tb;
+	if (reach <= 0)
+		reach = 8192;
+
+	if (cv_scarlet_aim_assist > 0 && self.ishuman == TRUE)
+		v_forward = AimAssistDir (org, v_forward, reach);
 	
-	traceline (org, org + v_forward*600, TRUE, self);
+	traceline (org, org + v_forward*reach, TRUE, self);
 
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 	WriteByte (MSG_BROADCAST, TE_LIGHTNING2);
@@ -594,11 +658,11 @@ void() W_FireGrenade =
 {
 	local	entity missile, mpuff;
 	
-	self.currentammo = self.ammo_rockets = self.ammo_rockets - cv_scarlet_dec_rockets; // was 1, SCARLET - custom ammo integration.
+	self.currentammo = self.ammo_rockets = self.ammo_rockets - cv_scarlet_ammo_dec_rockets; // was 1, SCARLET - custom ammo integration.
 	
 	sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
 
-	self.punchangle_x = -1 * cv_scarlet_kick_gl;
+	self.punchangle_x = -1 * cv_scarlet_weapon_kick_gl;
 
 	missile = spawn ();
 	missile.owner = self;
@@ -614,7 +678,7 @@ void() W_FireGrenade =
 		missile.velocity = v_forward*600 + v_up * 200 + crandom()*v_right*10 + crandom()*v_up*10;
 	else
 	{
-		missile.velocity = aim(self, 10000);
+		missile.velocity = aim(self, 10000);	// not assisted, like the rockets
 		missile.velocity = missile.velocity * 600;
 		missile.velocity_z = 200;
 	}
@@ -701,13 +765,13 @@ void() W_FireNailgun =
 {
 	local vector offset, v, org, dir;
 
-	dir = aim (self, 1000);
+	dir = aim (self, 1000);	// nails that fly are led like rockets, only the instant-hit ones are assisted (below)
 	v = vectoangles (dir);
 	v_x = v_x * -1;	// pitch comes back inverted from vectoangles
 	makevectors (v);
 
 	sound (self, CHAN_WEAPON, "weapons/rocket1i.wav", 1, ATTN_NORM);
-	self.currentammo = self.ammo_nails = self.ammo_nails - cv_scarlet_dec_nails; // was 1, SCARLET - custom ammo integration.
+	self.currentammo = self.ammo_nails = self.ammo_nails - cv_scarlet_ammo_dec_nails; // was 1, SCARLET - custom ammo integration.
 	offset = VEC_ORIGIN;
 	if (mod (self.cnt, 2))
 		offset_x = -2.5;
@@ -719,15 +783,15 @@ void() W_FireNailgun =
 
 	// default sv_maxvelocity is 2000, any higher leads to weird
 	// angular offsets caused by clamping the velocity
-	if (cv_scarlet_spd_ng >= 1999)
+	if (cv_scarlet_ammo_spd_ng >= 1999)
 	{
 		ClearMultiDamage ();
-		FireBullets (2, aim (self, 1000), Vector(cv_scarlet_spr_ng/100, cv_scarlet_spr_ng/100/2, 0), cv_scarlet_dmg_nails/2, 1); // flag true so it knows this was a nail not a bullet -whipowill
+		FireBullets (2, AssistAim (1000, 2048), Vector(cv_scarlet_spr_ng/100, cv_scarlet_spr_ng/100/2, 0), cv_scarlet_dmg_nails/2, 1); // flag true so it knows this was a nail not a bullet -whipowill
 		ApplyMultiDamage ();
 	}
 	else
 	{
-		launch_nail (org, dir * cv_scarlet_spd_ng);
+		launch_nail (org, dir * cv_scarlet_ammo_spd_ng);
 	}
 	self.attack_finished = time + cv_scarlet_rof_ng;
 }
@@ -737,25 +801,25 @@ void() W_FirePerforator =
 	local vector offset;
 
 	sound (self, CHAN_WEAPON, "weapons/spike2.wav", 1, ATTN_NORM);
-	self.currentammo = self.ammo_nails = self.ammo_nails - (cv_scarlet_dec_nails * 2); // was 2, SCARLET - custom ammo integration.
+	self.currentammo = self.ammo_nails = self.ammo_nails - (cv_scarlet_ammo_dec_nails * 2); // was 2, SCARLET - custom ammo integration.
 
 	if (mod (self.cnt, 4) == 0) offset = '0 0 1.25';
 	else if (mod (self.cnt, 4) == 1) offset = '1 0 1';
 	else if (mod (self.cnt, 4) == 2) offset = '1.25 0 0';
 	else offset = '1 0 -1';
 
-	if (cv_scarlet_spd_sng >= 1999)
+	if (cv_scarlet_ammo_spd_sng >= 1999)
 	{
 		ClearMultiDamage ();
-		FireBullets (4, aim (self, 1000), Vector(cv_scarlet_spr_sng/100, cv_scarlet_spr_sng/100/2, 0), cv_scarlet_dmg_nails/2, 1); // flag true so it knows this was a nail not a bullet -whipowill
+		FireBullets (4, AssistAim (1000, 2048), Vector(cv_scarlet_spr_sng/100, cv_scarlet_spr_sng/100/2, 0), cv_scarlet_dmg_nails/2, 1); // flag true so it knows this was a nail not a bullet -whipowill
 		ApplyMultiDamage ();
 	}
 	else
 	{
 		local entity spike1, spike2;
 
-		spike1 = launch_nail (W_SpikeOrigin(offset), W_SpikeDir(v_forward, cv_scarlet_spr_sng) * cv_scarlet_spd_sng);
-		spike2 = launch_nail (W_SpikeOrigin('0 0 0' - offset), W_SpikeDir(v_forward, cv_scarlet_spr_sng) * cv_scarlet_spd_sng);
+		spike1 = launch_nail (W_SpikeOrigin(offset), W_SpikeDir(v_forward, cv_scarlet_spr_sng) * cv_scarlet_ammo_spd_sng);
+		spike2 = launch_nail (W_SpikeOrigin('0 0 0' - offset), W_SpikeDir(v_forward, cv_scarlet_spr_sng) * cv_scarlet_ammo_spd_sng);
 
 		// weaken the SNG at long distance while keeping the spread under control
 		spike1.think = spike_unfatten;
@@ -792,12 +856,12 @@ void(float ox) W_FireSpikes =
 	if (self.ammo_nails >= 2 && self.weapon == IT_SUPER_NAILGUN)
 	{
 		W_FirePerforator ();
-		self.punchangle_x = -1 * cv_scarlet_kick_sng;
+		self.punchangle_x = -1 * cv_scarlet_weapon_kick_sng;
 	}
 	else
 	{
 		W_FireNailgun ();
-		self.punchangle_x = -1 * cv_scarlet_kick_ng;
+		self.punchangle_x = -1 * cv_scarlet_weapon_kick_ng;
 	}
 	self.cnt = cycle (self.cnt, 8);
 }

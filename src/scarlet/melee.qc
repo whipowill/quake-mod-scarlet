@@ -114,11 +114,11 @@ void() HandGrenadeThrow =
     float base;
     vector gvel;
 
-    //self.ammo_rockets = self.ammo_rockets - cv_scarlet_dec_rockets;
+    //self.ammo_rockets = self.ammo_rockets - cv_scarlet_ammo_dec_rockets;
     //W_SetCurrentAmmo();
 
     sound(self, CHAN_WEAPON, "halo3/weapons/frag_throw.wav", 1, ATTN_NORM);
-    self.punchangle_x = -1 * cv_scarlet_kick_gl;
+    self.punchangle_x = -1 * cv_scarlet_weapon_kick_gl;
 
     // set grenade speed
     makevectors(self.v_angle);

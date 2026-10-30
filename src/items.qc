@@ -355,14 +355,14 @@ WEAPONS
 
 void() bound_other_ammo =
 {
-	if (other.ammo_shells > cv_scarlet_max_shells)
-		other.ammo_shells = cv_scarlet_max_shells;
-	if (other.ammo_nails > cv_scarlet_max_nails)
-		other.ammo_nails = cv_scarlet_max_nails;
-	if (other.ammo_rockets > cv_scarlet_max_rockets)
-		other.ammo_rockets = cv_scarlet_max_rockets;
-	if (other.ammo_cells > cv_scarlet_max_cells)
-		other.ammo_cells = cv_scarlet_max_cells;
+	if (other.ammo_shells > cv_scarlet_ammo_max_shells)
+		other.ammo_shells = cv_scarlet_ammo_max_shells;
+	if (other.ammo_nails > cv_scarlet_ammo_max_nails)
+		other.ammo_nails = cv_scarlet_ammo_max_nails;
+	if (other.ammo_rockets > cv_scarlet_ammo_max_rockets)
+		other.ammo_rockets = cv_scarlet_ammo_max_rockets;
+	if (other.ammo_cells > cv_scarlet_ammo_max_cells)
+		other.ammo_cells = cv_scarlet_ammo_max_cells;
 };
 
 
@@ -438,6 +438,14 @@ weapon_touch
 */
 float() W_BestWeapon;
 
+// SCARLET - the ammo that comes with a weapon: Quake's own amount, or (scarlet_weapon_ammo 1) what a small ammo box holds
+float(float vanilla, float type) WeaponAmmo =
+{
+	if (cv_scarlet_weapon_ammo)
+		return AmmoAmount (type, FALSE);
+	return vanilla;
+};
+
 void() weapon_touch =
 {
 	local	float	hadammo, best, new, old;
@@ -464,7 +472,7 @@ void() weapon_touch =
 			return;
 		hadammo = other.ammo_nails;			
 		new = IT_NAILGUN;
-		other.ammo_nails = other.ammo_nails + 30;
+		other.ammo_nails = other.ammo_nails + WeaponAmmo (30, 2);
 	}
 	else if (self.classname == "weapon_supernailgun")
 	{
@@ -472,7 +480,7 @@ void() weapon_touch =
 			return;
 		hadammo = other.ammo_rockets;			
 		new = IT_SUPER_NAILGUN;
-		other.ammo_nails = other.ammo_nails + 30;
+		other.ammo_nails = other.ammo_nails + WeaponAmmo (30, 2);
 	}
 	else if (self.classname == "weapon_shotgun")	// SCARLET - the shotgun can be picked up too
 	{
@@ -480,7 +488,7 @@ void() weapon_touch =
 			return;
 		hadammo = other.ammo_shells;
 		new = IT_SHOTGUN;
-		other.ammo_shells = other.ammo_shells + cv_scarlet_shells_small;
+		other.ammo_shells = other.ammo_shells + cv_scarlet_ammobox_shells_small;
 	}
 	else if (self.classname == "weapon_supershotgun")
 	{
@@ -488,7 +496,7 @@ void() weapon_touch =
 			return;
 		hadammo = other.ammo_rockets;			
 		new = IT_SUPER_SHOTGUN;
-		other.ammo_shells = other.ammo_shells + 5;
+		other.ammo_shells = other.ammo_shells + WeaponAmmo (5, 1);
 	}
 	else if (self.classname == "weapon_rocketlauncher")
 	{
@@ -496,7 +504,7 @@ void() weapon_touch =
 			return;
 		hadammo = other.ammo_rockets;			
 		new = IT_ROCKET_LAUNCHER;
-		other.ammo_rockets = other.ammo_rockets + 5;
+		other.ammo_rockets = other.ammo_rockets + WeaponAmmo (5, 3);
 	}
 	else if (self.classname == "weapon_grenadelauncher")
 	{
@@ -504,7 +512,7 @@ void() weapon_touch =
 			return;
 		hadammo = other.ammo_rockets;			
 		new = IT_GRENADE_LAUNCHER;
-		other.ammo_rockets = other.ammo_rockets + 5;
+		other.ammo_rockets = other.ammo_rockets + WeaponAmmo (5, 3);
 	}
 	else if (self.classname == "weapon_lightning")
 	{
@@ -512,7 +520,7 @@ void() weapon_touch =
 			return;
 		hadammo = other.ammo_rockets;			
 		new = IT_LIGHTNING;
-		other.ammo_cells = other.ammo_cells + 15;
+		other.ammo_cells = other.ammo_cells + WeaponAmmo (15, 4);
 	}
 	else
 		objerror ("weapon_touch: unknown classname");
@@ -722,12 +730,12 @@ AMMO
 float(float type, float big) AmmoAmount =
 {
 	if (type == 1)
-		return big ? cv_scarlet_shells_big : cv_scarlet_shells_small;
+		return big ? cv_scarlet_ammobox_shells_big : cv_scarlet_ammobox_shells_small;
 	if (type == 2)
-		return big ? cv_scarlet_nails_big : cv_scarlet_nails_small;
+		return big ? cv_scarlet_ammobox_nails_big : cv_scarlet_ammobox_nails_small;
 	if (type == 3)
-		return big ? cv_scarlet_rockets_big : cv_scarlet_rockets_small;
-	return big ? cv_scarlet_cells_big : cv_scarlet_cells_small;
+		return big ? cv_scarlet_ammobox_rockets_big : cv_scarlet_ammobox_rockets_small;
+	return big ? cv_scarlet_ammobox_cells_big : cv_scarlet_ammobox_cells_small;
 };
 
 void() ammo_touch =
@@ -753,7 +761,7 @@ local float		best;
 // shotgun
 	if (self.weapon == 1)
 	{
-		if (other.ammo_shells >= cv_scarlet_max_shells)
+		if (other.ammo_shells >= cv_scarlet_ammo_max_shells)
 			return;
 		other.ammo_shells = other.ammo_shells + self.aflag;
 	}
@@ -761,7 +769,7 @@ local float		best;
 // spikes
 	if (self.weapon == 2)
 	{
-		if (other.ammo_nails >= cv_scarlet_max_nails)
+		if (other.ammo_nails >= cv_scarlet_ammo_max_nails)
 			return;
 		other.ammo_nails = other.ammo_nails + self.aflag;
 	}
@@ -769,7 +777,7 @@ local float		best;
 //	rockets
 	if (self.weapon == 3)
 	{
-		if (other.ammo_rockets >= cv_scarlet_max_rockets)
+		if (other.ammo_rockets >= cv_scarlet_ammo_max_rockets)
 			return;
 		other.ammo_rockets = other.ammo_rockets + self.aflag;
 	}
@@ -777,7 +785,7 @@ local float		best;
 //	cells
 	if (self.weapon == 4)
 	{
-		if (other.ammo_cells >= cv_scarlet_max_cells)
+		if (other.ammo_cells >= cv_scarlet_ammo_max_cells)
 			return;
 		other.ammo_cells = other.ammo_cells + self.aflag;
 	}
@@ -839,14 +847,14 @@ void() item_shells =
 	{
 		precache_model ("maps/b_shell1.bsp");
 		setmodel (self, "maps/b_shell1.bsp");
-		self.aflag = cv_scarlet_shells_big; // was 40, SCARLET - custom ammo integration.
+		self.aflag = cv_scarlet_ammobox_shells_big; // was 40, SCARLET - custom ammo integration.
 		self.ammo_live = 2;
 	}
 	else
 	{
 		precache_model ("maps/b_shell0.bsp");
 		setmodel (self, "maps/b_shell0.bsp");
-		self.aflag = cv_scarlet_shells_small; // was 20, SCARLET - custom ammo integration.
+		self.aflag = cv_scarlet_ammobox_shells_small; // was 20, SCARLET - custom ammo integration.
 		self.ammo_live = 1;
 	}
 	self.weapon = 1;
@@ -866,14 +874,14 @@ void() item_spikes =
 	{
 		precache_model ("maps/b_nail1.bsp");
 		setmodel (self, "maps/b_nail1.bsp");
-		self.aflag = cv_scarlet_nails_big; // was 50, SCARLET - custom ammo integration.
+		self.aflag = cv_scarlet_ammobox_nails_big; // was 50, SCARLET - custom ammo integration.
 		self.ammo_live = 2;
 	}
 	else
 	{
 		precache_model ("maps/b_nail0.bsp");
 		setmodel (self, "maps/b_nail0.bsp");
-		self.aflag = cv_scarlet_nails_small; // was 25, SCARLET - custom ammo integration.
+		self.aflag = cv_scarlet_ammobox_nails_small; // was 25, SCARLET - custom ammo integration.
 		self.ammo_live = 1;
 	}
 	self.weapon = 2;
@@ -893,14 +901,14 @@ void() item_rockets =
 	{
 		precache_model ("maps/b_rock1.bsp");
 		setmodel (self, "maps/b_rock1.bsp");
-		self.aflag = cv_scarlet_rockets_big; // was 10, SCARLET - custom ammo integration.
+		self.aflag = cv_scarlet_ammobox_rockets_big; // was 10, SCARLET - custom ammo integration.
 		self.ammo_live = 2;
 	}
 	else
 	{
 		precache_model ("maps/b_rock0.bsp");
 		setmodel (self, "maps/b_rock0.bsp");
-		self.aflag = cv_scarlet_rockets_small; // was 5, SCARLET - custom ammo integration.
+		self.aflag = cv_scarlet_ammobox_rockets_small; // was 5, SCARLET - custom ammo integration.
 		self.ammo_live = 1;
 	}
 	self.weapon = 3;
@@ -921,14 +929,14 @@ void() item_cells =
 	{
 		precache_model ("maps/b_batt1.bsp");
 		setmodel (self, "maps/b_batt1.bsp");
-		self.aflag = cv_scarlet_cells_big; // was 12, SCARLET - custom ammo integration.
+		self.aflag = cv_scarlet_ammobox_cells_big; // was 12, SCARLET - custom ammo integration.
 		self.ammo_live = 2;
 	}
 	else
 	{
 		precache_model ("maps/b_batt0.bsp");
 		setmodel (self, "maps/b_batt0.bsp");
-		self.aflag = cv_scarlet_cells_small; // was 6, SCARLET - custom ammo integration.
+		self.aflag = cv_scarlet_ammobox_cells_small; // was 6, SCARLET - custom ammo integration.
 		self.ammo_live = 1;
 	}
 	self.weapon = 4;

@@ -14,7 +14,7 @@ import (
 
 // genVersion is bumped whenever the generator's output would change for the same map.
 // A .ent made by another version is rebuilt.
-const genVersion = 23
+const genVersion = 25
 
 const headerPrefix = "// trailgen "
 

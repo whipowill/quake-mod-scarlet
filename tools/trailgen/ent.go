@@ -65,6 +65,16 @@ func (e *Entity) ModelIndex() int {
 	return n
 }
 
+// cloneEntities copies a list of entities, so one build's changes (items it marks, waypoints it adds)
+// don't leak into the next.
+func cloneEntities(in []*Entity) []*Entity {
+	out := make([]*Entity, len(in))
+	for i, e := range in {
+		out[i] = &Entity{Keys: append([]string(nil), e.Keys...), Vals: append([]string(nil), e.Vals...)}
+	}
+	return out
+}
+
 // ParseEntities reads the text of an entity lump (or a .ent file).
 func ParseEntities(text string) ([]*Entity, error) {
 	var out []*Entity

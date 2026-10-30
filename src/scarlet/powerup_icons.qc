@@ -8,8 +8,17 @@
 // -------------------------------------------------
 
 .float      scale;
-.float      icon_kind;  // 1 = pentagram, 2 = quad
-.entity     pent_icon, quad_icon;
+.float      icon_kind;  // 1 = pentagram, 2 = quad, 3 = cross (the blessing of respawn protection)
+.entity     pent_icon, quad_icon, bless_icon;
+.float      blessed_until;  // respawn protection runs to here; it is a real pentagram, shown as a cross
+
+// is the pentagram this player has just the respawn blessing, not one they picked up?
+float(entity plr) BlessedOnly =
+{
+    if (!(plr.items & IT_INVULNERABILITY))
+        return FALSE;
+    return time < plr.blessed_until + 0.05 && plr.invincible_finished <= plr.blessed_until + 0.05;
+}
 
 void() PowerupIconThink =
 {
@@ -17,7 +26,9 @@ void() PowerupIconThink =
     local float held, height;
 
     if (self.icon_kind == 1)
-        held = plr.items & IT_INVULNERABILITY;
+        held = (plr.items & IT_INVULNERABILITY) && !BlessedOnly(plr);
+    else if (self.icon_kind == 3)
+        held = BlessedOnly(plr);
     else
         held = plr.items & IT_QUAD;
 
@@ -30,7 +41,7 @@ void() PowerupIconThink =
 
     // stack them if the player has both
     height = cv_scarlet_powerup_icon_height;
-    if (self.icon_kind == 1 && (plr.items & IT_QUAD))
+    if (self.icon_kind != 2 && (plr.items & IT_QUAD))
         height = height + 12;
 
     setorigin(self, plr.origin + '0 0 1' * (height + 3 * sin(time * 3)));
@@ -51,6 +62,8 @@ entity(entity plr, float kind) PowerupIconSpawn =
 
     if (kind == 1)
         setmodel(icon, "progs/invulner.mdl");
+    else if (kind == 3)
+        setmodel(icon, "progs/items/quoth/cross.mdl");
     else
         setmodel(icon, "progs/quaddama.mdl");
     setsize(icon, '0 0 0', '0 0 0');
@@ -69,7 +82,12 @@ void() PowerupIcons =
     if (self.items & IT_INVISIBILITY) return;
 
     // the icon removes itself when the powerup ends, so a stale pointer means make a new one
-    if (self.items & IT_INVULNERABILITY)
+    if (BlessedOnly(self))
+    {
+        if (self.bless_icon.classname != "powerup_icon" || self.bless_icon.owner != self)
+            self.bless_icon = PowerupIconSpawn(self, 3);
+    }
+    else if (self.items & IT_INVULNERABILITY)
         if (self.pent_icon.classname != "powerup_icon" || self.pent_icon.owner != self)
             self.pent_icon = PowerupIconSpawn(self, 1);
 

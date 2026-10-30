@@ -256,11 +256,24 @@ func genMap(src mapSrc, outDir string, step, lift float32, force bool) (built bo
 		}
 	}
 
-	g := newGen(b, base, step)
+	// doors that a walk-in trigger opens count as walls until a bot can reach the trigger.  scouting where
+	// bots can walk is quick, so do that for as long as it opens another door, then build the trail once
+	open := map[int]bool{}
+	for pass := 0; pass < 8; pass++ {
+		scout := newGen(b, cloneEntities(base), step, open)
+		scout.scout()
+		if !scout.openDoors(open) {
+			break
+		}
+	}
+	g := newGen(b, cloneEntities(base), step, open)
 	g.Lift = lift
 	g.build()
 	s := g.Stats
 	stats := fmt.Sprintf("%d waypoints, %d spawns, %d teleporters, %d plats, %d rocket jumps", s.Kept, s.Seeds, s.Teleports, s.Plats, s.RJs)
+	if s.ShutDoors > 0 {
+		stats += fmt.Sprintf(", %d shut doors treated as walls", s.ShutDoors)
+	}
 	if s.KillZones > 0 {
 		stats += fmt.Sprintf(", %d kill zones avoided", s.KillZones)
 	}
@@ -271,10 +284,10 @@ func genMap(src mapSrc, outDir string, step, lift float32, force bool) (built bo
 	removeGenerated(filepath.Dir(outPath), func(n string) bool {
 		return n == name+".ent" || strings.HasPrefix(n, name+"@")
 	})
-	if err := writeEnt(outPath, hash, step, lift, base, g.waypointEntities(), stats); err != nil {
+	if err := writeEnt(outPath, hash, step, lift, g.ents, g.waypointEntities(), stats); err != nil {
 		return false, err
 	}
-	if err := writeEnt(atPath, hash, step, lift, base, g.waypointEntities(), stats); err != nil {
+	if err := writeEnt(atPath, hash, step, lift, g.ents, g.waypointEntities(), stats); err != nil {
 		return false, err
 	}
 	fmt.Printf("%s%-16s %s\n", progress, name, stats)

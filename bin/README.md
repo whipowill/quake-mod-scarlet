@@ -29,6 +29,7 @@ Adding a mix of modern conveniences to a classic game from 1996.
 - **Random Powerups** - every kill has a chance to drop a random powerup
 - **Highlander Games** - higher their killstreak, greater the chance of reward for taking their head
 - **Shield Recharge** - survive the battle and your shield begins to recharge
+- **Autoaim Assist** - slight forgiveness on aim can make the game more fun
 
 Every single feature in this mod is optional and controlled via console variables.
 

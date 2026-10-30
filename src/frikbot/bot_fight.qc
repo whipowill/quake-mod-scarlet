@@ -180,7 +180,7 @@ void() bot_dodge_stuff =
 	}
 	if (!self.avoid)
 	{
-		foe = find(world, classname, "missile");
+		foe = find(world, classname, "rocket");
 		while(foe)
 		{
 			if (foe.owner != self)
@@ -192,7 +192,7 @@ void() bot_dodge_stuff =
 					self.avoid = foe;
 				}
 			}
-			foe = find(foe, classname, "missile");
+			foe = find(foe, classname, "rocket");
 		}
 		if (!self.avoid)
 		{

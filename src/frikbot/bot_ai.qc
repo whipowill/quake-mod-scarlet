@@ -828,22 +828,22 @@ float(entity thing) priority_for_thing =
 			}
 			else if (thing.classname == "item_shells")
 			{
-				if (self.ammo_shells >= cv_scarlet_max_shells)
+				if (self.ammo_shells >= cv_scarlet_ammo_max_shells)
 					thisp = 0;
 			}
 			else if (thing.classname == "item_spikes")
 			{
-				if (self.ammo_nails >= cv_scarlet_max_nails)
+				if (self.ammo_nails >= cv_scarlet_ammo_max_nails)
 					thisp = 0;
 			}
 			else if (thing.classname == "item_rockets")
 			{
-				if (self.ammo_rockets >= cv_scarlet_max_rockets)
+				if (self.ammo_rockets >= cv_scarlet_ammo_max_rockets)
 					thisp = 0;
 			}
 			else if (thing.classname == "item_cells")
 			{
-				if (self.ammo_cells >= cv_scarlet_max_cells)
+				if (self.ammo_cells >= cv_scarlet_ammo_max_cells)
 					thisp = 0;
 			}
 		}
@@ -999,19 +999,19 @@ float(entity thing) bot_spot_value =
 	}
 	else if (thing.classname == "item_shells")
 	{
-		if (self.ammo_shells < cv_scarlet_max_shells) v = 30;
+		if (self.ammo_shells < cv_scarlet_ammo_max_shells) v = 30;
 	}
 	else if (thing.classname == "item_spikes")
 	{
-		if (self.ammo_nails < cv_scarlet_max_nails) v = 30;
+		if (self.ammo_nails < cv_scarlet_ammo_max_nails) v = 30;
 	}
 	else if (thing.classname == "item_rockets")
 	{
-		if (self.ammo_rockets < cv_scarlet_max_rockets) v = 35;
+		if (self.ammo_rockets < cv_scarlet_ammo_max_rockets) v = 35;
 	}
 	else if (thing.classname == "item_cells")
 	{
-		if (self.ammo_cells < cv_scarlet_max_cells) v = 25;
+		if (self.ammo_cells < cv_scarlet_ammo_max_cells) v = 25;
 	}
 	return v;
 };

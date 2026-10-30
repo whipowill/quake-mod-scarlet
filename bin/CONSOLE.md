@@ -19,12 +19,13 @@ Everything in Scarlet is controlled by console variables (cvars) and a few impul
 |---|---|---|
 | ``scarlet_armor_always_take`` | ``0`` | ``1`` makes you pick up an armor box of the same color as the armor you wear even if yours is already as good or better.  The box is used up and respawns as usual, and your own armor stays as it was.  A box of a different color that is no better than yours is still left alone.  ``0`` is Quake's rule, where the box is left alone. |
 | ``scarlet_autoswitch`` | ``1`` | ``1`` switches to a weapon when you pick it up.  ``0`` keeps your current weapon (you still auto-switch if you run out of ammo). |
-| ``scarlet_visible_weapons`` | ``0`` | ``1`` makes a dead player's weapon drop as a visible pickup on the floor instead of inside the backpack. |
+| ``scarlet_visible_weapons`` | ``0`` | ``1`` makes a dead player's weapon drop as a visible pickup on the floor instead of inside the backpack.  Picking that weapon up gives a small ammo box worth of its ammo. |
 | ``scarlet_remove_weaker_weapons`` | ``0`` | ``1`` removes the Shotgun and Nailgun from the game.  Players spawn with the Super Shotgun instead. |
 | ``scarlet_dead_noclip`` | ``0`` | ``1`` makes monsters, players and bots non-solid the moment they die, so you can walk through them at once.  Quake only does that partway through a monster's death animation.  Severed heads (`scarlet_football`) are left alone and can still be kicked. |
 | ``scarlet_football`` | ``0`` | ``1`` lets you kick severed heads around like a football. |
 | ``scarlet_item_ghosts`` | ``0`` | ``1`` leaves a faint see-through ghost of an item where it was picked up and flickers it back in before it respawns, so you can see what is coming back and when.  Without it the item just vanishes and reappears.  Also makes dropped items blink out. |
 | ``scarlet_respawn`` | ``0`` | Seconds a dead player must wait before they are allowed to respawn (the "death timeout"). |
+| ``scarlet_respawn_invul`` | ``0`` | Seconds of pentagram protection a player or bot gets on respawning.  It is the real pentagram, so it has the same glow and damage immunity, and bots keep clear of the holder instead of wasting shots.  When ``scarlet_powerup_icons`` is on, the floating icon is the Megahealth cross (a "blessing") instead of the pentagram, unless they pick up a real pentagram.  ``0`` is off, ``5`` is five seconds.  It ends quietly, without the pentagram's "burning out" warning. |
 | ``scarlet_powerup_icons`` | ``0`` | Float a small spinning quad or pentagram above anyone carrying one.  Needs an engine that supports the ``scale`` field (QSS, FTE, DarkPlaces); on others the icons show full size, so turn this off. |
 | ``scarlet_powerup_icon_scale`` | ``0.4`` | Size of the floating icon. |
 | ``scarlet_powerup_icon_height`` | ``42`` | How far above the player's origin the icon floats.  The top of the head is about ``32``. |
@@ -163,7 +164,7 @@ Tune any weapon.  Names: ``sg`` Shotgun, ``ssg`` Super Shotgun, ``ng`` Nailgun, 
 | ``scarlet_dmg_axe`` | ``20`` | |
 | ``scarlet_dmg_bullets`` | ``4`` | Per bullet. |
 | ``scarlet_dmg_nails`` | ``9`` | Per nail. |
-| ``scarlet_dmg_rockets`` | ``120`` | Direct and splash. |
+| ``scarlet_dmg_rockets`` | ``120`` | A direct hit does exactly this much.  Splash starts at this value and drops with distance, so a direct hit is never worth less than a near miss.  Everyone else near the blast takes the splash. |
 | ``scarlet_dmg_cells`` | ``30`` | Lightning. |
 | ``scarlet_bullets_in_shell_sg`` | ``6`` | Pellets per Shotgun shot. |
 | ``scarlet_bullets_in_shell_ssg`` | ``14`` | Pellets per Super Shotgun shot (2 shells). |
@@ -172,18 +173,18 @@ Tune any weapon.  Names: ``sg`` Shotgun, ``ssg`` Super Shotgun, ``ng`` Nailgun, 
 
 | Cvar | Default | Notes |
 |---|---|---|
-| ``scarlet_dec_shells`` / ``_nails`` / ``_rockets`` / ``_cells`` | ``1`` | Ammo spent per shot. |
+| ``scarlet_ammo_dec_shells`` / ``_nails`` / ``_rockets`` / ``_cells`` | ``1`` | Ammo spent per shot. |
 | ``scarlet_absorb_green`` | ``0.3`` | Share of each hit that green armor absorbs (0.3 is 30%). |
 | ``scarlet_absorb_yellow`` | ``0.6`` | Share of each hit that yellow armor absorbs.  Keep it between green and red. |
 | ``scarlet_absorb_red`` | ``0.8`` | Share of each hit that red armor absorbs. |
-| ``scarlet_max_shells`` | ``100`` | Maximum carried.  Players with a shotgun in their loadout also spawn with this many shells. |
-| ``scarlet_max_nails`` | ``200`` | |
-| ``scarlet_max_rockets`` | ``100`` | |
-| ``scarlet_max_cells`` | ``100`` | |
+| ``scarlet_ammo_max_shells`` | ``100`` | Maximum carried.  Players with a shotgun in their loadout also spawn with this many shells. |
+| ``scarlet_ammo_max_nails`` | ``200`` | |
+| ``scarlet_ammo_max_rockets`` | ``100`` | |
+| ``scarlet_ammo_max_cells`` | ``100`` | |
 
 ### Ammo crates
 
-``scarlet_<type>_big`` and ``scarlet_<type>_small`` set how much each crate gives.
+``scarlet_ammobox_<type>_big`` and ``scarlet_ammobox_<type>_small`` set how much each crate gives.
 
 | Type | Big | Small |
 |---|---|---|
@@ -191,6 +192,10 @@ Tune any weapon.  Names: ``sg`` Shotgun, ``ssg`` Super Shotgun, ``ng`` Nailgun, 
 | nails | ``50`` | ``25`` |
 | rockets | ``10`` | ``5`` |
 | cells | ``12`` | ``6`` |
+
+| Cvar | Default | What it does |
+|---|---|---|
+| ``scarlet_weapon_ammo`` | ``0`` | ``0`` is Quake's own amount of ammo with a weapon (30 nails for the Nailgun and Perforator, 5 shells for the Super Shotgun, 5 rockets for either rocket weapon, 15 cells for the Thunderbolt).  ``1`` gives the small box amount of that ammo instead (``scarlet_ammobox_<type>_small``, from the table above).  The weapons that drop from players and bots come with the same amount.  The Shotgun always gives the small shells amount. |
 
 ### Rate of fire
 
@@ -217,9 +222,13 @@ Seconds between shots.  Lower is faster.
 | Cvar | Default | What it does |
 |---|---|---|
 | ``scarlet_spr_sg`` / ``_ssg`` / ``_ng`` / ``_sng`` | ``4`` / ``14`` / ``0`` / ``0`` | Spread of shots.  ``0`` is perfectly accurate. |
-| ``scarlet_kick_sg`` / ``_ssg`` / ``_ng`` / ``_sng`` / ``_gl`` / ``_rl`` / ``_tb`` | ``2`` / ``4`` / ``2`` / ``2`` / ``2`` / ``2`` / ``2`` | How far your view jolts when firing.  ``0`` for none. |
-| ``scarlet_spd_ng`` | ``1000`` | Nailgun nail speed.  ``2000`` or more becomes instant hitscan. |
-| ``scarlet_spd_sng`` | ``1000`` | Perforator nail speed.  ``2000`` or more becomes instant hitscan. |
+| ``scarlet_weapon_kick_sg`` / ``_ssg`` / ``_ng`` / ``_sng`` / ``_gl`` / ``_rl`` / ``_tb`` | ``2`` / ``4`` / ``2`` / ``2`` / ``2`` / ``2`` / ``2`` | How far your view jolts when firing.  ``0`` for none. |
+| ``scarlet_aim_assist`` | ``0`` | Aim assist for human players, on the guns that hit instantly: the shotguns, the Thunderbolt, and the nail guns and Perforator when their nail speed is set high enough to be instant.  A shot that passes near a visible player or monster is pulled onto it.  The value is the size of the cone in degrees either side of the crosshair for a target right in front of you (the cone gets wider with distance if ``scarlet_aim_assist_growth`` is set): ``2`` is about one player width at 1000 units, ``1`` about half a width, ``0`` is off.  Rockets, grenades, nails that fly and the axe are not assisted, so you can still lead a moving target, and teammates in teamplay are never targeted. |
+| ``scarlet_aim_assist_growth`` | ``0`` | Extra degrees added to the aim assist cone for every 1000 units between you and the target, so far targets get more help.  With ``scarlet_aim_assist 2`` and a growth of ``2``, the cone is 2 degrees point blank, 3 at 500 units and 4 at 1000.  ``0`` keeps the cone the same at any distance. |
+| ``scarlet_aim_assist_max`` | ``0`` | The widest the aim assist cone can get, in degrees, however far the target is.  ``0`` is no limit. |
+| ``scarlet_weapon_range_tb`` | ``600`` | How far the Thunderbolt beam reaches, in units.  ``0`` makes it reach as far as the map goes (up to 8192 units), though walls still stop it.  The aim assist looks as far as the beam reaches. |
+| ``scarlet_ammo_spd_ng`` | ``1000`` | Nailgun nail speed.  ``2000`` or more becomes instant hitscan. |
+| ``scarlet_ammo_spd_sng`` | ``1000`` | Perforator nail speed.  ``2000`` or more becomes instant hitscan. |
 
 ## Melee
 

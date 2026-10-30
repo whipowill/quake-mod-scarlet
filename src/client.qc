@@ -422,6 +422,20 @@ void() trigger_changelevel =
 void() set_suicide_frame;
 
 // called by ClientKill and DeadThink
+// SCARLET - spawn protection: a respawn comes with the pentagram for scarlet_respawn_invul seconds (0 is off), so
+// it gets the glow, the floating icon and the damage immunity that the real one has
+void() RespawnProtect =
+{
+	if (cv_scarlet_respawn_invul > 0)
+	{
+		self.items = self.items | IT_INVULNERABILITY;
+		self.invincible_finished = time + cv_scarlet_respawn_invul;
+		self.blessed_until = self.invincible_finished;	// so the icon is the cross, not the pentagram
+		// the pentagram warns when it is about to run out; a short respawn timer has no need to
+		self.invincible_time = time + cv_scarlet_respawn_invul + 10;
+	}
+};
+
 void() respawn =
 {
 	if (coop || (!deathmatch && cv_scarlet_singleplayer_keep_progress))	// SCARLET - keep_progress respawns in single player instead of restarting the level
@@ -432,6 +446,7 @@ void() respawn =
 		setspawnparms (self);
 		// respawn		
 		PutClientInServer ();
+		RespawnProtect ();	// SCARLET - spawn protection
 	}
 	else if (deathmatch)
 	{
@@ -442,6 +457,7 @@ void() respawn =
 		SetNewParms ();
 		// respawn		
 		PutClientInServer ();
+		RespawnProtect ();	// SCARLET - spawn protection
 	}
 	else
 	{	// restart the entire server

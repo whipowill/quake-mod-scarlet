@@ -43,8 +43,8 @@ void() S_Precache =
     precache_model("progs/g_light.mdl");
 
     // the models that aren't part of Quake are only loaded when the feature that shows them is on
-    if (cv_scarlet_rewards || cv_scarlet_singleplayer_monsters_drop_chance > 0)
-        precache_model("progs/items/quoth/cross.mdl"); // the Megahealth reward
+    if (cv_scarlet_rewards || cv_scarlet_singleplayer_monsters_drop_chance > 0 || cv_scarlet_respawn_invul > 0)
+        precache_model("progs/items/quoth/cross.mdl"); // the Megahealth reward, and the respawn blessing icon
     if (cv_scarlet_grenades)
         precache_model("progs/items/hipnotic/proxbomb_edited.mdl"); // the hand grenade
 }
