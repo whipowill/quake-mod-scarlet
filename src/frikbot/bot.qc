@@ -122,6 +122,8 @@ for all variables in the bot...
 .float lost_count; // SCARLET - times bots have failed to reach this item in a row
 .float trail_skip; // set by trailgen on items bots can't reach, so they leave them alone
 .vector stuck_org;
+.vector idle_org;
+.float idle_time;
 .float dyn_plat;
 .entity temp_way, last_way, phys_obj;
 .entity target1_ent, target2_ent, target3_ent, target4_ent;

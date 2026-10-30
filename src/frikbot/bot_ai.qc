@@ -1658,6 +1658,7 @@ void() BotAI =
 			ClearMyRoute();
 		self.target1_ent = self.target2_ent = self.target3_ent = self.target4_ent = self.enemy = world;
 		self.last_way = world;
+		self.idle_time = 0;
 
 		return;
 	}
@@ -1719,6 +1720,26 @@ void() BotAI =
 	}
 
 	stagger_think = time;
+
+	// SCARLET - a bot that has not gone anywhere in 60 seconds (wedged in a corner, a pit, behind a door)
+	// kills itself and respawns somewhere else
+	if (intermission_running || self.idle_time == 0 || vlen(self.origin - self.idle_org) > 16)
+	{
+		self.idle_org = self.origin;
+		self.idle_time = time;
+	}
+	else if (time - self.idle_time > 60)
+	{
+		if (cv_scarlet_dev_botlog)
+		{
+			dprint("BOTIDLE ");
+			dprint(self.netname);
+			dprint("\n");
+		}
+		self.idle_time = 0;
+		ClientKill();
+		return;
+	}
 
 	// failsafe: if the bot is chasing a goal but hasn't gone anywhere in 2 seconds,
 	// give up on it and pick a new one.  SCARLET - the goal itself (the last thing on its plan, the item

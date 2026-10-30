@@ -1,10 +1,10 @@
 # Scarlet for Quake
 
-Scarlet is a Quake enhancement mod primarily intended for the multiplayer enthusiast. It adds a menu of modern features w/out losing the original soul of the game.
+Scarlet is a Quake enhancement mod that adds a menu of modern features w/out losing the original soul of the game. **Primarily intended for the multiplayer enthusiast, play blood-soaked adrenaline-pumping multiplayer games on demand.**
 
 [![Scarlet for Quake](https://i.imgur.com/4o2EPCa.png)](https://rumble.com/user/whipowill24)
 
-**This mod features a totally new, completely redesigned botting program called Trailgen.  It includes an executable that automatically generates all the necessary waypoint files for every map in your game directory.**  This means you can have instant bot-compatible maps without any work at all, just run the program and it creates what it needs.
+**This mod features a totally new, completely redesigned botting program called Trailgen.**  The included ``trailgen`` executable (written in Go) automatically generates all the necessary waypoint files for every map in your game directory.  You can have instant bot-compatible maps without any work at all.
 
 ## Features
 
@@ -14,11 +14,12 @@ Adding a mix of modern conveniences to a classic game from 1996.
 
 - **Multiplayer Bots** - new **Trailgen** bot players for all your games
 - **Blood & Gore** - bathe in the blood of your enemies w/ native engine-generated gore
-- **Perfect Balance** - weapons have been tuned to perfection w/ configurable settings
-- **Powerup Icons** - players who pick up powerups have that icon over their heads
-- **Singleplayer Tweaks** - items respawn, harder more-dense monsters, keep progress on death
-- **Music Shuffle** - maps play music at random, instead of a preset track
-- **Classic Fixes** - no auto switch, no armor loss from drowning, no armor loss w/ pent
+- **Perfect Balance** - weapons have been tuned to perfection w/ ideal damage
+- **Powerup Icons** - players who pick up powerups have a spinning model over their heads
+- **Classic Bugfixes** - no weapon auto switch, no armor loss from drowning, no armor loss w/ pent
+- **Campaign Co-op** - items respawn, harder more-dense monsters, keep progress on death
+- **Music Shuffle** - game plays music at random, instead of a preset track
+- **Shootable Buttons** - open doors by shooting the button, this actually is helpful
 
 ### Combat Features
 
@@ -29,7 +30,8 @@ Adding a mix of modern conveniences to a classic game from 1996.
 - **Random Powerups** - every kill has a chance to drop a random powerup
 - **Highlander Games** - higher their killstreak, greater the chance of reward for taking their head
 - **Shield Recharge** - survive the battle and your shield begins to recharge
-- **Autoaim Assist** - slight forgiveness on aim can make the game more fun
+- **Redeemed Respawn** - heavenly protection for a few moments after respawn
+- **Autoaim Assist** - a little forgiveness wielding your weapons
 
 Every single feature in this mod is optional and controlled via console variables.
 

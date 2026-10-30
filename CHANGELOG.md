@@ -5,6 +5,7 @@
     - Dropped Copper's own gameplay changes and HUD
     - The mod ships its own pak and no longer needs Copper's
     - Bots follow trails made by the ``trailgen`` tool and give up on stuck goals
+    - Bots that haven't moved in 60 seconds kill themselves and respawn
     - ``trailgen`` writes its files into the mod folder and clears old ones
     - ``trailgen`` no longer paths through doors that need a button, key or shot
     - Weapon switching, axe animation and respawn timer fixes

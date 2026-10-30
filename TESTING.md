@@ -66,6 +66,7 @@ Turn it on with `developer 1` and `scarlet_dev_botlog 1`.  Everything goes to th
 | `BOTSCAN` | A whole-map goal scan: the best pick (its class, score, model, position and name), the bot's health, armor and ammo, and why items were skipped.  A blank class with `progs/backpack.mdl` is a backpack a dead player dropped. |
 | `BOTNOPATH` | A bot picked a target it had no route to, and why: no waypoint can see it, or its waypoint can't be reached from where the bot is.  A bot that repeats these with nothing else to do is looping. |
 | `BOTGRAB` | A bot detoured for a clearly better item right beside it. |
+| `BOTIDLE` | The bot hadn't moved more than a little in 60 seconds and killed itself to respawn. |
 | `BOTTIMEOUT`, `BOTSTUCK` | The bot gave up on a target that took over two seconds (`BOTTIMEOUT`), or hadn't moved in two seconds (`BOTSTUCK`).  After a `BOTSTUCK` the bot's whole goal, the item or far waypoint at the end of its plan, is off limits to every bot for a minute, so nobody keeps walking into the same door. |
 | `BOTWALL`, `BOTSQUEEZE` | A bot pushing into a wall for over a second, and a sideways step it took to get around. |
 | `BOTTELE` | A bot went through a teleporter. |
