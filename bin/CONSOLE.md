@@ -76,6 +76,7 @@ Set all the ``scarlet_chat_*`` cvars to ``0`` for a quiet console in busy bot ma
 | ``scarlet_bot_priority_pent`` | ``1000`` | Same, for Pentagram of Protection. |
 | ``scarlet_bot_priority_ring`` | ``0`` | Same, for Ring of Shadows. |
 | ``scarlet_bot_priority_mega`` | ``1000`` | Same, for Megahealth. |
+| ``scarlet_bot_flee`` | ``1`` | ``1`` makes bots run away, along the waypoints, from a player holding the Pentagram (nothing hurts them) and, if the bot has no powerup of its own, from one holding the Quad Damage.  ``0`` leaves them as ordinary targets, so you can find someone to shoot while you hold a powerup. |
 | ``scarlet_bot_edgefriction`` | ``1.5`` | Friction multiplier bots feel when their leading edge is over a dropoff.  ``2`` is stock Quake (bots brake hard at ledges and rarely fall); ``1`` removes the extra braking so they can fall off bridges like players do. |
 | ``scarlet_bot_handicap`` | ``1`` | How much weaker a bot below skill 3 is.  A low skill bot reacts late to a new enemy, turns slower, aims with a wobble, leads its shots less and dodges fewer rockets.  ``1`` is the full effect, ``0`` makes every bot play like skill 3, and values between scale it.  Skill 3 is never held back.  See ``TRAILGEN.md`` for the numbers. |
 | ``scarlet_bot_goal_distance`` | ``1500`` | How far away an item is worth half as much to a bot, in units.  A bot scores every item by how much it wants it, divided by one plus its distance over this number, so it goes for a good item close by before a slightly better one across the map.  ``0`` ignores distance (the bot goes for the best item anywhere).  Powerups worth 100 or more are always worth the trip. |
@@ -213,7 +214,7 @@ Seconds between shots.  Lower is faster.
 | ``scarlet_rof_tb`` | ``0`` |
 | ``scarlet_rof_hg`` | ``0.6`` |
 
-``scarlet_axe_frametime`` is how long each of the four frames of the axe swing lasts, in seconds: ``0.1`` is id's, ``0.05`` is a faster swing that gets the damage frame out sooner.  The swing keeps this speed whatever ``scarlet_rof_axe`` is; a shorter rate of fire does not squeeze it.
+``scarlet_axe_frametime`` is how long the whole axe swing takes, in seconds, split over its four frames: ``0.4`` is id's, ``0.2`` is a faster swing that gets the damage frame out sooner.  The swing keeps this speed whatever ``scarlet_rof_axe`` is; a shorter rate of fire does not squeeze it.
 
 ``scarlet_rof_tb`` is the railgun switch.  At ``0`` the Thunderbolt is the normal beam that runs while you hold fire.  Above ``0`` it fires a single bolt per press and then is down for that many seconds (``1.6`` is a good start); the bolt still discharges in water.
 

@@ -23,6 +23,7 @@ float cv_scarlet_absorb_green;
 float cv_scarlet_absorb_yellow;
 float cv_scarlet_absorb_red;
 float cv_scarlet_bot_edgefriction;
+float cv_scarlet_bot_flee;
 float cv_scarlet_bot_handicap;
 float cv_scarlet_bot_goal_distance;
 float cv_scarlet_dev_autobots;
@@ -187,6 +188,7 @@ void() CvarRefresh =
     cv_scarlet_absorb_yellow = cvar("scarlet_absorb_yellow");
     cv_scarlet_absorb_red = cvar("scarlet_absorb_red");
     cv_scarlet_bot_edgefriction = cvar("scarlet_bot_edgefriction");
+    cv_scarlet_bot_flee = cvar("scarlet_bot_flee");
     cv_scarlet_bot_handicap = cvar("scarlet_bot_handicap");
     cv_scarlet_bot_goal_distance = cvar("scarlet_bot_goal_distance");
     cv_scarlet_dev_autobots = cvar("scarlet_dev_autobots");

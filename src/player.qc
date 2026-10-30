@@ -173,17 +173,17 @@ void()	player_shot4 =	[$shotatt4, player_shot5	] {self.weaponframe=4;};
 void()	player_shot5 =	[$shotatt5, player_shot6	] {self.weaponframe=5;};
 void()	player_shot6 =	[$shotatt6, player_run	] {self.weaponframe=6;};
 
-// SCARLET - the swing is four frames of scarlet_axe_frametime seconds each, whatever the rate of fire is.
+// SCARLET - scarlet_axe_frametime is the time of the whole swing, split over its four frames, whatever the rate of fire is.
 // FixWeaponState waits for the swing to finish before the weapon in hand comes back.
 void() AxeFrameTime =
 {
-	self.nextthink = time + cv_scarlet_axe_frametime;	// 0.1 is id's, 0.05 is the faster swing Copper uses
+	self.nextthink = time + cv_scarlet_axe_frametime / 4;	// 0.4 is id's swing, 0.2 is the faster one Copper uses
 };
 
 void()	player_axe1 =	[$axatt1, player_axe2	] {self.weaponframe=1;AxeFrameTime();};
 void()	player_axe2 =	[$axatt2, player_axe3	] {self.weaponframe=2;AxeFrameTime();};
 void()	player_axe3 =	[$axatt3, player_axe4	] {self.weaponframe=3;W_FireAxe();AxeFrameTime();};
-void()	player_axe4 =	[$axatt4, player_run	] {self.weaponframe=4;AxeFrameTime();};
+void()	player_axe4 =	[$axatt4, player_run	] {if (self.is_swing) self.weaponframe=0; else self.weaponframe=4;AxeFrameTime();};	// SCARLET - ditto
 
 void()	player_axeb1 =	[$axattb1, player_axeb2	] {self.weaponframe=5;AxeFrameTime();};
 void()	player_axeb2 =	[$axattb2, player_axeb3	] {self.weaponframe=6;AxeFrameTime();};
@@ -193,7 +193,7 @@ void()	player_axeb4 =	[$axattb4, player_run	] {if (self.is_swing) self.weaponfra
 void()	player_axec1 =	[$axattc1, player_axec2	] {self.weaponframe=1;AxeFrameTime();};
 void()	player_axec2 =	[$axattc2, player_axec3	] {self.weaponframe=2;AxeFrameTime();};
 void()	player_axec3 =	[$axattc3, player_axec4	] {self.weaponframe=3;W_FireAxe();AxeFrameTime();};
-void()	player_axec4 =	[$axattc4, player_run	] {self.weaponframe=4;AxeFrameTime();};
+void()	player_axec4 =	[$axattc4, player_run	] {if (self.is_swing) self.weaponframe=0; else self.weaponframe=4;AxeFrameTime();};	// SCARLET - ditto
 
 void()	player_axed1 =	[$axattd1, player_axed2	] {self.weaponframe=5;AxeFrameTime();};
 void()	player_axed2 =	[$axattd2, player_axed3	] {self.weaponframe=6;AxeFrameTime();};

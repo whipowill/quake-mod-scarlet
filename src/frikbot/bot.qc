@@ -101,7 +101,9 @@ for all variables in the bot...
 .float b_frags, b_clientno, b_shirt, b_pants;
 .float priority, ai_time, b_sound, missile_speed;
 .float portal_time, b_skill, switch_wallhug;
-.entity flee_ent; // a player holding the pentagram this bot is running from
+.entity flee_ent; // a player holding the pentagram or quad this bot is running from
+.entity flee_hop; // the waypoint it is running to
+.float flee_on; // the bot dropped its plan for the run
 .float flee_until, bump_since, fall_z, look_time;
 .vector fall_org;
 .float fall_tdz; // how far above the bot its next waypoint was when it left the ground

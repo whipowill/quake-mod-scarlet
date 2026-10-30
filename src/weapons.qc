@@ -971,7 +971,22 @@ PLAYER WEAPON USE
 
 void() W_SetCurrentAmmo =
 {
-	player_run ();		// get out of any weapon firing states
+	// SCARLET - in the middle of a melee swing or toss (an ammo pickup, say) the ammo counts follow the weapon in hand,
+	// but the swing carries on: no stopping the animation and no putting the weapon model back
+	local float swinging, swing_weapon, swing_frame;
+	local string swing_model;
+
+	swinging = self.is_swing;
+	if (swinging)
+	{
+		swing_weapon = self.weapon;
+		swing_model = self.weaponmodel;
+		swing_frame = self.weaponframe;
+		if (self.old_weapon)
+			self.weapon = self.old_weapon;
+	}
+	else
+		player_run ();		// get out of any weapon firing states
 
 	self.items = self.items - ( self.items & (IT_SHELLS | IT_NAILS | IT_ROCKETS | IT_CELLS) );
 	
@@ -1035,6 +1050,13 @@ void() W_SetCurrentAmmo =
 		self.currentammo = 0;
 		self.weaponmodel = "";
 		self.weaponframe = 0;
+	}
+
+	if (swinging)
+	{
+		self.weapon = swing_weapon;
+		self.weaponmodel = swing_model;
+		self.weaponframe = swing_frame;
 	}
 };
 

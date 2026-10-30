@@ -1803,6 +1803,9 @@ void() BotAI =
 
 	self.button2 = 0;
 	self.button0 = 0;
+
+	// SCARLET - running from a pentagram or quad: the next waypoint away from them is the target
+	bot_flee_plan();
 	
 	// target1_ent is like goalentity in normal Quake monster AI.
 	// it's the bot's most immediate target
@@ -1856,7 +1859,7 @@ void() BotAI =
 
 	bot_angle_set();
 
-	// run from anyone holding the pentagram, step around anyone blocking the way
+	// run from anyone holding the pentagram or quad, step around anyone blocking the way
 	bot_flee();
 	if (!self.flee_ent)
 	{

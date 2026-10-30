@@ -264,10 +264,10 @@ void() bot_dodge_stuff =
 				{
 					if (foe.health > 0)
 					{
-						if (foe.items & IT_INVULNERABILITY)
+						if (bot_flee_threat(foe))
 						{
-							// nothing hurts them, so don't pick them as a target.  run away instead
-							if (!(teamplay && self.team == foe.team) && !(self.items & IT_INVULNERABILITY))
+							// nothing hurts them (pentagram), or they hit four times as hard (quad), so don't pick them as a target.  run away instead
+							if (!(teamplay && self.team == foe.team))
 								if (vlen(foe.origin - self.origin) < 700 && fisible(foe))
 								{
 									self.flee_ent = foe;
@@ -621,12 +621,132 @@ void() bot_fight_style =
 
 bot_flee
 
-A player holding the pentagram can't be hurt, so a
-bot that sees one (bot_dodge_stuff picks which) turns
-and runs the other way, keeping the goal it had.
+A player holding the pentagram can't be hurt, and one
+holding the quad hits four times as hard, so a bot that
+sees one (bot_dodge_stuff picks which) turns and runs
+the other way.  It drops what it was doing and walks the
+waypoints away from them, one hop at a time (the linked
+waypoint, or the one past it, that ends up farthest from
+them), and plans again when it is done running.  Only
+with no way on from where it stands does it back off in
+a straight line.
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
+
+// is this player one to run from?  the pentagram beats everything, the quad only matters to a bot with neither
+float(entity foe) bot_flee_threat =
+{
+	if (!cv_scarlet_bot_flee)
+		return FALSE;
+	if (foe.items & IT_INVULNERABILITY)
+		return !(self.items & IT_INVULNERABILITY);
+	if (foe.items & IT_QUAD)
+		return !(self.items & (IT_INVULNERABILITY | IT_QUAD));
+	return FALSE;
+};
+
+entity(entity w, float n) flee_link =
+{
+	if (n == 1)
+		return w.target1_ent;
+	if (n == 2)
+		return w.target2_ent;
+	if (n == 3)
+		return w.target3_ent;
+	return w.target4_ent;
+};
+
+// walked links only: a teleporter link is not one a bot can follow by hand
+float(entity w, float n) flee_link_walks =
+{
+	if (n == 1)
+		return !(w.b_aiflags & AI_TELELINK_1);
+	if (n == 2)
+		return !(w.b_aiflags & AI_TELELINK_2);
+	if (n == 3)
+		return !(w.b_aiflags & AI_TELELINK_3);
+	return !(w.b_aiflags & AI_TELELINK_4);
+};
+
+// run before the bot moves: keeps the bot's next waypoint pointing away from who it is running from
+void() bot_flee_plan =
+{
+	local entity from, cand, cand2, best;
+	local vector threat;
+	local float i, j, dcur, score, bestscore;
+
+	if (!self.flee_ent)
+	{
+		self.flee_on = FALSE;
+		self.flee_hop = world;
+		return;
+	}
+	if (time > self.flee_until || self.flee_ent.health <= 0 || !bot_flee_threat(self.flee_ent))
+	{
+		self.flee_ent = world;
+		self.flee_on = FALSE;
+		self.flee_hop = world;
+		return;
+	}
+
+	// the first tick of a run: forget the plan, it may lead right back to them
+	if (!self.flee_on)
+	{
+		self.flee_on = TRUE;
+		self.target1_ent = self.target2_ent = self.target3_ent = self.target4_ent = world;
+		ClearMyRoute();
+		self.b_aiflags = 0;
+		self.last_way = FindWayPoint(self.current_way);
+	}
+
+	if (self.target1_ent)
+		return;	// still on its way to the last waypoint it picked
+
+	self.flee_hop = world;
+	from = self.last_way;
+	if (!from || (from.b_aiflags & AI_SUPER_JUMP))
+		return;
+
+	threat = self.flee_ent.origin;
+	dcur = vlen(from.origin - threat);
+	bestscore = dcur + 24;	// it has to end up clearly farther away
+	best = world;
+	i = 1;
+	while (i <= 4)
+	{
+		cand = flee_link(from, i);
+		if (cand && flee_link_walks(from, i) && !(cand.b_aiflags & AI_SUPER_JUMP) && vlen(cand.origin - threat) > dcur - 8)
+		{
+			score = vlen(cand.origin - threat);
+			j = 1;
+			while (j <= 4)
+			{
+				cand2 = flee_link(cand, j);
+				if (cand2 && cand2 != from && flee_link_walks(cand, j) && vlen(cand2.origin - threat) > score)
+					score = vlen(cand2.origin - threat);
+				j = j + 1;
+			}
+			if (score > bestscore)
+			{
+				bestscore = score;
+				best = cand;
+			}
+		}
+		i = i + 1;
+	}
+
+	if (best)
+	{
+		// the same bookkeeping bot_path does when it picks the next waypoint on a route
+		self.b_aiflags = (best.b_aiflags & AI_READAHEAD_TYPES) | (from.b_aiflags & AI_POINT_TYPES);
+		self.b_dir = normalize(best.origin - from.origin);
+		self.flee_hop = best;
+		self.target1_ent = best;
+		self.last_way = best;
+		bot_set_search_time();
+	}
+};
 
 void() bot_flee =
 {
@@ -634,17 +754,16 @@ void() bot_flee =
 
 	if (!self.flee_ent)
 		return;
-	if (time > self.flee_until || self.flee_ent.health <= 0 || !(self.flee_ent.items & IT_INVULNERABILITY))
-	{
-		self.flee_ent = world;
-		return;
-	}
+	self.enemy = world;
+	if (self.flee_hop)
+		return;	// bot_flee_plan has it walking the waypoints
+
+	// nowhere to go on the waypoints from here: back off in a straight line
 	away = self.origin - self.flee_ent.origin;
 	away_z = 0;
 	if (vlen(away) < 1)
 		return;
 
-	self.enemy = world;
 	ang = vectoangles(away);
 	ang_x = 0;
 	self.b_angle = ang;
