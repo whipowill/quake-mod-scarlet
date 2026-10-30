@@ -173,16 +173,11 @@ void()	player_shot4 =	[$shotatt4, player_shot5	] {self.weaponframe=4;};
 void()	player_shot5 =	[$shotatt5, player_shot6	] {self.weaponframe=5;};
 void()	player_shot6 =	[$shotatt6, player_run	] {self.weaponframe=6;};
 
-// SCARLET - the swing is four frames of scarlet_axe_frametime seconds each, and a rate of fire faster than four of those would cut it off
-// (and the melee weapon swap back would hide the last frame).  squeeze the frames to fit instead.
+// SCARLET - the swing is four frames of scarlet_axe_frametime seconds each, whatever the rate of fire is.
+// FixWeaponState waits for the swing to finish before the weapon in hand comes back.
 void() AxeFrameTime =
 {
-	local float t;
-
-	t = cv_scarlet_axe_frametime;	// 0.1 is id's, 0.05 is the faster swing Copper uses
-	if (cv_scarlet_rof_axe > 0 && cv_scarlet_rof_axe / 4 < t)
-		t = cv_scarlet_rof_axe / 4;
-	self.nextthink = time + t;
+	self.nextthink = time + cv_scarlet_axe_frametime;	// 0.1 is id's, 0.05 is the faster swing Copper uses
 };
 
 void()	player_axe1 =	[$axatt1, player_axe2	] {self.weaponframe=1;AxeFrameTime();};
@@ -193,7 +188,7 @@ void()	player_axe4 =	[$axatt4, player_run	] {self.weaponframe=4;AxeFrameTime();}
 void()	player_axeb1 =	[$axattb1, player_axeb2	] {self.weaponframe=5;AxeFrameTime();};
 void()	player_axeb2 =	[$axattb2, player_axeb3	] {self.weaponframe=6;AxeFrameTime();};
 void()	player_axeb3 =	[$axattb3, player_axeb4	] {self.weaponframe=7;W_FireAxe();AxeFrameTime();};
-void()	player_axeb4 =	[$axattb4, player_run	] {self.weaponframe=8;AxeFrameTime();};
+void()	player_axeb4 =	[$axattb4, player_run	] {if (self.is_swing) self.weaponframe=0; else self.weaponframe=8;AxeFrameTime();};	// SCARLET - on a melee swing only (not the axe in hand) the last frame is not shown: weaponframe 0 is the idle axe, hidden until the rate of fire is over
 
 void()	player_axec1 =	[$axattc1, player_axec2	] {self.weaponframe=1;AxeFrameTime();};
 void()	player_axec2 =	[$axattc2, player_axec3	] {self.weaponframe=2;AxeFrameTime();};
@@ -203,7 +198,7 @@ void()	player_axec4 =	[$axattc4, player_run	] {self.weaponframe=4;AxeFrameTime()
 void()	player_axed1 =	[$axattd1, player_axed2	] {self.weaponframe=5;AxeFrameTime();};
 void()	player_axed2 =	[$axattd2, player_axed3	] {self.weaponframe=6;AxeFrameTime();};
 void()	player_axed3 =	[$axattd3, player_axed4	] {self.weaponframe=7;W_FireAxe();AxeFrameTime();};
-void()	player_axed4 =	[$axattd4, player_run	] {self.weaponframe=8;AxeFrameTime();};
+void()	player_axed4 =	[$axattd4, player_run	] {if (self.is_swing) self.weaponframe=0; else self.weaponframe=8;AxeFrameTime();};	// SCARLET - ditto
 
 
 //============================================================================

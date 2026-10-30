@@ -33,7 +33,7 @@ void(float is_lunge = 1) AxeAttack =
         // mark as in melee swing
         self.is_swing = 1;
 
-        // change model
+        // the axe shows for the swing only, FixWeaponState hides it once the swing is over
         self.weaponmodel = "progs/v_axe.mdl";
 
         // determine if we can lunge
@@ -176,11 +176,18 @@ void() FixWeaponState =
     // if dead, bail
     if (self.health < 1) return;
 
+    // the swing is over and the axe is back to idle: no weapon on screen until the rate of fire is over
+    if (self.weapon == IT_AXE && self.weaponmodel == "progs/v_axe.mdl" && self.weaponframe == 0 && self.attack_finished_melee > time)
+        self.weaponmodel = string_null;
+
     // if not weaponless or using an axe, bail
     if (self.weaponmodel != string_null && self.weaponmodel != "progs/v_axe.mdl") return;
 
     // if not ready for reset, bail
     if (self.attack_finished_melee > time) return;
+
+    // if the swing is still playing (a rate of fire shorter than the swing), wait for it
+    if (self.weaponmodel == "progs/v_axe.mdl" && self.weaponframe != 0) return;
 
     // change weapons back
     if (self.old_weapon)

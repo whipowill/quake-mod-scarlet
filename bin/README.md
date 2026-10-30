@@ -19,7 +19,8 @@ Adding a mix of modern conveniences to a classic game from 1996.
 - **Classic Bugfixes** - no weapon auto switch, no armor loss from drowning, no armor loss w/ pent
 - **Campaign Co-op** - items respawn, harder more-dense monsters, keep progress on death
 - **Music Shuffle** - game plays music at random, instead of a preset track
-- **Shootable Buttons** - open doors by shooting the button, this actually is helpful
+- **Shootable Buttons** - open doors by shooting the button, this is actually handy
+- **Team Deathmatch** - team mates have indicators and scoreboard shows team score
 
 ### Combat Features
 

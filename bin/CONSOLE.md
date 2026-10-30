@@ -213,7 +213,7 @@ Seconds between shots.  Lower is faster.
 | ``scarlet_rof_tb`` | ``0`` |
 | ``scarlet_rof_hg`` | ``0.6`` |
 
-``scarlet_axe_frametime`` is how long each of the four frames of the axe swing lasts, in seconds: ``0.1`` is id's, ``0.05`` is a faster swing that gets the damage frame out sooner.  A ``scarlet_rof_axe`` shorter than four frames squeezes the swing to fit.
+``scarlet_axe_frametime`` is how long each of the four frames of the axe swing lasts, in seconds: ``0.1`` is id's, ``0.05`` is a faster swing that gets the damage frame out sooner.  The swing keeps this speed whatever ``scarlet_rof_axe`` is; a shorter rate of fire does not squeeze it.
 
 ``scarlet_rof_tb`` is the railgun switch.  At ``0`` the Thunderbolt is the normal beam that runs while you hold fire.  Above ``0`` it fires a single bolt per press and then is down for that many seconds (``1.6`` is a good start); the bolt still discharges in water.
 
