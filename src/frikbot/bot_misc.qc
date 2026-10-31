@@ -102,12 +102,17 @@ void(float topic) bot_start_topic =
 	if (!cv_scarlet_bot_dialogue) return;
 
 	local float odds;
-	odds = 0.3;
+	odds = cv_scarlet_bot_dialogue_odds_victory;
 
-	if (topic == 1) odds = 0.6; // connect
-	if (topic == 2) odds = 0.6; // welcome
-	if (topic == 8) odds = 0.6; // suicide
-	if (topic == 9) odds = 0.6; // ridicule
+	if (topic == 1) odds = cv_scarlet_bot_dialogue_odds_connect;
+	else if (topic == 2) odds = cv_scarlet_bot_dialogue_odds_welcome;
+	else if (topic == 3) odds = cv_scarlet_bot_dialogue_odds_victory;
+	else if (topic == 4) odds = cv_scarlet_bot_dialogue_odds_deathsdoor;
+	else if (topic == 5) odds = cv_scarlet_bot_dialogue_odds_death;
+	else if (topic == 7) odds = cv_scarlet_bot_dialogue_odds_team;
+	else if (topic == 8) odds = cv_scarlet_bot_dialogue_odds_suicide;
+	else if (topic == 9) odds = cv_scarlet_bot_dialogue_odds_ridicule;
+	else if (topic == 10) odds = cv_scarlet_bot_dialogue_odds_intermission;
 
 	if (random() < odds)
 	{
@@ -299,6 +304,8 @@ void() bot_chat =
 		{
 			if (teamplay > 0)
 				BotSayTeam(quote);
+			else if (b_topic == 4)
+				BotSay(quote);	// no teams: a bot hurt badly says so to the whole game
 		}
 		else
 		{
@@ -313,10 +320,7 @@ void() bot_chat =
 		if (b_topic == 4 || b_topic == 7)
 			self.b_chattime_alt = time + 60 + (random() * 60); // player cannot speak re: alternative topics (spammy topics)
 
-		if (b_topic == 10)
-			b_chattime_system = time + 3 + (random() * 5); // nobody can speak
-		else
-			b_chattime_system = time + 1; // nobody can speak
+		b_chattime_system = time + cv_scarlet_bot_dialogue_gap + (random() * cv_scarlet_bot_dialogue_gap_random); // nobody can speak for a while
 	}
 
 	// set the next chat topic

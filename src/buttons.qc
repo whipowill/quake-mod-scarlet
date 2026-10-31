@@ -78,6 +78,14 @@ void() button_touch =
 	{
 		if (other.flags & FL_MONSTER)
 			return;
+		// a rocket, grenade or nail has already been through its own touch by now (the engine runs the flying thing's
+		// touch first), and that turned it into an explosion or removed it, so its movetype no longer says what it was
+		if (other.classname == "rocket" || other.classname == "grenade" || other.classname == "spike")
+		{
+			self.enemy = other.owner;
+			button_fire ();
+			return;
+		}
 		if (other.movetype != MOVETYPE_FLYMISSILE && other.movetype != MOVETYPE_BOUNCE && other.movetype != MOVETYPE_BOUNCEMISSILE
 			&& other.movetype != MOVETYPE_TOSS && other.movetype != MOVETYPE_FLY)
 			return;

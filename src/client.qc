@@ -1146,7 +1146,7 @@ void() CheckPowerups =
 		{
 			if (self.invisible_time == 1)
 			{
-				sprint (self, "Ring of Shadows magic is fading\n");
+				if (cv_scarlet_chat_powerups) sprint (self, "Ring of Shadows magic is fading\n");
 				stuffcmd (self, "bf\n");
 				sound (self, CHAN_AUTO, "items/inv2.wav", 1, ATTN_NORM);
 				self.invisible_time = time + 1;
@@ -1181,7 +1181,7 @@ void() CheckPowerups =
 		{
 			if (self.invincible_time == 1)
 			{
-				sprint (self, "Protection is almost burned out\n");
+				if (cv_scarlet_chat_powerups) sprint (self, "Protection is almost burned out\n");
 				stuffcmd (self, "bf\n");
 				sound (self, CHAN_AUTO, "items/protect2.wav", 1, ATTN_NORM);
 				self.invincible_time = time + 1;
@@ -1216,7 +1216,7 @@ void() CheckPowerups =
 		{
 			if (self.super_time == 1)
 			{
-				sprint (self, "Quad Damage is wearing off\n");
+				if (cv_scarlet_chat_powerups) sprint (self, "Quad Damage is wearing off\n");
 				stuffcmd (self, "bf\n");
 				sound (self, CHAN_AUTO, "items/damage2.wav", 1, ATTN_NORM);
 				self.super_time = time + 1;
@@ -1251,7 +1251,7 @@ void() CheckPowerups =
 		{
 			if (self.rad_time == 1)
 			{
-				sprint (self, "Air supply in Biosuit expiring\n");
+				if (cv_scarlet_chat_powerups) sprint (self, "Air supply in Biosuit expiring\n");
 				stuffcmd (self, "bf\n");
 				sound (self, CHAN_AUTO, "items/suit2.wav", 1, ATTN_NORM);
 				self.rad_time = time + 1;
@@ -1366,7 +1366,12 @@ void() ClientDisconnect =
 	bprint (ftos(self.frags));
 	bprint (" frags\n");
 	sound (self, CHAN_BODY, "player/tornoff2.wav", 1, ATTN_NONE);
-	set_suicide_frame ();
+	// SCARLET - id left the body of whoever quit lying where it was (set_suicide_frame) until the slot was used again,
+	// which could be never; take it off the map instead
+	self.solid = SOLID_NOT;
+	self.movetype = MOVETYPE_NONE;
+	self.velocity = '0 0 0';
+	setmodel (self, "");
 };
 
 /*

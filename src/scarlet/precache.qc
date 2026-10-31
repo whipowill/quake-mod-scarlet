@@ -30,6 +30,7 @@ void() S_Precache =
 
     // models
     precache_model("progs/zom_gib.mdl");
+    precache_model("progs/h_zombie.mdl"); // killstreak skulls
     precache_model("progs/invulner.mdl");
     precache_model("progs/quaddama.mdl");
 

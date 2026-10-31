@@ -166,7 +166,7 @@ float(entity e, float amt, float absorb, float replace) armor_give =
 
 void(entity h, float t) powerup_invulnerability =
 {
-	sprint (h, "An unholy ward surrounds you ...\n");
+	if (cv_scarlet_chat_powerups) sprint (h, "An unholy ward surrounds you ...\n");
 	h.items = h.items | IT_INVULNERABILITY;
 	h.invincible_time = 1;
 	h.invincible_finished = time + t;
@@ -174,7 +174,7 @@ void(entity h, float t) powerup_invulnerability =
 
 void(entity h, float t) powerup_super_damage =
 {
-	sprint (h, "You begin to channel unstoppable power ...\n");
+	if (cv_scarlet_chat_powerups) sprint (h, "You begin to channel unstoppable power ...\n");
 	h.items = h.items | IT_QUAD;
 	h.super_damage_finished = time + t;
 	h.super_time = 1;

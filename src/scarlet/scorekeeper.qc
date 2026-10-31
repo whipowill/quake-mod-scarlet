@@ -151,87 +151,30 @@ float(float rankkey, string roster_type) ScoreKeeperFragsForRank =
 void() AlphaKeeper =
 {
         // reset player ranks
-        score_player_alpha[7] = -1;
-        score_player_alpha[6] = -1;
-        score_player_alpha[5] = -1;
-        score_player_alpha[4] = -1;
-        score_player_alpha[3] = -1;
-        score_player_alpha[2] = -1;
-        score_player_alpha[1] = -1;
-        score_player_alpha[0] = -1;
-
-        // alphabetize the players (for use in stats.qc)
-
-        float i;
+        float i, k, m;
         string name;
 
+        for (k=0; k<16; k++)
+                score_player_alpha[k] = -1;
+
+        // alphabetize the players (for use in stats.qc): each goes in front of the first one that sorts after it
         for (i=0; i<16; i++)
         {
                 name = NameFilter(score_player_roster[i].name);
 
-                if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[0])) < 0)
+                for (k=0; k<16; k++)
                 {
-                        score_player_alpha[7] = score_player_alpha[6];
-                        score_player_alpha[6] = score_player_alpha[5];
-                        score_player_alpha[5] = score_player_alpha[4];
-                        score_player_alpha[4] = score_player_alpha[3];
-                        score_player_alpha[3] = score_player_alpha[2];
-                        score_player_alpha[2] = score_player_alpha[1];
-                        score_player_alpha[1] = score_player_alpha[0];
-                        score_player_alpha[0] = i;
-                }
-                else if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[1])) < 0)
-                {
-                        score_player_alpha[7] = score_player_alpha[6];
-                        score_player_alpha[6] = score_player_alpha[5];
-                        score_player_alpha[5] = score_player_alpha[4];
-                        score_player_alpha[4] = score_player_alpha[3];
-                        score_player_alpha[3] = score_player_alpha[2];
-                        score_player_alpha[2] = score_player_alpha[1];
-                        score_player_alpha[1] = i;
-                }
-                else if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[2])) < 0)
-                {
-                        score_player_alpha[7] = score_player_alpha[6];
-                        score_player_alpha[6] = score_player_alpha[5];
-                        score_player_alpha[5] = score_player_alpha[4];
-                        score_player_alpha[4] = score_player_alpha[3];
-                        score_player_alpha[3] = score_player_alpha[2];
-                        score_player_alpha[2] = i;
-                }
-                else if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[3])) < 0)
-                {
-                        score_player_alpha[7] = score_player_alpha[6];
-                        score_player_alpha[6] = score_player_alpha[5];
-                        score_player_alpha[5] = score_player_alpha[4];
-                        score_player_alpha[4] = score_player_alpha[3];
-                        score_player_alpha[3] = i;
-                }
-                else if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[4])) < 0)
-                {
-                        score_player_alpha[7] = score_player_alpha[6];
-                        score_player_alpha[6] = score_player_alpha[5];
-                        score_player_alpha[5] = score_player_alpha[4];
-                        score_player_alpha[4] = i;
-                }
-                else if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[5])) < 0)
-                {
-                        score_player_alpha[7] = score_player_alpha[6];
-                        score_player_alpha[6] = score_player_alpha[5];
-                        score_player_alpha[5] = i;
-                }
-                else if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[6])) < 0)
-                {
-                        score_player_alpha[7] = score_player_alpha[6];
-                        score_player_alpha[6] = i;
-                }
-                else if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[7])) < 0)
-                {
-                        score_player_alpha[7] = i;
+                        if (StringCompare(name, GetPlayerNameFromAlphaIndex(score_player_alpha[k])) < 0)
+                        {
+                                for (m=15; m>k; m--)
+                                        score_player_alpha[m] = score_player_alpha[m-1];
+                                score_player_alpha[k] = i;
+                                break;
+                        }
                 }
         }
 
-        for (i=0; i<8; i++)
+        for (i=0; i<16; i++)
                 if (score_player_alpha[i] >= 0) // if a real player
                         AssignAlpha(score_player_alpha[i], i+1);
 }

@@ -450,7 +450,7 @@ I have no idea how well it will work
 void() frik_dodge_obstruction =
 {
 	local vector way, org;
-	local float oflags, yaw;
+	local float oflags, yaw, osolid, moved;
 
 	if (!(self.b_aiflags & AI_OBSTRUCTED))
 		return;
@@ -466,9 +466,17 @@ void() frik_dodge_obstruction =
 
 	oflags = self.flags;
 	org = self.origin;
+	osolid = self.solid;
 
+	// SCARLET - the probe step must not touch anything.  A walkmove touches the triggers it ends in, so a bot
+	// next to a teleporter was really teleported by the test (then put back by the origin reset below, leaving
+	// the fog, a telefrag and a stale link behind), and it picked up items as well.  A SOLID_NOT entity is not
+	// linked into the world, so nothing it moves through is touched.
 	yaw = vectoyaw(self.obs_dir);
-	if (walkmove(yaw, 32))
+	self.solid = SOLID_NOT;
+	moved = walkmove(yaw, 32);
+	self.solid = osolid;
+	if (moved)
 		self.b_aiflags = self.b_aiflags - AI_OBSTRUCTED;
 	else
 	{
@@ -491,7 +499,7 @@ void() frik_dodge_obstruction =
 	
 	// fix the bot
 
-	self.origin = org;
+	setorigin(self, org); // relinks the bot where it is (a bare self.origin = left it linked where the probe ended)
 	self.flags = oflags;
 };
 

@@ -26,13 +26,13 @@ Adding a mix of modern conveniences to a classic game from 1996.
 
 - **Melee Attacks** - perform a melee axe attack w/out switching weapons
 - **Hand Grenades** - toss a hand grenade w/out switching weapons
+- **Killing Spree** - game now tracks streaks, assists, and deaths
 - **Name Tags** - see other player names Halo-style when aiming at them
-- **Killing Spree** - game announces when you're on a killstreak and when it ends
 - **Random Powerups** - every kill has a chance to drop a random powerup
 - **Highlander Games** - higher their killstreak, greater the chance of reward for taking their head
 - **Shield Recharge** - survive the battle and your shield begins to recharge
 - **Redeemed Respawn** - heavenly protection for a few moments after respawn
-- **Autoaim Assist** - a little forgiveness wielding your weapons
+- **Autoaim Assist** - a little forgiveness wielding the Thunderbolt
 
 Every single feature in this mod is optional and controlled via console variables.
 

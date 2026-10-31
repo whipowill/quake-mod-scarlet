@@ -31,6 +31,7 @@ Then add bots with the impulses below, or let the game do it with `scarlet_dev_a
 | `114` | Go to the next map. |
 | `150` | Go to a random map from `maps.cfg`. |
 | `123` | Print every player's frags, deaths and assists. |
+| `124` | Print your own coordinates, to point at a spot on the map. |
 | `130` | Print the scorekeeper's lists. |
 | `120` / `121` | Melee attack / toss a hand grenade. |
 

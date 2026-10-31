@@ -256,24 +256,19 @@ func genMap(src mapSrc, outDir string, step, lift float32, force bool) (built bo
 		}
 	}
 
-	// doors that a walk-in trigger opens count as walls until a bot can reach the trigger.  scouting where
-	// bots can walk is quick, so do that for as long as it opens another door, then build the trail once
-	open := map[int]bool{}
-	for pass := 0; pass < 8; pass++ {
-		scout := newGen(b, cloneEntities(base), step, open)
-		scout.scout()
-		if !scout.openDoors(open) {
+	g := newGen(b, cloneEntities(base), step)
+	g.Lift = lift
+	g.build()
+	g.Stats.FloorArea = g.floorArea()
+	for _, e := range g.ents {
+		if e.Class() == "worldspawn" {
+			e.Set("floor_area", fmt.Sprintf("%.0f", g.Stats.FloorArea)) // read by the game to size the bot count
 			break
 		}
 	}
-	g := newGen(b, cloneEntities(base), step, open)
-	g.Lift = lift
-	g.build()
 	s := g.Stats
 	stats := fmt.Sprintf("%d waypoints, %d spawns, %d teleporters, %d plats, %d rocket jumps", s.Kept, s.Seeds, s.Teleports, s.Plats, s.RJs)
-	if s.ShutDoors > 0 {
-		stats += fmt.Sprintf(", %d shut doors treated as walls", s.ShutDoors)
-	}
+	stats += fmt.Sprintf(", floor %.0f square units (about %.0f sq ft)", s.FloorArea, s.FloorArea/144)
 	if s.KillZones > 0 {
 		stats += fmt.Sprintf(", %d kill zones avoided", s.KillZones)
 	}

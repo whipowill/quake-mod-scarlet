@@ -103,12 +103,7 @@ The summary line for each map tells you what it found: waypoints, spawns, telepo
 
 Some items can't be reached by any route trailgen can find, often because they are behind a door that needs a button or a key, in a secret, in water, or a long way from anything walkable.  Bots never choose an item the route table can't reach.  Use `-v` to see which ones.
 
-**Doors.**  A bot opens a door by walking into it, so a plain door is no obstacle.  Trailgen treats a door as a wall when walking up to it would not open it:
-- it needs a gold or silver key;
-- it has to be shot (it has health), or it is a secret door;
-- it is triggered by a button, a relay or anything else a bot can't use (it has a targetname).
-
-A triggered door that a walk-in trigger volume is aimed at counts as a wall only until a bot can reach that volume.  Some of those volumes sit on the far side of the door they open, and then the door stays a wall.  Anything that can only be reached through a wall door is marked unreachable, and the bots leave it alone.  The summary line says how many doors were treated as walls.  A door that starts open is never a wall.  The bots' stuck rule (above) is still the safety net for any door this misjudges.
+**Doors.**  Trailgen treats every door as open, so a trail runs through any door: plain, locked, shoot-only or triggered by a button.  A bot that can't actually get through one gives up on its goal through the stuck rules in the game (the give-up code in `bot_ai.qc`).
 
 ### Diagnostics
 

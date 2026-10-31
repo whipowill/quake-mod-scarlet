@@ -21,12 +21,16 @@ const float GAME_ASSISTS = 42; // client mod shows the assists column when set
 const float GAME_MARKERS = 43; // client mod draws teammate markers through walls when set (2 also shows names)
 const float GAME_MARKER_SCALE = 44; // client mod sizes the marker by this (percent)
 const float GAME_NAMETAG = 45; // client mod prints the name of the player under the crosshair (client slot + 1, 0 = nobody)
+const float GAME_KILLSTREAK_LABEL = 47; // the label of that streak, 3 letters in each of 6 stats (47-52), so up to 18 letters
+const float GAME_STREAKS = 53; // client mod shows the Streak (best killstreak) column when set
+const float GAME_KILLSTREAK = 46; // client mod shows the player's own killstreak as skulls at the bottom center (0 = none)
 const float MARKER_STATS = 200; // 3 stats (forward, right, up) per client slot, 16 slots
 
 // my global vars (128-255) -whipowill
 const float SCORE_DEATHS = 131; // 32 slots
 const float SCORE_ASSISTS = 163; // 32 slots
-const float SCORE_SKILL = 248; // 8 slots (248-255), bot skill + 1 (0 = human)
+const float SCORE_STREAK = 64; // 32 slots (64-95), the best killstreak of the player
+const float SCORE_SKILL = 96; // 16 slots (96-111), bot skill + 1 (0 = human)
 
 float gametracker_scarlet, gametracker_teamplay, gametracker_grenades;
 
@@ -39,6 +43,8 @@ float gametracker_scarlet, gametracker_teamplay, gametracker_grenades;
 .float stat_markers_on;
 .float stat_marker_scale;
 .float stat_nametag;
+.float stat_killstreak;
+.float stat_kl0, stat_kl1, stat_kl2, stat_kl3, stat_kl4, stat_kl5;
 .float mf0, mr0, mu0;
 .float mf1, mr1, mu1;
 .float mf2, mr2, mu2;
@@ -56,10 +62,13 @@ float gametracker_scarlet, gametracker_teamplay, gametracker_grenades;
 .float mf14, mr14, mu14;
 .float mf15, mr15, mu15;
 .float stat_deaths_on;
+.float stat_streaks_on;
+.float best_killstreak; // the longest streak of kills in a row this map
 .float stat_assists_on;
-.float sd1, sd2, sd3, sd4, sd5, sd6, sd7, sd8; // deaths of the player at each alphabetical position
-.float sa1, sa2, sa3, sa4, sa5, sa6, sa7, sa8; // assists of the player at each alphabetical position
-.float ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8; // bot skill + 1 of the player at each alphabetical position, 0 for a human
+.float sd1, sd2, sd3, sd4, sd5, sd6, sd7, sd8, sd9, sd10, sd11, sd12, sd13, sd14, sd15, sd16; // deaths of the player at each alphabetical position
+.float sa1, sa2, sa3, sa4, sa5, sa6, sa7, sa8, sa9, sa10, sa11, sa12, sa13, sa14, sa15, sa16; // assists of the player at each alphabetical position
+.float sb1, sb2, sb3, sb4, sb5, sb6, sb7, sb8, sb9, sb10, sb11, sb12, sb13, sb14, sb15, sb16; // best killstreak of the player at each alphabetical position
+.float ss1, ss2, ss3, ss4, ss5, ss6, ss7, ss8, ss9, ss10, ss11, ss12, ss13, ss14, ss15, ss16; // bot skill + 1 of the player at each alphabetical position
 .float stat_grenades;
 
 // this runs when client loads
@@ -79,6 +88,13 @@ void() StatsInit =
     clientstat (GAME_MARKERS, 2, stat_markers_on);
     clientstat (GAME_MARKER_SCALE, 2, stat_marker_scale);
     clientstat (GAME_NAMETAG, 2, stat_nametag);
+    clientstat (GAME_KILLSTREAK, 2, stat_killstreak);
+    clientstat (GAME_KILLSTREAK_LABEL+0, 2, stat_kl0);
+    clientstat (GAME_KILLSTREAK_LABEL+1, 2, stat_kl1);
+    clientstat (GAME_KILLSTREAK_LABEL+2, 2, stat_kl2);
+    clientstat (GAME_KILLSTREAK_LABEL+3, 2, stat_kl3);
+    clientstat (GAME_KILLSTREAK_LABEL+4, 2, stat_kl4);
+    clientstat (GAME_KILLSTREAK_LABEL+5, 2, stat_kl5);
     clientstat (MARKER_STATS+0, 2, mf0);
     clientstat (MARKER_STATS+1, 2, mr0);
     clientstat (MARKER_STATS+2, 2, mu0);
@@ -137,6 +153,14 @@ void() StatsInit =
     clientstat (SCORE_DEATHS+5, 2, sd6);
     clientstat (SCORE_DEATHS+6, 2, sd7);
     clientstat (SCORE_DEATHS+7, 2, sd8);
+    clientstat (SCORE_DEATHS+8, 2, sd9);
+    clientstat (SCORE_DEATHS+9, 2, sd10);
+    clientstat (SCORE_DEATHS+10, 2, sd11);
+    clientstat (SCORE_DEATHS+11, 2, sd12);
+    clientstat (SCORE_DEATHS+12, 2, sd13);
+    clientstat (SCORE_DEATHS+13, 2, sd14);
+    clientstat (SCORE_DEATHS+14, 2, sd15);
+    clientstat (SCORE_DEATHS+15, 2, sd16);
     clientstat (SCORE_ASSISTS+0, 2, sa1);
     clientstat (SCORE_ASSISTS+1, 2, sa2);
     clientstat (SCORE_ASSISTS+2, 2, sa3);
@@ -145,6 +169,31 @@ void() StatsInit =
     clientstat (SCORE_ASSISTS+5, 2, sa6);
     clientstat (SCORE_ASSISTS+6, 2, sa7);
     clientstat (SCORE_ASSISTS+7, 2, sa8);
+    clientstat (SCORE_ASSISTS+8, 2, sa9);
+    clientstat (SCORE_ASSISTS+9, 2, sa10);
+    clientstat (SCORE_ASSISTS+10, 2, sa11);
+    clientstat (SCORE_ASSISTS+11, 2, sa12);
+    clientstat (SCORE_ASSISTS+12, 2, sa13);
+    clientstat (SCORE_ASSISTS+13, 2, sa14);
+    clientstat (SCORE_ASSISTS+14, 2, sa15);
+    clientstat (SCORE_ASSISTS+15, 2, sa16);
+    clientstat (GAME_STREAKS, 2, stat_streaks_on);
+    clientstat (SCORE_STREAK+0, 2, sb1);
+    clientstat (SCORE_STREAK+1, 2, sb2);
+    clientstat (SCORE_STREAK+2, 2, sb3);
+    clientstat (SCORE_STREAK+3, 2, sb4);
+    clientstat (SCORE_STREAK+4, 2, sb5);
+    clientstat (SCORE_STREAK+5, 2, sb6);
+    clientstat (SCORE_STREAK+6, 2, sb7);
+    clientstat (SCORE_STREAK+7, 2, sb8);
+    clientstat (SCORE_STREAK+8, 2, sb9);
+    clientstat (SCORE_STREAK+9, 2, sb10);
+    clientstat (SCORE_STREAK+10, 2, sb11);
+    clientstat (SCORE_STREAK+11, 2, sb12);
+    clientstat (SCORE_STREAK+12, 2, sb13);
+    clientstat (SCORE_STREAK+13, 2, sb14);
+    clientstat (SCORE_STREAK+14, 2, sb15);
+    clientstat (SCORE_STREAK+15, 2, sb16);
     clientstat (SCORE_SKILL+0, 2, ss1);
     clientstat (SCORE_SKILL+1, 2, ss2);
     clientstat (SCORE_SKILL+2, 2, ss3);
@@ -153,6 +202,14 @@ void() StatsInit =
     clientstat (SCORE_SKILL+5, 2, ss6);
     clientstat (SCORE_SKILL+6, 2, ss7);
     clientstat (SCORE_SKILL+7, 2, ss8);
+    clientstat (SCORE_SKILL+8, 2, ss9);
+    clientstat (SCORE_SKILL+9, 2, ss10);
+    clientstat (SCORE_SKILL+10, 2, ss11);
+    clientstat (SCORE_SKILL+11, 2, ss12);
+    clientstat (SCORE_SKILL+12, 2, ss13);
+    clientstat (SCORE_SKILL+13, 2, ss14);
+    clientstat (SCORE_SKILL+14, 2, ss15);
+    clientstat (SCORE_SKILL+15, 2, ss16);
 }
 
 // assist tracking: when each attacker last damaged each victim, indexed by
@@ -196,16 +253,24 @@ float(entity a, entity b) StatsTeammates =
 }
 
 // store one player's deaths and assists in a client's stat slot
-void(entity to, float k, float d, float a, float s) StatsSetSlot =
+void(entity to, float k, float d, float a, float s, float b) StatsSetSlot =
 {
-    if (k == 1) { to.sd1 = d; to.sa1 = a; to.ss1 = s; }
-    else if (k == 2) { to.sd2 = d; to.sa2 = a; to.ss2 = s; }
-    else if (k == 3) { to.sd3 = d; to.sa3 = a; to.ss3 = s; }
-    else if (k == 4) { to.sd4 = d; to.sa4 = a; to.ss4 = s; }
-    else if (k == 5) { to.sd5 = d; to.sa5 = a; to.ss5 = s; }
-    else if (k == 6) { to.sd6 = d; to.sa6 = a; to.ss6 = s; }
-    else if (k == 7) { to.sd7 = d; to.sa7 = a; to.ss7 = s; }
-    else if (k == 8) { to.sd8 = d; to.sa8 = a; to.ss8 = s; }
+    if (k == 1) { to.sd1 = d; to.sa1 = a; to.ss1 = s; to.sb1 = b; }
+    else if (k == 2) { to.sd2 = d; to.sa2 = a; to.ss2 = s; to.sb2 = b; }
+    else if (k == 3) { to.sd3 = d; to.sa3 = a; to.ss3 = s; to.sb3 = b; }
+    else if (k == 4) { to.sd4 = d; to.sa4 = a; to.ss4 = s; to.sb4 = b; }
+    else if (k == 5) { to.sd5 = d; to.sa5 = a; to.ss5 = s; to.sb5 = b; }
+    else if (k == 6) { to.sd6 = d; to.sa6 = a; to.ss6 = s; to.sb6 = b; }
+    else if (k == 7) { to.sd7 = d; to.sa7 = a; to.ss7 = s; to.sb7 = b; }
+    else if (k == 8) { to.sd8 = d; to.sa8 = a; to.ss8 = s; to.sb8 = b; }
+    else if (k == 9) { to.sd9 = d; to.sa9 = a; to.ss9 = s; to.sb9 = b; }
+    else if (k == 10) { to.sd10 = d; to.sa10 = a; to.ss10 = s; to.sb10 = b; }
+    else if (k == 11) { to.sd11 = d; to.sa11 = a; to.ss11 = s; to.sb11 = b; }
+    else if (k == 12) { to.sd12 = d; to.sa12 = a; to.ss12 = s; to.sb12 = b; }
+    else if (k == 13) { to.sd13 = d; to.sa13 = a; to.ss13 = s; to.sb13 = b; }
+    else if (k == 14) { to.sd14 = d; to.sa14 = a; to.ss14 = s; to.sb14 = b; }
+    else if (k == 15) { to.sd15 = d; to.sa15 = a; to.ss15 = s; to.sb15 = b; }
+    else if (k == 16) { to.sd16 = d; to.sa16 = a; to.ss16 = s; to.sb16 = b; }
 }
 
 void(entity to, float k, float f, float r, float u) StatsSetMarker =
@@ -260,7 +325,7 @@ void(entity player) StatsMarkers =
         p = find(world, classname, "player");
         while (p)
         {
-            if (p != player && p.health > 0 && p.team > 0 && p.team == player.team && !(p.items & IT_INVISIBILITY))
+            if (p != player && p.health > 0 && p.team > 0 && p.team == player.team)
             {
                 slot = StatsSlot(p);
                 d = (p.origin + '0 0 44') - org;
@@ -303,7 +368,7 @@ void() StatsShare =
         who = find(world, classname, "player");
         while (who)
         {
-            StatsSetSlot(to, who.alphapos, who.deaths, who.assists, who.ishuman ? 0 : who.b_skill + 1);
+            StatsSetSlot(to, who.alphapos, who.deaths, who.assists, who.ishuman ? 0 : who.b_skill + 1, who.best_killstreak);
             who = find(who, classname, "player");
         }
         to = find(to, classname, "player");
@@ -557,11 +622,14 @@ void(entity player) StatsUpdate =
     if (player.classname != "player") return;
 
     NameTag(); // SCARLET - nametags integration.
+    KillstreakSkulls(player); // SCARLET - killstreak skulls integration.
+    KillstreakStats(player); // SCARLET - killstreak HUD integration.
     RechargeShields(); // SCARLET - shields integration.
 
     // tell client some game settings
     gametracker_scarlet = 1;
     player.stat_deaths_on = 1;
+    player.stat_streaks_on = 1;
     StatsMarkers(player);
     player.stat_assists_on = (cv_scarlet_assist_window > 0);
     gametracker_teamplay = teamplay;

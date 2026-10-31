@@ -679,6 +679,9 @@ the bot finds things it wants to kill/grab.
 // *!* Make sure you add code to bot_check_lost to remove the target *!*
 
 
+float(entity thing) bot_armor_worth;
+float(entity thing) bot_armor_wanted;
+
 float(entity thing) priority_for_thing =
 {
 	local float thisp;
@@ -796,15 +799,9 @@ float(entity thing) priority_for_thing =
 		}
 		else if (thing.model == "progs/armor.mdl")
 		{
-			if (self.armorvalue < 200)
-			{
-				if (self.armorvalue <= 50)
-					thisp = 60;
-				else if (self.armorvalue <= 100 && thing.classname != "item_armor1")
-					thisp = 55;
-				else if (self.armorvalue <= 150 && thing.classname == "item_armorInv")
-					thisp = 50;
-			}
+			// SCARLET - armor that would be a step up is a vital item, worth the trip from anywhere
+			if (bot_armor_wanted(thing))
+				thisp = cv_scarlet_bot_priority_armor;
 		}
 		else if (thing.model == "progs/backpack.mdl")
 			thisp = 45;
@@ -822,8 +819,8 @@ float(entity thing) priority_for_thing =
 			}
 			else if (bot_armor_worth(thing))
 			{
-				// armor that is no better than what the bot wears can't be taken
-				if (self.armortype * self.armorvalue >= bot_armor_worth(thing))
+				// armor that the game would not let the bot take is no goal
+				if (!bot_armor_wanted(thing))
 					thisp = 0;
 			}
 			else if (thing.classname == "item_shells")
@@ -919,17 +916,35 @@ float(entity thing) priority_for_thing =
 
 float dev_why_items, dev_why_gone, dev_why_blocked, dev_why_unreach, dev_why_zero;
 
-// what a piece of armor is worth: protection times points (green 30, yellow 90, red 160).  the
-// game only lets you take armor worth more than what you wear
+// what a piece of armor is worth: protection times points, the same sum the game does when a box is
+// touched (it only lets you take armor worth more than what you wear)
 float(entity thing) bot_armor_worth =
 {
 	if (thing.classname == "item_armor1")
-		return 30;
+		return cv_scarlet_absorb_green * 100;
 	if (thing.classname == "item_armor2")
-		return 90;
+		return cv_scarlet_absorb_yellow * 150;
 	if (thing.classname == "item_armorInv")
-		return 160;
+		return cv_scarlet_absorb_red * 200;
 	return 0;
+};
+
+// would the game let this bot take that armor?  it has to be worth more than what the bot wears, and with
+// the armor recharge on a lower tier is never taken over a higher one (see armor_touch)
+float(entity thing) bot_armor_wanted =
+{
+	local float absorb;
+
+	if (!bot_armor_worth(thing))
+		return FALSE;
+	if (self.armortype * self.armorvalue >= bot_armor_worth(thing))
+		return FALSE;
+	if (thing.classname == "item_armor1") absorb = cv_scarlet_absorb_green;
+	else if (thing.classname == "item_armor2") absorb = cv_scarlet_absorb_yellow;
+	else absorb = cv_scarlet_absorb_red;
+	if (cv_scarlet_recharge && cv_scarlet_recharge_armor > 0 && self.armorvalue > 0 && armor_tier(self.armortype) > armor_tier(absorb))
+		return FALSE;
+	return TRUE;
 };
 
 // how much this bot would like to get to the spot of an item, whether or not the item is
@@ -991,11 +1006,8 @@ float(entity thing) bot_spot_value =
 	}
 	else if (bot_armor_worth(thing))
 	{
-		if (self.armortype * self.armorvalue < bot_armor_worth(thing))
-		{
-			if (self.armorvalue <= 50) v = 60;
-			else v = 45;
-		}
+		if (bot_armor_wanted(thing))
+			v = cv_scarlet_bot_priority_armor;
 	}
 	else if (thing.classname == "item_shells")
 	{
@@ -1639,6 +1651,7 @@ void() bot_devlog =
 void() BotAI =
 {
 	local entity stuck_goal;
+	local vector stuck_dir;
 	// am I dead? Fire randomly until I respawn
 	// health < 1 is used because fractional healths show up as 0 on normal player
 	// status bars, and the mod probably already compensated for that
@@ -1721,14 +1734,14 @@ void() BotAI =
 
 	stagger_think = time;
 
-	// SCARLET - a bot that has not gone anywhere in 60 seconds (wedged in a corner, a pit, behind a door)
+	// SCARLET - a bot that has not gone anywhere in 60 seconds (20 with no goal at all) (wedged in a corner, a pit, behind a door)
 	// kills itself and respawns somewhere else
-	if (intermission_running || self.idle_time == 0 || vlen(self.origin - self.idle_org) > 16)
+	if (intermission_running || cv_scarlet_dev_botfreeze || self.idle_time == 0 || vlen(self.origin - self.idle_org) > 16)
 	{
 		self.idle_org = self.origin;
 		self.idle_time = time;
 	}
-	else if (time - self.idle_time > 60)
+	else if (time - self.idle_time > (self.target1_ent ? 60 : 20)) // a bot with nothing to go for gives up sooner (a spawn sealed in by doors)
 	{
 		if (cv_scarlet_dev_botlog)
 		{
@@ -1745,18 +1758,35 @@ void() BotAI =
 	// give up on it and pick a new one.  SCARLET - the goal itself (the last thing on its plan, the item
 	// or the far waypoint, not just the next step) is banned for a minute for every bot, so nobody walks
 	// into the same door again as soon as the short ban on a single waypoint runs out.
+	// Pacing about does not count as getting somewhere, so a bot also gives up when it has been right above or
+	// below the next step on its plan (more than 32 units up or down, within 96 across) for 2.5 seconds: an item
+	// in the water under a bridge, a ledge it can't climb.  It would walk to and fro over it for ever.
 	if (self.target1_ent && self.target1_ent.classname != "player" && !(self.b_aiflags & AI_WAIT) && !intermission_running)
 	{
+		local float over;
+		over = FALSE;
+		stuck_dir = self.target1_ent.origin - self.origin;
+		if (fabs(stuck_dir_z) > 32)
+		{
+			stuck_dir_z = 0;
+			if (vlen(stuck_dir) < 96)
+				over = TRUE;
+		}
+		if (!over)
+			self.vmiss_time = 0;
+		else if (!self.vmiss_time)
+			self.vmiss_time = time;
+
 		if (vlen(self.origin - self.stuck_org) > 16 || self.stuck_time == 0)
 		{
 			self.stuck_org = self.origin;
 			self.stuck_time = time;
 		}
-		else if (time - self.stuck_time > 2)
+		if (time - self.stuck_time > 2 || (over && time - self.vmiss_time > 2.5))
 		{
 			if (cv_scarlet_dev_botlog)
 			{
-				dprint("BOTSTUCK ");
+				dprint(over ? "BOTVMISS " : "BOTSTUCK ");
 				dprint(self.netname);
 				dprint(" ");
 				dprint(self.target1_ent.classname);
@@ -1794,10 +1824,14 @@ void() BotAI =
 			else if (stuck_goal.search_time < time + 60)
 				stuck_goal.search_time = time + 60;
 			self.stuck_time = 0;
+			self.vmiss_time = 0;
 		}
 	}
 	else
+	{
 		self.stuck_time = 0;
+		self.vmiss_time = 0;
+	}
 
 	// shut the bot's buttons off, various functions will turn them on by AI end
 

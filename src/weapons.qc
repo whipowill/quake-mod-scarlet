@@ -139,7 +139,14 @@ SpawnBlood
 */
 void(vector org, vector vel, float damage) SpawnBlood =
 {
-	particle (org, vel*0.1, 73, damage*2);
+	local float count;
+
+	// SCARLET - the engine reads a particle count of 255 or more as "make a rocket explosion" (the orange and yellow
+	// fireball), and a hard hit makes that many (240 damage is 480 particles), so the count stops short of it
+	count = damage*2;
+	if (count > 250)
+		count = 250;
+	particle (org, vel*0.1, 73, count);
 
 	// SCARLET - gore integration.
 	if (cv_scarlet_gore > 1)
@@ -149,7 +156,10 @@ void(vector org, vector vel, float damage) SpawnBlood =
 		{
 			vel = normalize(vel) * -1;
 			vel = normalize(vel + v_up*(random()- 0.5) + v_right*(random()- 0.5));
-			particle (org, vel*i*random(), 64+(random()*12), damage*random());
+			count = damage*random();
+			if (count > 250)
+				count = 250;
+			particle (org, vel*i*random(), 64+(random()*12), count);
 		}
 	}
 	// SCARLET - end.
@@ -547,15 +557,11 @@ vector(vector org, vector dir, float range) AimAssistDir =
 	return dir;
 };
 
-// the engine's aim() (which only lifts or lowers a shot) with the aim assist on top
+// the engine's aim() (which only lifts or lowers a shot).  the aim assist is for the Thunderbolt only, so the
+// shotguns and nail guns, which used to get it too, no longer do
 vector(float speed, float range) AssistAim =
 {
-	local vector d;
-
-	d = aim (self, speed);
-	if (cv_scarlet_aim_assist > 0 && self.ishuman == TRUE)
-		d = AimAssistDir (self.origin + '0 0 16', d, range);
-	return d;
+	return aim (self, speed);
 };
 
 void() W_FireLightning =
@@ -1286,13 +1292,11 @@ void() W_ChangeWeapon =
 	
 	if (!(self.items & fl))
 	{	// don't have the weapon or the ammo
-		sprint (self, "no weapon.\n");
 		return;
 	}
 	
 	if (am)
 	{	// don't have the ammo
-		sprint (self, "not enough ammo.\n");
 		return;
 	}
 

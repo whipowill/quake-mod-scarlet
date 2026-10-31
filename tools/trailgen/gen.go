@@ -90,156 +90,53 @@ type Gen struct {
 	keepout  []Keepout
 	Notes    []string
 	Stats    Stats
-	Lift     float32      // how far above the player's origin a waypoint sits
-	soft     []softDoor   // doors that a walk-in trigger opens, once a bot can reach the trigger
-	open     map[int]bool // the soft doors (by entity number) that a bot can open
-	scouting bool         // only looking at where bots can walk from the spawns, not building the trail
-}
-
-// softDoor is a door that opens when a bot walks into a trigger volume aimed at it.
-type softDoor struct {
-	ent  int
-	head int
-	trig []Box
+	Lift     float32 // how far above the player's origin a waypoint sits
 }
 
 type Stats struct {
 	Seeds, Teleports, Plats, RJs     int
 	Built, Kept, Falls, Links        int
 	Dead, KillZones, Thinned         int
-	ShutDoors                        int
+	FloorArea                        float64
 	ItemsTotal, ItemsOnFoot, ItemsRJ int
 	StretchMean, StretchP90          float64
 }
 
 const cellSize = 64
 
-func newGen(b *BSP, ents []*Entity, step float32, open map[int]bool) *Gen {
-	g := &Gen{b: b, mv: &Mover{b: b, head: b.Models[0].Head[1]}, ents: ents, step: step, cells: map[[3]int32][]int{}, open: open}
+func newGen(b *BSP, ents []*Entity, step float32) *Gen {
+	g := &Gen{b: b, mv: &Mover{b: b, head: b.Models[0].Head[1]}, ents: ents, step: step, cells: map[[3]int32][]int{}}
 	g.collectDeadly()
-	g.collectShutDoors()
 	return g
 }
 
-// collectShutDoors finds the doors a bot can't open by walking up to them, and treats each as a
-// wall.  a door opens by touch only when nothing else controls it, so these stay shut:
-//   - a door that has to be shot (it has health), or a secret door, which opens when it is shot or triggered
-//   - a door that needs a key (gold or silver)
-//   - a door that is triggered (it has a targetname) by a button, a relay or anything else out of a bot's reach
-//
-// a triggered door that a walk-in trigger volume is aimed at is shut only until a bot can reach that
-// volume (some of them sit on the far side of the door they open).  a door that starts open is left alone.
-func (g *Gen) collectShutDoors() {
-	walk := map[string][]Box{}
-	for _, e := range g.ents {
-		switch e.Class() {
-		case "trigger_multiple", "trigger_once":
-			if h := e.Get("health"); (h == "" || h == "0") && e.Get("target") != "" {
-				if mins, maxs, ok := g.bounds(e); ok {
-					walk[e.Get("target")] = append(walk[e.Get("target")], Box{mins, maxs})
-				}
-			}
-		}
-	}
-	for i, e := range g.ents {
-		cls := e.Class()
-		if cls != "func_door" && cls != "func_door_secret" {
-			continue
-		}
-		m := e.ModelIndex()
-		if m < 1 || m >= len(g.b.Models) {
-			continue
-		}
-		head := g.b.Models[m].Head[1]
-		flags := 0
-		fmt.Sscanf(e.Get("spawnflags"), "%d", &flags)
-		switch {
-		case cls == "func_door" && flags&1 != 0:
-			// starts open
-		case cls == "func_door_secret":
-			g.mv.shut = append(g.mv.shut, head)
-		case flags&(8|16) != 0:
-			g.mv.shut = append(g.mv.shut, head) // gold or silver key
-		case e.Get("health") != "" && e.Get("health") != "0":
-			g.mv.shut = append(g.mv.shut, head)
-		case e.Get("targetname") != "":
-			if boxes := walk[e.Get("targetname")]; len(boxes) > 0 {
-				g.soft = append(g.soft, softDoor{ent: i, head: head, trig: boxes})
-				if g.open[i] {
+// floorArea is how much floor a bot can stand on, in square units, found by dropping a probe through a grid
+// of 16 unit cells from the top of the map down.  every floor a probe lands on counts (a balcony over a hall
+// counts twice), then the probe carries on below it.  the game divides it by a number of square units per
+// player to decide how many bots a map gets.
+func (g *Gen) floorArea() float64 {
+	const cell = 16
+	m := g.b.Models[0]
+	cells := 0
+	for x := m.Mins[0]; x < m.Maxs[0]; x += cell {
+		for y := m.Mins[1]; y < m.Maxs[1]; y += cell {
+			z := m.Maxs[2]
+			for z > m.Mins[2] {
+				p := Vec3{x, y, z}
+				if !g.mv.Empty(p) {
+					z -= 8
 					continue
 				}
-			}
-			g.mv.shut = append(g.mv.shut, head)
-		}
-	}
-	g.Stats.ShutDoors = len(g.mv.shut)
-}
-
-// scout spreads from the spawns, teleporters and plats only (not from the items, which can sit behind a
-// door), which is all it takes to know where a bot can walk.  it is a small part of a full build.
-func (g *Gen) scout() {
-	g.scouting = true
-	g.seedSpawns()
-	g.seedTeleports()
-	g.seedPlats()
-	g.fill()
-}
-
-// openDoors marks the soft doors whose trigger volume a bot can now reach, and says whether it
-// found any new ones, in which case the map has to be built again with those doors open.
-func (g *Gen) openDoors(open map[int]bool) bool {
-	changed := false
-	for _, sd := range g.soft {
-		if open[sd.ent] {
-			continue
-		}
-		for _, b := range sd.trig {
-			if g.reaches(b) {
-				open[sd.ent] = true
-				changed = true
-				break
+				f, ok := g.mv.Drop(p, z-m.Mins[2]+64)
+				if !ok {
+					break
+				}
+				cells++
+				z = f[2] - 40
 			}
 		}
 	}
-	return changed
-}
-
-// standable says a bot can get to waypoint i: while scouting every waypoint comes from a spawn, a teleporter
-// or a plat, otherwise it has to be one that bots can reach and leave
-func (g *Gen) standable(i int) bool { return g.scouting || g.alive(i) }
-
-// reaches reports whether a bot can walk into the box: a waypoint it can get to and back from stands
-// in it, or a short straight walk from one gets there.  triggers are thin volumes in front of a door,
-// so they rarely have a waypoint of their own.
-func (g *Gen) reaches(b Box) bool {
-	for i, nd := range g.nodes {
-		p := nd.Pos
-		if p[0]+16 > b.Min[0] && p[0]-16 < b.Max[0] && p[1]+16 > b.Min[1] && p[1]-16 < b.Max[1] &&
-			p[2]+32 > b.Min[2] && p[2]-24 < b.Max[2] && g.standable(i) {
-			return true
-		}
-	}
-	cx, cy := (b.Min[0]+b.Max[0])/2, (b.Min[1]+b.Max[1])/2
-	for _, s := range [][2]float32{{cx, cy}, {b.Min[0] + 4, b.Min[1] + 4}, {b.Max[0] - 4, b.Min[1] + 4}, {b.Min[0] + 4, b.Max[1] - 4}, {b.Max[0] - 4, b.Max[1] - 4}} {
-		spot, ok := g.mv.Drop(Vec3{s[0], s[1], b.Max[2]}, b.Max[2]-b.Min[2]+64)
-		if !ok || spot[2] < b.Min[2]-24 || spot[2] > b.Max[2]+24 {
-			continue
-		}
-		for i, nd := range g.nodes {
-			d := hdist(nd.Pos, spot)
-			if d > 320 || !g.standable(i) {
-				continue
-			}
-			dir := Vec3{(spot[0] - nd.Pos[0]) / d, (spot[1] - nd.Pos[1]) / d, 0}
-			if d < 1 {
-				return true
-			}
-			if end, fell, ok := g.mv.Walk(nd.Pos, dir, d, nil); ok && !fell && hdist(end, spot) < 24 {
-				return true
-			}
-		}
-	}
-	return false
+	return float64(cells) * cell * cell
 }
 
 // collectDeadly finds the kill zones: a hurt trigger that does 50 or more damage, and the

@@ -2,23 +2,23 @@
 
 - November 2026
     - Rebuilt on id Software's original Quake source instead of Copper
-    - Dropped Copper's own gameplay changes and HUD
-    - The mod ships its own pak and no longer needs Copper's
     - Bots follow trails made by the ``trailgen`` tool and give up on stuck goals
-    - Bots that haven't moved in 60 seconds kill themselves and respawn
-    - ``trailgen`` writes its files into the mod folder and clears old ones
-    - ``trailgen`` no longer paths through doors that need a button, key or shot
-    - Weapon switching, axe animation and respawn timer fixes
-    - Overheal rots, drowning and fall damage fixes
+    - Bots with nothing to go for kill themselves after 20 seconds, and after 60 seconds if they haven't moved
+    - Bots go for armor first, and skip armor they can't take
+    - Option for bots to flee from fights they are losing
+    - Option to fill deathmatch games with bots to suit the map's size, joining a few at a time, evenly by team, and leaving as real players arrive
+    - New medieval, funny bot chat lines, limited to one every 12 seconds or more, with options for how often and when
+    - ``trailgen`` paths through every door, and records each map's floor area for the bot count
+    - Health and armor recharge on the same second
+    - With armor recharge on, a lower armor is never picked up over a higher one
     - Option for zombies to die from normal damage in single player
     - Monster kills and assists count on the single player scoreboard
-    - Pickup message options for health, plus the other ``scarlet_chat_*`` ones
+    - Pickup message options for health and powerups, plus the other ``scarlet_chat_*`` ones
     - Impulses for best rocket, nail, shot and overall weapon
     - Rockets, grenades and other flying objects press buttons
-    - Option for damage immunity after a respawn
-    - Option for aim assist on instant-hit guns, for players and monsters
-    - Option for weapons to come with a small ammo box of ammo
-    - Corpses no longer keep the quad glow
+    - Option for aim assist on the Thunderbolt, for players and monsters
+    - Teammate markers also show a teammate with the Ring of Shadows
+    - A player who leaves no longer leaves a body behind
 - October 2026
     - Started using Claude to assist with maintaining this mod
     - Merged Copper v1.30

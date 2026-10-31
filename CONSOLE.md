@@ -61,7 +61,8 @@ Everything in Scarlet is controlled by console variables (cvars) and a few impul
 | ``scarlet_chat_health`` | ``1`` | Notices about health pickups.  ``0`` silences them. |
 | ``scarlet_chat_backpacks`` | ``1`` | Notices about backpacks.  ``0`` silences them. |
 | ``scarlet_chat_deaths`` | ``1`` | Death messages.  ``0`` off, ``1`` classic Quake messages, ``2`` generic alternate messages. |
-| ``scarlet_chat_killstreaks`` | ``1`` | Killstreak announcements ("Killing Spree!").  ``0`` silences them (only matters if ``scarlet_killstreaks`` is on). |
+| ``scarlet_chat_killstreaks`` | ``1`` | Killstreak announcements ("Killing Spree!").  ``0`` silences them (only matters if ``scarlet_killstreak_vfx`` is on). |
+| ``scarlet_chat_powerups`` | ``1`` | The messages about powerups: picking one up ("You got the Quad Damage") and the warnings that it is wearing off.  ``0`` turns them off. |
 
 Set all the ``scarlet_chat_*`` cvars to ``0`` for a quiet console in busy bot matches.
 
@@ -69,13 +70,30 @@ Set all the ``scarlet_chat_*`` cvars to ``0`` for a quiet console in busy bot ma
 
 | Cvar | Default | What it does |
 |---|---|---|
+| ``scarlet_bot_autofill`` | ``0`` | ``1`` fills deathmatch games with bots to suit the size of the map, with teams if ``teamplay`` is on (the first person's side against everybody else, kept the same size: each side gets half the wanted players, or as many as the bigger side has people, and the bots make up the difference), and it keeps that number: a bot leaves when another person joins (and when there are too many for the map), and one comes in when a person leaves.  It waits for at least one person, and does nothing in single player or co-op. |
+| ``scarlet_bot_autofill_units`` | ``500000`` | The floor area, in square units, for each player.  trailgen measures it for each map (the walkable floor, every level counted) and stores it in the map's trail file, and the wanted number of players (people and bots) is that divided by this: a bigger number means fewer players.  A map without a trail is guessed from the size of its bounding box.  Some areas: ``dm4`` 1.1 million, ``dm1`` 1.7, ``dm2`` 2.3, ``dm3`` 4.7, ``e1m2`` 4.2. |
+| ``scarlet_bot_autofill_min`` | ``4`` | The fewest players (people and bots) autofill wants. |
+| ``scarlet_bot_autofill_max`` | ``12`` | The most players autofill wants. |
+| ``scarlet_bot_autofill_delay`` | ``8`` | Seconds between one bot joining and the next, so they trickle in.  Each gap is random, from half to one and a half times this. |
 | ``scarlet_bot_dialogue`` | ``1`` | Bots occasionally say things (greetings, taunts, complaints when losing). |
+| ``scarlet_bot_dialogue_gap`` | ``12`` | the least seconds between two bot chat lines, in the whole game |
+| ``scarlet_bot_dialogue_gap_random`` | ``8`` | up to this many seconds more are added at random to that |
+| ``scarlet_bot_dialogue_odds_connect`` | ``0.6`` | The chance (0 to 1) a bot says something on this occasion. |
+| ``scarlet_bot_dialogue_odds_welcome`` | ``0.6`` | The chance (0 to 1) a bot says something on this occasion. |
+| ``scarlet_bot_dialogue_odds_victory`` | ``0.3`` | The chance (0 to 1) a bot says something on this occasion. |
+| ``scarlet_bot_dialogue_odds_deathsdoor`` | ``0.3`` | The chance (0 to 1) a bot says something on this occasion. |
+| ``scarlet_bot_dialogue_odds_death`` | ``0.3`` | The chance (0 to 1) a bot says something on this occasion. |
+| ``scarlet_bot_dialogue_odds_team`` | ``0.3`` | The chance (0 to 1) a bot says something on this occasion. |
+| ``scarlet_bot_dialogue_odds_suicide`` | ``0.6`` | The chance (0 to 1) a bot says something on this occasion. |
+| ``scarlet_bot_dialogue_odds_ridicule`` | ``0.6`` | The chance (0 to 1) a bot says something on this occasion. |
+| ``scarlet_bot_dialogue_odds_intermission`` | ``0.3`` | The chance (0 to 1) a bot says something on this occasion. |
 | ``scarlet_bots_enemy_color`` | ``-1`` | In teamplay, the opposing team of bots (added with ``impulse 101`` or ``111``) always wears this color, so enemies are easy to spot.  Use the same numbers as the ``color`` command: ``0`` white, ``1`` brown, ``2`` light blue, ``3`` green, ``4`` red, ``5`` tan, ``6`` orange, ``7`` pink, ``8`` purple, ``9`` dusty rose, ``10`` dark sienna, ``11`` blue-green, ``12`` yellow, ``13`` blue.  ``-1`` turns it off.  If your own team already wears that color, the bots pick another.  Only affects bots added afterward. |
 | ``scarlet_bots_team_jersey`` | ``1`` | In teamplay, bots wear their team color.  ``0`` lets each bot keep a unique shirt color while the pants still show the team. |
 | ``scarlet_bot_priority_quad`` | ``1000`` | How badly bots want a Quad Damage.  Higher means they route to it sooner. |
 | ``scarlet_bot_priority_pent`` | ``1000`` | Same, for Pentagram of Protection. |
 | ``scarlet_bot_priority_ring`` | ``0`` | Same, for Ring of Shadows. |
 | ``scarlet_bot_priority_mega`` | ``1000`` | Same, for Megahealth. |
+| ``scarlet_bot_priority_armor`` | ``1500`` | Same, for armor that is better than what the bot wears, or any armor at all.  Above the powerups by default, so a bot goes for armor before anything else.  A bot never goes for armor the game would not let it take (a lower color than it wears when ``scarlet_recharge_armor`` is on). |
 | ``scarlet_bot_flee`` | ``1`` | ``1`` makes bots run away, along the waypoints, from a player holding the Pentagram (nothing hurts them) and, if the bot has no powerup of its own, from one holding the Quad Damage.  ``0`` leaves them as ordinary targets, so you can find someone to shoot while you hold a powerup. |
 | ``scarlet_bot_edgefriction`` | ``1.5`` | Friction multiplier bots feel when their leading edge is over a dropoff.  ``2`` is stock Quake (bots brake hard at ledges and rarely fall); ``1`` removes the extra braking so they can fall off bridges like players do. |
 | ``scarlet_bot_handicap`` | ``1`` | How much weaker a bot below skill 3 is.  A low skill bot reacts late to a new enemy, turns slower, aims with a wobble, leads its shots less and dodges fewer rockets.  ``1`` is the full effect, ``0`` makes every bot play like skill 3, and values between scale it.  Skill 3 is never held back.  See ``TRAILGEN.md`` for the numbers. |
@@ -113,7 +131,19 @@ Set all the ``scarlet_chat_*`` cvars to ``0`` for a quiet console in busy bot ma
 
 | Cvar | Default | What it does |
 |---|---|---|
-| ``scarlet_killstreaks`` | ``0`` | Announces killing sprees (every 5 kills without dying) and when they end. |
+| ``scarlet_killstreak_vfx_skulls`` | ``0`` | ``1`` makes zombie heads orbit a player's feet, one more for every 5 kills without dying, and they go when the streak ends. |
+| ``scarlet_killstreak_vfx_skulls_max`` | ``8`` | The most skulls one player can have (40 kills).  The whole game never has more than 96. |
+| ``scarlet_killstreak_vfx_skulls_radius`` | ``40`` | How far from the player the skulls orbit, in units. |
+| ``scarlet_killstreak_vfx_skulls_height`` | ``12`` | How high above the floor under the player the skulls orbit, in units (a player is 56 tall). |
+| ``scarlet_killstreak_vfx_skulls_speed`` | ``150`` | How fast the skulls spin around the player, in degrees a second: ``360`` is a turn a second, and a negative number spins them the other way. |
+| ``scarlet_killstreak_vfx_skulls_pitch`` | ``-90`` | How the skulls are tipped so their faces point out from the player.  The zombie head's face is up in the model, so ``-90`` turns it out; try ``90`` if they look inward, and ``0`` or ``180`` for up or down. |
+| ``scarlet_killstreak_heal`` | ``0`` | Health healed once a second for every skull earned (every 5 kills in a row, up to ``scarlet_killstreak_vfx_skulls_max`` skulls), so 2 skulls at ``3`` heal 6 health every second.  It keeps healing in the middle of a fight, unlike ``scarlet_recharge``, which waits until you have not been hurt for a while.  It never takes you above 100.  ``0`` is off. |
+| ``scarlet_killstreak_vfx_swirl`` | ``0`` | ``1`` makes a swirl of red blood particles circle the feet of a player on a streak (5 or more kills).  It gets thicker and wider every 5 kills.  Each streak tier sends a few more particle messages, so a busy server may want it off. |
+| ``scarlet_killstreak_vfx_swirl_style`` | ``1`` | ``0`` is the swirl that gets thicker with the streak.  ``1`` sends waves of blood pulsing outward from the player, and the higher the streak the quicker the waves follow each other.  ``2`` is a spiral of blood climbing from the feet to the head, with more strands the higher the streak.  ``3`` is a flat spiral on one plane at the player's feet, turning slowly, in dark reds, with another arm every 3 tiers. |
+| ``scarlet_killstreak_vfx_swirl_radius`` | ``24`` | How far from the player the swirl starts, in units. |
+| ``scarlet_killstreak_vfx_swirl_speed`` | ``360`` | How fast the swirl turns, in degrees a second. |
+| ``scarlet_killstreak_vfx_skulls_blood`` | ``1`` | How much the skulls bleed: ``0`` not at all, ``1`` a steady drip of red particles, ``2`` twice that, and so on.  Each puff is a particle message sent to everybody, so a high number with a lot of skulls costs more. |
+| ``scarlet_killstreak_vfx`` | ``0`` | The master switch for the killstreak visual effects ("vfx"): the orbiting skulls, the blood swirl, and the streak label and dots on the HUD mod.  ``0`` turns all of them off.  Killstreaks are still counted, announced in chat (see ``scarlet_chat_killstreaks``), shown in the scoreboard's Streak column, and still heal if ``scarlet_killstreak_heal`` is on. |
 | ``scarlet_rewards`` | ``0`` | **(DM only)** Dead players can drop powerup rewards (Megahealth, Quad, Pent) that anyone can grab. |
 | ``scarlet_rewards_drop_chance`` | ``0.07`` | Chance (``0``-``1``) that any kill drops one powerup (Megahealth, Quad or Pent, equally likely).  Axe kills are 4x as likely. |
 | ``scarlet_rewards_drop_streak`` | ``0.05`` | Extra chance added for every kill in the killstreak of the player who died, so killing someone on a hot streak is more likely to drop a powerup.  ``0`` ignores killstreaks. |
@@ -224,7 +254,7 @@ Seconds between shots.  Lower is faster.
 |---|---|---|
 | ``scarlet_spr_sg`` / ``_ssg`` / ``_ng`` / ``_sng`` | ``4`` / ``14`` / ``0`` / ``0`` | Spread of shots.  ``0`` is perfectly accurate. |
 | ``scarlet_weapon_kick_sg`` / ``_ssg`` / ``_ng`` / ``_sng`` / ``_gl`` / ``_rl`` / ``_tb`` | ``2`` / ``4`` / ``2`` / ``2`` / ``2`` / ``2`` / ``2`` | How far your view jolts when firing.  ``0`` for none. |
-| ``scarlet_aim_assist`` | ``0`` | Aim assist for human players, on the guns that hit instantly: the shotguns, the Thunderbolt, and the nail guns and Perforator when their nail speed is set high enough to be instant.  A shot that passes near a visible player or monster is pulled onto it.  The value is the size of the cone in degrees either side of the crosshair for a target right in front of you (the cone gets wider with distance if ``scarlet_aim_assist_growth`` is set): ``2`` is about one player width at 1000 units, ``1`` about half a width, ``0`` is off.  Rockets, grenades, nails that fly and the axe are not assisted, so you can still lead a moving target, and teammates in teamplay are never targeted. |
+| ``scarlet_aim_assist`` | ``0`` | Aim assist for human players, on the Thunderbolt only.  A shot that passes near a visible player or monster is pulled onto it.  The value is the size of the cone in degrees either side of the crosshair for a target right in front of you (the cone gets wider with distance if ``scarlet_aim_assist_growth`` is set): ``2`` is about one player width at 1000 units, ``1`` about half a width, ``0`` is off.  Every other weapon is unassisted, so you can still lead a moving target, and teammates in teamplay are never targeted. |
 | ``scarlet_aim_assist_growth`` | ``0`` | Extra degrees added to the aim assist cone for every 1000 units between you and the target, so far targets get more help.  With ``scarlet_aim_assist 2`` and a growth of ``2``, the cone is 2 degrees point blank, 3 at 500 units and 4 at 1000.  ``0`` keeps the cone the same at any distance. |
 | ``scarlet_aim_assist_max`` | ``0`` | The widest the aim assist cone can get, in degrees, however far the target is.  ``0`` is no limit. |
 | ``scarlet_weapon_range_tb`` | ``600`` | How far the Thunderbolt beam reaches, in units.  ``0`` makes it reach as far as the map goes (up to 8192 units), though walls still stop it.  The aim assist looks as far as the beam reaches. |
@@ -278,6 +308,9 @@ Developer aids for debugging bots and trails.  Leave them at ``0`` for normal pl
 |---|---|---|
 | ``scarlet_testing`` | ``0`` | Developer aid: bots say the topic name ("connect", "welcome") instead of a random quote so dialogue can be tested. |
 | ``scarlet_dev_autobots`` | ``0`` | Developer test: adds this many bots by itself a moment after the map starts, so a dedicated server can run a bot test with nobody connected. |
+| ``scarlet_dev_rechargelog`` | ``0`` | Developer test: ``1`` prints a line in your console each time the recharge changes your health or armor, with the game time and the values before and after. |
+| ``scarlet_dev_botfreeze`` | ``0`` | Developer test: ``1`` makes every bot stand where it is (it can still turn and shoot). |
+| ``scarlet_dev_botskulls`` | ``0`` | Developer test: a number above 0 puts every player and bot at that killstreak tier (one per 5 kills), whatever its streak, for the skulls, the blood swirl and your HUD (the skulls and swirl still need their own settings on). |
 | ``scarlet_dev_botlog`` | ``0`` | Developer test: ``1`` prints each bot's position and goal once a second, every goal it reaches or gives up on, and the waypoint mode every 10 seconds (``mode 3`` is a loaded trail, ``mode 0`` is a map with no trail, where the bots stand still).  Also prints ``BOTSQUEEZE`` when a bot jammed against a wall steps sideways, ``BOTSTUCK`` and ``BOTTIMEOUT`` when a bot gives up on a target, ``BOTTELE`` for each teleport and ``BOTFALL`` for each drop of more than 80 units (``tdz`` is how far above the bot its next waypoint was, so a drop with ``tdz`` near 0 was an accident).  Needs ``developer 1``. |
 | ``scarlet_dev_botgoal`` | ``0`` | Developer test: ``1`` floats a model over every bot showing its goal (the item's own model when it is after an item, a fireball for a waypoint, a head for a player, a rocket when it is fighting, a gib when it is running from a pentagram, a spike for no goal), and prints a bot's name and goal in the middle of your screen while you look straight at it. |
 | ``scarlet_dev_wayfile`` | ``0`` | Developer test: ``1`` also loads the old ``maps/<map>.way`` waypoint file, only to compare it against a trail. |

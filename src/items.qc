@@ -274,6 +274,10 @@ void() armor_touch =
 		value = 200;
 		bit = IT_ARMOR3;
 	}
+	// SCARLET - with the armor recharge on, a lower armor is never picked up over a higher one, however little of
+	// the higher one is left: it will fill back up by itself, so swapping down would only throw tier away
+	if (cv_scarlet_recharge && cv_scarlet_recharge_armor > 0 && other.armorvalue > 0 && armor_tier(other.armortype) > armor_tier(type))
+		return;
 	if (other.armortype*other.armorvalue >= type*value)
 	{
 		// SCARLET - with armor_always_take, a box of the same color as the armor you wear is picked up even
@@ -1244,9 +1248,12 @@ local float		best;
 	if (other.health <= 0)
 		return;
 
-	sprint (other, "You got the ");
-	sprint (other, self.netname);
-	sprint (other,"\n");
+	if (cv_scarlet_chat_powerups)	// SCARLET - powerup messages can be switched off
+	{
+		sprint (other, "You got the ");
+		sprint (other, self.netname);
+		sprint (other,"\n");
+	}
 
 	if (deathmatch || cv_scarlet_singleplayer_resupply)	// SCARLET - resupply integration.
 	{

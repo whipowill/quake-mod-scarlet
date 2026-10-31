@@ -4,25 +4,39 @@
 //-------------------------------------------------
 
 .float last_damaged_time; // keep track of the last time we got damaged
-.float next_recharge_time;
+.float regen_second; // the whole second of game time this player last had its beat, the one the streak healing and the recharge both go by
 
 void() RechargeShields =
 {
+    // one beat a second, on the turn of each whole second of game time, and everything that heals goes by it, so
+    // the streak healing, the health recharge and the armor recharge below always land on the same frame, and that
+    // frame is the same for every player (a timer counted from each player's own last beat would drift apart)
+    local float beat = (floor(time) != self.regen_second);
+    if (beat)
+        self.regen_second = floor(time);
+
+    // killstreak healing: every skull earned heals scarlet_killstreak_heal health on each beat, and unlike
+    // the recharge below it does not wait for a break in the fighting
+    if (beat && cv_scarlet_killstreak_heal > 0)
+    {
+        local float skulls = KillstreakTier(self);
+        if (skulls > cv_scarlet_killstreak_vfx_skulls_max) skulls = cv_scarlet_killstreak_vfx_skulls_max;
+        if (skulls >= 1)
+            T_Heal(self, skulls * cv_scarlet_killstreak_heal, FALSE); // flag false to not allow overheal
+    }
+
     // if disabled
     if (!cv_scarlet_recharge) return;
 
     // if not enough time has passed since last damaged
     if (time < (self.last_damaged_time + cv_scarlet_recharge_cooldown))
     {
-        // reset
-        self.next_recharge_time = 0;
-
         // end
         return;
     }
 
-    // if not enough time has passed since last recharge
-    if (time < self.next_recharge_time && self.next_recharge_time > 0) return;
+    // not on the beat
+    if (!beat) return;
 
     local float type = cv_scarlet_recharge;
     local float rate_health = cv_scarlet_recharge_health;
@@ -55,6 +69,9 @@ void() RechargeShields =
         }
     }
 
+    local float log_health = self.health;
+    local float log_armor = self.armorvalue;
+
     if (pass_health)
     {
         T_Heal(self, rate_health, FALSE); // flag false to not allow overheal
@@ -65,22 +82,20 @@ void() RechargeShields =
         armor_give(self, rate_armor, self.armortype, FALSE); // flag false to allow increment instead of replace
     }
 
-    // if we did anything...
-    if (pass_health || pass_armor)
+    // dev: say what the recharge did, and when, in the player's own console
+    if (cv_scarlet_dev_rechargelog && (pass_health || pass_armor))
     {
-        // if this was the first time
-        //if (self.next_recharge_time == 0)
-            //sound(self, CHAN_AUTO, "items/protect3.wav", 1, ATTN_NORM);
-
-        // It doesn't seem to be an option to have a sound only play for the player.
-
-        // set next tick
-        self.next_recharge_time = time + 1;
-
-        // end
-        return;
+        sprint(self, "RECHARGE time ");
+        sprint(self, ftos(time));
+        sprint(self, " health ");
+        sprint(self, ftos(log_health));
+        sprint(self, "->");
+        sprint(self, ftos(self.health));
+        sprint(self, " armor ");
+        sprint(self, ftos(log_armor));
+        sprint(self, "->");
+        sprint(self, ftos(self.armorvalue));
+        sprint(self, "\n");
     }
 
-    // reset
-    self.next_recharge_time = 0;
 };

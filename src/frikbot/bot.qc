@@ -119,6 +119,7 @@ for all variables in the bot...
 .float b_menu, b_menu_time, b_menu_value;
 .float route_failed, dyn_flags, dyn_time;
 .float stuck_time, look_time;
+.float vmiss_time; // since when the bot has been right above or below the next step on its plan, too far up or down to reach it
 .entity avoid_ent; // a player this bot just failed to reach, left alone until avoid_until
 .float avoid_until;
 .float lost_count; // SCARLET - times bots have failed to reach this item in a row
@@ -1541,7 +1542,17 @@ void() BotFrame =
 				frik_obstacles();
 				bot_fall_log();
 				BotGoalMark(self);
+				if (cv_scarlet_dev_botfreeze) // dev: bots stand still
+				{
+					self.keys = 0;
+					self.button2 = 0;
+				}
 				CL_KeyMove();
+				if (cv_scarlet_dev_botfreeze)
+				{
+					self.movevect = '0 0 0';
+					self.velocity_x = self.velocity_y = 0;
+				}
 				SV_ClientThink();
 				SV_Physics_Client();
 			}
@@ -1575,6 +1586,188 @@ void() BotFrame =
 		dev_autobot_time = time + 0.5;
 		BotConnect(0, 0, cvar("skill"));
 	}
+
+	bot_autofill();
+};
+
+
+// SCARLET - fill a deathmatch game with bots to suit the size of the map.  The wanted number of players (people and
+// bots) is the floor area of the map divided by scarlet_bot_autofill_units, kept between _min and _max.  Bots come in one
+// at a time, scarlet_bot_autofill_delay seconds apart, so they trickle in instead of all arriving at once.  It keeps that
+// number: when another person joins a bot leaves, when one leaves a bot comes in.  With teams (teamplay) it also keeps
+// the sides the same size, the first person's side and the other: every side gets as many players as the bigger of
+// half the wanted number and the most people on either side, bots making up the difference.  It does nothing in single
+// player or co-op, or with nobody in the game to play with.
+float autofill_time, autofill_last;
+.float floor_area; // worldspawn: the floor area of the map in square units, written by trailgen
+
+// the team a player is on: a bot's color is set when it connects, its team follows once it has spawned
+float(entity p) autofill_team =
+{
+	if (p.ishuman == TRUE)
+		return p.team;
+	return p.b_pants + 1;
+};
+
+// a bot of that team leaves the game
+void(float team) autofill_kick =
+{
+	local entity p;
+
+	p = find(world, classname, "player");
+	while (p)
+	{
+		if (p.ishuman != TRUE && autofill_team(p) == team)
+		{
+			BotDisconnect(p);
+			p.ishuman = TRUE;
+			return;
+		}
+		p = find(p, classname, "player");
+	}
+};
+
+void() bot_autofill =
+{
+	local entity p, host, oself;
+	local float humans, bots, total, target, f, goal;
+	local float hum_a, hum_b, bot_a, bot_b, t, want_a, want_b;
+	local vector sz;
+	local float area;
+
+	if (!cv_scarlet_bot_autofill || !deathmatch || coop || intermission_running)
+		return;
+	if (time < 5)
+		return;	// the bots from the last map come back first
+
+	p = find(world, classname, "player");
+	while (p)
+	{
+		if (p.ishuman == TRUE)
+		{
+			humans = humans + 1;
+			if (!host && (!teamplay || p.team > 0))
+				host = p;
+		}
+		else
+			bots = bots + 1;
+		p = find(p, classname, "player");
+	}
+	if (!host)
+		return;	// nobody to play with
+
+	if (time < autofill_time)
+		return;
+
+	// the floor area trailgen measured for this map (it writes floor_area into the map's entities).  A map without a
+	// trail gets a rough guess from its size: the footprint of its bounding box, a third of which is floor
+	area = world.floor_area;
+	if (area <= 0)
+	{
+		sz = world.maxs - world.mins;
+		area = sz_x * sz_y * 0.3;
+	}
+	target = rint(area / max(cv_scarlet_bot_autofill_units, 1));
+	if (cv_scarlet_dev_botlog && target != autofill_last)
+	{
+		autofill_last = target;
+		dprint("AUTOFILL area ");
+		dprint(ftos(area));
+		dprint(" wanted ");
+		dprint(ftos(target));
+		dprint("\n");
+	}
+	if (target < cv_scarlet_bot_autofill_min)
+		target = cv_scarlet_bot_autofill_min;
+	if (target > cv_scarlet_bot_autofill_max)
+		target = cv_scarlet_bot_autofill_max;
+	if (target > max_clients)
+		target = max_clients;
+
+	oself = self;
+	self = host;
+	if (teamplay)
+	{
+		// two sides: the first person's team (a) and everybody else (b)
+		p = find(world, classname, "player");
+		while (p)
+		{
+			t = autofill_team(p);
+			if (p.ishuman == TRUE)
+			{
+				if (t == host.team)
+					hum_a = hum_a + 1;
+				else if (t > 0)
+					hum_b = hum_b + 1;
+			}
+			else if (t == host.team)
+				bot_a = bot_a + 1;
+			else
+				bot_b = bot_b + 1;
+			p = find(p, classname, "player");
+		}
+		goal = ceil(target / 2);
+		if (hum_a > goal)
+			goal = hum_a;
+		if (hum_b > goal)
+			goal = hum_b;
+		if (goal * 2 > max_clients)
+			goal = floor(max_clients / 2);
+		want_a = goal - hum_a;
+		want_b = goal - hum_b;
+		if (want_a < 0)
+			want_a = 0;
+		if (want_b < 0)
+			want_b = 0;
+
+		if (bot_a - want_a >= bot_b - want_b && bot_a > want_a)
+		{
+			autofill_kick(host.team);
+			autofill_time = time + cv_scarlet_bot_autofill_delay * (0.5 + random());
+		}
+		else if (bot_b > want_b)
+		{
+			// any bot not on the first person's side
+			p = find(world, classname, "player");
+			while (p)
+			{
+				if (p.ishuman != TRUE && autofill_team(p) != host.team)
+				{
+					autofill_kick(autofill_team(p));
+					p = world;
+				}
+				else
+					p = find(p, classname, "player");
+			}
+			autofill_time = time + cv_scarlet_bot_autofill_delay * (0.5 + random());
+		}
+		else if (bot_a < want_a || bot_b < want_b)
+		{
+			// the side that is further behind gets the next one
+			BotConnect((want_b - bot_b > want_a - bot_a) ? 1 : 0, 0, cvar("skill") - 1 + rint(random()));
+			autofill_time = time + cv_scarlet_bot_autofill_delay * (0.5 + random());
+		}
+	}
+	else
+	{
+		total = humans + bots;
+		if (total > target)
+		{
+			// too many in the game (a person joined, or the bots from the last map are more than this map wants): one
+			// bot leaves, then another after the delay, until the number is right
+			if (bots > 0)
+			{
+				KickABot();
+				autofill_time = time + cv_scarlet_bot_autofill_delay * (0.5 + random());
+			}
+		}
+		else if (total < target)
+		{
+			BotConnect(0, 0, cvar("skill") - 1 + rint(random()));
+			autofill_time = time + cv_scarlet_bot_autofill_delay * (0.5 + random());
+		}
+	}
+	self = oself;
 };
 
 /*
@@ -1648,6 +1841,12 @@ void() BotImpulses =
 	else if (self.impulse == 123) // show kills, deaths and assists
 	{
 		sprint(self, StatsScoreText());
+	}
+	else if (self.impulse == 124) // say where you are, to point at a spot on the map
+	{
+		sprint(self, "You are at ");
+		sprint(self, vtos(self.origin));
+		sprint(self, "\n");
 	}
 	else if (self.impulse == 130) // testing scorekeeper -whipowill
 	{
