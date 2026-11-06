@@ -316,10 +316,10 @@ void(entity player) KillstreakReset =
 // The HUD has room for 16 characters.
 string(float tier) KillstreakLabel =
 {
-    if (tier == 1) return "Cutthroat";
-    if (tier == 2) return "Gore Hound";
-    if (tier == 3) return "Slaughterhouse";
-    if (tier == 4) return "Crimson Tide";
+    if (tier == 1) return "Killing Spree";
+    if (tier == 2) return "Killing Frenzy";
+    if (tier == 3) return "Running Riot";
+    if (tier == 4) return "Rampage";
     if (tier == 5) return "Nightmare";
     if (tier == 6) return "Boogeyman";
     if (tier == 7) return "Grim Reaper";
@@ -343,12 +343,11 @@ void(entity player) KillstreakAdd =
         player.streak_tier = tier;
         player.skulls_want = KillstreakSkullsWanted(player);
 
-        if (cv_scarlet_chat_killstreaks && tier <= 8)
+        // the tier is told to the player who reached it alone; chat only reports when a streak ends (KillstreakReset)
+        if (cv_scarlet_chat_killstreak_achieve && tier <= 8 && player.ishuman == 1) // never to a bot, its message buffer is never drained
         {
-            bprint(player.netname);
-            bprint(" is a ");
-            bprint(KillstreakLabel(tier));
-            bprint("!\n");
+            local string lbl = KillstreakLabel(tier);
+            centerprint2(player, lbl, "!");
         }
     }
 }

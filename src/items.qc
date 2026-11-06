@@ -585,6 +585,7 @@ void() weapon_shotgun =
 
 	if (cv_scarlet_remove_weaker_weapons)
 	{
+		self.classname = "weapon_supershotgun";	// so the pickup gives the super one
 		weapon_supershotgun();
 		return;
 	}
@@ -630,6 +631,7 @@ void() weapon_nailgun =
 
 	if (cv_scarlet_remove_weaker_weapons)	// SCARLET
 	{
+		self.classname = "weapon_supernailgun";	// so the pickup gives the super one
 		weapon_supernailgun();
 		return;
 	}

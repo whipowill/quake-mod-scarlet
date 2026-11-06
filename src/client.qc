@@ -801,7 +801,7 @@ NextLevel ();
 		return;
 	}
 	
-	if (fraglimit && self.frags >= fraglimit)
+	if (deathmatch && fraglimit && self.frags >= fraglimit)	// SCARLET - single player and co-op count monster kills as frags, so the limit is deathmatch only
 	{
 NextLevel ();
 /*

@@ -61,7 +61,8 @@ Everything in Scarlet is controlled by console variables (cvars) and a few impul
 | ``scarlet_chat_health`` | ``1`` | Notices about health pickups.  ``0`` silences them. |
 | ``scarlet_chat_backpacks`` | ``1`` | Notices about backpacks.  ``0`` silences them. |
 | ``scarlet_chat_deaths`` | ``1`` | Death messages.  ``0`` off, ``1`` classic Quake messages, ``2`` generic alternate messages. |
-| ``scarlet_chat_killstreaks`` | ``1`` | Killstreak announcements ("Killing Spree!").  ``0`` silences them (only matters if ``scarlet_killstreak_vfx`` is on). |
+| ``scarlet_chat_killstreak_achieve`` | ``1`` | Center-screen message ("Killing Spree!") shown only to the player who reaches a new streak tier (every 5 kills).  ``0`` silences it. |
+| ``scarlet_chat_killstreaks`` | ``1`` | Chat message when a streak of 5 or more ends.  ``0`` silences it. |
 | ``scarlet_chat_powerups`` | ``1`` | The messages about powerups: picking one up ("You got the Quad Damage") and the warnings that it is wearing off.  ``0`` turns them off. |
 
 Set all the ``scarlet_chat_*`` cvars to ``0`` for a quiet console in busy bot matches.

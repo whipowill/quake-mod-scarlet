@@ -66,6 +66,7 @@ float cv_scarlet_chat_backpacks;
 float cv_scarlet_chat_deaths;
 float cv_scarlet_chat_guns;
 float cv_scarlet_chat_health;
+float cv_scarlet_chat_killstreak_achieve;
 float cv_scarlet_chat_killstreaks;
 float cv_scarlet_chat_powerups;
 float cv_scarlet_dead_noclip;
@@ -264,6 +265,7 @@ void() CvarRefresh =
     cv_scarlet_chat_deaths = cvar("scarlet_chat_deaths");
     cv_scarlet_chat_guns = cvar("scarlet_chat_guns");
     cv_scarlet_chat_health = cvar("scarlet_chat_health");
+    cv_scarlet_chat_killstreak_achieve = cvar("scarlet_chat_killstreak_achieve");
     cv_scarlet_chat_killstreaks = cvar("scarlet_chat_killstreaks");
     cv_scarlet_chat_powerups = cvar("scarlet_chat_powerups");
     cv_scarlet_dead_noclip = cvar("scarlet_dead_noclip");
